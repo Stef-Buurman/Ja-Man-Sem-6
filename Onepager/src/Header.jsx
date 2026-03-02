@@ -2,7 +2,7 @@ function Header() {
     return (
         <header id="jaman" className="h-screen bg-neutral-900 text-white flex flex-col relative">
 
-            <nav className="w-full flex items-center px-10 py-6 absolute top-0 left-0 sticky z-10">
+            <nav className="w-full bg-neutral-900 flex items-center px-10 py-6 fixed top-0 left-0 z-50">
 
                 {/* Logo links */}
                 <a href="#top">
