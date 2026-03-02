@@ -1,6 +1,6 @@
 function Sprint0() {
     return (
-        <section className="py-24 bg-neutral-100">
+        <section id="sprint0" className="py-24 bg-neutral-100">
             <div className="max-w-5xl mx-auto px-6">
 
                 <h2 className="text-4xl font-bold mb-10 text-neutral-900">
