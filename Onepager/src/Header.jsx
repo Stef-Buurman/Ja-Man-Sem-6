@@ -1,3 +1,5 @@
+import arrow from "./assets/arrow.png";
+
 function Header() {
     return (
         <header id="jaman" className="h-screen bg-neutral-900 text-white flex flex-col relative">
@@ -39,8 +41,12 @@ function Header() {
             </div>
 
             {/* Scroll indicator */}
-            <div className="absolute bottom-12 text-gray-400 text-3xl w-full text-center">
-                ▼
+            <div className="absolute bottom-12 w-full flex justify-center">
+                <img
+                    src={arrow}
+                    alt="Scroll down"
+                    className="w-4 opacity-80 hover:opacity-100"
+                />
             </div>
 
         </header>
