@@ -1,20 +1,18 @@
-import arrow from "./assets/arrow.png";
+import arrow from "./assets/arrow.svg";
 
 function Header() {
     return (
-        <header id="jaman" className="h-screen bg-neutral-900 text-white flex flex-col relative">
+        <header id="jaman" className="fixed top-0 left-0 w-full h-screen bg-[#fdf1e3] flex flex-col z-0">
 
-            <nav className="w-full bg-neutral-900 flex items-center px-10 py-6 fixed top-0 left-0 z-50">
+            <nav className="w-full bg-[#fdf1e3] flex items-center px-10 py-6 fixed top-0 left-0 z-10">
 
                 {/* Logo links */}
                 <a href="#top">
-                    <h2 className="text-2xl font-bold tracking-wide">
-                        JaMan
-                    </h2>
+                    <img src="/jaman_brown.svg" alt="JaMan logo" className="w-12 mb-6"/>
                 </a>
 
                 {/* Menu midden */}
-                <div className="absolute left-1/2 -translate-x-1/2 flex space-x-8 text-gray-300">
+                <div className="absolute left-1/2 -translate-x-1/2 flex space-x-8 text-[#342626]">
                     <a href="#sprint0" className="hover:text-white transition">
                         Sprint 0
                     </a>
@@ -31,13 +29,7 @@ function Header() {
 
             {/* Center content */}
             <div id="top" className="flex flex-col justify-center items-center flex-grow text-center">
-                <h1 className="text-7xl font-bold tracking-widest mb-6">
-                    JaMan
-                </h1>
-
-                <p className="text-lg text-gray-400">
-                    Ons project portfolio
-                </p>
+                <img src="/jaman_brown.svg" alt="JaMan logo" className="w-64 mb-6"/>
             </div>
 
             {/* Scroll indicator */}
@@ -45,7 +37,7 @@ function Header() {
                 <img
                     src={arrow}
                     alt="Scroll down"
-                    className="w-4 opacity-80 hover:opacity-100"
+                    className="w-24 opacity-80 hover:opacity-100"
                 />
             </div>
 

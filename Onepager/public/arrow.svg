@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 179.48 179.48">
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 179.5 179.5">
+  <!-- Generator: Adobe Illustrator 29.8.5, SVG Export Plug-In . SVG Version: 2.1.1 Build 2)  -->
   <defs>
     <style>
-      .cls-1 {
+      .st0 {
         fill: none;
-        stroke: #fff;
+        stroke: #342626;
         stroke-linecap: round;
         stroke-linejoin: round;
         stroke-width: 2px;
       }
     </style>
   </defs>
-  <polyline class="cls-1" points="32.61 73.57 89.52 130.49 146.88 73.13"/>
-  <polyline class="cls-1" points="32.61 60.74 89.52 117.65 146.88 60.29"/>
-  <polyline class="cls-1" points="32.61 49.43 89.52 106.35 146.88 48.99"/>
+  <polyline class="st0" points="32.6 73.6 89.5 130.5 146.9 73.1"/>
+  <polyline class="st0" points="32.6 60.7 89.5 117.7 146.9 60.3"/>
+  <polyline class="st0" points="32.6 49.4 89.5 106.3 146.9 49"/>
 </svg>

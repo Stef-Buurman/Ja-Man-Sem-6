@@ -1,41 +1,44 @@
-import paola from "./assets/team/Paola.jpeg";
-import rick from "./assets/team/Rick.jpeg";
-import stef from "./assets/team/Stef.jpeg";
-import stefan from "./assets/team/Stefan.jpeg";
-import wout from "./assets/team/Wout.jpeg";
+import paola from "./assets/team/Paola.png";
+import rick from "./assets/team/Rick.png";
+import stef from "./assets/team/Stef.png";
+import stefan from "./assets/team/Stefan.png";
+import wout from "./assets/team/Wout.png";
 
 function Team1() {
     const team = [
-        { name: "Paola", role: "Team", img: paola },
-        { name: "Rick", role: "Team", img: rick },
-        { name: "Stef", role: "Team", img: stef },
-        { name: "Stefan", role: "Team", img: stefan },
-        { name: "Wout", role: "Team", img: wout },
+        { name: "Wout", role: "CMD", img: wout },
+        { name: "Rick", role: "CMGT", img: rick },
+        { name: "Stef", role: "INF", img: stef },
+        { name: "Paola", role: "CMD", img: paola },
+        { name: "Stefan", role: "CMGT", img: stefan },
     ];
 
     return (
-        <section className="py-20">
+        <section className="relative py-20 bg-[#342626]">
 
-            <h2 className="text-4xl font-bold text-center mb-12">
+            <h2 className="text-4xl font-bold text-center mb-12 text-[#fdf1e3]">
                 Ons Team
             </h2>
 
-            <div className="flex justify-center gap-4">
-                {team.map((member, index) => (
-                    <div
-                        key={index}
-                        className=""
-                    >
-                        <img
-                            src={member.img}
-                            alt={member.name}
-                            className="w-48 h-48 object-cover rounded-2xl mx-auto shadow-lg"
-                        />
+            <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex justify-center px-10 snap-x snap-mandatory">
 
-                        <p className="font-semibold text-lg">{member.name}</p>
-                        <p className="text-gray-400 text-sm">{member.role}</p>
-                    </div>
-                ))}
+                    {team.map((member, index) => (
+                        <div
+                            key={index}
+                            className="min-w-[250px] snap-center flex-shrink-0 text-center transition hover:-translate-y-2 duration-300"
+                        >
+                            <img
+                                src={member.img}
+                                alt={member.name}
+                                className="w-52 h-60 object-cover rounded-2xl mx-auto mb-4 shadow-lg"
+                            />
+
+                            <p className="text-[#fdf1e3] text-sm">{member.role}</p>
+                        </div>
+                    ))}
+
+                </div>
             </div>
 
         </section>
