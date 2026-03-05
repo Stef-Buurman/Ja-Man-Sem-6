@@ -1,15 +1,15 @@
 function Sprint0() {
     return (
-        <section id="sprint0" className="py-24 bg-neutral-100">
+        <section id="sprint0" className="py-24 bg-[#fdf1e3]">
             <div className="max-w-5xl mx-auto px-6">
 
-                <h2 className="text-4xl font-bold mb-16 text-neutral-900">
+                <h2 className="text-4xl font-bold mb-16 text-[#342626]">
                     Productvisie en ontwerpvraag versie 1
                 </h2>
 
                 {/* HUIDIGE SITUATIE */}
-                <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                    <h3 className="text-2xl font-bold text-neutral-900">
+                <section className="mb-20 space-y-6 text-lg text-[#342626] leading-relaxed">
+                    <h3 className="text-2xl font-bold text-[#342626]">
                         Huidige situatie
                     </h3>
 
@@ -21,7 +21,7 @@ function Sprint0() {
                         Rotterdam.
                     </p>
 
-                    <h4 className="text-l font-medium text-neutral-900 mb-1">
+                    <h4 className="text-l font-medium mb-1">
                         Context (wat, waar, hoe vaak)
                     </h4>
 
@@ -33,7 +33,7 @@ function Sprint0() {
                         </li>
                     </ul>
 
-                    <h4 className="text-l font-medium text-neutral-900 mb-1">
+                    <h4 className="text-l font-medium mb-1">
                         Huidige knelpunten
                     </h4>
 
