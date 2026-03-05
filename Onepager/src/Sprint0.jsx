@@ -1,4 +1,6 @@
-import deliveryImg from "./assets/images/delivery.png";
+import deliveryRobotImg from "./assets/images/delivery.png";
+import deliveryHumanImg from "./assets/images/delivery_human.png";
+
 
 function Sprint0() {
     return (
@@ -13,7 +15,7 @@ function Sprint0() {
                         <div className="relative">
                             <div className="sticky top-32">
                                 <img
-                                    src={deliveryImg}
+                                    src={deliveryHumanImg}
                                     alt="Bezorgrobot"
                                     className="rounded-xl shadow-xl w-full h-[80vh]"
                                 />
@@ -130,7 +132,7 @@ function Sprint0() {
                         <div className="relative">
                             <div className="sticky top-32">
                                 <img
-                                    src={deliveryImg}
+                                    src={deliveryRobotImg}
                                     alt="Bezorgrobot"
                                     className="rounded-xl shadow-xl w-full h-[80vh]"
                                 />
