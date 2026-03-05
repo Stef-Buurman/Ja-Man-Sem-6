@@ -4,10 +4,10 @@ import deliveryHumanImg from "./assets/images/delivery_human.png";
 
 function Sprint0() {
     return (
-        <section id="sprint0" className="py-24 bg-[#beddfc]">
+        <section id="sprint0" className="overflow-visible relative">
 
             {/* HUIDIGE SITUATIE */}
-            <section className="pb-40 z-10">
+            <section className="pb-40 pt-24 z-10 bg-[#beddfc]">
                 <div className="max-w-5xl mx-auto px-6">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
 
@@ -78,7 +78,7 @@ function Sprint0() {
             </section>
 
             {/* GEWENSTE SITUATIE */}
-            <section className="bg-[#e8492b] py-32 w-full z-20">
+            <section className="bg-[#e8492b] py-32 w-full">
                 <div className="max-w-5xl mx-auto px-6">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
 
@@ -142,184 +142,79 @@ function Sprint0() {
                 </div>
             </section>
 
-            {/* ONTWERPVRAGEN */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Ontwerpvragen ideeën
-                </h3>
+            {/* ONTWERPVRAAG */}
+            <section id="ontwerpvraag" className="sticky top-1 z-10 py-28 bg-[#fdf1e3]">
+                <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#342626]">
 
-                <p>Bezorgrobots</p>
+                    <h2 className="text-4xl font-bold">
+                        Ontwerpvraag
+                    </h2>
 
-                <p>Hoe kunnen we de interactie, het vertrouwen en de samenwerking tussen menselijke burgers en
-                    bezorgrobots in de openbare ruimte faciliteren en verbeteren door middel van inclusieve en
-                    transparante digitale oplossingen?</p>
-
-                <p>
-                    Oplossing zou bijv. kunnen zijn: Een digitaal buurtplatform waarop bewoners niet alleen
-                    pakketjes en goederen kunnen delen of laten bezorgen door autonome karretjes, maar waarbij deze
-                    interacties actief worden ingezet om buren met elkaar in contact te brengen
-                </p>
-
-                <p>Autonome schepen/robots</p>
-
-                <ul className="space-y-3 list-disc pl-6">
-                    <li>Optie 1. Op welke manier kan een autonoom varend schip zijn 'intenties' duidelijk en tijdig
-                        communiceren om ongevallen te voorkomen?
-                    </li>
-                    <li>Optie 2. Hoe kunnen we een Digital Twin zo visualiseren dat gebruikers intuïtief
-                        voorspellingen kunnen doen over drukte en veiligheidsrisico's?
-                    </li>
-                </ul>
+                    <p className="text-xl leading-relaxed max-w-3xl mx-auto">
+                        Hoe kunnen we de <span className="text-[#e8492b] font-bold">interactie</span>, het <span
+                        className="text-[#e8492b] font-bold">vertrouwen</span> en de <span
+                        className="text-[#e8492b] font-bold">samenwerking</span> tussen mensen en bezorgrobots
+                        en de <span className="text-[#e8492b] font-bold">sociale verbinding</span> tussen bewoners in de
+                        openbare ruimte faciliteren en verbeteren door
+                        middel van <span className="text-[#e8492b] font-bold">inclusieve</span> en <span
+                        className="text-[#e8492b] font-bold">transparante</span> digitale oplossingen?
+                    </p>
+                </div>
             </section>
 
             {/* RANDVOORWAARDEN */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Randvoorwaarden
-                </h3>
+            <section id="randvoorwaarden" className="sticky z-20 top-50 py-16 bg-[#342626] ">
+                <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#fdf1e3]">
+                    <h2 className="text-4xl font-bold">
+                        Randvoorwaarden
+                    </h2>
 
-                <p>Technische vereisten:</p>
-                <ul className="space-y-3 list-disc pl-6">
-                    <li>Het project moet worden gemaakt met de technische kennis die wij binnen het team hebben.
-                    </li>
-                    <li>Het product moet realtime communicatie met de gebruiker aanbieden.</li>
-                    <li>De oplossing moet werken op webapplicaties</li>
-                    <li>Data moet end-to-end worden opgeslagen en verzonden</li>
-                </ul>
+                    <ul className="space-y-5 text-lg max-w-3xl mx-auto text-left list-disc pl-6 leading-relaxed">
+                        <li>Realtime communicatie met de gebruiker aanbieden (bijv. een status).</li>
+                        <li>Werken op webapplicaties, zodat gebruikers niet nog een nieuwe app hoeven te downloaden.
+                        </li>
+                        <li>Rekening houden met privacyregels (AVG).</li>
+                        <li>Rekening houden met verkeersregels.</li>
+                        <li>Rekening houden met het gebrek aan vertrouwen in autonome apparaten.</li>
+                        <li>Rekening houden met alle mensen en daarmee ook met de generatiekloof in ervaring met
+                            webapplicaties en eventueel robots.
+                        </li>
+                    </ul>
+                </div>
             </section>
 
             {/* PROJECT SCOPE */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Project Scope
-                </h3>
+            <section id="scope" className="sticky z-30 top-88 py-16 bg-[#beddfc] ">
+                <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#342626]">
+                    <h2 className="text-4xl font-bold">
+                        Scope
+                    </h2>
 
-                <p>Binnen de scope (In-scope):</p>
-                <ul className="space-y-3 list-disc pl-6">
-                    <li>Onderzoek doen</li>
-                    <li>Database opzetten</li>
-                    <li>Frontend met user friendly interface</li>
-                    <li>Backend met veilige informatiebeveiliging</li>
-                </ul>
+                    <ul className="space-y-5 text-lg max-w-3xl mx-auto text-left list-disc pl-6 leading-relaxed">
+                        <li>Realtime communicatie met de gebruiker aanbieden (bijv. een status).</li>
+                        <li>Werken op webapplicaties, zodat gebruikers niet nog een nieuwe app hoeven te downloaden.
+                        </li>
+                        <li>Rekening houden met privacyregels (AVG).</li>
+                        <li>Rekening houden met verkeersregels.</li>
+                        <li>Rekening houden met het gebrek aan vertrouwen in autonome apparaten.</li>
+                        <li>Rekening houden met alle mensen en daarmee ook met de generatiekloof in ervaring met
+                            webapplicaties en eventueel robots.
+                        </li>
+                    </ul>
+                </div>
             </section>
 
-            {/* BACKLOG */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Backlog – Trello
-                </h3>
-
-                <p>
-                    Beschrijving: Items worden bij voorkeur geformuleerd als User Stories:
-                    "Als [rol], wil ik [doel], zodat [voordeel]". De bovenste items zijn zeer gedetailleerd,
-                    de onderste items mogen grover zijn geformuleerd.
-                </p>
-
-                <p>
-                    Grootte: Elk item bevat een inschatting van de benodigde inspanning om de werkdruk en voortgang
-                    te plannen en te zien wanneer de sprint eindigt.
-                </p>
-
-                <p>
-                    Link: <a href="https://trello.com/b/RfpRo2DN/team-ja-man" className="text-blue-600 underline"
-                             target="_blank" rel="noopener noreferrer">
-                    https://trello.com/b/RfpRo2DN/team-ja-man
-                </a>
-                </p>
+            {/* Logo */}
+            <section id="logo" className="sticky z-40 top-126 py-30 bg-[#e8492b] ">
+                <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#342626]">
+                    <div className="flex flex-col justify-center items-center flex-grow text-center">
+                        <img src="/jaman_white.svg" alt="JaMan logo" className="w-64 mb-6"/>
+                    </div>
+                </div>
             </section>
 
-            {/* SPRINTDOEL & PLANNING */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Sprintdoel & Planning
-                </h3>
+            <section className="h-[100vh] bg-[#e8492b]">
 
-                <p>
-                    Het Sprintdoel beschrijft de gewenste resultaten aan het einde van de sprint, in lijn met de
-                    scope.
-                </p>
-
-                <p className="font-semibold text-neutral-900">
-                    Sprintdoel Sprint 1
-                </p>
-                <p>
-                    Ons eerste prototype maken en testen. Ook kijken of deze planning werkt voor aankomende sprints.
-                </p>
-
-                <p className="font-semibold text-neutral-900">
-                    Planning
-                </p>
-
-                <ul className="space-y-3 list-disc pl-6">
-                    <li>11 maart – Deskresearch: doelgroep bepalen en volledige onderzoek uitvoeren via
-                        PACT-analyse.
-                    </li>
-                    <li>15 maart 23:59 – Fieldresearch: potentiële gebruikers zoeken en spreken met vooraf
-                        opgestelde vragen.
-                    </li>
-                    <li>16 maart – Prototypes maken (bijv. Figma).</li>
-                    <li>17 maart – Testen.</li>
-                    <li>18 maart – Sprint review en retrospective.</li>
-                    <li>18 maart – Inleveren sprint 1.</li>
-                </ul>
-            </section>
-
-            {/* TEAM WAARDEN & NORMEN */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Team Waarden & Normen
-                </h3>
-
-                <p className="font-semibold text-neutral-900">Gedeelde waarden</p>
-
-                <ul className="space-y-3 list-disc pl-6">
-                    <li><strong>Betrouwbaarheid</strong> – Wij vinden betrouwbaarheid belangrijk omdat slimme
-                        technologie alleen werkt als bewoners erop kunnen vertrouwen.
-                    </li>
-                    <li><strong>Plezier</strong> – Technologie moet bijdragen aan een leefbare en leuke stad.</li>
-                    <li><strong>Vriendschap</strong> – Slimme technologie mag menselijke verbinding versterken, niet
-                        vervangen.
-                    </li>
-                    <li><strong>Loyaliteit</strong> – Technologie moet verbondenheid tussen bewoners en stad
-                        stimuleren.
-                    </li>
-                    <li><strong>Rechtvaardigheid</strong> – Oplossingen moeten toegankelijk zijn voor iedereen,
-                        ongeacht achtergrond of digitale vaardigheden.
-                    </li>
-                </ul>
-            </section>
-
-            {/* COMMUNICATIE & SAMENWERKING */}
-            <section className="mb-20 space-y-6 text-lg text-neutral-700 leading-relaxed">
-                <h3 className="text-2xl font-bold text-neutral-900">
-                    Communicatie & Samenwerking
-                </h3>
-
-                <p className="font-semibold text-neutral-900">
-                    Hoe worden waarden en normen in de praktijk gebracht?
-                </p>
-
-                <ul className="space-y-3 list-disc pl-6">
-                    <li><strong>Helderheid</strong> – Gebruik visuele hulpmiddelen zoals schetsen en prototypes en
-                        vermijd onnodig jargon.
-                    </li>
-                    <li><strong>Transparantie</strong> – Creëer een veilige omgeving voor feedback, discussie en
-                        conflictoplossing.
-                    </li>
-                </ul>
-
-                <p className="font-semibold text-neutral-900">
-                    Stakeholders
-                </p>
-
-                <ul className="space-y-3 list-disc pl-6">
-                    <li>Jan Jacobs (Lely) – UX expert – jjacobs@lely.com</li>
-                    <li>Maurice de Beer (Veiligheidsregio Rotterdam-Rijnmond) – officier van dienst –
-                        maurice.debeer@vr-rr.nl
-                    </li>
-                    <li>Iskander Smit (Cities of Things) – onderzoeker – i.r.smit@hva.nl</li>
-                    <li>Thierry Verduijn (Samskip) – t.m.verduijn@hr.nl</li>
-                </ul>
             </section>
         </section>
     );
