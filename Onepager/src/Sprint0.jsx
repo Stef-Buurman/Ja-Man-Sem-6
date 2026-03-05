@@ -213,7 +213,7 @@ function Sprint0() {
                 </div>
             </section>
 
-            <section className="h-[100vh] bg-[#e8492b]">
+            <section className="h-[50vh] bg-[#e8492b]">
 
             </section>
         </section>

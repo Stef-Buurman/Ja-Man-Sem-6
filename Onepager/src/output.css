@@ -278,6 +278,12 @@
   .top-130 {
     top: calc(var(--spacing) * 130);
   }
+  .top-140 {
+    top: calc(var(--spacing) * 140);
+  }
+  .top-160 {
+    top: calc(var(--spacing) * 160);
+  }
   .bottom-12 {
     bottom: calc(var(--spacing) * 12);
   }
@@ -386,8 +392,23 @@
   .h-60 {
     height: calc(var(--spacing) * 60);
   }
+  .h-\[1vh\] {
+    height: 1vh;
+  }
+  .h-\[2vh\] {
+    height: 2vh;
+  }
+  .h-\[5vh\] {
+    height: 5vh;
+  }
+  .h-\[20vh\] {
+    height: 20vh;
+  }
   .h-\[40vh\] {
     height: 40vh;
+  }
+  .h-\[50vh\] {
+    height: 50vh;
   }
   .h-\[60vh\] {
     height: 60vh;
@@ -650,6 +671,9 @@
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
+  .py-10 {
+    padding-block: calc(var(--spacing) * 10);
+  }
   .py-16 {
     padding-block: calc(var(--spacing) * 16);
   }
@@ -679,6 +703,9 @@
   }
   .py-90 {
     padding-block: calc(var(--spacing) * 90);
+  }
+  .py-100 {
+    padding-block: calc(var(--spacing) * 100);
   }
   .pt-24 {
     padding-top: calc(var(--spacing) * 24);
