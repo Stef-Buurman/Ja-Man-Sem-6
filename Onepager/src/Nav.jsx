@@ -1,11 +1,19 @@
-import arrow from "./assets/arrow.svg";
+
+const scrollToTop = (e) => {
+    e.preventDefault();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+};
 
 function Nav() {
     return (
             <nav className="w-full bg-[#fdf1e3] flex items-center px-10 py-6 fixed top-0 left-0 z-11">
 
                 {/* Logo links */}
-                <a href="#jaman">
+                <a href="#top" onClick={scrollToTop}>
                     <img src="/jaman_brown.svg" alt="JaMan logo" className="w-12"/>
                 </a>
 

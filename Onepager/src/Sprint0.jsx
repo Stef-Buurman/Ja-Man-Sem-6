@@ -3,8 +3,9 @@ import deliveryImg from "./assets/images/delivery.png";
 function Sprint0() {
     return (
         <section id="sprint0" className="py-24 bg-[#beddfc]">
+
             {/* HUIDIGE SITUATIE */}
-            <section className="relative pb-40 z-10">
+            <section className="pb-40 z-10">
                 <div className="max-w-5xl mx-auto px-6">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
 
@@ -75,7 +76,7 @@ function Sprint0() {
             </section>
 
             {/* GEWENSTE SITUATIE */}
-            <section className="relative bg-[#e8492b] min-h-screen py-32 w-full z-20">
+            <section className="bg-[#e8492b] py-32 w-full z-20">
                 <div className="max-w-5xl mx-auto px-6">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
 

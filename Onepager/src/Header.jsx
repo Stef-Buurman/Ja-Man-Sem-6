@@ -5,7 +5,7 @@ function Header() {
         <header id="jaman" className="fixed top-0 left-0 w-full h-screen bg-[#fdf1e3] flex flex-col z-0">
 
             {/* Center content */}
-            <div id="top" className="flex flex-col justify-center items-center flex-grow text-center">
+            <div className="flex flex-col justify-center items-center flex-grow text-center">
                 <img src="/jaman_brown.svg" alt="JaMan logo" className="w-64 mb-6"/>
             </div>
 
