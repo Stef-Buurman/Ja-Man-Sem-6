@@ -1,4 +1,5 @@
 import arrow from "./assets/arrow.svg";
+import logo_brown from "./assets/logo/jaman_brown.svg";
 
 function Header() {
     return (
@@ -6,7 +7,7 @@ function Header() {
 
             {/* Center content */}
             <div className="flex flex-col justify-center items-center flex-grow text-center">
-                <img src="/jaman_brown.svg" alt="JaMan logo" className="w-64 mb-6"/>
+                <img src={logo_brown} alt="JaMan logo" className="w-64 mb-6"/>
             </div>
 
             {/* Scroll indicator */}

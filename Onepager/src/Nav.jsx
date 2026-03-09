@@ -1,3 +1,4 @@
+import logo_brown from "./assets/logo/jaman_brown.svg";
 
 const scrollToTop = (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ function Nav() {
 
                 {/* Logo links */}
                 <a href="#top" onClick={scrollToTop}>
-                    <img src="/jaman_brown.svg" alt="JaMan logo" className="w-12"/>
+                    <img src={logo_brown} alt="JaMan logo" className="w-12"/>
                 </a>
 
                 {/* Menu midden */}

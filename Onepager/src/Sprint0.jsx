@@ -1,6 +1,6 @@
 import deliveryRobotImg from "./assets/images/delivery.png";
 import deliveryHumanImg from "./assets/images/delivery_human.png";
-
+import logo_white from "./assets/logo/jaman_white.svg";
 
 function Sprint0() {
     return (
@@ -184,7 +184,7 @@ function Sprint0() {
             </section>
 
             {/* PROJECT SCOPE */}
-            <section id="scope" className="sticky z-30 top-88 py-16 bg-[#beddfc] ">
+            <section id="scope" className="sticky z-30 top-86 py-16 bg-[#beddfc] ">
                 <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#342626]">
                     <h2 className="text-4xl font-bold">
                         Scope
@@ -205,15 +205,15 @@ function Sprint0() {
             </section>
 
             {/* Logo */}
-            <section id="logo" className="sticky z-40 top-126 py-30 bg-[#e8492b] ">
+            <section id="logo" className="sticky z-40 top-120 py-30 bg-[#e8492b] ">
                 <div className="max-w-5xl mx-auto px-6 text-center space-y-10 text-[#342626]">
                     <div className="flex flex-col justify-center items-center flex-grow text-center">
-                        <img src="/jaman_white.svg" alt="JaMan logo" className="w-64 mb-6"/>
+                        <img src={logo_white} alt="JaMan logo" className="w-64 mb-6"/>
                     </div>
                 </div>
             </section>
 
-            <section className="h-[50vh] bg-[#e8492b]">
+            <section className="h-[80vh] bg-[#e8492b]">
 
             </section>
         </section>
