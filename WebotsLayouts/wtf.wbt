@@ -1,0 +1,291 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/SuburbanHouse.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/BungalowStyleHouse.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/HouseWithGarage.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/ModernHouse.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/ModernSuburbanHouse.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/bluebotics/shrimp/protos/Shrimp.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.5200221372892732 0.023460822990098853 -0.8538305256394407 3.0534062487366183
+  position 81.91142196901137 41.84776933099055 122.15082580830222
+}
+Solid {
+  translation 17.91 33.18 0
+  children [
+    Solid {
+      translation 6.2 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 5 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(1)"
+    }
+    Solid {
+      translation 2.6 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(2)"
+    }
+    Solid {
+      translation 1.4 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(4)"
+    }
+    Solid {
+      translation 0.2 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(5)"
+    }
+    Solid {
+      translation -1 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(6)"
+    }
+    Solid {
+      translation -2.2 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(3)"
+    }
+    Solid {
+      translation 3.8 0 0
+      children [
+        Shape {
+          geometry Box {
+            size 0.5 7.5 0.15
+          }
+        }
+      ]
+      name "solid(7)"
+    }
+  ]
+  name "Zebrapad"
+}
+Solid {
+  translation 14 34.67 0.01
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.7 0.7
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 2 150 0.1
+      }
+    }
+  ]
+  name "Stoep-1"
+  boundingObject Box {
+    size 2 150 0.1
+  }
+}
+Solid {
+  translation 25.9 34.67 0.01
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.7 0.7 0.7
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 2 150 0.1
+      }
+    }
+  ]
+  name "Stoep-2"
+  boundingObject Box {
+    size 2 150 0.1
+  }
+}
+Solid {
+  translation 19.92 34.55 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.2 0.2 0.2
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 10 150 0.1
+      }
+    }
+  ]
+  name "Weg"
+  boundingObject Box {
+    size 10 150 0.1
+  }
+}
+Solid {
+  translation 19.92 34.55 -0.1
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.333333 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 100 150 0.1
+      }
+    }
+  ]
+  name "Gras"
+  boundingObject Box {
+    size 100 150 0.1
+  }
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+SuburbanHouse {
+}
+SuburbanHouse {
+  translation 38.24 70.7 0
+  rotation 0 0 1 3.14159
+  name "suburban house(3)"
+}
+BungalowStyleHouse {
+  translation 38.91 50.73 0
+  rotation 0 0 1 3.14159
+}
+BungalowStyleHouse {
+  translation 0 16.48 0
+  name "bungalow style house(1)"
+}
+HouseWithGarage {
+  translation 37.21 33.15 0
+  rotation 0 0 1 3.14159
+}
+HouseWithGarage {
+  translation 0 36.17 0
+  name "house with garage(1)"
+}
+ModernHouse {
+  translation 0 58.09 0
+}
+ModernHouse {
+  translation 43.12 11.17 0
+  rotation 0 0 1 3.14159
+  name "modern house(1)"
+}
+ModernSuburbanHouse {
+  translation 0 74.25 0
+  rotation 0 0 1 3.14159
+  name "suburban house(1)"
+}
+ModernSuburbanHouse {
+  translation 38.04 -6.21 0
+  name "suburban house(2)"
+}
+Shrimp {
+  hidden position_0_0 -1.915344454403107e-07
+  hidden position_0_1 0.07391085513643297
+  hidden position_0_2 0.07391047885836098
+  hidden position_0_3 0.07392011168790472
+  hidden position_0_4 0.07391893077085965
+  hidden position_0_5 0.018865088543823783
+  hidden position_0_6 0.017378753676262595
+  hidden rotation_1 0 0 -1 1.9082797281243954e-07
+  hidden position_1_0 -375.50742232706716
+  hidden rotation_2 0 -1 0 1.4836961037080278
+  hidden rotation_3 0 -0.9999999999999999 0 0.0036048162822092094
+  hidden position_3_0 -0.0725050850460355
+  hidden position_3_1 -0.07187196386494009
+  hidden translation_4 -0.10490092579062196 0 -0.21892329834670665
+  hidden rotation_4 0 1 0 0.07250508504603806
+  hidden position_4_0 -367.70437659463715
+  hidden rotation_5 0 0.9999999999999999 0 3.279628778221138
+  hidden translation_6 0.07323768236421957 0 -0.21893332168207924
+  hidden rotation_6 0 1 0 0.07187196386494077
+  hidden position_6_0 -366.7590086696556
+  hidden rotation_7 0 1 0 2.3342608532395843
+  hidden rotation_8 0 -1 0 0.0036044400041616415
+  hidden position_8_0 -0.0725047087048249
+  hidden position_8_1 -0.07187158752322521
+  hidden rotation_9 0 -1 0 0.0036140732860243116
+  hidden position_9_0 -0.07773699529747802
+  hidden position_9_1 -0.0770226318970994
+  hidden translation_10 -0.10604608998749508 0 -0.21883711023530325
+  hidden rotation_10 0.03885871155863323 1.800199561609397e-06 0.9992447150386947 3.141500069979863
+  hidden position_10_0 320.2236053341087
+  hidden rotation_11 0 -1 0 6.064339975129373
+  hidden translation_12 0.07211024357084353 0 -0.21884923149913932
+  hidden rotation_12 0.03850179716122751 1.7836648615103576e-06 0.9992585309178874 3.1415000686997723
+  hidden position_12_0 319.3172033947637
+  hidden rotation_13 0 -1 0 5.1579380357843565
+  hidden rotation_14 0 -1 0 0.0036128923687052967
+  hidden position_14_0 -0.07773581425550447
+  hidden position_14_1 -0.07702145085512223
+  hidden translation_15 0.10159278637590569 0 0.24528257380917576
+  hidden rotation_15 0 -0.9999999999999999 0 0.48723719015626216
+  hidden position_15_0 -0.012249323953402558
+  hidden position_15_1 -0.01592946121789834
+  hidden translation_16 0.10009686480553089 0 -0.17218366838248067
+  hidden rotation_16 0 0.9999999999999999 0 0.48344932395340345
+  hidden position_16_0 -1.0354214245924999e-07
+  hidden rotation_17 0 0 -0.9999999999999999 1.032382731180714e-07
+  hidden position_17_0 -388.8105346917491
+  hidden rotation_18 0 -1 0 0.7469543533852356
+  hidden translation_19 0.01888726290506462 0 -0.019664414232488825
+  hidden rotation_19 0 -1 0 0.19215053878209779
+  hidden translation_20 0.12850812377321355 0 0.18963856865894826
+  hidden rotation_20 0 -1 0 0.3654012926455929
+  hidden position_20_0 -0.010762989087342365
+  hidden position_20_1 -0.014443114621398233
+  hidden translation_21 0.023775087586887716 0 0.020491895281744058
+  hidden rotation_21 0 -1 0 0.3142368853785981
+  hidden position_21_0 -0.00018914087535299183
+  translation 25.492802729974635 26.489808168551576 0.058513211455955616
+  rotation 0.0016664220382548256 0.0019790982100943164 -0.9999966530983317 1.523576064535094
+}
