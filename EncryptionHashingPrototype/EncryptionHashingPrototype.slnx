@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="encryptionhashingprototype.client/encryptionhashingprototype.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="EncryptionHashingPrototype.Server/EncryptionHashingPrototype.Server.csproj" />
+</Solution>
