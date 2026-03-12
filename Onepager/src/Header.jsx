@@ -7,7 +7,7 @@ function Header() {
 
             {/* Center content */}
             <div className="flex flex-col justify-center items-center flex-grow text-center">
-                <img src={logo_brown} alt="JaMan logo" className="w-64 mb-6"/>
+                <img src={logo_brown} alt="JaMan logo" className="w-40 sm:w-52 md:w-64"/>
             </div>
 
             {/* Scroll indicator */}
@@ -15,7 +15,7 @@ function Header() {
                 <img
                     src={arrow}
                     alt="Scroll down"
-                    className="w-24 opacity-80 hover:opacity-100"
+                    className="w-16 sm:w-20 md:w-24"
                 />
             </div>
 

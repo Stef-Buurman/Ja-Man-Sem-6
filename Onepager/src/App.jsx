@@ -2,6 +2,7 @@ import Header from "./Header.jsx";
 import Sprint0 from "./Sprint0.jsx";
 import Team1 from "./Team.jsx";
 import Nav from "./Nav.jsx";
+import Sprint1 from "./Sprint1.jsx";
 
 
 
@@ -14,6 +15,7 @@ function App() {
             <main className="relative z-10 mt-[100vh]">
                 <Team1 />
                 <Sprint0 />
+                <Sprint1/>
             </main>
         </>
     );

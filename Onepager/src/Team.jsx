@@ -14,60 +14,63 @@ function Team1() {
     ];
 
     return (
-        <section className="py-20 bg-[#342626] h-screen">
+        <section className="py-20 bg-[#342626] min-h-screen">
 
-            <h2 className="text-4xl font-bold text-center mb-12 text-[#fdf1e3]">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#fdf1e3]">
                 Ons Team
             </h2>
 
             <div className="flex flex-col items-center gap-10">
+
                 {/* eerste rij */}
-                <div className="grid grid-cols-3 gap-32">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20">
                     {team.slice(0,3).map((member, index) => (
-                        <div key={index} className="text-center transition hover:-translate-y-2 duration-300">
+                        <div key={index} className="text-center">
+
                             <img
                                 src={member.img}
                                 alt={member.name}
-                                className="w-54 h-60 object-cover"
+                                className="w-40 h-48 md:w-52 md:h-60 object-cover"
                             />
-                            <p className="text-[#fdf1e3] text-sm">{member.role}</p>
+
+                            <p className="text-[#fdf1e3] text-sm mt-2">
+                                {member.role}
+                            </p>
+
                         </div>
                     ))}
                 </div>
 
                 {/* tweede rij */}
-                <div className="grid grid-cols-2 gap-32">
-                    {team.slice(3,5).map((member, index) => (
-                        <div key={index} className="text-center transition hover:-translate-y-2 duration-300">
-                            <img
-                                src={member.img}
-                                alt={member.name}
-                                className="w-54 h-60 object-cover"
-                            />
-                            <p className="text-[#fdf1e3] text-sm">{member.role}</p>
-                        </div>
-                    ))}
-                </div>
+                <div className="flex justify-center w-full">
 
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-20">
+                        {team.slice(3,5).map((member, index) => (
+                            <div key={index} className="text-center">
+
+                                <img
+                                    src={member.img}
+                                    alt={member.name}
+                                    className="w-40 h-48 md:w-52 md:h-60 object-cover"
+                                />
+
+                                <p className="text-[#fdf1e3] text-sm mt-2">
+                                    {member.role}
+                                </p>
+
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             {/* Waardes */}
-            <div className="mt-10 px-10 text-[#fdf1e3] text-2xl font-bold flex items-center justify-center">
-
-                <p className="py-6">Plezier</p>
-                <div className="w-16 h-px bg-[#fdf1e3] mx-4"></div>
-
-                <p className="py-6">Betrouwbaarheid</p>
-                <div className="w-16 h-px bg-[#fdf1e3] mx-4"></div>
-
-                <p className="py-6">Vriendschap</p>
-                <div className="w-16 h-px bg-[#fdf1e3] mx-4"></div>
-
-                <p className="py-6">Loyaliteit</p>
-                <div className="w-16 h-px bg-[#fdf1e3] mx-4"></div>
-
-                <p className="py-6">Rechtvaardigheid</p>
-
+            <div className="mt-12 px-6 text-[#fdf1e3] text-lg md:text-2xl font-bold flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-6 md:gap-12 lg:gap-24">
+                <p>Plezier</p>
+                <p>Betrouwbaarheid</p>
+                <p>Vriendschap</p>
+                <p>Loyaliteit</p>
+                <p>Rechtvaardigheid</p>
             </div>
 
         </section>
