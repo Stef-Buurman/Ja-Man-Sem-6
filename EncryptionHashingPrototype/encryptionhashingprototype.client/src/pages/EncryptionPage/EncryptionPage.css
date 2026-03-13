@@ -2,30 +2,34 @@
   max-width: 800px;
   margin: 40px auto;
   padding: 30px;
-  background-color: #f7f9fc;
+  background-color: #E7DBCC;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .title {
   text-align: center;
-  color: #2c3e50;
+  color: #372526;
   margin-bottom: 25px;
 }
 
 .section {
   margin-bottom: 20px;
+  color: #372526;
 }
 
-.input-field, .input-area {
+.input-field,
+.input-area {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #B6DEFF;
   font-size: 14px;
   font-family: inherit;
   box-sizing: border-box;
+  background-color: #ffffff;
+  color: #372526;
 }
 
 .input-area {
@@ -44,29 +48,52 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background-color: #3498db;
-  color: white;
+  background-color: #372526;
+  color: #ffffff;
   font-weight: 600;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .btn:hover {
-  background-color: #2980b9;
+  background-color: #FC3511;
 }
 
-.btn-encrypt { background-color: #27ae60; }
-.btn-encrypt:hover { background-color: #1e8449; }
+/* Action buttons */
 
-.btn-decrypt { background-color: #e67e22; }
-.btn-decrypt:hover { background-color: #ca6f1e; }
+.btn-encrypt {
+  background-color: #B6DEFF;
+  color: #372526;
+}
 
-.btn-hash { background-color: #8e44ad; }
-.btn-hash:hover { background-color: #71368a; }
+.btn-encrypt:hover {
+  background-color: #7fa2bd;
+}
+
+.btn-decrypt {
+  background-color: #FC3511;
+  color: white;
+}
+
+.btn-decrypt:hover {
+  background-color: #d92d0e;
+}
+
+.btn-hash {
+  background-color: #372526;
+  color: white;
+}
+
+.btn-hash:hover {
+  background-color: #2f1b17;
+}
+
+/* Keys section */
 
 .keys-section {
-  background-color: #ecf0f1;
+  background-color: #B6DEFF;
   padding: 15px;
   border-radius: 10px;
+  color: #372526;
 }
 
 .keys-list {
@@ -87,11 +114,23 @@
 }
 
 .key-code {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 5px 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #372526;
   font-family: monospace;
   overflow-wrap: break-word;
   word-break: break-all;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 0.8rem;
 }
