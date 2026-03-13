@@ -130,7 +130,7 @@ function Sprint0() {
             </section>
 
             {/* PROJECT SCOPE */}
-            <section id="scope" className="py-16 bg-[#beddfc] z-30 md:sticky md:top-86">
+            <section id="scope" className="py-16 bg-[#beddfc] z-30 md:sticky md:top-84">
                 <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
 
                     <h2 className="text-3xl sm:text-4xl font-bold">Scope</h2>
