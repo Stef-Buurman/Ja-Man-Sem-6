@@ -1,5 +1,24 @@
 {
+  "config": {
+    "swaggerInput": "Swagger/swagger.json",
+    "apiOutput": "encryptionhashingprototype.client/src/api",
+    "clientOutput": "encryptionhashingprototype.client",
+    "serverOutput": "EncryptionHashingPrototype.Server"
+  },
   "dependencies": {
-    "react-toastify": "^11.0.5"
+    "prettier": "^3.8.1",
+    "react-icons": "^5.6.0",
+    "react-router": "^7.13.1",
+    "react-toastify": "^11.0.5",
+    "swagger-typescript-api": "^13.6.3"
+  },
+  "scripts": {
+    "stop": "node Scripts/Node/stop.mjs",
+    "swagger": "node Scripts/Node/swagger.mjs && npm run stop",
+    "generate:ts-api": "swagger-typescript-api generate -p %npm_package_config_swaggerInput% -o %npm_package_config_apiOutput% --modular --module-name-first-tag --fetch --extractRequestParams --templates swagger-templates",
+    "create:api-instance": "node Scripts/JS/createApiInstance.js",
+    "generate:api": "node Scripts/Node/swagger.mjs && npm run generate:api-minimal && npm run stop",
+    "generate:api-minimal": "npm run generate:ts-api && npm run create:api-instance",
+    "prettier": "prettier --write ."
   }
 }
