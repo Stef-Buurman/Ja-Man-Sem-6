@@ -48,14 +48,14 @@ export default function EncryptionPage() {
     try {
       const response = await handleApiCall("encrypt", { data, key });
       setResult(response);
-    } catch { }
+    } catch {}
   };
 
   const decrypt = async () => {
     try {
       const response = await handleApiCall("decrypt", { data, key });
       setResult(response);
-    } catch { }
+    } catch {}
   };
 
   const hash = async () => {
@@ -64,14 +64,14 @@ export default function EncryptionPage() {
         `hash?data=${encodeURIComponent(data)}`,
       );
       setResult(response);
-    } catch { }
+    } catch {}
   };
 
   const generateKeys = async () => {
     try {
       const response = await handleApiCall("keys");
       setKeys(response);
-    } catch { }
+    } catch {}
   };
 
   const copyResult = async () => {
@@ -159,12 +159,7 @@ export default function EncryptionPage() {
           </button>
         </div>
 
-        <textarea
-          className="input-area"
-          value={result}
-          readOnly
-          rows={6}
-        />
+        <textarea className="input-area" value={result} readOnly rows={6} />
       </div>
 
       <ToastContainer position="top-right" />

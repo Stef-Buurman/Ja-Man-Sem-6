@@ -2,10 +2,10 @@
   max-width: 800px;
   margin: 40px auto;
   padding: 30px;
-  background-color: #E7DBCC;
+  background-color: #e7dbcc;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .title {
@@ -24,7 +24,7 @@
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #B6DEFF;
+  border: 1px solid #b6deff;
   font-size: 14px;
   font-family: inherit;
   box-sizing: border-box;
@@ -55,13 +55,13 @@
 }
 
 .btn:hover {
-  background-color: #FC3511;
+  background-color: #fc3511;
 }
 
 /* Action buttons */
 
 .btn-encrypt {
-  background-color: #B6DEFF;
+  background-color: #b6deff;
   color: #372526;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .btn-decrypt {
-  background-color: #FC3511;
+  background-color: #fc3511;
   color: white;
 }
 
@@ -90,7 +90,7 @@
 /* Keys section */
 
 .keys-section {
-  background-color: #B6DEFF;
+  background-color: #b6deff;
   padding: 15px;
   border-radius: 10px;
   color: #372526;
