@@ -16,6 +16,7 @@ export async function handleApiResponse<T>(
     const toastSuccess = toastOptions?.toastSuccess;
     const toastError = toastOptions?.toastError;
 
+    console.log("Showing success toast:", globalToastRef.current);
     if (isOk && toastSuccess && globalToastRef.current) {
       globalToastRef.current.showToastSuccess(
         toastSuccess.message,

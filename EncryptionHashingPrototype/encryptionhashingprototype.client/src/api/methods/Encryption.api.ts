@@ -26,10 +26,6 @@ export type EncryptionKeysListQuery = NonNullable<
 const encryptionApi = new Encryption();
 
 /* =======================
-   Paginated Query Methods
-   ======================= */
-
-/* =======================
    Simple Query Methods
    ======================= */
 export async function encryptionHashList(

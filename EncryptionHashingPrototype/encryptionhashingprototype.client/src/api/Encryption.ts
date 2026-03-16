@@ -10,8 +10,9 @@
  * ---------------------------------------------------------------
  */
 
-import { EncryptDecryptRequest } from "./data-contracts";
-import { ContentType, HttpClient, RequestParams } from "./http-client";
+import type { ApiResponse, EncryptDecryptRequest } from "./data-contracts";
+import { ContentType, HttpClient } from "./http-client";
+import type { RequestParams } from "./http-client";
 
 export class Encryption<
   SecurityDataType = unknown,
@@ -27,11 +28,12 @@ export class Encryption<
     data: EncryptDecryptRequest,
     params: RequestParams = {},
   ) =>
-    this.request<void, any>({
+    this.request<ApiResponse, any>({
       path: `/api/Encryption/encrypt`,
       method: "POST",
       body: data,
       type: ContentType.Json,
+      format: "json",
       ...params,
     });
   /**
@@ -45,11 +47,12 @@ export class Encryption<
     data: EncryptDecryptRequest,
     params: RequestParams = {},
   ) =>
-    this.request<void, any>({
+    this.request<ApiResponse, any>({
       path: `/api/Encryption/decrypt`,
       method: "POST",
       body: data,
       type: ContentType.Json,
+      format: "json",
       ...params,
     });
   /**
@@ -65,10 +68,11 @@ export class Encryption<
     },
     params: RequestParams = {},
   ) =>
-    this.request<void, any>({
+    this.request<ApiResponse, any>({
       path: `/api/Encryption/hash`,
       method: "GET",
       query: query,
+      format: "json",
       ...params,
     });
   /**
@@ -88,10 +92,11 @@ export class Encryption<
     },
     params: RequestParams = {},
   ) =>
-    this.request<void, any>({
+    this.request<ApiResponse, any>({
       path: `/api/Encryption/keys`,
       method: "GET",
       query: query,
+      format: "json",
       ...params,
     });
 }

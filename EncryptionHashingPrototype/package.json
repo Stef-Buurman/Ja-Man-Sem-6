@@ -15,7 +15,7 @@
   "scripts": {
     "stop": "node Scripts/Node/stop.mjs",
     "swagger": "node Scripts/Node/swagger.mjs && npm run stop",
-    "generate:ts-api": "swagger-typescript-api generate -p %npm_package_config_swaggerInput% -o %npm_package_config_apiOutput% --modular --module-name-first-tag --fetch --extractRequestParams --templates swagger-templates",
+    "generate:ts-api": "swagger-typescript-api generate -p %npm_package_config_swaggerInput% -o %npm_package_config_apiOutput% --modular --module-name-first-tag --fetch --extractRequestParams --templates swagger-templates && node Scripts/JS/test.js ",
     "create:api-instance": "node Scripts/JS/createApiInstance.js",
     "generate:api": "node Scripts/Node/swagger.mjs && npm run generate:api-minimal && npm run stop",
     "generate:api-minimal": "npm run generate:ts-api && npm run create:api-instance",

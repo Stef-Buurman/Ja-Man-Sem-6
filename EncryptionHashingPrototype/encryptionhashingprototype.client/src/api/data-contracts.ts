@@ -10,6 +10,12 @@
  * ---------------------------------------------------------------
  */
 
+export interface ApiResponse {
+  success?: boolean;
+  data?: any;
+  message?: string | null;
+}
+
 export interface EncryptDecryptRequest {
   data?: string | null;
   key?: string | null;

@@ -16,7 +16,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
         }
 
         [HttpPost("encrypt")]
-        public IActionResult Encrypt([FromBody] EncryptDecryptRequest request)
+        public ActionResult<ApiResponse> Encrypt([FromBody] EncryptDecryptRequest request)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
         }
 
         [HttpPost("decrypt")]
-        public IActionResult Decrypt([FromBody] EncryptDecryptRequest request)
+        public ActionResult<ApiResponse> Decrypt([FromBody] EncryptDecryptRequest request)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
         }
 
         [HttpGet("hash")]
-        public IActionResult Hash(string data)
+        public ActionResult<ApiResponse> Hash(string data)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
         }
 
         [HttpGet("keys")]
-        public IActionResult GetKeyOptions(int amount = 5)
+        public ActionResult<ApiResponse> GetKeyOptions(int amount = 5)
         {
             try
             {

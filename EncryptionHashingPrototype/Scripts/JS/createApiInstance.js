@@ -130,41 +130,41 @@ export type ${toQueryName(m)} =
        Paginated Query Methods
        ======================= */
 
-    const paginatedMethodOverloads = paginatedMethods
-      .map((m) =>
-        `
-export async function ${m}(
-  filters: FilterFormValues<${toQueryName(m)}>[] = [],
-  page = 1,
-  pageSize = 100,
-  sortBy: SortableKeys<ExtractResponse<ReturnType<${className}["${m}"]>>> | null = null,
-  descending?: boolean,
-  toastOptions?: ToastOptions,
-): Promise<ApiResult<ExtractResponse<ReturnType<${className}["${m}"]>>>> {
-  return handleApiResponse(
-    () =>
-      ${instanceName}.${m}(
-        buildQuery<
-          ${toQueryName(m)},
-          UnwrapArray<
-            ExtractDataIfPaginated<
-              ExtractResponse<ReturnType<${className}["${m}"]>>
-            >
-          >
-        >(filters, page, pageSize, sortBy, descending),
-      ),
-    toastOptions,
-  );
-}
-`.trim(),
-      )
-      .join("\n\n");
+//     const paginatedMethodOverloads = paginatedMethods
+//       .map((m) =>
+//         `
+// export async function ${m}(
+//   filters: FilterFormValues<${toQueryName(m)}>[] = [],
+//   page = 1,
+//   pageSize = 100,
+//   sortBy: SortableKeys<ExtractResponse<ReturnType<${className}["${m}"]>>> | null = null,
+//   descending?: boolean,
+//   toastOptions?: ToastOptions,
+// ): Promise<ApiResult<ExtractResponse<ReturnType<${className}["${m}"]>>>> {
+//   return handleApiResponse(
+//     () =>
+//       ${instanceName}.${m}(
+//         buildQuery<
+//           ${toQueryName(m)},
+//           UnwrapArray<
+//             ExtractDataIfPaginated<
+//               ExtractResponse<ReturnType<${className}["${m}"]>>
+//             >
+//           >
+//         >(filters, page, pageSize, sortBy, descending),
+//       ),
+//     toastOptions,
+//   );
+// }
+// `.trim(),
+//       )
+//       .join("\n\n");
 
     /* =======================
        Simple Query Methods
        ======================= */
 
-    const simpleQueryMethodOverloads = simpleQueryMethods
+    const simpleQueryMethodOverloads = simpleQueryMethods.concat(paginatedMethods)
       .map((m) =>
         `
 export async function ${m}(
@@ -216,11 +216,6 @@ ${types}
    API Instance
    ======================= */
 const ${instanceName} = new ${className}();
-
-/* =======================
-   Paginated Query Methods
-   ======================= */
-${paginatedMethodOverloads}
 
 /* =======================
    Simple Query Methods
