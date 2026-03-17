@@ -35,7 +35,7 @@ export default function CardGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-5xl">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-5xl mx-auto">
       {cards.map((card) => (<InfoCard {...card} />))}
     </div>
   );
