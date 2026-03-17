@@ -21,13 +21,10 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
-   * @name EncryptionEncryptCreate
+   * @name EncryptData
    * @request POST:/api/Encryption/encrypt
    */
-  encryptionEncryptCreate = (
-    data: EncryptDecryptRequest,
-    params: RequestParams = {},
-  ) =>
+  encryptData = (data: EncryptDecryptRequest, params: RequestParams = {}) =>
     this.request<ApiResponse, any>({
       path: `/api/Encryption/encrypt`,
       method: "POST",
@@ -40,13 +37,10 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
-   * @name EncryptionDecryptCreate
+   * @name DecryptData
    * @request POST:/api/Encryption/decrypt
    */
-  encryptionDecryptCreate = (
-    data: EncryptDecryptRequest,
-    params: RequestParams = {},
-  ) =>
+  decryptData = (data: EncryptDecryptRequest, params: RequestParams = {}) =>
     this.request<ApiResponse, any>({
       path: `/api/Encryption/decrypt`,
       method: "POST",
@@ -59,10 +53,10 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
-   * @name EncryptionHashList
+   * @name HashData
    * @request GET:/api/Encryption/hash
    */
-  encryptionHashList = (
+  hashData = (
     query?: {
       data?: string;
     },
@@ -79,10 +73,10 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
-   * @name EncryptionKeysList
+   * @name GetKeyOptions
    * @request GET:/api/Encryption/keys
    */
-  encryptionKeysList = (
+  getKeyOptions = (
     query?: {
       /**
        * @format int32

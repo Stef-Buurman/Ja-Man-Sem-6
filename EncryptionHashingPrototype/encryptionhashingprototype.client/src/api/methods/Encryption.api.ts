@@ -12,12 +12,10 @@ import { extractArgsToastsAndParams } from "../../utils/ExtractArgsToastsAndPara
 /* =======================
    Query Types
    ======================= */
-export type EncryptionHashListQuery = NonNullable<
-  Parameters<Encryption["encryptionHashList"]>[0]
->;
+export type HashDataQuery = NonNullable<Parameters<Encryption["hashData"]>[0]>;
 
-export type EncryptionKeysListQuery = NonNullable<
-  Parameters<Encryption["encryptionKeysList"]>[0]
+export type GetKeyOptionsQuery = NonNullable<
+  Parameters<Encryption["getKeyOptions"]>[0]
 >;
 
 /* =======================
@@ -28,26 +26,21 @@ const encryptionApi = new Encryption();
 /* =======================
    Simple Query Methods
    ======================= */
-export async function encryptionHashList(
-  query?: EncryptionHashListQuery,
+export async function hashData(
+  query?: HashDataQuery,
   toastOptions?: ToastOptions,
-): Promise<
-  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionHashList"]>>>
-> {
-  return handleApiResponse(
-    () => encryptionApi.encryptionHashList(query),
-    toastOptions,
-  );
+): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["hashData"]>>>> {
+  return handleApiResponse(() => encryptionApi.hashData(query), toastOptions);
 }
 
-export async function encryptionKeysList(
-  query?: EncryptionKeysListQuery,
+export async function getKeyOptions(
+  query?: GetKeyOptionsQuery,
   toastOptions?: ToastOptions,
 ): Promise<
-  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionKeysList"]>>>
+  ApiResult<ExtractResponse<ReturnType<Encryption["getKeyOptions"]>>>
 > {
   return handleApiResponse(
-    () => encryptionApi.encryptionKeysList(query),
+    () => encryptionApi.getKeyOptions(query),
     toastOptions,
   );
 }
@@ -55,36 +48,32 @@ export async function encryptionKeysList(
 /* =======================
    Non-Query Methods
    ======================= */
-export async function encryptionEncryptCreate(
+export async function encryptData(
   ...argsWithToast: [
-    ...WithoutRequestParams<Parameters<Encryption["encryptionEncryptCreate"]>>,
+    ...WithoutRequestParams<Parameters<Encryption["encryptData"]>>,
     ToastOptions?,
     RequestParams?,
   ]
-): Promise<
-  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionEncryptCreate"]>>>
-> {
+): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["encryptData"]>>>> {
   const { args, toastOptions, params } =
     extractArgsToastsAndParams(argsWithToast);
   return handleApiResponse(
-    () => encryptionApi.encryptionEncryptCreate(...args, params),
+    () => encryptionApi.encryptData(...args, params),
     toastOptions,
   );
 }
 
-export async function encryptionDecryptCreate(
+export async function decryptData(
   ...argsWithToast: [
-    ...WithoutRequestParams<Parameters<Encryption["encryptionDecryptCreate"]>>,
+    ...WithoutRequestParams<Parameters<Encryption["decryptData"]>>,
     ToastOptions?,
     RequestParams?,
   ]
-): Promise<
-  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionDecryptCreate"]>>>
-> {
+): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["decryptData"]>>>> {
   const { args, toastOptions, params } =
     extractArgsToastsAndParams(argsWithToast);
   return handleApiResponse(
-    () => encryptionApi.encryptionDecryptCreate(...args, params),
+    () => encryptionApi.decryptData(...args, params),
     toastOptions,
   );
 }

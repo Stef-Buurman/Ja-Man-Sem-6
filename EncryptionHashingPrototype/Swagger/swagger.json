@@ -10,6 +10,7 @@
         "tags": [
           "Encryption"
         ],
+        "operationId": "EncryptData",
         "requestBody": {
           "content": {
             "application/json": {
@@ -58,6 +59,7 @@
         "tags": [
           "Encryption"
         ],
+        "operationId": "DecryptData",
         "requestBody": {
           "content": {
             "application/json": {
@@ -106,6 +108,7 @@
         "tags": [
           "Encryption"
         ],
+        "operationId": "HashData",
         "parameters": [
           {
             "name": "data",
@@ -144,6 +147,7 @@
         "tags": [
           "Encryption"
         ],
+        "operationId": "GetKeyOptions",
         "parameters": [
           {
             "name": "amount",
@@ -212,6 +216,10 @@
   "components": {
     "schemas": {
       "ApiResponse": {
+        "required": [
+          "message",
+          "success"
+        ],
         "type": "object",
         "properties": {
           "success": {
@@ -228,6 +236,10 @@
         "additionalProperties": false
       },
       "EncryptDecryptRequest": {
+        "required": [
+          "data",
+          "key"
+        ],
         "type": "object",
         "properties": {
           "data": {

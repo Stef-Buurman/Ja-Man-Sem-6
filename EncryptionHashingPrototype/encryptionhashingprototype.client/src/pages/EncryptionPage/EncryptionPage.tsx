@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./EncryptionPage.css";
-import { encryptionDecryptCreate, encryptionEncryptCreate, encryptionHashList, encryptionKeysList, encryptionPublicKeyList } from "../../api/methods/Encryption.api";
-import { globalToastRef } from "../../components/toast-manager/toast-context";
-import { importPublicKey, secureFetch } from "../../utils/generateKey";
+import { encryptionPublicKeyList, encryptData, decryptData, hashData, getKeyOptions } from "../../api/methods/Encryption.api";
+import { importPublicKey, secureFetch } from "../../utils/GenerateKey";
+import { toast } from "../../components/toast-manager/toast-context";
 
 export default function EncryptionPage() {
   const [data, setData] = useState("");
@@ -31,51 +31,80 @@ export default function EncryptionPage() {
 
   const encrypt = async () => {
     try {
-      const response = await encryptionEncryptCreate({ data, key });
+      const response = await encryptData(
+        { data, key },
+        {
+          toastSuccess: {
+            message: "Data encrypted successfully",
+            title: "Encryption Successful",
+          },
+        },
+      );
       if (response.ok) {
         setResult(response.response.data || "");
       }
-    } catch { }
+    } catch {}
   };
 
   const decrypt = async () => {
     try {
-      const result = await encryptionDecryptCreate({ data, key });
+      const result = await decryptData(
+        { data, key },
+        {
+          toastSuccess: {
+            message: "Data decrypted successfully",
+            title: "Decryption Successful",
+          },
+        },
+      );
       if (result.ok) {
         setResult(result.response.data || "");
       }
-    } catch { }
+    } catch {}
   };
 
   const hash = async () => {
     try {
-      const response = await encryptionHashList({ data });
+      const response = await hashData(
+        { data },
+        {
+          toastSuccess: {
+            message: "Data hashed successfully",
+            title: "Hashing Successful",
+          },
+        },
+      );
       if (response.ok) {
         setResult(response.response.data || "");
       }
-    } catch { }
+    } catch {}
   };
 
   const generateKeys = async () => {
     try {
-      const result = await encryptionKeysList();
+      const result = await getKeyOptions(undefined, {
+        toastSuccess: {
+          message: "Keys generated successfully",
+          title: "Key Generation Successful",
+        },
+      });
       if (result.ok) {
         setKeys(result.response.data || []);
       }
-    } catch { }
+    } catch {}
   };
 
   const copyResult = async () => {
     if (!result) {
-      globalToastRef.current?.showToastError("No result to copy", "Copy Failed");
+      
       return;
     }
 
     try {
       await navigator.clipboard.writeText(result);
-      globalToastRef.current?.showToastSuccess("Result copied to clipboard", "Copy Successful");
+      toast.success("Result copied to clipboard", "Copy Successful");
     } catch (err) {
-      globalToastRef.current?.showToastError("Failed to copy result", "Copy Failed");
+      toast.error("Failed to copy result", "Copy Failed");
     }
   };
 
@@ -107,16 +136,10 @@ export default function EncryptionPage() {
         <button className="btn" onClick={generateKeys}>
           Generate Keys
         </button>
-        <button
-          className="btn btn-encrypt"
-          onClick={encrypt}
-        >
+        <button className="btn btn-encrypt" onClick={encrypt}>
           Encrypt
         </button>
-        <button
-          className="btn btn-decrypt"
-          onClick={decrypt}
-        >
+        <button className="btn btn-decrypt" onClick={decrypt}>
           Decrypt
         </button>
         <button className="btn btn-hash" onClick={hash}>

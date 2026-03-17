@@ -19,9 +19,18 @@ File.WriteAllText("public.pem", publicKey);
 builder.Services.AddControllers();
 builder.Services.AddSingleton<EncryptionService>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.TagActionsBy(api =>
+        new[] { api.GroupName ?? api.ActionDescriptor.RouteValues["controller"] }
+    );
+    options.CustomOperationIds(apiDesc =>
+        apiDesc.ActionDescriptor.RouteValues["action"]
+    );
+    options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
+});
 
 var app = builder.Build();
 

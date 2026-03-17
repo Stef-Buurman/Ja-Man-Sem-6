@@ -1,6 +1,6 @@
 import type { HttpResponse } from "../api/http-client";
 import type { ToastOptions } from "../api/methods/Types";
-import { globalToastRef } from "../components/toast-manager/toast-context";
+import { toast } from "../components/toast-manager/toast-context";
 import type { ApiResult } from "../interfaces/responses/ApiResult";
 
 export async function handleApiResponse<T>(
@@ -16,20 +16,13 @@ export async function handleApiResponse<T>(
     const toastSuccess = toastOptions?.toastSuccess;
     const toastError = toastOptions?.toastError;
 
-    console.log("Showing success toast:", globalToastRef.current);
-    if (isOk && toastSuccess && globalToastRef.current) {
-      globalToastRef.current.showToastSuccess(
-        toastSuccess.message,
-        toastSuccess.title,
-      );
+    if (isOk && toastSuccess) {
+      toast.success(toastSuccess.message, toastSuccess.title);
     } else if (!isOk) {
-      if (toastError && globalToastRef.current) {
-        globalToastRef.current.showToastError(
-          toastError.message,
-          toastError.title,
-        );
+      if (toastError) {
+        toast.error(toastError.message, toastError.title);
       } else {
-        globalToastRef.current?.showToastErrorResponse(response);
+        toast.errorResponse(response);
       }
     }
 
@@ -52,7 +45,7 @@ export async function handleApiResponse<T>(
       };
     }
   } catch (error) {
-    globalToastRef.current?.showToastErrorResponse(error as any);
+    toast.errorResponse(error as any);
     return {
       ok: false,
       status: response?.status ?? 0,
