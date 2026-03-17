@@ -1,7 +1,7 @@
-import InfoCard, { InfoCardProps } from "./InfoCard";
+import PactAnalyseCard, { PactAnalyseCardProps } from "./PactAnalyseCard";
 
-export default function CardGrid() {
-  const cards: InfoCardProps[] = [
+export default function PactAnalyseCardGrid() {
+  const cards: PactAnalyseCardProps[] = [
     {
       key: "card1",
       variant: "blue",
@@ -48,7 +48,7 @@ export default function CardGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-5xl mx-auto">
       {cards.map(({ key, ...card }) => (
-        <InfoCard key={key} {...card} />
+        <PactAnalyseCard key={key} {...card} />
       ))}
     </div>
   );

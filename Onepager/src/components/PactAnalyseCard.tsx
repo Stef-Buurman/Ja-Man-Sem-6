@@ -1,7 +1,7 @@
 import logo_white from "../assets/logo/jaman_white.svg";
 import logo_brown from "../assets/logo/jaman_brown.svg";
 
-export interface InfoCardProps {
+export interface PactAnalyseCardProps {
   key: string;
   title: string;
   content: string;
@@ -10,35 +10,35 @@ export interface InfoCardProps {
   variant: "blue" | "dark" | "brown" | "red";
 }
 
-export default function InfoCard({
+export default function PactAnalyseCard({
   title,
   content,
   quote,
   literature,
   variant = "blue",
-}: InfoCardProps) {
-  const variantStyles: Record<InfoCardProps["variant"], string> = {
+}: PactAnalyseCardProps) {
+  const variantStyles: Record<PactAnalyseCardProps["variant"], string> = {
     blue: "bg-blue-200 text-gray-800",
     dark: "bg-[#3b2626] text-white",
     brown: "bg-[#4b2e2e] text-white",
     red: "bg-orange-500 text-white",
   };
 
-  const variantLabels: Record<InfoCardProps["variant"], string> = {
+  const variantLabels: Record<PactAnalyseCardProps["variant"], string> = {
     blue: "✨ Activities",
     dark: "👥 People",
     brown: "🧠 Technologies",
     red: "🌍 Context",
   };
 
-  const variantLabelStyling: Record<InfoCardProps["variant"], string> = {
+  const variantLabelStyling: Record<PactAnalyseCardProps["variant"], string> = {
     dark: "bg-blue-200 text-gray-800",
     brown: "bg-orange-500 text-white",
     red: "bg-[#4b2e2e] text-white",
     blue: "bg-[#4b2e2e] text-white",
   };
 
-  const variantLogos: Record<InfoCardProps["variant"], string> = {
+  const variantLogos: Record<PactAnalyseCardProps["variant"], string> = {
     blue: logo_brown,
     dark: logo_white,
     brown: logo_white,

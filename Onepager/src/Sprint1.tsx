@@ -1,5 +1,5 @@
 import deliveryHumanImg from "./assets/images/delivery_human.png";
-import CardGrid from "./components/CardGrid";
+import PactAnalyseCardGrid from "./components/CardGrid";
 import logo_white from "./assets/logo/jaman_white.svg";
 
 function Sprint1() {
@@ -30,7 +30,7 @@ function Sprint1() {
             <li>Sociale communicatie met robots.</li>
           </ul>
         </div>
-        <CardGrid />
+        <PactAnalyseCardGrid />
       </section>
 
       <section
