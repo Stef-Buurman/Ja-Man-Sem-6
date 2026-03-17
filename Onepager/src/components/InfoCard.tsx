@@ -66,7 +66,9 @@ export default function InfoCard({
 
         {/* Quote */}
         {quote && (
-          <p className="text-xs italic border-t border-white/30 pt-3">{quote}</p>
+          <p className="text-xs italic border-t border-white/30 pt-3">
+            {quote}
+          </p>
         )}
       </div>
 

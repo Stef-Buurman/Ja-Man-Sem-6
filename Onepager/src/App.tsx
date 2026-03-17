@@ -3,37 +3,38 @@ import Sprint0 from "./Sprint0.jsx";
 import Team1 from "./Team.jsx";
 import Sprint1 from "./Sprint1.jsx";
 import Nav from "./Nav.js";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-    return (
-        <>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <div id="top"></div>
-                            <Nav />
-                        </>
-                    }
-                >
-                    <Route
-                        index
-                        element={<>
-                            <Header />
-                            <main className="relative z-10 mt-[100vh]">
-                                <Team1 />
-                                <Sprint0 />
-                                <Sprint1 />
-                            </main>
-                        </>
-                        }
-                    />
-                </Route>
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div id="top"></div>
+              <Nav />
+            </>
+          }
+        >
+          <Route
+            index
+            element={
+              <>
+                <Header />
+                <main className="relative z-10 mt-[100vh]">
+                  <Team1 />
+                  <Sprint0 />
+                  <Sprint1 />
+                </main>
+              </>
+            }
+          />
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;
