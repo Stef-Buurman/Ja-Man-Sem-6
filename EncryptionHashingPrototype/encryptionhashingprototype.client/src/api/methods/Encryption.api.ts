@@ -88,3 +88,20 @@ export async function encryptionDecryptCreate(
     toastOptions,
   );
 }
+
+export async function encryptionPublicKeyList(
+  ...argsWithToast: [
+    ...WithoutRequestParams<Parameters<Encryption["encryptionPublicKeyList"]>>,
+    ToastOptions?,
+    RequestParams?,
+  ]
+): Promise<
+  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionPublicKeyList"]>>>
+> {
+  const { args, toastOptions, params } =
+    extractArgsToastsAndParams(argsWithToast);
+  return handleApiResponse(
+    () => encryptionApi.encryptionPublicKeyList(...args, params),
+    toastOptions,
+  );
+}

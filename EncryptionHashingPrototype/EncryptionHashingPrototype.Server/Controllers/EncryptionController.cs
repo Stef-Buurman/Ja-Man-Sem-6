@@ -114,6 +114,13 @@ namespace EncryptionHashingPrototype.Server.Controllers
                 });
             }
         }
+
+        [HttpGet("public-key")]
+        public ActionResult<string> GetPublicKey()
+        {
+            var publicKey = System.IO.File.ReadAllText("public.pem");
+            return Ok(publicKey);
+        }
     }
 
     // Standard API response model

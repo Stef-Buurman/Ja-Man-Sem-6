@@ -99,4 +99,18 @@ export class Encryption<
       format: "json",
       ...params,
     });
+  /**
+   * No description
+   *
+   * @tags Encryption
+   * @name EncryptionPublicKeyList
+   * @request GET:/api/Encryption/public-key
+   */
+  encryptionPublicKeyList = (params: RequestParams = {}) =>
+    this.request<string, any>({
+      path: `/api/Encryption/public-key`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
 }

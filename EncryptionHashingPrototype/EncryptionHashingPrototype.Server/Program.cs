@@ -1,6 +1,18 @@
 using EncryptionHashingPrototype.Server.Services;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var rsa = RSA.Create(2048);
+
+// Export keys
+string privateKey = rsa.ExportRSAPrivateKeyPem();
+string publicKey = rsa.ExportSubjectPublicKeyInfoPem();
+
+// Save them (or store securely)
+File.WriteAllText("private.pem", privateKey);
+File.WriteAllText("public.pem", publicKey);
 
 // Add services to the container.
 

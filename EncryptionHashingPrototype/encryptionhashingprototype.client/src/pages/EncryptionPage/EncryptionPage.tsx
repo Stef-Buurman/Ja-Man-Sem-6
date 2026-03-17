@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./EncryptionPage.css";
-import { encryptionDecryptCreate, encryptionEncryptCreate, encryptionHashList, encryptionKeysList } from "../../api/methods/Encryption.api";
+import { encryptionDecryptCreate, encryptionEncryptCreate, encryptionHashList, encryptionKeysList, encryptionPublicKeyList } from "../../api/methods/Encryption.api";
 import { globalToastRef } from "../../components/toast-manager/toast-context";
+import { importPublicKey, secureFetch } from "../../utils/generateKey";
 
 export default function EncryptionPage() {
   const [data, setData] = useState("");
   const [key, setKey] = useState("");
   const [result, setResult] = useState("");
   const [keys, setKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    testEncryption();
+  }, []);
+
+  const testEncryption = async () => {
+    var res = await encryptionPublicKeyList();
+    if (res.ok) {
+      const publicKey = await importPublicKey(res.response);
+
+      const result = await secureFetch(
+        "/api/Encryption/encrypt",
+        { message: "hello" },
+        publicKey
+      );
+      console.log("Encrypted response:", result);
+    }
+  }
 
   const encrypt = async () => {
     try {
