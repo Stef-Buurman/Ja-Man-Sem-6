@@ -1,7 +1,8 @@
+import { Outlet } from "react-router";
 import logo_brown from "./assets/logo/jaman_brown.svg";
 import { useState } from "react";
 
-const scrollToTop = (e) => {
+const scrollToTop = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     window.scrollTo({
@@ -15,6 +16,7 @@ function Nav() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
+        <>
         <nav className="w-full bg-[#fdf1e3] flex items-center justify-between px-6 py-4 fixed top-0 left-0 z-20">
 
             {/* Logo */}
@@ -57,6 +59,8 @@ function Nav() {
             )}
 
         </nav>
+        <Outlet />
+        </>
     );
 }
 

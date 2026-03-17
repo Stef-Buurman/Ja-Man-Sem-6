@@ -1,4 +1,5 @@
 import deliveryHumanImg from "./assets/images/delivery_human.png";
+import CardGrid from "./components/CardGrid";
 
 function Sprint1() {
     return (
@@ -6,7 +7,8 @@ function Sprint1() {
 
             {/* HUIDIGE SITUATIE */}
             <section className="pb-40 pt-24 bg-[#fdf1e3] justify-center flex h-[100vh]">
-             <h1 id="sprint1">SPRINT 1</h1>
+                <h1 id="sprint1">SPRINT 1</h1>
+                <CardGrid />
             </section>
         </section>
     );
