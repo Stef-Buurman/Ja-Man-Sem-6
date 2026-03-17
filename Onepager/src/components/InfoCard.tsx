@@ -2,6 +2,7 @@ import logo_white from "../assets/logo/jaman_white.svg";
 import logo_brown from "../assets/logo/jaman_brown.svg";
 
 export interface InfoCardProps {
+  key: string;
   title: string;
   content: string;
   quote?: string;

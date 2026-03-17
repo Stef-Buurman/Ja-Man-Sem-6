@@ -1,5 +1,6 @@
 import deliveryHumanImg from "./assets/images/delivery_human.png";
 import CardGrid from "./components/CardGrid";
+import logo_white from "./assets/logo/jaman_white.svg";
 
 function Sprint1() {
   return (
@@ -36,8 +37,8 @@ function Sprint1() {
         id="ontwerpvraag-verandering"
         className="py-16 bg-[#342626] z-20 md:sticky md:top-48"
       >
-        <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#fdf1e3]">
-          <div className="max-w-6xl mx-auto px-6 py-16">
+        <div className="max-w-6xl mx-auto px-6 space-y-6 sm:space-y-10 text-[#fdf1e3]">
+          <div className="max-w-5xl mx-auto px-6 py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* LEFT SIDE - EXPLANATION */}
               <div>
@@ -70,7 +71,7 @@ function Sprint1() {
               </div>
 
               {/* RIGHT SIDE - BEFORE / AFTER */}
-              <div className="space-y-10 text-[#fdf1e3]">
+              <div className="space-y-10 text-[#fdf1e3] text-center">
                 {/* BEFORE */}
                 <div className="border border-[#fdf1e3]/20 rounded-2xl p-6 shadow-sm">
                   <h3 className="text-sm uppercase tracking-widest opacity-60 mb-4">
@@ -107,6 +108,53 @@ function Sprint1() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="field-research"
+        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-15"
+      >
+        <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
+          <h2 className="text-3xl sm:text-4xl font-bold">Field research</h2>
+
+          <p>
+            Wij hebben fieldresearch gedaan om aan bezoekers van het Wijnhaven
+            107 t/m 99. Hierin hebben wij een korte vragenlijst opgesteld waarin
+            wij duidelijk wilde hebben welke problemen de studenten of docenten
+            ervaren in dit gebouw. Wat ronduit het vaakst benoemd werd is dat de
+            lokalen lastig te vinden zijn, onder andere omdat op sommige
+            verdiepingen je niet van de ene naar de andere kant van het gebouw
+            kan lopen. Daarnaast werd ook het inzien welke lokalen bezet zijn,
+            zodat studenten weten waar ze kunnen kijken voor een rustige
+            studeerplek. De volgende punten werden hiernaast ook nog vaak
+            benoemd als ervaringen met het gebouw en mogelijke verbeterpunten:
+          </p>
+
+          <ul className="space-y-3 sm:space-y-5 text-base sm:text-lg max-w-3xl mx-auto text-left list-disc pl-6 leading-relaxed">
+            <li>De lift loopt vaak vast of is erg traag.</li>
+            <li>Weinig rustige werkplekken waar je ongestoord kan studeren.</li>
+            <li>
+              Stopcontacten doen het op de 4e verdieping al een tijd niet.
+            </li>
+            <li>
+              Om tafeltennis badjes te krijgen moet je naar de receptie gaan om
+              deze daar te lenen.
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section
+        id="logo"
+        className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center"
+      >
+        <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
+          <div className="flex flex-col justify-center items-center text-center">
+            <img
+              src={logo_white}
+              alt="JaMan logo"
+              className="w-40 sm:w-56 md:w-64 mb-6"
+            />
           </div>
         </div>
       </section>

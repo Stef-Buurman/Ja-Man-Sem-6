@@ -3,6 +3,7 @@ import InfoCard, { InfoCardProps } from "./InfoCard";
 export default function CardGrid() {
   const cards: InfoCardProps[] = [
     {
+      key: "card1",
       variant: "blue",
       title: "Emoties tonen door robots",
       content:
@@ -12,6 +13,7 @@ export default function CardGrid() {
         "Enhancing human understanding of a mobile robot’s state and actions using expressive lights. (20161 augustus). IEEE Conference Publication | IEEE Xplore. https://ieeexplore.ieee.org/document/7745187",
     },
     {
+      key: "card2",
       variant: "dark",
       title: "Sociale signalen maken robotinteractie menselijker",
       content:
@@ -21,6 +23,7 @@ export default function CardGrid() {
         "Goodrich, M. A., & Schultz, A. C. (2007, pp. 209–210). Human–robot interaction: A survey. Foundations and Trends in Human–Computer Interaction.",
     },
     {
+      key: "card3",
       variant: "brown",
       title: "AI voor verbale communicatie",
       content:
@@ -30,6 +33,7 @@ export default function CardGrid() {
         "Universiteit van Amsterdam. (2025, March 9). Praten met robots: hoe machines onze communicatie veranderen. Universiteit Van Amsterdam. https://www.uva.nl/shared-content/faculteiten/nl/faculteit-der-maatschappij-en-gedragswetenschappen/nieuws/2025/03/praten-met-robots-hoe-machines-onze-communicatie-veranderen.html",
     },
     {
+      key: "card4",
       variant: "red",
       title: "Vandalisme is vaak een vorm van protest",
       content: `Het komt vaak voort uit onvrede, angst voor baanverlies door automatisering, of wrok tegen grote, winstgedreven bedrijven. De robot functioneert hierbij als een zondebok.
@@ -43,8 +47,8 @@ export default function CardGrid() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-5xl mx-auto">
-      {cards.map((card) => (
-        <InfoCard {...card} />
+      {cards.map(({ key, ...card }) => (
+        <InfoCard key={key} {...card} />
       ))}
     </div>
   );
