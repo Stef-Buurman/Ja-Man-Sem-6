@@ -114,7 +114,7 @@ function Sprint1() {
       </section>
       <section
         id="field-research"
-        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-12"
+        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-12 pb-70"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <h2 className="text-3xl sm:text-4xl font-bold">Field research</h2>
@@ -151,13 +151,13 @@ function Sprint1() {
         className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
-          {/* <div className="flex flex-col justify-center items-center text-center">
+          <div className="flex flex-col justify-center items-center text-center">
             <img
               src={logo_white}
               alt="JaMan logo"
               className="w-40 sm:w-56 md:w-64 mb-6"
             />
-          </div> */}
+          </div>
         </div>
       </section>
     </section>

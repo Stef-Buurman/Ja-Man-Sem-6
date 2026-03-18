@@ -22,12 +22,13 @@ export default function FieldResearchCard({
     red: "bg-orange-500 text-white",
   };
 
-  const variantLabelStyling: Record<FieldResearchCardProps["variant"], string> = {
-    dark: "bg-blue-200 text-gray-800",
-    brown: "bg-orange-500 text-white",
-    red: "bg-[#4b2e2e] text-white",
-    blue: "bg-[#4b2e2e] text-white",
-  };
+  const variantLabelStyling: Record<FieldResearchCardProps["variant"], string> =
+    {
+      dark: "bg-blue-200 text-gray-800",
+      brown: "bg-orange-500 text-white",
+      red: "bg-[#4b2e2e] text-white",
+      blue: "bg-[#4b2e2e] text-white",
+    };
 
   const variantLogos: Record<FieldResearchCardProps["variant"], string> = {
     blue: logo_brown,
@@ -58,13 +59,13 @@ export default function FieldResearchCard({
       </div>
 
       {/* Bottom section with literature and logo */}
-        <div className="mt-2 pt-3 flex justify-between items-center">
-          <img
-            src={variantLogos[variant]}
-            alt={label}
-            className="w-8 h-6 object-contain opacity-80"
-          />
-        </div>
+      <div className="mt-2 pt-3 flex justify-end">
+        <img
+          src={variantLogos[variant]}
+          alt={label}
+          className="w-8 h-6 object-contain opacity-80"
+        />
+      </div>
     </div>
   );
 }
