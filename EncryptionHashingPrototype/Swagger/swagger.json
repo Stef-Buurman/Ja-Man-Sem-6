@@ -188,6 +188,7 @@
         "tags": [
           "Encryption"
         ],
+        "operationId": "GetPublicKey",
         "responses": {
           "200": {
             "description": "OK",

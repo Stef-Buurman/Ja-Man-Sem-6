@@ -22,5 +22,9 @@
     "generate:api": "node Scripts/Node/swagger.mjs && npm run generate:api-minimal && npm run stop",
     "generate:api-minimal": "npm run generate:ts-api && npm run create:api-instance",
     "prettier": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
   }
 }
