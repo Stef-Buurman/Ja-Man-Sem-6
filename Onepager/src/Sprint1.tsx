@@ -35,10 +35,10 @@ function Sprint1() {
 
       <section
         id="ontwerpvraag-verandering"
-        className="py-16 bg-[#342626] z-20 md:sticky md:top-48"
+        className="py-2 bg-[#342626] z-20 md:sticky md:top-15"
       >
-        <div className="max-w-6xl mx-auto px-6 space-y-6 sm:space-y-10 text-[#fdf1e3]">
-          <div className="max-w-5xl mx-auto px-6 py-16">
+        <div className="max-w-6xl mx-auto px-4 space-y-6 sm:space-y-10 text-[#fdf1e3]">
+          <div className="max-w-5xl mx-auto px-4 py-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               {/* LEFT SIDE - EXPLANATION */}
               <div>
@@ -113,7 +113,7 @@ function Sprint1() {
       </section>
       <section
         id="field-research"
-        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-15"
+        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-12"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <h2 className="text-3xl sm:text-4xl font-bold">Field research</h2>
