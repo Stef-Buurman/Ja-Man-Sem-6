@@ -27,7 +27,6 @@ export default function EncryptionPage() {
         toast.error("Failed to obtain JWT", "Authentication Failed");
       }
     });
-
   }, []);
 
   const encrypt = async () => {
@@ -57,6 +56,11 @@ export default function EncryptionPage() {
             title: "Decryption Successful",
           },
         },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        },
       );
       if (result.ok) {
         setResult(result.response.data || "");
@@ -78,7 +82,7 @@ export default function EncryptionPage() {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
-        }
+        },
       );
       if (response.ok) {
         setResult(response.response.data || "");
