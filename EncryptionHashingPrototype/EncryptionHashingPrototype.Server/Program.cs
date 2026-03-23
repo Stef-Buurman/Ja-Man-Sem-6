@@ -1,29 +1,15 @@
 using EncryptionHashingPrototype.Server.Services;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-var rsa = RSA.Create(2048);
-
-// Export keys
-string privateKey = rsa.ExportRSAPrivateKeyPem();
-string publicKey = rsa.ExportSubjectPublicKeyInfoPem();
-
-// Save them (or store securely)
-File.WriteAllText("private.pem", privateKey);
-File.WriteAllText("public.pem", publicKey);
-
-// Add services to the container.
-
+// Add services
 builder.Services.AddControllers();
 builder.Services.AddSingleton<EncryptionService>();
 builder.Services.AddEndpointsApiExplorer();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {
     options.TagActionsBy(api =>
@@ -35,7 +21,9 @@ builder.Services.AddSwaggerGen(options =>
     options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
 });
 
-var key = "SUPER_SECRET_KEY_12345";
+// JWT configuration
+var jwtKey = "your_super_secret_key_here_very_long"; // use env var in production
+var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -46,31 +34,42 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+            ClockSkew = TimeSpan.FromSeconds(30)
         };
     });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:58895")
+              .AllowCredentials()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Middleware
+app.UseCors("AllowFrontend");
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
-
 app.MapFallbackToFile("/index.html");
 
 app.Run();

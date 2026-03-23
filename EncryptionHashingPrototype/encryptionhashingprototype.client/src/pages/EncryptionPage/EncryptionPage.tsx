@@ -1,33 +1,34 @@
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./EncryptionPage.css";
-import { encryptionPublicKeyList, encryptData, decryptData, hashData, getKeyOptions } from "../../api/methods/Encryption.api";
-import { importPublicKey, secureFetch } from "../../utils/GenerateKey";
+import {
+  encryptData,
+  decryptData,
+  hashData,
+  getKeyOptions,
+} from "../../api/methods/Encryption.api";
 import { toast } from "../../components/toast-manager/toast-context";
+import { getJwt } from "../../api/methods/Auth.api";
 
 export default function EncryptionPage() {
   const [data, setData] = useState("");
   const [key, setKey] = useState("");
   const [result, setResult] = useState("");
   const [keys, setKeys] = useState<string[]>([]);
+  const [jwt, setJwt] = useState("");
 
   useEffect(() => {
-    testEncryption();
+    var res = getJwt();
+    res.then((jwtToken) => {
+      if (jwtToken.ok) {
+        setJwt(jwtToken.response.token || "");
+        toast.success("JWT obtained successfully", "Authentication Successful");
+      } else {
+        toast.error("Failed to obtain JWT", "Authentication Failed");
+      }
+    });
+
   }, []);
-
-  const testEncryption = async () => {
-    var res = await encryptionPublicKeyList();
-    if (res.ok) {
-      const publicKey = await importPublicKey(res.response);
-
-      const result = await secureFetch(
-        "/api/Encryption/encrypt",
-        { message: "hello" },
-        publicKey
-      );
-      console.log("Encrypted response:", result);
-    }
-  }
 
   const encrypt = async () => {
     try {
@@ -73,6 +74,11 @@ export default function EncryptionPage() {
             title: "Hashing Successful",
           },
         },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
       );
       if (response.ok) {
         setResult(response.response.data || "");
@@ -96,7 +102,6 @@ export default function EncryptionPage() {
 
   const copyResult = async () => {
     if (!result) {
-      
       return;
     }
 

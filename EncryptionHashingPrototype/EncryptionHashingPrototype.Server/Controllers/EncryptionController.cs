@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using EncryptionHashingPrototype.Server.Models;
 using EncryptionHashingPrototype.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EncryptionHashingPrototype.Server.Controllers
 {
@@ -15,6 +16,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
             _encryptionService = encryptionService;
         }
 
+        // [Authorize]
         [HttpPost("encrypt")]
         public ActionResult<ApiResponse> EncryptData([FromBody] EncryptDecryptRequest request)
         {
@@ -40,6 +42,14 @@ namespace EncryptionHashingPrototype.Server.Controllers
             }
         }
 
+        [HttpGet("protected-data")]
+        [Authorize]
+        public IActionResult GetProtectedData()
+        {
+            return Ok(new { data = "This is protected!" });
+        }
+
+        [Authorize]
         [HttpPost("decrypt")]
         public ActionResult<ApiResponse> DecryptData([FromBody] EncryptDecryptRequest request)
         {
@@ -65,6 +75,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("hash")]
         public ActionResult<ApiResponse> HashData(string data)
         {
@@ -90,6 +101,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
             }
         }
 
+        // [Authorize]
         [HttpGet("keys")]
         public ActionResult<ApiResponse> GetKeyOptions(int amount = 5)
         {
@@ -115,6 +127,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
             }
         }
 
+        // [Authorize]
         [HttpGet("public-key")]
         public ActionResult<string> GetPublicKey()
         {

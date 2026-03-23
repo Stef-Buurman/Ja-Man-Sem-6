@@ -37,6 +37,19 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
+   * @name GetProtectedData
+   * @request GET:/api/Encryption/protected-data
+   */
+  getProtectedData = (params: RequestParams = {}) =>
+    this.request<void, any>({
+      path: `/api/Encryption/protected-data`,
+      method: "GET",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Encryption
    * @name DecryptData
    * @request POST:/api/Encryption/decrypt
    */
@@ -97,10 +110,10 @@ export class Encryption<
    * No description
    *
    * @tags Encryption
-   * @name EncryptionPublicKeyList
+   * @name GetPublicKey
    * @request GET:/api/Encryption/public-key
    */
-  encryptionPublicKeyList = (params: RequestParams = {}) =>
+  getPublicKey = (params: RequestParams = {}) =>
     this.request<string, any>({
       path: `/api/Encryption/public-key`,
       method: "GET",

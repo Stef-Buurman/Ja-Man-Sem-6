@@ -20,3 +20,7 @@ export interface EncryptDecryptRequest {
   data: string | null;
   key: string | null;
 }
+
+export interface GetJwtResponse {
+  token: string | null;
+}

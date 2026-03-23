@@ -29,18 +29,23 @@ const encryptionApi = new Encryption();
 export async function hashData(
   query?: HashDataQuery,
   toastOptions?: ToastOptions,
+  params?: RequestParams,
 ): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["hashData"]>>>> {
-  return handleApiResponse(() => encryptionApi.hashData(query), toastOptions);
+  return handleApiResponse(
+    () => encryptionApi.hashData(query, params),
+    toastOptions,
+  );
 }
 
 export async function getKeyOptions(
   query?: GetKeyOptionsQuery,
   toastOptions?: ToastOptions,
+  params?: RequestParams,
 ): Promise<
   ApiResult<ExtractResponse<ReturnType<Encryption["getKeyOptions"]>>>
 > {
   return handleApiResponse(
-    () => encryptionApi.getKeyOptions(query),
+    () => encryptionApi.getKeyOptions(query, params),
     toastOptions,
   );
 }
@@ -63,6 +68,23 @@ export async function encryptData(
   );
 }
 
+export async function getProtectedData(
+  ...argsWithToast: [
+    ...WithoutRequestParams<Parameters<Encryption["getProtectedData"]>>,
+    ToastOptions?,
+    RequestParams?,
+  ]
+): Promise<
+  ApiResult<ExtractResponse<ReturnType<Encryption["getProtectedData"]>>>
+> {
+  const { args, toastOptions, params } =
+    extractArgsToastsAndParams(argsWithToast);
+  return handleApiResponse(
+    () => encryptionApi.getProtectedData(...args, params),
+    toastOptions,
+  );
+}
+
 export async function decryptData(
   ...argsWithToast: [
     ...WithoutRequestParams<Parameters<Encryption["decryptData"]>>,
@@ -78,19 +100,17 @@ export async function decryptData(
   );
 }
 
-export async function encryptionPublicKeyList(
+export async function getPublicKey(
   ...argsWithToast: [
-    ...WithoutRequestParams<Parameters<Encryption["encryptionPublicKeyList"]>>,
+    ...WithoutRequestParams<Parameters<Encryption["getPublicKey"]>>,
     ToastOptions?,
     RequestParams?,
   ]
-): Promise<
-  ApiResult<ExtractResponse<ReturnType<Encryption["encryptionPublicKeyList"]>>>
-> {
+): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["getPublicKey"]>>>> {
   const { args, toastOptions, params } =
     extractArgsToastsAndParams(argsWithToast);
   return handleApiResponse(
-    () => encryptionApi.encryptionPublicKeyList(...args, params),
+    () => encryptionApi.getPublicKey(...args, params),
     toastOptions,
   );
 }

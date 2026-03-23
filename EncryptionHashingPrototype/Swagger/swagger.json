@@ -5,6 +5,36 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Auth/get-jwt": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "GetJwt",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetJwtResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetJwtResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetJwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Encryption/encrypt": {
       "post": {
         "tags": [
@@ -50,6 +80,19 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Encryption/protected-data": {
+      "get": {
+        "tags": [
+          "Encryption"
+        ],
+        "operationId": "GetProtectedData",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -253,10 +296,26 @@
           }
         },
         "additionalProperties": false
+      },
+      "GetJwtResponse": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       }
     }
   },
   "tags": [
+    {
+      "name": "Auth"
+    },
     {
       "name": "Encryption"
     }

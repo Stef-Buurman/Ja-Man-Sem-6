@@ -170,9 +170,10 @@ export type ${toQueryName(m)} =
 export async function ${m}(
   query?: ${toQueryName(m)},
   toastOptions?: ToastOptions,
+  params?: RequestParams
 ): Promise<ApiResult<ExtractResponse<ReturnType<${className}["${m}"]>>>> {
   return handleApiResponse(
-    () => ${instanceName}.${m}(query),
+    () => ${instanceName}.${m}(query, params),
     toastOptions,
   );
 }
