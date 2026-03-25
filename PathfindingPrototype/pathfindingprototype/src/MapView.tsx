@@ -1,5 +1,6 @@
 import React from "react";
 import { Node, Edge } from "./types";
+import firstFloorImage from "./assets/FirstFloor.png";
 
 interface MapViewProps {
   nodes: Node[];
@@ -42,26 +43,14 @@ export const MapView: React.FC<MapViewProps> = ({
           />
         );
       })}
-
-      {/* Path */}
-      {path && (
-        <polyline
-          points={path
-            .map((id) => {
-              const n = nodes.find(
-                (n) => n.id === id && n.floor === currentFloor,
-              );
-              return n ? `${n.x},${n.y}` : null;
-            })
-            .filter(Boolean)
-            .join(" ")}
-          fill="none"
-          stroke="red"
-          strokeWidth={6}
-          strokeLinecap="round"
-        />
-      )}
-
+      <image
+        href={firstFloorImage}
+        x={0}
+        y={0}
+        width={1200}
+        height={800}
+      opacity={0.3}
+      />
       {/* Nodes */}
       {nodes
         .filter((n) => n.floor === currentFloor && n.type !== "hallway")
@@ -93,7 +82,24 @@ export const MapView: React.FC<MapViewProps> = ({
             />
           );
         })}
-
+      {/* Path */}
+      {path && (
+        <polyline
+          points={path
+            .map((id) => {
+              const n = nodes.find(
+                (n) => n.id === id && n.floor === currentFloor,
+              );
+              return n ? `${n.x},${n.y}` : null;
+            })
+            .filter(Boolean)
+            .join(" ")}
+          fill="none"
+          stroke="red"
+          strokeWidth={6}
+          strokeLinecap="round"
+        />
+      )}
       {/* Room labels */}
       {nodes
         .filter((n) => n.floor === currentFloor && n.type === "room")

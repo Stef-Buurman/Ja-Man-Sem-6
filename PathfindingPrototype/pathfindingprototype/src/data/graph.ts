@@ -15,18 +15,23 @@ export const graph: Graph = {
     { id: 'hall_south', x: 400, y: 550, floor: 0, type: 'hallway', width: 40, height: 150 },
 
     // North wing classrooms
-    { id: 'class101', x: 300, y: 150, floor: 0, type: 'room', width: 80, height: 80 },
-    { id: 'class102', x: 400, y: 130, floor: 0, type: 'room', width: 80, height: 80 },
-    { id: 'class103', x: 500, y: 150, floor: 0, type: 'room', width: 80, height: 80 },
+    // { id: 'class101', x: 300, y: 150, floor: 0, type: 'room', width: 80, height: 80 },
+    // { id: 'class102', x: 400, y: 130, floor: 0, type: 'room', width: 80, height: 80 },
+    // { id: 'class103', x: 500, y: 150, floor: 0, type: 'room', width: 80, height: 80 },
 
     // South wing classrooms
-    { id: 'class104', x: 300, y: 650, floor: 0, type: 'room', width: 80, height: 80 },
-    { id: 'class105', x: 400, y: 650, floor: 0, type: 'room', width: 80, height: 80 },
-    { id: 'class106', x: 500, y: 650, floor: 0, type: 'room', width: 80, height: 80 },
+    { id: 'hall_WN_104', x: 678, y: 540, floor: 0, type: 'hallway', width: 40, height: 150 },
+    { id: 'class104', x: 678, y: 565, floor: 0, type: 'room', width: 100, height: 112 },
+    { id: 'hall_WN_105', x: 778, y: 540, floor: 0, type: 'hallway', width: 40, height: 150 },
+    { id: 'class105', x: 778, y: 565, floor: 0, type: 'room', width: 96, height: 112 },
+    { id: 'hall_WN_106', x: 873, y: 540, floor: 0, type: 'hallway', width: 40, height: 150 },
+    { id: 'class106', x: 873, y: 565, floor: 0, type: 'room', width: 82, height: 112 },
+    { id: 'hall_WN_107', x: 955, y: 540, floor: 0, type: 'hallway', width: 40, height: 150 },
+    { id: 'class107', x: 955, y: 565, floor: 0, type: 'room', width: 96, height: 112 },
 
     // Gym and cafeteria
     { id: 'gym', x: 650, y: 150, floor: 0, type: 'room', width: 120, height: 120 },
-    { id: 'cafeteria', x: 650, y: 650, floor: 0, type: 'room', width: 120, height: 120 },
+    // { id: 'cafeteria', x: 650, y: 650, floor: 0, type: 'room', width: 120, height: 120 },
 
     // Stairs/escalator
     { id: 'stairs0', x: 900, y: 400, floor: 0, type: 'stairs', width: 50, height: 50 },
@@ -34,15 +39,16 @@ export const graph: Graph = {
     // ====================
     // Doors for Ground Floor Rooms
     // ====================
-    { id: 'door_class101', x: 360, y: 210, floor: 0, type: 'door', width: 20, height: 20 },
-    { id: 'door_class102', x: 400, y: 190, floor: 0, type: 'door', width: 20, height: 20 },
-    { id: 'door_class103', x: 500, y: 210, floor: 0, type: 'door', width: 20, height: 20 },
+    // { id: 'door_class101', x: 360, y: 210, floor: 0, type: 'door', width: 20, height: 20 },
+    // { id: 'door_class102', x: 400, y: 190, floor: 0, type: 'door', width: 20, height: 20 },
+    // { id: 'door_class103', x: 500, y: 210, floor: 0, type: 'door', width: 20, height: 20 },
     { id: 'door_gym', x: 650, y: 230, floor: 0, type: 'door', width: 20, height: 20 },
 
-    { id: 'door_class104', x: 300, y: 650, floor: 0, type: 'door', width: 20, height: 20 },
-    { id: 'door_class105', x: 400, y: 650, floor: 0, type: 'door', width: 20, height: 20 },
-    { id: 'door_class106', x: 500, y: 650, floor: 0, type: 'door', width: 20, height: 20 },
-    { id: 'door_cafeteria', x: 650, y: 650, floor: 0, type: 'door', width: 20, height: 20 },
+    { id: 'door_class104', x: 678, y: 565, floor: 0, type: 'door', width: 20, height: 1 },
+    { id: 'door_class105', x: 778, y: 565, floor: 0, type: 'door', width: 20, height: 1 },
+    { id: 'door_class106', x: 873, y: 565, floor: 0, type: 'door', width: 20, height: 1 },
+    // { id: 'door_cafeteria', x: 650, y: 650, floor: 0, type: 'door', width: 20, height: 20 },
+    { id: 'door_class107', x: 955, y: 565, floor: 0, type: 'door', width: 20, height: 1 },
 
     // ====================
     // First Floor (1)
@@ -96,14 +102,18 @@ export const graph: Graph = {
     { from: 'door_gym', to: 'gym' },
 
     // South wing connections through doors
-    { from: 'hall_south', to: 'door_class104' },
+    { from: 'hall_south', to: 'hall_WN_104' },
+    { from: 'hall_WN_104', to: 'door_class104' },
     { from: 'door_class104', to: 'class104' },
-    { from: 'hall_south', to: 'door_class105' },
+    { from: 'hall_WN_104', to: 'hall_WN_105' },
+    { from: 'hall_WN_105', to: 'door_class105' },
     { from: 'door_class105', to: 'class105' },
-    { from: 'hall_south', to: 'door_class106' },
+    { from: 'hall_WN_105', to: 'hall_WN_106' },
+    { from: 'hall_WN_106', to: 'door_class106' },
     { from: 'door_class106', to: 'class106' },
-    { from: 'hall_south', to: 'door_cafeteria' },
-    { from: 'door_cafeteria', to: 'cafeteria' },
+    { from: 'hall_WN_106', to: 'hall_WN_107' },
+    { from: 'hall_WN_107', to: 'door_class107' },
+    { from: 'door_class107', to: 'class107' },
 
 
     { from: 'stairs1', to: 'stairs0' },
