@@ -11,7 +11,7 @@ export interface Node {
   x: number;
   y: number;
   floor: number;
-  type?: NodeType;
+  type: NodeType;
 
   width?: number;
   height?: number;

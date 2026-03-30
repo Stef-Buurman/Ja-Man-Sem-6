@@ -1,4 +1,4 @@
-import { Graph } from '../types';
+import { Graph } from '../Types/types';
 
 export function findPath(startId: string, endId: string, graph: Graph): string[] {
   const visited = new Set<string>();
@@ -6,7 +6,6 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
 
   while (queue.length > 0) {
     const { node, path } = queue.shift()!;
-            console.log(node);
     if (node.toLocaleLowerCase() === endId.toLocaleLowerCase()) {
       return path;
     }
@@ -14,8 +13,8 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
     visited.add(node);
 
     const neighbors = graph.edges
-      .filter(e => e.from === node)
-      .map(e => e.to)
+      .filter(e => e.from === node || e.to === node)
+      .map(e => (e.from === node ? e.to : e.from))
       .filter(n => !visited.has(n));
 
     neighbors.forEach(neighbor => {
