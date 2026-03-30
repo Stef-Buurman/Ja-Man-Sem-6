@@ -2,12 +2,12 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #FDF1E3; /* soft cream */
+  background-color: var(--main-JaMan-color); /* soft cream */
 }
 
 /* Header */
 .layout-header {
-  background-color: #342626; /* dark brown */
+  background-color: var(--secondary-JaMan-color); /* dark brown */
   color: #FDF1E3;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
@@ -24,19 +24,19 @@
 .logo {
   font-size: 20px;
   font-weight: bold;
-  color: #E8492B; /* accent */
+  color: var(--quaternary-JaMan-color); /* accent */
 }
 
 /* Navigation */
 .nav-links a {
   margin-left: 16px;
-  color: #FDF1E3;
+  color: var(--main-JaMan-color);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-  color: #BEDDFC; /* light blue */
+  color: var(--tertiary-JaMan-color); /* light blue */
 }
 
 /* Main content */
@@ -50,7 +50,7 @@
 .content-wrapper {
   width: 100%;
   max-width: 1200px;
-  background: #BEDDFC; /* soft blue card */
+  background: var(--tertiary-JaMan-color); /* soft blue card */
   padding: 24px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -60,7 +60,7 @@
 .layout-footer {
   text-align: center;
   padding: 12px;
-  background-color: #342626;
-  color: #FDF1E3;
+  background-color: var(--secondary-JaMan-color);
+  color: var(--main-JaMan-color);
   font-size: 14px;
 }

@@ -4,23 +4,13 @@ import test3 from "../../assets/2e_verdieping.svg";
 import { findPath } from "../../services/pathfinding";
 import { RouteOverlay } from "../RouteOverlay/RouteOverlay";
 import { graph3d2 } from "../../data/graph3d2";
+import "./MapView3d2.css";
 
 interface MapViewProps {
   nodes: Node[];
   edges: Edge[];
   currentFloor: number;
   path?: string[];
-}
-
-function formatPoints(points: string): string {
-  const arr = points.trim().split(' ');
-
-  const pairs = [];
-  for (let i = 0; i < arr.length; i += 2) {
-    pairs.push(`${arr[i]},${arr[i + 1]}`);
-  }
-
-  return pairs.join(' ');
 }
 
 export const MapView3d2: React.FC<MapViewProps> = ({
@@ -40,7 +30,7 @@ export const MapView3d2: React.FC<MapViewProps> = ({
       <svg
         width={1200}
         height={800}
-        style={{ border: "2px solid #333", backgroundColor: "gray" }}
+        className="MapView3d2"
       >
         <image href={test3}
           width={453}
