@@ -135,14 +135,14 @@ export const MapView: React.FC<MapViewProps> = ({
               {n.id.toUpperCase()}
             </text>
           ))}
-        <image
+        {/* <image
           href={SecondFloorImage}
           x={0}
           y={0}
           width={1200}
           height={800}
           opacity={0.3}
-        />
+        /> */}
       </svg>
     </>
   );
