@@ -1,4 +1,5 @@
-import { Graph } from '../Types/types';
+import { Graph } from "../Types/types";
+import { Node } from "../Types/types";
 
 export function findPath(startId: string, endId: string, graph: Graph): string[] {
   const visited = new Set<string>();
@@ -13,14 +14,122 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
     visited.add(node);
 
     const neighbors = graph.edges
-      .filter(e => e.from === node || e.to === node)
-      .map(e => (e.from === node ? e.to : e.from))
-      .filter(n => !visited.has(n));
+      .filter((e) => e.from === node || e.to === node)
+      .map((e) => (e.from === node ? e.to : e.from))
+      .filter((n) => !visited.has(n));
 
-    neighbors.forEach(neighbor => {
+    neighbors.forEach((neighbor) => {
       queue.push({ node: neighbor, path: [...path, neighbor] });
     });
   }
 
-  return []; 
+  return [];
+}
+
+export function buildAdjacencyMap(graph: Graph) {
+  const map = new Map<string, string[]>();
+
+  graph.nodes.forEach((n) => map.set(n.id, []));
+
+  graph.edges.forEach((e) => {
+    map.get(e.from)!.push(e.to);
+    map.get(e.to)!.push(e.from); // bidirectional
+  });
+
+  return map;
+}
+
+export function distance(a: Node, b: Node) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+export function heuristic(a: Node, b: Node) {
+  return distance(a, b);
+}
+
+export function getEdgeCost(from: Node, to: Node) {
+  let cost = distance(from, to);
+
+  // Add intelligence
+  if (to.type === "door") cost += 5;
+  if (to.type === "stairs") cost += 20;
+  if (to.type === "elevator") cost += 10;
+
+  // Floor change penalty
+  if (from.floor !== to.floor) cost += 50;
+
+  return cost;
+}
+
+export function getNode(graph: Graph, id: string): Node {
+  const node = graph.nodes.find((n) => n.id === id);
+  if (!node) throw new Error(`Node ${id} not found`);
+  return node;
+}
+
+export function getNeighbors(id: string, adjacency: Map<string, string[]>) {
+  return adjacency.get(id) || [];
+}
+
+export function reconstructPath(cameFrom: Map<string, string>, current: string): string[] {
+  const path = [current];
+
+  while (cameFrom.has(current)) {
+    current = cameFrom.get(current)!;
+    path.unshift(current);
+  }
+
+  return path;
+}
+
+export function findPathAStar(startId: string, endId: string, graph: Graph): string[] {
+  const adjacency = buildAdjacencyMap(graph);
+
+  const openSet = new Set<string>([startId]);
+  const cameFrom = new Map<string, string>();
+
+  const gScore = new Map<string, number>();
+  const fScore = new Map<string, number>();
+
+  graph.nodes.forEach((n) => {
+    gScore.set(n.id, Infinity);
+    fScore.set(n.id, Infinity);
+  });
+
+  gScore.set(startId, 0);
+
+  const startNode = getNode(graph, startId);
+  const endNode = getNode(graph, endId);
+
+  fScore.set(startId, heuristic(startNode, endNode));
+
+  while (openSet.size > 0) {
+    // Get node with lowest fScore
+    let current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
+
+    if (current === endId) {
+      return reconstructPath(cameFrom, current);
+    }
+
+    openSet.delete(current);
+
+    const currentNode = getNode(graph, current);
+
+    for (const neighborId of getNeighbors(current, adjacency)) {
+      const neighborNode = getNode(graph, neighborId);
+
+      const tentativeG = gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
+
+      if (tentativeG < gScore.get(neighborId)!) {
+        cameFrom.set(neighborId, current);
+
+        gScore.set(neighborId, tentativeG);
+        fScore.set(neighborId, tentativeG + heuristic(neighborNode, endNode));
+
+        openSet.add(neighborId);
+      }
+    }
+  }
+
+  return [];
 }

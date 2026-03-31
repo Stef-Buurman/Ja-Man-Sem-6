@@ -3,8 +3,8 @@ import { Node, Edge } from "../../Types/types";
 import test3 from "../../assets/2e_verdieping.svg";
 import { findPath } from "../../services/pathfinding";
 import { RouteOverlay } from "../RouteOverlay/RouteOverlay";
-import { graph3d2 } from "../../data/graph3d2";
-import "./MapView3d2.css";
+import { graph3d2v2 } from "../../data/graph3dv2";
+import "./MapView3dV2.css";
 
 interface MapViewProps {
   nodes: Node[];
@@ -13,7 +13,7 @@ interface MapViewProps {
   path?: string[];
 }
 
-export const MapView3d2: React.FC<MapViewProps> = ({
+export const MapView3dV2: React.FC<MapViewProps> = ({
   nodes,
   edges,
   currentFloor,
@@ -22,7 +22,7 @@ export const MapView3d2: React.FC<MapViewProps> = ({
   const [path2, setPath] = useState<string[]>([]);
 
   const handleRoomClick = (roomId: string) => {
-    const result = findPath('entrance', roomId, graph3d2);
+    const result = findPath('entrance', roomId, graph3d2v2);
     setPath(result);
   };
   return (
@@ -169,7 +169,7 @@ export const MapView3d2: React.FC<MapViewProps> = ({
       </svg>
       <RouteOverlay
         path={path2}
-        nodes={graph3d2.nodes}
+        nodes={graph3d2v2.nodes}
         currentFloor={0}
       />
     </>

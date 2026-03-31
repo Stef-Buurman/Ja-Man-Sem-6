@@ -1,6 +1,5 @@
 import React from "react";
 import { Node, Edge } from "../../Types/types";
-import SecondFloorImage from "../../assets/2e_verdieping.png";
 
 interface MapViewProps {
   nodes: Node[];

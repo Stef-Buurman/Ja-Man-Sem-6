@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Node, Edge } from "../../Types/types";
-import SecondFloorImage from "../../assets/2e_verdieping.png";
 import test3 from "../../assets/test3.svg";
-import { graph } from "../../data/graph";
 import { findPath } from "../../services/pathfinding";
-import { graph3d } from "../../data/graph3d";
+import { graph3dv1 } from "../../data/graph3dv1";
 import { RouteOverlay } from "../RouteOverlay/RouteOverlay";
 
 interface MapViewProps {
@@ -14,7 +12,7 @@ interface MapViewProps {
   path?: string[];
 }
 
-export const MapViewer3DTest: React.FC<MapViewProps> = ({
+export const MapViewer3DV1: React.FC<MapViewProps> = ({
   nodes,
   edges,
   currentFloor,
@@ -23,7 +21,7 @@ export const MapViewer3DTest: React.FC<MapViewProps> = ({
   const [path2, setPath] = useState<string[]>([]);
 
   const handleRoomClick = (roomId: string) => {
-    const result = findPath('entrance', roomId, graph3d);
+    const result = findPath('entrance', roomId, graph3dv1);
     setPath(result);
   };
   return (
@@ -152,7 +150,7 @@ export const MapViewer3DTest: React.FC<MapViewProps> = ({
       </svg>
       <RouteOverlay
         path={path2}
-        nodes={graph3d.nodes}
+        nodes={graph3dv1.nodes}
         currentFloor={0}
       />
     </>

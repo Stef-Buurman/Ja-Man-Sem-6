@@ -21,6 +21,9 @@ export const RouteOverlay: React.FC<RouteOverlayProps> = ({
       return `${n.x},${n.y}`;
     })
     .join(" ");
+    console.log("RouteOverlay - floorPath: ", floorPath);
+    console.log("RouteOverlay - points: ", points);
+
 
   if (!points) return null;
 
