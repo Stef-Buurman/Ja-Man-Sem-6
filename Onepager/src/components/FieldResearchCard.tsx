@@ -34,7 +34,7 @@ export default function FieldResearchCardGrid() {
       label: "👥 Q&A",
       },
           {
-      key: "card4",
+      key: "card6",
       variant: "dark",
       title: "Robots zouden kunnen helpen met informeren en leren.",
       label: "👥 Q&A",

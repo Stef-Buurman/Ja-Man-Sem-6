@@ -1,6 +1,7 @@
 import deliveryHumanImg from "./assets/images/delivery_human.png";
 import PactAnalyseCardGrid from "./components/PactAnalyseCardGrid";
 import logo_white from "./assets/logo/jaman_white.svg";
+import logo_brown from "./assets/logo/jaman_brown.svg";
 import FieldResearchCardGrid from "./components/FieldResearchCard";
 
 function Sprint1() {
@@ -33,7 +34,6 @@ function Sprint1() {
         </div>
         <PactAnalyseCardGrid />
       </section>
-
       <section
         id="ontwerpvraag-verandering"
         className="py-2 bg-[#342626] z-20 md:sticky md:top-15"
@@ -146,14 +146,42 @@ function Sprint1() {
           <FieldResearchCardGrid />
         </div>
       </section>
+      {/* Planning sprint 2 */}
+      <section
+          id="sprint-planning"
+          className="py-16 bg-[#e8492b] z-40 md:sticky md:top-12 text-[#fdf1e3]"
+      >
+        <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
+          <h2 className="text-3xl sm:text-4xl font-bold">
+            Planning sprint 2
+          </h2>
+
+          <p className="text-base sm:text-lg leading-relaxed">
+            Omdat wij na tijdens sprint 1 verandert zijn van doelgroep en ontwerpvraag zullen wij
+            ons tijdens sprint 2 bezig houden met het onderzoeken van de nieuwe gebruiker en
+            onze nieuwe aannames.
+          </p>
+
+          {/* Doelen */}
+          <div className="text-left max-w-3xl mx-auto border border-[#fdf1e3] rounded-2xl p-6">
+            <h3 className="text-2xl font-semibold mb-4">Doelen</h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Een user persona opstellen aan de hand van interviews.</li>
+              <li>Sociale interactie onderzoeken.</li>
+              <li>Slimme omgevingen onderzoeken.</li>
+              <li>Prototypes maken en testen.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <section
         id="logo"
-        className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center"
+        className="md:h-[44vh] py-16 bg-[#fdf1e3] z-40 md:sticky md:top-0 flex justify-center items-center"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <div className="flex flex-col justify-center items-center text-center">
             <img
-              src={logo_white}
+              src={logo_brown}
               alt="JaMan logo"
               className="w-40 sm:w-56 md:w-64 mb-6"
             />

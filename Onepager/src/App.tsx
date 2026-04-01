@@ -4,6 +4,7 @@ import Team1 from "./Team.jsx";
 import Sprint1 from "./Sprint1.jsx";
 import Nav from "./Nav.js";
 import { Routes, Route } from "react-router-dom";
+import Sprint2 from "./Sprint2";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                   <Team1 />
                   <Sprint0 />
                   <Sprint1 />
+                  <Sprint2 />
                 </main>
               </>
             }
