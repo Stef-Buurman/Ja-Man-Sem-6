@@ -25,16 +25,16 @@ const Heatmap: React.FC = () => {
   const [points, setPoints] = useState<HeatPoint[]>([]);
   const [areas, setAreas] = useState<HeatPointArea[]>([]);
 
-
   useEffect(() => {
     const connection = new signalR.HubConnectionBuilder()
       .withUrl("http://localhost:5252/api/heatmapHub")
       .withAutomaticReconnect()
       .build();
 
-    connection.start()
+    connection
+      .start()
       .then(() => console.log("SignalR connected"))
-      .catch(err => console.error("Failed to start connection:", err));
+      .catch((err) => console.error("Failed to start connection:", err));
 
     connection.on("ReceivePoint", (message: string) => {
       console.log("Received message from SignalR:", message);
@@ -52,7 +52,7 @@ const Heatmap: React.FC = () => {
   }, []);
 
   const handleClick = async (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
   ) => {
     const rect = e.currentTarget.getBoundingClientRect();
 
@@ -61,25 +61,17 @@ const Heatmap: React.FC = () => {
 
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
-
-    await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ x, y }),
-    });
   };
 
-  const handleAreaUpdate = async (area: HeatPointArea) => {
-    await fetch(`${API_URL}/areas/${area.id}`, {
+  const handleAreaUpdate = async () => {
+    await fetch(`${API_URL}/areas`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(area),
+      body: JSON.stringify(areas),
     });
-  }
+  };
 
   const fetchHeatmap = async () => {
     const res = await fetch(API_URL);
@@ -96,12 +88,6 @@ const Heatmap: React.FC = () => {
   useEffect(() => {
     fetchHeatmap();
     fetchHeatmapAreas();
-    // const interval = setInterval(fetchHeatmap, 2000);
-    // const areaInterval = setInterval(fetchHeatmapAreas, 2000);
-    return () => {
-      // clearInterval(interval);
-      // clearInterval(areaInterval);
-    };
   }, []);
 
   const getColor = (level: string) => {
@@ -117,6 +103,59 @@ const Heatmap: React.FC = () => {
     }
   };
 
+  const getColor2 = (value: number) => {
+    if (value <= 3) {
+      const ratio = value / 3;
+      const r = 0;
+      const g = Math.round(150 + 105 * ratio);
+      const b = 0;
+
+      return `rgba(${r}, ${g}, ${b}, 0.7)`;
+    }
+
+    if (value <= 10) {
+      const ratio = (value - 3) / (10 - 3);
+
+      const r = Math.round(255 * ratio);
+      const g = 255;
+      const b = 0;
+
+      return `rgba(${r}, ${g}, ${b}, 0.7)`;
+    }
+
+    const max = 20;
+    const ratio = Math.min(1, (value - 10) / (max - 10));
+
+    const r = 255;
+    const g = Math.round(255 * (1 - ratio));
+    const b = 0;
+
+    return `rgba(${r}, ${g}, ${b}, 0.7)`;
+  };
+
+  const generateHeatPoints = (x: number, y: number, value: number) => {
+    const points = [];
+    const spread = 80;
+    const density = 500;
+
+    for (let i = 0; i < density; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = Math.random() * spread;
+
+      const offsetX = Math.cos(angle) * radius;
+      const offsetY = Math.sin(angle) * radius;
+
+      points.push({
+        x: x + offsetX,
+        y: y + offsetY,
+        opacity: 1 - radius / spread,
+        value,
+      });
+    }
+
+    return points;
+  };
+
   return (
     <div>
       <svg
@@ -126,16 +165,25 @@ const Heatmap: React.FC = () => {
       >
         <image href={test3} x="0" y="0" width="454" height="627.31" />
 
-        {areas.map((a) => (
-          <rect
-            key={a.id}
-            x={a.x}
-            y={a.y}
-            width={50}
-            height={50}
-            fill={getColor(a.color)}
-          />
-        ))}
+        <defs>
+          <filter id="heat-blur">
+            <feGaussianBlur stdDeviation="8" />
+          </filter>
+        </defs>
+
+        {areas.flatMap((a) =>
+          generateHeatPoints(a.x + 25, a.y + 25, a.value).map((p, i) => (
+            <circle
+              key={`${a.id}-${i}`}
+              cx={p.x}
+              cy={p.y}
+              r={5}
+              fill={getColor2(p.value)}
+              opacity={p.opacity}
+              filter="url(#heat-blur)"
+            />
+          )),
+        )}
 
         {points.map((p, i) => (
           <circle
@@ -150,34 +198,62 @@ const Heatmap: React.FC = () => {
       {areas.map((a) => (
         <div key={a.id}>
           <label>
-            X: <input type="number" value={a.x} onChange={(e) => {
-              const updated = areas.map(area => 
-                area.id === a.id ? { ...area, x: parseFloat(e.target.value) } : area
-              );
-              setAreas(updated);
-            }} />
+            X:{" "}
+            <input
+              min={0}
+              type="number"
+              value={a.x}
+              onChange={(e) => {
+                const updated = areas.map((area) =>
+                  area.id === a.id
+                    ? { ...area, x: parseFloat(e.target.value) }
+                    : area,
+                );
+                setAreas(updated);
+              }}
+            />
           </label>
           <label>
-            Y: <input type="number" value={a.y} onChange={(e) => {
-              const updated = areas.map(area => 
-                area.id === a.id ? { ...area, y: parseFloat(e.target.value) } : area
-              );
-              setAreas(updated);
-            }} />
+            Y:{" "}
+            <input
+              min={0}
+              type="number"
+              value={a.y}
+              onChange={(e) => {
+                const updated = areas.map((area) =>
+                  area.id === a.id
+                    ? { ...area, y: parseFloat(e.target.value) }
+                    : area,
+                );
+                setAreas(updated);
+              }}
+            />
           </label>
           <label>
-            Value: <input type="number" value={a.value} onChange={(e) => {
-              const updated = areas.map(area => 
-                area.id === a.id ? { ...area, value: parseFloat(e.target.value) } : area
-              );
-              setAreas(updated);
-            }} />
+            Value:{" "}
+            <input
+              min={0}
+              type="number"
+              value={a.value}
+              onChange={(e) => {
+                const updated = areas.map((area) =>
+                  area.id === a.id
+                    ? { ...area, value: parseFloat(e.target.value) }
+                    : area,
+                );
+                setAreas(updated);
+              }}
+            />
           </label>
         </div>
       ))}
-            <button onClick={() => {
-        areas.forEach(area => handleAreaUpdate(area));
-      }}>Save Areas</button>
+      <button
+        onClick={() => {
+          handleAreaUpdate();
+        }}
+      >
+        Save Areas
+      </button>
     </div>
   );
 };

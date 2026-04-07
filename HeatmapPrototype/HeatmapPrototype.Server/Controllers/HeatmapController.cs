@@ -96,5 +96,23 @@ namespace HeatmapAPI.Controllers
             await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area updated");
             return Ok();
         }
+
+        [HttpPut("areas")]
+        public async Task<IActionResult> UpdateRangeHeatpointArea([FromBody] List<HeatpointArea> area)
+        {
+            foreach (var a in area)
+            {
+                Console.WriteLine($"Updating area {a.Id} with value {a.Value}, sound level {a.SoundLevel}, level {a.Level}");
+                if (!_context.HeatpointAreas.Any(existing => existing.Id == a.Id))
+                {
+                    return BadRequest($"Area with ID {a.Id} does not exist.");
+                }
+            }
+
+            _context.HeatpointAreas.UpdateRange(area);
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint areas updated");
+            return Ok();
+        }
     }
 }
