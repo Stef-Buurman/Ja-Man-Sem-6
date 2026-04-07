@@ -36,7 +36,7 @@ function Sprint1() {
       </section>
       <section
         id="ontwerpvraag-verandering"
-        className="py-2 bg-[#342626] z-20 md:sticky md:top-15"
+        className="py-2 bg-[#342626] z-20 md:top-15"
       >
         <div className="max-w-6xl mx-auto px-4 space-y-6 sm:space-y-10 text-[#fdf1e3]">
           <div className="max-w-5xl mx-auto px-4 py-3">
@@ -114,7 +114,7 @@ function Sprint1() {
       </section>
       <section
         id="field-research"
-        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-12 pb-70"
+        className="py-16 bg-[#beddfc] z-30 md:top-12 pb-70"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <h2 className="text-3xl sm:text-4xl font-bold">Field research</h2>
@@ -149,7 +149,7 @@ function Sprint1() {
       {/* Planning sprint 2 */}
       <section
           id="sprint-planning"
-          className="py-16 bg-[#e8492b] z-40 md:sticky md:top-12 text-[#fdf1e3]"
+          className="py-16 bg-[#e8492b] z-40 md:top-12 text-[#fdf1e3]"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
           <h2 className="text-3xl sm:text-4xl font-bold">
@@ -176,7 +176,7 @@ function Sprint1() {
       </section>
       <section
         id="logo"
-        className="md:h-[44vh] py-16 bg-[#fdf1e3] z-40 md:sticky md:top-0 flex justify-center items-center"
+        className="md:h-[44vh] py-16 bg-[#fdf1e3] z-40 md:top-0 flex justify-center items-center"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <div className="flex flex-col justify-center items-center text-center">
