@@ -7,6 +7,6 @@ import Heatmap from './Pages/Heatmap/Heatmap.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* <App /> */}
-    <Heatmap></Heatmap>
+    <Heatmap/>
   </StrictMode>,
 )

@@ -3,6 +3,7 @@ using System;
 using HeatmapAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HeatmapPrototype.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260407110249_AddedHeatpointAreas")]
+    partial class AddedHeatpointAreas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
@@ -34,7 +37,7 @@ namespace HeatmapPrototype.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HeatPoints", (string)null);
+                    b.ToTable("HeatPoints");
                 });
 
             modelBuilder.Entity("HeatmapAPI.Models.HeatpointArea", b =>
@@ -60,7 +63,7 @@ namespace HeatmapPrototype.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HeatpointAreas", (string)null);
+                    b.ToTable("HeatpointAreas");
                 });
 #pragma warning restore 612, 618
         }
