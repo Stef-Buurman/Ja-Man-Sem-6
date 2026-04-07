@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="heatmapprototype.client/heatmapprototype.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="HeatmapPrototype.Server/HeatmapPrototype.Server.csproj" />
+</Solution>

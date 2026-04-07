@@ -1,0 +1,6 @@
+@HeatmapPrototype.Server_HostAddress = http://localhost:5252
+
+GET {{HeatmapPrototype.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
