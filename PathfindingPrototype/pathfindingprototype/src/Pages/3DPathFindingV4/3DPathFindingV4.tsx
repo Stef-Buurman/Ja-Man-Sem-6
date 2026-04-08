@@ -6,6 +6,7 @@ import { FloorSelector } from "../../Components/FloorSelector/FloorSelector";
 import { Graph, Node } from "../../Types/types";
 import { MapView3dV4 } from "../../Components/MapViewer3DV4/MapView3dv4";
 import Test3Svg from "../../assets/2e_verdieping.svg?react";
+import TestGroundFloor from "../../assets/Verdieping_0.svg?react";
 
 const floors = [1, 2, 3];
 
@@ -40,7 +41,7 @@ export const PathFinding3DV4: React.FC = () => {
         <h1>3D Pathfinding Prototype V4</h1>
         <h2>Current Floor: {currentFloor} {selectedRoom && `(Rout send to: ${selectedRoom})`}</h2>
         <FloorSelector floors={floors} currentFloor={currentFloor} setFloor={setCurrentFloor} />
-        <MapView3dV4 nodes={graph.nodes} edges={graph.edges} currentFloor={currentFloor} path={path} handleRoomClick={handleRoomClick} floors={[Test3Svg, Test3Svg, Test3Svg]} />
+        <MapView3dV4 nodes={graph.nodes} edges={graph.edges} currentFloor={currentFloor} path={path} handleRoomClick={handleRoomClick} floors={[TestGroundFloor, Test3Svg, Test3Svg]} />
       </div>
     )
   );

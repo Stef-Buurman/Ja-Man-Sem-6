@@ -63,9 +63,10 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
   return (
     <>
       <button onClick={copyDoors}>Copy doors</button>
-      <svg width={1200} height={800} className="MapView3d2">
-        {SelectedFloor && <SelectedFloor ref={svgElement} width={453} height={627} style={{ display: "none" }} />}
-        {grounds.map((ground) => (
+      <svg width={1200} height={800} className="MapView3d4">
+        {SelectedFloor && <SelectedFloor ref={svgElement} />}
+        {/* style={{ display: "none" }} */}
+        {/* {grounds.map((ground) => (
           <polygon
             key={ground.id}
             points={ground.getAttribute("points") || undefined}
@@ -104,7 +105,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
               points={el.getAttribute("points") || undefined}
             />
           );
-        })}
+        })} */}
         {path && (
           <path
             d={(() => {
