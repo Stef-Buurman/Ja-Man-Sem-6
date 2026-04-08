@@ -15,6 +15,8 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
   const svgElement = React.useRef<SVGSVGElement>(null);
   const [elements, setElements] = React.useState<SVGPolygonElement[]>([]);
   const [doors, setDoors] = React.useState<SVGCircleElement[]>([]);
+  const [images, setImages] = React.useState<SVGImageElement[]>([]);
+  const [grounds, setGrounds] = React.useState<SVGPolygonElement[]>([]);
 
   useEffect(() => {
     if (svgElement.current) {
@@ -27,6 +29,16 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
       if (doorGroup) {
         const doors = doorGroup.querySelectorAll("circle");
         setDoors(Array.from(doors));
+      }
+      const imageGroup = svgElement.current.getElementById("_3D_blokken");
+      if (imageGroup) {
+        const images = imageGroup.querySelectorAll("image");
+        setImages(Array.from(images));
+      }
+      const groundGroup = svgElement.current.getElementById("Ondergrond");
+      if (groundGroup) {
+        const grounds = groundGroup.querySelectorAll("polygon");
+        setGrounds(Array.from(grounds));
       }
     }
   }, []);
@@ -52,14 +64,42 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
     <>
       <button onClick={copyDoors}>Copy doors</button>
       <svg width={1200} height={800} className="MapView3d2">
-        {SelectedFloor && <SelectedFloor ref={svgElement} width={453} height={627} />}
+        {SelectedFloor && <SelectedFloor ref={svgElement} width={453} height={627} style={{ display: "none" }} />}
+        {grounds.map((ground) => (
+          <polygon
+            key={ground.id}
+            points={ground.getAttribute("points") || undefined}
+            className="cls-3"
+          />
+        ))}
+        {images.map((img) => {
+          const x = parseFloat(img.getAttribute("x") || "0");
+          const y = parseFloat(img.getAttribute("y") || "0");
+          const width: number = parseInt(img.getAttribute("width") || "0") || 0;
+          const height: number = parseInt(img.getAttribute("height") || "0") || 0;
+          const randomInt = Math.floor(Math.random() * 10000);
+          return (
+            <image
+              key={randomInt}
+              x={x}
+              y={y}
+              transform={img.getAttribute("transform") || undefined}
+              width={width}
+              height={height}
+              href={img.getAttribute("xlink:href") || undefined}
+            />
+          );
+        })}
         {elements.map((el) => {
           const roomId = el.id;
+          const parts = roomId.split(".");
+          parts[1] = currentFloor.toString();
+          const result = parts.join(".");
           return (
             <polygon
-              key={roomId}
-              id={roomId}
-              onClick={() => handleRoomClick(roomId)}
+              key={result}
+              id={result}
+              onClick={() => handleRoomClick(result)}
               className="cls-2 room"
               points={el.getAttribute("points") || undefined}
             />

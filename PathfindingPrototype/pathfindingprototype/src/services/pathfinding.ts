@@ -33,7 +33,7 @@ export function buildAdjacencyMap(graph: Graph) {
 
   graph.edges.forEach((e) => {
     map.get(e.from)!.push(e.to);
-    map.get(e.to)!.push(e.from); // bidirectional
+    map.get(e.to)!.push(e.from);
   });
 
   return map;
@@ -50,12 +50,10 @@ export function heuristic(a: Node, b: Node) {
 export function getEdgeCost(from: Node, to: Node) {
   let cost = distance(from, to);
 
-  // Add intelligence
   if (to.type === "door") cost += 5;
   if (to.type === "stairs") cost += 20;
   if (to.type === "elevator") cost += 10;
 
-  // Floor change penalty
   if (from.floor !== to.floor) cost += 50;
 
   return cost;
@@ -80,6 +78,57 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
   }
 
   return path;
+}
+
+export function findPathAStar(startId: string, endId: string, graph: Graph): string[] {
+  const adjacency = buildAdjacencyMap(graph);
+
+  const openSet = new Set<string>([startId]);
+  const cameFrom = new Map<string, string>();
+
+  const gScore = new Map<string, number>();
+  const fScore = new Map<string, number>();
+
+  graph.nodes.forEach((n) => {
+    gScore.set(n.id, Infinity);
+    fScore.set(n.id, Infinity);
+  });
+
+  gScore.set(startId, 0);
+
+  const startNode = getNode(graph, startId);
+  const endNode = getNode(graph, endId);
+
+  fScore.set(startId, heuristic(startNode, endNode));
+
+  while (openSet.size > 0) {
+    let current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
+
+    if (current === endId) {
+      return reconstructPath(cameFrom, current);
+    }
+
+    openSet.delete(current);
+
+    const currentNode = getNode(graph, current);
+
+    for (const neighborId of getNeighbors(current, adjacency)) {
+      const neighborNode = getNode(graph, neighborId);
+
+      const tentativeG = gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
+
+      if (tentativeG < gScore.get(neighborId)!) {
+        cameFrom.set(neighborId, current);
+
+        gScore.set(neighborId, tentativeG);
+        fScore.set(neighborId, tentativeG + heuristic(neighborNode, endNode));
+
+        openSet.add(neighborId);
+      }
+    }
+  }
+
+  return [];
 }
 
 export function findPathAStarMultiStart(
