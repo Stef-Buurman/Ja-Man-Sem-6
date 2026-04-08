@@ -82,10 +82,14 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
   return path;
 }
 
-export function findPathAStar(startId: string, endId: string, graph: Graph): string[] {
+export function findPathAStarMultiStart(
+  startIds: string[],
+  endId: string,
+  graph: Graph
+): string[] {
   const adjacency = buildAdjacencyMap(graph);
 
-  const openSet = new Set<string>([startId]);
+  const openSet = new Set<string>(startIds);
   const cameFrom = new Map<string, string>();
 
   const gScore = new Map<string, number>();
@@ -96,16 +100,19 @@ export function findPathAStar(startId: string, endId: string, graph: Graph): str
     fScore.set(n.id, Infinity);
   });
 
-  gScore.set(startId, 0);
-
-  const startNode = getNode(graph, startId);
   const endNode = getNode(graph, endId);
 
-  fScore.set(startId, heuristic(startNode, endNode));
+  for (const startId of startIds) {
+    const startNode = getNode(graph, startId);
+
+    gScore.set(startId, 0);
+    fScore.set(startId, heuristic(startNode, endNode));
+  }
 
   while (openSet.size > 0) {
-    // Get node with lowest fScore
-    let current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
+    let current = [...openSet].reduce((a, b) =>
+      fScore.get(a)! < fScore.get(b)! ? a : b
+    );
 
     if (current === endId) {
       return reconstructPath(cameFrom, current);
@@ -118,13 +125,17 @@ export function findPathAStar(startId: string, endId: string, graph: Graph): str
     for (const neighborId of getNeighbors(current, adjacency)) {
       const neighborNode = getNode(graph, neighborId);
 
-      const tentativeG = gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
+      const tentativeG =
+        gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
 
       if (tentativeG < gScore.get(neighborId)!) {
         cameFrom.set(neighborId, current);
 
         gScore.set(neighborId, tentativeG);
-        fScore.set(neighborId, tentativeG + heuristic(neighborNode, endNode));
+        fScore.set(
+          neighborId,
+          tentativeG + heuristic(neighborNode, endNode)
+        );
 
         openSet.add(neighborId);
       }

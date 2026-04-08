@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import { Node } from "../../Types/types";
-import test3 from "../../assets/2e_verdieping.svg";
+import { Edge, Node } from "../../Types/types";
 import "./MapView3dv4.css";
-import Test3Svg from "../../assets/2e_verdieping.svg?react";
 
 interface MapViewProps {
   nodes: Node[];
+  edges: Edge[];
   currentFloor: number;
   path?: string[];
   handleRoomClick?: (roomId: string) => void;
+  floors?: React.FC<React.SVGProps<SVGSVGElement>>[];
 }
 
-export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, currentFloor, path, handleRoomClick = () => { } }) => {
+export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => { }, floors }) => {
   const svgElement = React.useRef<SVGSVGElement>(null);
   const [elements, setElements] = React.useState<SVGPolygonElement[]>([]);
   const [doors, setDoors] = React.useState<SVGCircleElement[]>([]);
@@ -46,11 +46,13 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, currentFloor, path,
     });
   };
 
+  const SelectedFloor = floors?.[currentFloor - 1];
+
   return (
     <>
       <button onClick={copyDoors}>Copy doors</button>
       <svg width={1200} height={800} className="MapView3d2">
-        <Test3Svg ref={svgElement} width={453} height={627} />
+        {SelectedFloor && <SelectedFloor ref={svgElement} width={453} height={627} />}
         {elements.map((el) => {
           const roomId = el.id;
           return (
@@ -99,6 +101,57 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, currentFloor, path,
             strokeLinejoin="round"
           />
         )}
+
+        {/* {edges.map((e) => {
+          const from = nodes.find(
+            (n) => n.id === e.from && n.floor === currentFloor,
+          );
+          const to = nodes.find((n) => n.id === e.to && n.floor === currentFloor);
+          if (!from || !to) return null;
+
+          // Hallway color: gray
+          return (
+            <line
+              key={`${e.from}-${e.to}`}
+              x1={from.x}
+              y1={from.y}
+              x2={to.x}
+              y2={to.y}
+              stroke="#aaa"
+              strokeWidth={8}
+              strokeLinecap="round"
+            />
+          );
+        })}
+        {nodes
+          .filter((n) => n.floor === currentFloor) //&& n.type !== "hallway"
+          .map((n) => {
+            const fillColor =
+              n.type === "room"
+                ? "#ffd27f"
+                : n.type === "hallway"
+                  ? "#ccc"
+                  : n.type === "stairs"
+                    ? "#6b9fff"
+                    : n.type === "entrance"
+                      ? "#90ee90"
+                      : n.type === "door"
+                        ? "#8b8b8b" // gray for doors
+                        : "#eee";
+            return (
+              <rect
+                key={n.id}
+                x={n.x}
+                y={n.y}
+                width={n.width ?? 40}
+                height={n.height ?? 40}
+                fill={fillColor}
+                stroke="#333"
+                strokeWidth={2}
+                rx={5}
+              />
+            );
+          })} */}
       </svg>
     </>
   );
