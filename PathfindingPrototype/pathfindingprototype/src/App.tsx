@@ -15,6 +15,7 @@ import { PathFinding3DV2 } from "./Pages/3DPathFindingV2/3DPathFindingV2";
 import { MapViewer3DV1 } from "./Components/MapViewer3Dv1/MapView3dv1";
 import { GraphEditor } from "./Components/GraphEditor/GraphEditor";
 import test3 from "./assets/2e_verdieping.svg";
+import { PathFinding3DV4 } from "./Pages/3DPathFindingV4/3DPathFindingV4";
 
 const floors = [0, 1];
 
@@ -36,6 +37,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/3d" element={<MapView3dV2 nodes={graph3d2v2.nodes} edges={graph3d2v2.edges} currentFloor={currentFloor} path={path} />} />
           <Route path="/3dV2" element={<PathFinding3DV2 />} />
+          <Route path="/3dv3" element={<PathFinding3DV4 />} />
           <Route path="/test3d" element={<MapViewer3DV1 nodes={graph3dv1.nodes} edges={graph3dv1.edges} currentFloor={currentFloor} path={path} />} />
           <Route
             path="/2d"

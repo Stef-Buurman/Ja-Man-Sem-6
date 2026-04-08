@@ -14,6 +14,7 @@ export const Layout: React.FC = () => {
             <Link to="/test3d">3D V1</Link>
             <Link to="/3d">3D V2</Link>
             <Link to="/3dV2">3D V3</Link>
+            <Link to="/3dv3">3D V4</Link>
             <Link to="/editor">Graph Editor</Link>
           </nav>
         </div>
