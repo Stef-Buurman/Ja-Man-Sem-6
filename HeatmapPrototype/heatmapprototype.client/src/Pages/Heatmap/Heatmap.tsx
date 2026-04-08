@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
 import test3 from "../../assets/2EVerdieping.svg";
 import * as signalR from "@microsoft/signalr";
-
-type HeatPoint = {
-  x: number;
-  y: number;
-  value: number;
-  level: "green" | "yellow" | "red";
-};
-
-type HeatPointArea = {
-  id: number;
-  x: number;
-  y: number;
-  value: number;
-  soundLevel: number;
-  level: number;
-  color: string;
-};
+import type { HeatPointArea } from "../../Types/HeatPointArea";
+import type { HeatPoint } from "../../Types/HeatPoint";
 
 const API_URL = "/api/heatmap";
 
@@ -50,28 +35,6 @@ const Heatmap: React.FC = () => {
       connection.stop();
     };
   }, []);
-
-  const handleClick = async (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-  ) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-
-    const scaleX = 454 / rect.width;
-    const scaleY = 627.31 / rect.height;
-
-    const x = (e.clientX - rect.left) * scaleX;
-    const y = (e.clientY - rect.top) * scaleY;
-  };
-
-  const handleAreaUpdate = async () => {
-    await fetch(`${API_URL}/areas`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(areas),
-    });
-  };
 
   const fetchHeatmap = async () => {
     const res = await fetch(API_URL);
@@ -161,7 +124,6 @@ const Heatmap: React.FC = () => {
       <svg
         viewBox="0 0 454 627.31"
         style={{ width: "400px", border: "1px solid black" }}
-        onClick={handleClick}
       >
         <image href={test3} x="0" y="0" width="454" height="627.31" />
 
@@ -195,65 +157,6 @@ const Heatmap: React.FC = () => {
           />
         ))}
       </svg>
-      {areas.map((a) => (
-        <div key={a.id}>
-          <label>
-            X:{" "}
-            <input
-              min={0}
-              type="number"
-              value={a.x}
-              onChange={(e) => {
-                const updated = areas.map((area) =>
-                  area.id === a.id
-                    ? { ...area, x: parseFloat(e.target.value) }
-                    : area,
-                );
-                setAreas(updated);
-              }}
-            />
-          </label>
-          <label>
-            Y:{" "}
-            <input
-              min={0}
-              type="number"
-              value={a.y}
-              onChange={(e) => {
-                const updated = areas.map((area) =>
-                  area.id === a.id
-                    ? { ...area, y: parseFloat(e.target.value) }
-                    : area,
-                );
-                setAreas(updated);
-              }}
-            />
-          </label>
-          <label>
-            Value:{" "}
-            <input
-              min={0}
-              type="number"
-              value={a.value}
-              onChange={(e) => {
-                const updated = areas.map((area) =>
-                  area.id === a.id
-                    ? { ...area, value: parseFloat(e.target.value) }
-                    : area,
-                );
-                setAreas(updated);
-              }}
-            />
-          </label>
-        </div>
-      ))}
-      <button
-        onClick={() => {
-          handleAreaUpdate();
-        }}
-      >
-        Save Areas
-      </button>
     </div>
   );
 };

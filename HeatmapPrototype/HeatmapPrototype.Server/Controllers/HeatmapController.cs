@@ -19,7 +19,6 @@ namespace HeatmapAPI.Controllers
             _hubContext = hubContext;
         }
 
-        // POST: api/heatmap
         [HttpPost]
         public async Task<IActionResult> AddPoint([FromBody] HeatPoint point)
         {
@@ -29,7 +28,6 @@ namespace HeatmapAPI.Controllers
             return Ok();
         }
 
-        // GET: api/heatmap
         [HttpGet]
         public IActionResult GetHeatmap()
         {
@@ -58,7 +56,7 @@ namespace HeatmapAPI.Controllers
                         x = (g.Key.X * gridSize) + gridSize / 2,
                         y = (g.Key.Y * gridSize) + gridSize / 2,
                         value = count,
-                        level = level
+                        level
                     };
                 })
                 .ToList();
@@ -85,7 +83,6 @@ namespace HeatmapAPI.Controllers
         [HttpPut("areas/{id}")]
         public async Task<IActionResult> UpdateHeatpointArea(int id, [FromBody] HeatpointArea area)
         {
-            Console.WriteLine($"Updating area {id} with value {area.Value}, sound level {area.SoundLevel}, level {area.Level}");
             if (id != area.Id || !_context.HeatpointAreas.Any(a => a.Id == id))
             {
                 return BadRequest();
@@ -102,7 +99,6 @@ namespace HeatmapAPI.Controllers
         {
             foreach (var a in area)
             {
-                Console.WriteLine($"Updating area {a.Id} with value {a.Value}, sound level {a.SoundLevel}, level {a.Level}");
                 if (!_context.HeatpointAreas.Any(existing => existing.Id == a.Id))
                 {
                     return BadRequest($"Area with ID {a.Id} does not exist.");
@@ -112,6 +108,21 @@ namespace HeatmapAPI.Controllers
             _context.HeatpointAreas.UpdateRange(area);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint areas updated");
+            return Ok();
+        }
+
+        [HttpDelete("areas/{id}")]
+        public async Task<IActionResult> DeleteHeatpointArea(int id)
+        {
+            var area = await _context.HeatpointAreas.FindAsync(id);
+            if (area == null)
+            {
+                return BadRequest($"Area with ID {id} does not exist.");
+            }
+
+            _context.HeatpointAreas.Remove(area);
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area deleted");
             return Ok();
         }
     }
