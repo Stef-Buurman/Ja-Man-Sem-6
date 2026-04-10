@@ -1,0 +1,93 @@
+.heatmap-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: var(--tertiary-JaMan-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Each heat area row */
+.heatmap-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  background: var(--main-JaMan-color);
+  border: 1px solid var(--secondary-JaMan-color);
+  border-radius: 10px;
+}
+
+/* Labels */
+.heatmap-area label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--secondary-JaMan-color);
+  gap: 6px;
+}
+
+/* Input fields */
+.heatmap-area input[type="number"] {
+  width: 100px;
+  padding: 10px 12px;
+  border: 2px solid var(--secondary-JaMan-color);
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--secondary-JaMan-color);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.heatmap-area input[type="number"]:focus {
+  outline: none;
+  border-color: var(--quaternary-JaMan-color);
+  box-shadow: 0 0 0 3px rgba(253, 241, 227, 0.25);
+}
+
+/* Generic button styling */
+.heatmap-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--secondary-JaMan-color);
+  color: var(--main-JaMan-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.heatmap-button:hover {
+  background-color: var(--quaternary-JaMan-color);
+  color: var(--secondary-JaMan-color);
+  transform: translateY(-1px);
+}
+
+.heatmap-button:active {
+  transform: translateY(0);
+}
+
+/* Delete button variant */
+.heatmap-button.delete {
+  background-color: #b84c4c;
+  color: white;
+}
+
+.heatmap-button.delete:hover {
+  background-color: #993d3d;
+}
+
+/* Save button special emphasis */
+.save-button {
+  align-self: flex-start;
+  background-color: var(--quaternary-JaMan-color);
+  color: var(--secondary-JaMan-color);
+}
+
+.save-button:hover {
+  background-color: var(--secondary-JaMan-color);
+  color: var(--main-JaMan-color);
+}
