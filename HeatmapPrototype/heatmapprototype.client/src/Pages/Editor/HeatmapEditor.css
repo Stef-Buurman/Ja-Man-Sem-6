@@ -91,3 +91,26 @@
   background-color: var(--secondary-JaMan-color);
   color: var(--main-JaMan-color);
 }
+
+/* Disabled button state */
+.heatmap-button:disabled {
+  background-color: #c9c9c9;
+  color: #7a7a7a;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+/* Prevent hover effects when disabled */
+.heatmap-button:disabled:hover {
+  background-color: #c9c9c9;
+  color: #7a7a7a;
+  transform: none;
+}
+
+.heatmap-button:hover:not(:disabled) {
+  background-color: var(--quaternary-JaMan-color);
+  color: var(--secondary-JaMan-color);
+  transform: translateY(-1px);
+}
