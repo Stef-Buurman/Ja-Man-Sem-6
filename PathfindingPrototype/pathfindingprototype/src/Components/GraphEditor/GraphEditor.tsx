@@ -6,14 +6,15 @@ type Door = Omit<Node, "type"> & { type: "door" };
 type GraphEditorProps = {
   background?: React.ReactNode;
   doors?: Door[];
+  curFloor?: number;
 };
 
-export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors }) => {
+export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, curFloor }) => {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
-  const currentFloor = 0;
+  const currentFloor = curFloor ?? 0;
 
   const snap = (value: number, grid = 10) => Math.round(value / grid) * grid;
 
@@ -99,7 +100,7 @@ ${edges.map(formatEdge).join(",\n")}
       <button onClick={exportGraph}>Copy Graph</button>
       <button onClick={() => setNodes([])}>Clear Graph</button>
 
-      <svg width={1200} height={800} viewBox="0 0 453 627" style={{ border: "1px solid #ccc", marginTop: 10 }} onClick={handleMapClick}>
+      <svg viewBox="0 0 2412.61 1344.75" style={{ border: "1px solid #ccc", marginTop: 10 }} onClick={handleMapClick}>
         {background}
         {edges.map((e, i) => {
           const from = nodes.concat(doors || []).find((n) => n.id === e.from);
@@ -114,7 +115,7 @@ ${edges.map(formatEdge).join(",\n")}
             key={d.id}
             cx={d.x}
             cy={d.y}
-            r={6}
+            r={10}
             width={d.width}
             height={d.height}
             fill={selectedNode === d.id ? "red" : "yellow"}

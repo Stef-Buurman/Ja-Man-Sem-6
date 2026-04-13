@@ -14,10 +14,10 @@ import { Layout } from "./Components/Layout/Layout";
 import { PathFinding3DV2 } from "./Pages/3DPathFindingV2/3DPathFindingV2";
 import { MapViewer3DV1 } from "./Components/MapViewer3Dv1/MapView3dv1";
 import { GraphEditor } from "./Components/GraphEditor/GraphEditor";
-import test3 from "./assets/2e_verdieping.svg";
+import Verdieping3 from "./assets/Verdieping3_2.svg";
 import { PathFinding3DV4 } from "./Pages/3DPathFindingV4/3DPathFindingV4";
 
-const floors = [0, 1];
+const floors = [1];
 
 export const App: React.FC = () => {
   const [currentFloor, setCurrentFloor] = useState<number>(0);
@@ -56,121 +56,53 @@ export const App: React.FC = () => {
             path="/editor"
             element={
               <GraphEditor
+                curFloor={1}
                 doors={[
-                  { id: "H.2.403", x: 134.7, y: 125.93, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.318", x: 139.7, y: 211.05, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.312", x: 150.44, y: 255.58, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.308", x: 167.58, y: 337.75, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.306", x: 191.52, y: 441.07, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.204", x: 210.59, y: 470.79, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.219", x: 333.09, y: 429.45, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.118", x: 327.33, y: 404.96, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.117", x: 322.67, y: 382.59, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.116", x: 317.49, y: 358.73, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.215", x: 311.16, y: 337.75, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.114", x: 301.44, y: 298.66, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.112", x: 295.97, y: 275.86, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.111", x: 290.7, y: 253.65, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.107", x: 272.37, y: 167.16, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.104", x: 261.76, y: 120.91, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.120", x: 336.6, y: 444.19, floor: 0, type: "door", width: 20, height: 20 },
-                  { id: "H.2.409", x: 373.01, y: 478.86, floor: 0, type: "door", width: 20, height: 20 },
+                  { id: "H.3.403_door", x: 240, y: 320, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.319_door", x: 229, y: 383, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.312_door", x: 294, y: 673, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.308_door", x: 324, y: 812, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.306_door", x: 360, y: 974, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.206_door", x: 390, y: 1005, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.204_door", x: 477, y: 994, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.Trap1_door", x: 691, y: 1070, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.Lift1_door", x: 686, y: 1037, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.Lift2_door", x: 615, y: 972, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.Lift3_door", x: 609, y: 940, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.Trap2_door", x: 462, y: 242, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.117_door", x: 590, y: 819, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.116_door", x: 580, y: 775, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.114_door", x: 562, y: 695, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.111_door", x: 544, y: 611, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.109_door", x: 526, y: 530, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.107_door", x: 503, y: 396, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.104_door", x: 478, y: 275, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.318_door", x: 240, y: 434, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "H.3.405_door", x: 303, y: 309, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.023_door", x: 821, y: 1018, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.021_door", x: 923, y: 1002, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.019_door", x: 1024, y: 991, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.Trap1_door", x: 990, y: 906, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.lift_door", x: 922, y: 908, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.Trap2_door", x: 812, y: 732, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.028_door", x: 805, y: 859, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.029_door", x: 793, y: 810, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.030_door", x: 787, y: 778, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.033_door", x: 863, y: 829, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WD.03.005_door", x: 1308, y: 870, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.029_door", x: 1426, y: 758, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.028_door", x: 1462, y: 752, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.022_door", x: 1779, y: 786, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.017_door", x: 2004, y: 755, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.014_door", x: 2167, y: 733, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.007_door", x: 2189, y: 699, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.Trap1_door", x: 2156, y: 661, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.Lift_door", x: 2113, y: 624, floor: 1, type: "door", width: 20, height: 20 },
+                  { id: "WN.03.Trap2_door", x: 1422, y: 713, floor: 1, type: "door", width: 20, height: 20 },
                 ]}
                 background={
                   <>
-                    <image href={test3} width={453} height={627} />
-                    <g id="Platte_3D" data-name="Platte 3D">
-                      <polygon
-                        id={"H." + currentFloor + ".318"}
-                        className="cls-2 room"
-                        points="37.81 140.19 120.83 128.43 145.72 236.77 62.08 248.78 37.81 140.19"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".312"}
-                        className="cls-2 room"
-                        points="62.52 249.8 145.83 237.89 164.75 319.59 80.88 331.54 62.52 249.8"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".308"}
-                        className="cls-2 room"
-                        points="81.19 332.36 164.39 320.48 189.3 429.41 105.61 441.25 81.19 332.36"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".306"}
-                        className="cls-2 room"
-                        points="105.94 442.03 114.94 483.25 198.14 471.14 188.95 430.2 105.94 442.03"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".204"}
-                        className="cls-2 room"
-                        points="115.3 483.96 135.18 573.09 316.44 547.12 296.32 457.91 115.3 483.96"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".118"}
-                        className="cls-2 room"
-                        points="325.27 393.59 363.39 388.06 368.56 409.89 330.18 415.86 325.27 393.59"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".117"}
-                        className="cls-2 room"
-                        points="319.31 369.22 362.69 363 365.29 373.78 375.69 372.2 378.56 384.73 324.48 392.45 319.31 369.22"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".116"}
-                        className="cls-2 room"
-                        points="313.88 345.47 357.87 339.43 363.39 361.95 319.31 368.35 313.88 345.47"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".215"}
-                        className="cls-2 room"
-                        points="309.32 327.68 313 345.04 338.64 341.44 334.65 324.27 309.32 327.68"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".114"}
-                        className="cls-2 room"
-                        points="299.22 285.09 352.98 277.44 366.56 337.47 339.56 341.18 335.44 323.47 308.42 327.16 299.22 285.09"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".112"}
-                        className="cls-2 room"
-                        points="293.9 263.19 298.59 284.4 353.16 276.61 348.41 255.37 293.9 263.19"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".111"}
-                        className="cls-2 room"
-                        points="293.67 262.34 347.75 254.75 333.32 190.49 279.59 197.97 293.67 262.34"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".107"}
-                        className="cls-2 room"
-                        points="274.6 175.8 322.31 169.01 312.82 127.28 296.19 129.5 294.75 124.28 264.07 128.72 274.6 175.8"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".104"}
-                        className="cls-2 room"
-                        points="313.78 126.44 296.61 129.05 295.42 123.6 263.54 128.21 255.35 91.34 304.27 84.41 313.78 126.44"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".219"}
-                        className="cls-2 room"
-                        points="331.99 422.61 366.59 417.6 369.52 429.5 334.76 434.46 331.99 422.61"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".120"}
-                        className="cls-2 room"
-                        points="335.28 437.02 337.99 448.87 372.65 443.86 369.99 432.06 335.28 437.02"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".409"}
-                        className="cls-2 room"
-                        points="359.61 458.52 374.27 456.59 379.28 477.47 364.4 479.45 359.61 458.52"
-                      />
-                      <polygon
-                        id={"H." + currentFloor + ".403"}
-                        className="cls-2 room"
-                        points="17.66 50.15 204.92 23.19 225.07 112.53 37.31 139.5 17.66 50.15"
-                      />
-                    </g>
+                    <image href={Verdieping3} width={2412.61} height={1344.75} />
                   </>
                 }
               />

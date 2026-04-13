@@ -32,8 +32,11 @@ export function buildAdjacencyMap(graph: Graph) {
   graph.nodes.forEach((n) => map.set(n.id, []));
 
   graph.edges.forEach((e) => {
-    map.get(e.from)!.push(e.to);
-    map.get(e.to)!.push(e.from);
+    if (!map.has(e.from)) map.set(e.from, []);
+    if (!map.has(e.to)) map.set(e.to, []);
+
+    map.get(e.from)?.push(e.to);
+    map.get(e.to)?.push(e.from);
   });
 
   return map;

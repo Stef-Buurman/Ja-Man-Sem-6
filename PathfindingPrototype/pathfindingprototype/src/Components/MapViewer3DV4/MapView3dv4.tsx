@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Edge, Node } from "../../Types/types";
 import "./MapView3dv4.css";
 
@@ -11,212 +11,217 @@ interface MapViewProps {
   floors?: React.FC<React.SVGProps<SVGSVGElement>>[];
 }
 
-export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => { }, floors }) => {
-  const svgElement = React.useRef<SVGSVGElement>(null);
-  const [elements, setElements] = React.useState<SVGPolygonElement[]>([]);
-  const [doors, setDoors] = React.useState<SVGCircleElement[]>([]);
-  const [images, setImages] = React.useState<SVGImageElement[]>([]);
-  const [grounds, setGrounds] = React.useState<SVGPolygonElement[]>([]);
+export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => {}, floors }) => {
+  const svgElement = useRef<SVGSVGElement>(null);
 
-  const imgWidth = 2412.61;
-  const imgHeight = 1344.75;
-  const svgWidth = 1200;
-  const svgHeight = 800;
-  const scaleX = 1;
-  const scaleY = 1;
+  // Extract room polygons and add click handlers
+  useEffect(() => {
+    if (!svgElement.current) return;
 
+    const prefixes = ["H.", "WN", "WD"];
+    const allRooms = svgElement.current.querySelectorAll(prefixes.map((p) => `g[id^='${p}']`).join(", "));
+
+    const cleanups: Array<() => void> = [];
+
+    allRooms.forEach((room) => {
+      const polygon = room.querySelector("polygon");
+      const roomId = room.id;
+
+      if (!polygon) return;
+
+      const onClick = (event: Event) => {
+        event.stopPropagation();
+        handleRoomClick(roomId + "_door");
+      };
+
+      const onEnter = () => {
+        polygon.style.fillOpacity = "0.8";
+        polygon.style.stroke = "#ff5722";
+        polygon.style.strokeWidth = "3";
+      };
+
+      const onLeave = () => {
+        polygon.style.fillOpacity = "0.6";
+        polygon.style.stroke = "";
+        polygon.style.strokeWidth = "";
+      };
+
+      polygon.style.cursor = "pointer";
+      polygon.style.transition = "all 0.2s ease";
+
+      polygon.addEventListener("click", onClick);
+      polygon.addEventListener("mouseenter", onEnter);
+      polygon.addEventListener("mouseleave", onLeave);
+
+      cleanups.push(() => {
+        polygon.removeEventListener("click", onClick);
+        polygon.removeEventListener("mouseenter", onEnter);
+        polygon.removeEventListener("mouseleave", onLeave);
+      });
+    });
+
+    return () => {
+      cleanups.forEach((fn) => fn());
+    };
+  }, [currentFloor, floors, handleRoomClick]);
+
+  // Add this useEffect to debug door positions
   useEffect(() => {
     if (svgElement.current) {
-      const element = svgElement.current.getElementById("Plane-2");
-      if (element) {
-        const polygons = element.querySelectorAll("polygon");
-        setElements(Array.from(polygons));
-      }
-      const doorGroup = svgElement.current.getElementById("DataPoints");
-      if (doorGroup) {
-        const doors = doorGroup.querySelectorAll("circle");
-        setDoors(Array.from(doors));
-      }
-      const imageGroup = svgElement.current.getElementById("_3d-2");
-      const x = svgElement.current.getElementById("floor");
-      const y = svgElement.current.getElementById("walls");
-      if (imageGroup && x && y) {
-        const images = imageGroup.querySelectorAll("image");
-        const xImages = x.querySelectorAll("image");
-        const yImages = y.querySelectorAll("image");
-        setImages([...Array.from(xImages), ...Array.from(yImages), ...Array.from(images)]);
-        // setImages(Array.from(images));
-      }
-      const groundGroup = svgElement.current.getElementById("Ondergrond");
-      if (groundGroup) {
-        const grounds = groundGroup.querySelectorAll("polygon");
-        setGrounds(Array.from(grounds));
-      }
+      setTimeout(() => {
+        const doorGroup = svgElement.current?.getElementById("DataPoints");
+        if (doorGroup) {
+          const doors = doorGroup.querySelectorAll("circle");
+          // console.log("=== DOOR DEBUG INFO ===");
+          doors.forEach((door, index) => {
+            const cx = door.getAttribute("cx");
+            const cy = door.getAttribute("cy");
+            const transform = door.getAttribute("transform");
+            const id = door.getAttribute("data-name") || door.id;
+
+            // Get the actual rendered position
+            const bbox = door.getBBox();
+            // console.log(`Door ${index} (${id}):`, {
+            //   original_cx: cx,
+            //   original_cy: cy,
+            //   transform: transform,
+            //   rendered_x: bbox.x,
+            //   rendered_y: bbox.y,
+            //   bbox_width: bbox.width,
+            //   bbox_height: bbox.height,
+            // });
+          });
+        }
+      }, 500);
     }
-  }, []);
-
-
-
+  }, [currentFloor, floors]);
   const copyDoors = () => {
-    const doorData = doors.map(door => {
-      console.log("Door element: ", door.getAttribute("data-name"));
-      const id = door.getAttribute("data-name") || door.id;
-      const x = parseFloat(door.getAttribute("cx") || "0") * scaleX;
-      const y = parseFloat(door.getAttribute("cy") || "0") * scaleY;
-      return { id, x, y, floor: currentFloor, type: "door", width: 20, height: 20 };
+    if (!svgElement.current) return;
+
+    const doorGroup = svgElement.current.getElementById("DataPoints");
+    if (!doorGroup) return;
+
+    const doors = doorGroup.querySelectorAll("circle");
+
+    const doorData = Array.from(doors).map((door) => {
+      const rawId = door.getAttribute("data-name") || door.id;
+      const cleanId = rawId.replace(/-\d+$/, "");
+
+      const x = parseFloat(door.getAttribute("cx") || "0");
+      const y = parseFloat(door.getAttribute("cy") || "0");
+
+      return {
+        id: `${cleanId}_door`,
+        x: Math.round(x),
+        y: Math.round(y),
+        floor: currentFloor,
+        type: "door",
+        width: 20,
+        height: 20,
+      };
     });
-    const formattedData = doorData.map((d) => `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`).join("\n");
-    navigator.clipboard.writeText(formattedData).then(() => {
-      alert("Door data copied to clipboard!");
-    }).catch(err => {
-      console.error("Failed to copy door data: ", err);
-    });
+
+    const formattedData = doorData
+      .map((d) => `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`)
+      .join("\n");
+
+    navigator.clipboard.writeText(formattedData);
   };
 
   const SelectedFloor = floors?.[currentFloor - 1];
 
-  const handleSvgClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    console.log("x:", x, "y:", y);
-  };
-
-
   return (
     <>
-      <button onClick={copyDoors}>Copy doors</button>
-      <svg viewBox={0 + " " + 0 + " " + svgWidth + " " + svgHeight} width={svgWidth} height={svgHeight} className="MapView3d4" onClick={handleSvgClick}>
-        {SelectedFloor && <SelectedFloor ref={svgElement} width={svgWidth} height={svgHeight} style={{ display: "none" }} />}
-        {/* style={{ display: "none" }} */}
-        {/* {grounds.map((ground) => (
-          <polygon
-            key={ground.id}
-            points={ground.getAttribute("points") || undefined}
-            className="cls-3"
-          />
-        ))} */}
-        {images.map((img) => {
-          const x = parseFloat(img.getAttribute("x") || "0") * scaleX;
-          const y = parseFloat(img.getAttribute("y") || "0") * scaleY;
-          const width: number = (parseInt(img.getAttribute("width") || "0") || 0) * scaleX;
-          const height: number = (parseInt(img.getAttribute("height") || "0") || 0) * scaleY;
-          const randomInt = Math.floor(Math.random() * 10000);
-          return (
-            <image
-              key={randomInt}
-              x={x}
-              y={y}
-              transform={img.getAttribute("transform") || undefined}
-              width={width}
-              height={height}
-              href={img.getAttribute("xlink:href") || undefined}
-            />
-          );
-        })}
-        {/* {elements.map((el) => {
-          const roomId = el.id;
-          const parts = roomId.split(".");
-          parts[1] = currentFloor.toString();
-          const result = parts.join(".");
-          return (
-            <polygon
-              key={result}
-              id={result}
-              onClick={() => handleRoomClick(result)}
-              className="cls-2 room"
-              points={el.getAttribute("points") || undefined}
-            />
-          );
-        })}  */}
-        {path && (
-          <path
-            d={(() => {
-              const points = path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)).filter(Boolean) as {
-                x: number;
-                y: number;
-              }[];
+      <button onClick={copyDoors} style={{ margin: "10px", padding: "5px 10px" }}>
+        Copy doors (original coordinates)
+      </button>
 
-              if (points.length === 0) return "";
+      <div
+        style={{
+          position: "relative",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          overflow: "hidden",
+          maxWidth: "1200px",
+          margin: "0 auto",
+        }}
+      >
+        <svg
+          ref={svgElement}
+          viewBox="0 0 2412.61 1344.75"
+          className="MapView3d4"
+          style={{ backgroundColor: "#f5f5f5", width: "100%", height: "auto", display: "block" }}
+        >
+          {SelectedFloor && <SelectedFloor />}
 
-              let d = `M ${points[0].x},${points[0].y}`;
-
-              for (let i = 0; i < points.length - 1; i++) {
-                const p0 = points[i - 1] || points[i];
-                const p1 = points[i];
-                const p2 = points[i + 1];
-                const p3 = points[i + 2] || p2;
-
-                const cp1x = p1.x + (p2.x - p0.x) / 6;
-                const cp1y = p1.y + (p2.y - p0.y) / 6;
-
-                const cp2x = p2.x - (p3.x - p1.x) / 6;
-                const cp2y = p2.y - (p3.y - p1.y) / 6;
-
-                d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
-              }
-
-              return d;
-            })()}
-            fill="none"
-            stroke="blue"
-            strokeWidth={6}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )}
-
-        {edges.map((e) => {
-          const from = nodes.find(
-            (n) => n.id === e.from && n.floor === currentFloor,
-          );
-          const to = nodes.find((n) => n.id === e.to && n.floor === currentFloor);
-          if (!from || !to) return null;
-
-          // Hallway color: gray
-          return (
-            <line
-              key={`${e.from}-${e.to}`}
-              x1={from.x}
-              y1={from.y}
-              x2={to.x}
-              y2={to.y}
-              stroke="#aaa"
-              strokeWidth={8}
-              strokeLinecap="round"
-            />
-          );
-        })}
-        {nodes
-          .filter((n) => n.floor === currentFloor) //&& n.type !== "hallway"
-          .map((n) => {
-            const fillColor =
-              n.type === "room"
-                ? "#ffd27f"
-                : n.type === "hallway"
-                  ? "#ccc"
-                  : n.type === "stairs"
-                    ? "#6b9fff"
-                    : n.type === "entrance"
-                      ? "#90ee90"
-                      : n.type === "door"
-                        ? "#8b8b8b" // gray for doors
-                        : "#eee";
-            return (
+          {/* {nodes
+            .filter((n) => n.floor === currentFloor)
+            .map((n) => (
               <rect
-                key={n.id + (n.type === "door" ? "_door" : "")}
-                x={n.x}
-                y={n.y}
-                width={n.width ?? 40}
-                height={n.height ?? 40}
-                fill={fillColor}
+                key={n.id}
+                x={n.x - (n.width ?? 20) / 2}
+                y={n.y - (n.height ?? 20) / 2}
+                width={n.width ?? 20}
+                height={n.height ?? 20}
+                fill={n.type === "door" ? "#ff0000" : "#ffd27f"}
                 stroke="#333"
                 strokeWidth={2}
-                rx={5}
+                rx={3}
+                onClick={() => handleRoomClick(n.id)}
+                style={{ cursor: "pointer", opacity: 0.8 }}
               />
-            );
-          })}
-      </svg>
+            ))} */}
+
+          {/* {edges.map((e) => {
+            const from = nodes.find((n) => n.id === e.from && n.floor === currentFloor);
+            const to = nodes.find((n) => n.id === e.to && n.floor === currentFloor);
+            if (!from || !to) return null;
+
+            return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
+          })} */}
+
+          {path && (
+            <path
+              d={(() => {
+                const points = path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)).filter(Boolean) as {
+                  x: number;
+                  y: number;
+                }[];
+
+                console.log("=== PATH DEBUG INFO ===");
+                console.log("Raw path IDs:", path);
+                console.log("Mapped points:", points);
+
+                if (points.length === 0) return "";
+
+                let d = `M ${points[0].x},${points[0].y}`;
+
+                for (let i = 0; i < points.length - 1; i++) {
+                  const p0 = points[i - 1] || points[i];
+                  const p1 = points[i];
+                  const p2 = points[i + 1];
+                  const p3 = points[i + 2] || p2;
+
+                  const cp1x = p1.x + (p2.x - p0.x) / 6;
+                  const cp1y = p1.y + (p2.y - p0.y) / 6;
+
+                  const cp2x = p2.x - (p3.x - p1.x) / 6;
+                  const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+                  d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
+                }
+
+                return d;
+              })()}
+              fill="none"
+              stroke="blue"
+              strokeWidth={6}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )}
+        </svg>
+      </div>
     </>
   );
 };

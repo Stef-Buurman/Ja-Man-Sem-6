@@ -9,9 +9,13 @@
 .cls-2 {
   fill: #d3114c;
 }
-.cls-4{
+.cls-4 {
   width: 50%;
 }
+.cls-7 {
+  display: none;
+}
+
 .room {
   fill: #d3114c;
   stroke: #342626;
@@ -33,6 +37,17 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #FDF1E3;
+  background-color: #fdf1e3;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.clickable-room {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.clickable-room:hover {
+  fill-opacity: 0.85 !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
