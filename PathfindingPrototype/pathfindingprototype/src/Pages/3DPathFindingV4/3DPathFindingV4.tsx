@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getGraph3dv2 } from "../../data/graph3dv3";
+import { graph3d2v4 } from "../../data/graph3dv4";
 import { findPathAStarMultiStart } from "../../services/pathfinding";
 import "./3DPathFindingV4.css";
 import { FloorSelector } from "../../Components/FloorSelector/FloorSelector";
 import { Graph, Node } from "../../Types/types";
 import { MapView3dV4 } from "../../Components/MapViewer3DV4/MapView3dv4";
-import Test3Svg from "../../assets/2e_verdieping.svg?react";
+import Test3Svg from "../../assets/Verdieping3_2.svg?react";
 import TestGroundFloor from "../../assets/Verdieping_0.svg?react";
 
 const floors = [1, 2, 3];
@@ -17,7 +17,7 @@ export const PathFinding3DV4: React.FC = () => {
   useEffect(() => {
     const gottenGraph: Graph = { nodes: [], edges: [] };
     floors.forEach((floor) => {
-      const gr = getGraph3dv2(floor);
+      const gr = graph3d2v4;
       gottenGraph.nodes.push(...gr.nodes);
       gottenGraph.edges.push(...gr.edges);
     });
@@ -41,7 +41,7 @@ export const PathFinding3DV4: React.FC = () => {
         <h1>3D Pathfinding Prototype V4</h1>
         <h2>Current Floor: {currentFloor} {selectedRoom && `(Rout send to: ${selectedRoom})`}</h2>
         <FloorSelector floors={floors} currentFloor={currentFloor} setFloor={setCurrentFloor} />
-        <MapView3dV4 nodes={graph.nodes} edges={graph.edges} currentFloor={currentFloor} path={path} handleRoomClick={handleRoomClick} floors={[TestGroundFloor, Test3Svg, Test3Svg]} />
+        <MapView3dV4 nodes={graph.nodes} edges={graph.edges} currentFloor={currentFloor} path={path} handleRoomClick={handleRoomClick} floors={[Test3Svg]} />
       </div>
     )
   );

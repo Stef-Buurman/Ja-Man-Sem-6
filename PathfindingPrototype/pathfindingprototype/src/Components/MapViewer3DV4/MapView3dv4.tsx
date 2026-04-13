@@ -18,22 +18,34 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
   const [images, setImages] = React.useState<SVGImageElement[]>([]);
   const [grounds, setGrounds] = React.useState<SVGPolygonElement[]>([]);
 
+  const imgWidth = 2412.61;
+  const imgHeight = 1344.75;
+  const svgWidth = 1200;
+  const svgHeight = 800;
+  const scaleX = 1;
+  const scaleY = 1;
+
   useEffect(() => {
     if (svgElement.current) {
-      const element = svgElement.current.getElementById("Platte_3D");
+      const element = svgElement.current.getElementById("Plane-2");
       if (element) {
         const polygons = element.querySelectorAll("polygon");
         setElements(Array.from(polygons));
       }
-      const doorGroup = svgElement.current.getElementById("Deuren");
+      const doorGroup = svgElement.current.getElementById("DataPoints");
       if (doorGroup) {
         const doors = doorGroup.querySelectorAll("circle");
         setDoors(Array.from(doors));
       }
-      const imageGroup = svgElement.current.getElementById("_3D_blokken");
-      if (imageGroup) {
+      const imageGroup = svgElement.current.getElementById("_3d-2");
+      const x = svgElement.current.getElementById("floor");
+      const y = svgElement.current.getElementById("walls");
+      if (imageGroup && x && y) {
         const images = imageGroup.querySelectorAll("image");
-        setImages(Array.from(images));
+        const xImages = x.querySelectorAll("image");
+        const yImages = y.querySelectorAll("image");
+        setImages([...Array.from(xImages), ...Array.from(yImages), ...Array.from(images)]);
+        // setImages(Array.from(images));
       }
       const groundGroup = svgElement.current.getElementById("Ondergrond");
       if (groundGroup) {
@@ -43,14 +55,17 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
     }
   }, []);
 
+
+
   const copyDoors = () => {
     const doorData = doors.map(door => {
-      const id = door.id;
-      const x = parseFloat(door.getAttribute("cx") || "0");
-      const y = parseFloat(door.getAttribute("cy") || "0");
+      console.log("Door element: ", door.getAttribute("data-name"));
+      const id = door.getAttribute("data-name") || door.id;
+      const x = parseFloat(door.getAttribute("cx") || "0") * scaleX;
+      const y = parseFloat(door.getAttribute("cy") || "0") * scaleY;
       return { id, x, y, floor: currentFloor, type: "door", width: 20, height: 20 };
     });
-    const formattedData = doorData.map((d, index) => `{ id: "${elements[index]?.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`).join("\n");
+    const formattedData = doorData.map((d) => `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`).join("\n");
     navigator.clipboard.writeText(formattedData).then(() => {
       alert("Door data copied to clipboard!");
     }).catch(err => {
@@ -60,11 +75,19 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
 
   const SelectedFloor = floors?.[currentFloor - 1];
 
+  const handleSvgClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    console.log("x:", x, "y:", y);
+  };
+
+
   return (
     <>
       <button onClick={copyDoors}>Copy doors</button>
-      <svg width={1200} height={800} className="MapView3d4">
-        {SelectedFloor && <SelectedFloor ref={svgElement} />}
+      <svg viewBox={0 + " " + 0 + " " + svgWidth + " " + svgHeight} width={svgWidth} height={svgHeight} className="MapView3d4" onClick={handleSvgClick}>
+        {SelectedFloor && <SelectedFloor ref={svgElement} width={svgWidth} height={svgHeight} style={{ display: "none" }} />}
         {/* style={{ display: "none" }} */}
         {/* {grounds.map((ground) => (
           <polygon
@@ -72,12 +95,12 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
             points={ground.getAttribute("points") || undefined}
             className="cls-3"
           />
-        ))}
+        ))} */}
         {images.map((img) => {
-          const x = parseFloat(img.getAttribute("x") || "0");
-          const y = parseFloat(img.getAttribute("y") || "0");
-          const width: number = parseInt(img.getAttribute("width") || "0") || 0;
-          const height: number = parseInt(img.getAttribute("height") || "0") || 0;
+          const x = parseFloat(img.getAttribute("x") || "0") * scaleX;
+          const y = parseFloat(img.getAttribute("y") || "0") * scaleY;
+          const width: number = (parseInt(img.getAttribute("width") || "0") || 0) * scaleX;
+          const height: number = (parseInt(img.getAttribute("height") || "0") || 0) * scaleY;
           const randomInt = Math.floor(Math.random() * 10000);
           return (
             <image
@@ -91,7 +114,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
             />
           );
         })}
-        {elements.map((el) => {
+        {/* {elements.map((el) => {
           const roomId = el.id;
           const parts = roomId.split(".");
           parts[1] = currentFloor.toString();
@@ -105,7 +128,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
               points={el.getAttribute("points") || undefined}
             />
           );
-        })} */}
+        })}  */}
         {path && (
           <path
             d={(() => {
@@ -143,7 +166,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
           />
         )}
 
-        {/* {edges.map((e) => {
+        {edges.map((e) => {
           const from = nodes.find(
             (n) => n.id === e.from && n.floor === currentFloor,
           );
@@ -181,7 +204,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
                         : "#eee";
             return (
               <rect
-                key={n.id}
+                key={n.id + (n.type === "door" ? "_door" : "")}
                 x={n.x}
                 y={n.y}
                 width={n.width ?? 40}
@@ -192,7 +215,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
                 rx={5}
               />
             );
-          })} */}
+          })}
       </svg>
     </>
   );

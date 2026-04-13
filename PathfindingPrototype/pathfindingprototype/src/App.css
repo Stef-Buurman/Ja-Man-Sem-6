@@ -1,15 +1,17 @@
-.cls-1 {
+/* .cls-1 {
   fill: red;
-}
+} */
 
-.cls-1 {
+/* .cls-1 {
   fill: #4882a4;
-}
+} */
 
 .cls-2 {
   fill: #d3114c;
 }
-
+.cls-4{
+  width: 50%;
+}
 .room {
   fill: #d3114c;
   stroke: #342626;
