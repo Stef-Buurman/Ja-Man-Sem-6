@@ -1,0 +1,136 @@
+.api-tester-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #e7dbcc;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: #372526;
+  margin-bottom: 25px;
+}
+
+.section {
+  margin-bottom: 20px;
+  color: #372526;
+}
+
+.input-field,
+.input-area {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #b6deff;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  color: #372526;
+}
+
+.input-area {
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #372526;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #fc3511;
+}
+
+/* Action buttons */
+
+.btn-encrypt {
+  background-color: #b6deff;
+  color: #372526;
+}
+
+.btn-encrypt:hover {
+  background-color: #7fa2bd;
+}
+
+.btn-decrypt {
+  background-color: #fc3511;
+  color: white;
+}
+
+.btn-decrypt:hover {
+  background-color: #d92d0e;
+}
+
+.btn-hash {
+  background-color: #372526;
+  color: white;
+}
+
+.btn-hash:hover {
+  background-color: #2f1b17;
+}
+
+/* Keys section */
+
+.keys-section {
+  background-color: #b6deff;
+  padding: 15px;
+  border-radius: 10px;
+  color: #372526;
+}
+
+.keys-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.key-code {
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #372526;
+  font-family: monospace;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}

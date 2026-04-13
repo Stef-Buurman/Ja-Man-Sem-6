@@ -1,0 +1,187 @@
+import { useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import "./EncryptionPage.css";
+import {
+  encryptData,
+  decryptData,
+  hashData,
+  getKeyOptions,
+} from "../../api/methods/Encryption.api";
+import { toast } from "../../components/toast-manager/toast-context";
+import { getJwt } from "../../api/methods/Auth.api";
+
+export default function EncryptionPage() {
+  const [data, setData] = useState("");
+  const [key, setKey] = useState("");
+  const [result, setResult] = useState("");
+  const [keys, setKeys] = useState<string[]>([]);
+  const [jwt, setJwt] = useState("");
+
+  useEffect(() => {
+    var res = getJwt();
+    res.then((jwtToken) => {
+      if (jwtToken.ok) {
+        setJwt(jwtToken.response.token || "");
+        toast.success("JWT obtained successfully", "Authentication Successful");
+      } else {
+        toast.error("Failed to obtain JWT", "Authentication Failed");
+      }
+    });
+  }, []);
+
+  const encrypt = async () => {
+    try {
+      const response = await encryptData(
+        { data, key },
+        {
+          toastSuccess: {
+            message: "Data encrypted successfully",
+            title: "Encryption Successful",
+          },
+        },
+      );
+      if (response.ok) {
+        setResult(response.response.data || "");
+      }
+    } catch {}
+  };
+
+  const decrypt = async () => {
+    try {
+      const result = await decryptData(
+        { data, key },
+        {
+          toastSuccess: {
+            message: "Data decrypted successfully",
+            title: "Decryption Successful",
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        },
+      );
+      if (result.ok) {
+        setResult(result.response.data || "");
+      }
+    } catch {}
+  };
+
+  const hash = async () => {
+    try {
+      const response = await hashData(
+        { data },
+        {
+          toastSuccess: {
+            message: "Data hashed successfully",
+            title: "Hashing Successful",
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        },
+      );
+      if (response.ok) {
+        setResult(response.response.data || "");
+      }
+    } catch {}
+  };
+
+  const generateKeys = async () => {
+    try {
+      const result = await getKeyOptions(undefined, {
+        toastSuccess: {
+          message: "Keys generated successfully",
+          title: "Key Generation Successful",
+        },
+      });
+      if (result.ok) {
+        setKeys(result.response.data || []);
+      }
+    } catch {}
+  };
+
+  const copyResult = async () => {
+    if (!result) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(result);
+      toast.success("Result copied to clipboard", "Copy Successful");
+    } catch (err) {
+      toast.error("Failed to copy result", "Copy Failed");
+    }
+  };
+
+  return (
+    <div className="api-tester-container">
+      <h2 className="title">Encryption API Tester</h2>
+
+      <div className="section">
+        <label>Data</label>
+        <textarea
+          className="input-area"
+          value={data}
+          onChange={(e) => setData(e.target.value)}
+          placeholder="Enter text or JSON here..."
+        />
+      </div>
+
+      <div className="section">
+        <label>Key</label>
+        <input
+          className="input-field"
+          value={key}
+          onChange={(e) => setKey(e.target.value)}
+          placeholder="Enter or select a key"
+        />
+      </div>
+
+      <div className="button-group">
+        <button className="btn" onClick={generateKeys}>
+          Generate Keys
+        </button>
+        <button className="btn btn-encrypt" onClick={encrypt}>
+          Encrypt
+        </button>
+        <button className="btn btn-decrypt" onClick={decrypt}>
+          Decrypt
+        </button>
+        <button className="btn btn-hash" onClick={hash}>
+          Hash
+        </button>
+      </div>
+
+      {keys.length > 0 && (
+        <div className="section keys-section">
+          <h3>Generated Keys</h3>
+          <div className="keys-list">
+            {keys.map((k, i) => (
+              <div key={i} className="key-item">
+                <button className="btn btn-small" onClick={() => setKey(k)}>
+                  Use
+                </button>
+                <code className="key-code">{k}</code>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="section">
+        <div className="result-header">
+          <h3>Result</h3>
+          <button className="btn btn-small" onClick={copyResult}>
+            Copy
+          </button>
+        </div>
+
+        <textarea className="input-area" value={result} readOnly rows={6} />
+      </div>
+    </div>
+  );
+}

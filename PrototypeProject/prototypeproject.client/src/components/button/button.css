@@ -1,0 +1,251 @@
+.evf-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: fit-content;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.evf-button:hover:not(:disabled) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.evf-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.evf-button:disabled {
+  filter: brightness(60%);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .evf-button {
+    width: 100%;
+    padding: 14px 16px;
+  }
+}
+
+/* Primary variant */
+
+.evf-button-primary {
+  background-color: var(--main-lms-color);
+}
+
+/* Navigation Item Button Styles */
+
+.evf-button-nav-item-secondary {
+  justify-content: start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #a3aed0;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+  box-shadow: none;
+  margin-left: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 0;
+  transition:
+    color 0.2s,
+    border-right 0.2s;
+}
+
+.evf-button-nav-item-secondary:not(:disabled) {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.evf-button-nav-item-secondary:hover {
+  color: var(--main-lms-color);
+  border-right: var(--main-lms-color) 3px solid;
+}
+
+.evf-button-nav-item-secondary .icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Navigation Item Button Styles */
+
+.evf-button-nav-item-primary {
+  justify-content: start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #a3aed0;
+  font-size: 20px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+  box-shadow: none;
+  text-decoration: none;
+  color: #818181;
+  display: flex;
+  align-items: center;
+  transition:
+    color 0.2s,
+    border-right 0.2s;
+  border-radius: 0;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.evf-button-nav-item-primary:not(:disabled) {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.evf-button-nav-item-primary:hover {
+  color: var(--main-lms-color);
+  border-right: var(--main-lms-color) 3px solid;
+}
+
+.evf-button-nav-item-primary .icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Red variant */
+
+.evf-button-red {
+  background-color: red;
+}
+
+/* Secondary variant */
+
+.evf-button-secondary {
+  background-color: #1899d6;
+  border-radius: 16px;
+  box-sizing: border-box;
+  color: #ffffff !important;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 0.8px;
+  line-height: 20px;
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  text-decoration: underline;
+}
+
+.evf-button-secondary:hover {
+  background: var(--main-lms-color);
+}
+
+.evf-button-secondary:focus {
+  user-select: auto;
+}
+
+.evf-button-secondary:disabled {
+  cursor: auto;
+}
+
+.evf-button-secondary:not(:disabled) {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* tertiary variant */
+
+.evf-button-tertiary {
+  margin-left: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--main-lms-color);
+  background-color: #e3f2fd;
+  border: 2px solid var(--main-lms-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.evf-button-tertiary:hover {
+  background-color: var(--main-lms-color);
+  color: #fff;
+  border-color: #e3f2fd;
+}
+
+/* no-style variant */
+
+.evf-button-no-style {
+  all: unset;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.evf-button-no-style:hover {
+  text-decoration: underline;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Link Button Styles ***Place all stylings above!!!!*** */
+
+.reset-link {
+  all: unset;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.full-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.evf-button.button-link {
+  padding: 0 !important;
+}
+
+.evf-button-secondary.button-link .full-link {
+  padding: 5px 10px 5px 10px;
+  width: calc(100% - 10px);
+}
+
+.evf-button-nav-item-primary .full-link {
+  padding: 7.5px 0px 7.5px 15px;
+}
