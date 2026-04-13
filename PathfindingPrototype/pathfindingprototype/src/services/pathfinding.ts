@@ -63,7 +63,7 @@ export function getEdgeCost(from: Node, to: Node) {
 }
 
 export function getNode(graph: Graph, id: string): Node {
-  const node = graph.nodes.find((n) => n.id === id);
+  const node = graph.nodes.find((n) => n.id === id || n.id === id + "_door");
   if (!node) throw new Error(`Node ${id} not found`);
   return node;
 }
@@ -139,59 +139,83 @@ export function findPathAStarMultiStart(
   endId: string,
   graph: Graph
 ): string[] {
-  const adjacency = buildAdjacencyMap(graph);
+  const tryFindPath = (targetId: string): string[] => {
+    const adjacency = buildAdjacencyMap(graph);
 
-  const openSet = new Set<string>(startIds);
-  const cameFrom = new Map<string, string>();
+    const openSet = new Set<string>(startIds);
+    const cameFrom = new Map<string, string>();
 
-  const gScore = new Map<string, number>();
-  const fScore = new Map<string, number>();
+    const gScore = new Map<string, number>();
+    const fScore = new Map<string, number>();
 
-  graph.nodes.forEach((n) => {
-    gScore.set(n.id, Infinity);
-    fScore.set(n.id, Infinity);
-  });
+    graph.nodes.forEach((n) => {
+      gScore.set(n.id, Infinity);
+      fScore.set(n.id, Infinity);
+    });
 
-  const endNode = getNode(graph, endId);
+    const endNode = getNode(graph, targetId);
+    if (!endNode) {
+      return [];
+    }
 
-  for (const startId of startIds) {
-    const startNode = getNode(graph, startId);
-
-    gScore.set(startId, 0);
-    fScore.set(startId, heuristic(startNode, endNode));
-  }
-
-  while (openSet.size > 0) {
-    let current = [...openSet].reduce((a, b) =>
-      fScore.get(a)! < fScore.get(b)! ? a : b
+    console.log(
+      `End node: ${endNode.id} at (${endNode.x}, ${endNode.y}) on floor ${endNode.floor}`
     );
 
-    if (current === endId) {
-      return reconstructPath(cameFrom, current);
+    for (const startId of startIds) {
+      const startNode = getNode(graph, startId);
+      if (!startNode) continue;
+
+      gScore.set(startId, 0);
+      fScore.set(startId, heuristic(startNode, endNode));
     }
 
-    openSet.delete(current);
+    while (openSet.size > 0) {
+      const current = [...openSet].reduce((a, b) =>
+        fScore.get(a)! < fScore.get(b)! ? a : b
+      );
 
-    const currentNode = getNode(graph, current);
+      if (current === targetId) {
+        return reconstructPath(cameFrom, current);
+      }
 
-    for (const neighborId of getNeighbors(current, adjacency)) {
-      const neighborNode = getNode(graph, neighborId);
+      openSet.delete(current);
 
-      const tentativeG =
-        gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
+      const currentNode = getNode(graph, current);
+      if (!currentNode) continue;
 
-      if (tentativeG < gScore.get(neighborId)!) {
-        cameFrom.set(neighborId, current);
+      for (const neighborId of getNeighbors(current, adjacency)) {
+        const neighborNode = getNode(graph, neighborId);
+        if (!neighborNode) continue;
 
-        gScore.set(neighborId, tentativeG);
-        fScore.set(
-          neighborId,
-          tentativeG + heuristic(neighborNode, endNode)
-        );
+        const tentativeG =
+          gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
 
-        openSet.add(neighborId);
+        if (tentativeG < gScore.get(neighborId)!) {
+          cameFrom.set(neighborId, current);
+          gScore.set(neighborId, tentativeG);
+          fScore.set(
+            neighborId,
+            tentativeG + heuristic(neighborNode, endNode)
+          );
+          openSet.add(neighborId);
+        }
       }
     }
+
+    return [];
+  };
+
+  const normalPath = tryFindPath(endId);
+  if (normalPath.length > 0) {
+    console.log("Path found to " + endId);
+    return normalPath;
+  }
+
+  const doorPath = tryFindPath(endId + "_door");
+  if (doorPath.length > 0) {
+    console.log("Path found to fallback target " + endId + "_door");
+    return doorPath;
   }
 
   return [];

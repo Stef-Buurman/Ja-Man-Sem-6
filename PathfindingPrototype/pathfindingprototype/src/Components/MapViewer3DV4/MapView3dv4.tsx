@@ -13,12 +13,10 @@ interface MapViewProps {
 
 export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => {}, floors }) => {
   const svgElement = useRef<SVGSVGElement>(null);
-
-  // Extract room polygons and add click handlers
   useEffect(() => {
     if (!svgElement.current) return;
 
-    const prefixes = ["H.", "WN", "WD"];
+    const prefixes = ["H.", "WN.", "WD."];
     const allRooms = svgElement.current.querySelectorAll(prefixes.map((p) => `g[id^='${p}']`).join(", "));
 
     const cleanups: Array<() => void> = [];
@@ -31,7 +29,7 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
 
       const onClick = (event: Event) => {
         event.stopPropagation();
-        handleRoomClick(roomId + "_door");
+        handleRoomClick(roomId);
       };
 
       const onEnter = () => {
@@ -65,36 +63,6 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
     };
   }, [currentFloor, floors, handleRoomClick]);
 
-  // Add this useEffect to debug door positions
-  useEffect(() => {
-    if (svgElement.current) {
-      setTimeout(() => {
-        const doorGroup = svgElement.current?.getElementById("DataPoints");
-        if (doorGroup) {
-          const doors = doorGroup.querySelectorAll("circle");
-          // console.log("=== DOOR DEBUG INFO ===");
-          doors.forEach((door, index) => {
-            const cx = door.getAttribute("cx");
-            const cy = door.getAttribute("cy");
-            const transform = door.getAttribute("transform");
-            const id = door.getAttribute("data-name") || door.id;
-
-            // Get the actual rendered position
-            const bbox = door.getBBox();
-            // console.log(`Door ${index} (${id}):`, {
-            //   original_cx: cx,
-            //   original_cy: cy,
-            //   transform: transform,
-            //   rendered_x: bbox.x,
-            //   rendered_y: bbox.y,
-            //   bbox_width: bbox.width,
-            //   bbox_height: bbox.height,
-            // });
-          });
-        }
-      }, 500);
-    }
-  }, [currentFloor, floors]);
   const copyDoors = () => {
     if (!svgElement.current) return;
 
@@ -170,9 +138,9 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
                 onClick={() => handleRoomClick(n.id)}
                 style={{ cursor: "pointer", opacity: 0.8 }}
               />
-            ))} */}
+            ))}
 
-          {/* {edges.map((e) => {
+          {edges.map((e) => {
             const from = nodes.find((n) => n.id === e.from && n.floor === currentFloor);
             const to = nodes.find((n) => n.id === e.to && n.floor === currentFloor);
             if (!from || !to) return null;

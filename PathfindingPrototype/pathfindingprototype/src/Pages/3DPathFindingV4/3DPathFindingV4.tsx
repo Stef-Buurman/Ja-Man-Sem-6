@@ -14,11 +14,9 @@ export const PathFinding3DV4: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
 
   const handleRoomClick = (roomId: string) => {
-    console.log("Room clicked:", roomId);
     const result = findPathAStarMultiStart(["H.3.Trap1_door"], roomId, graph3d2v4);
     setPath(result);
     const floor = (graph3d2v4.nodes.find((n) => n.id === result[0]) as Node)?.floor ?? floors[0];
-    console.log("Path found:", result, "Floor:", floor);
     setCurrentFloor(floor);
     setSelectedRoom(roomId);
   };
