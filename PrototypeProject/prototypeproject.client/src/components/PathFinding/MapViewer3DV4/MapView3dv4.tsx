@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { Node, Edge} from "../../../Types/types";
+import type { GraphNode, Edge } from "../../../Types/types";
 import "./MapView3dv4.css";
 
 interface MapViewProps {
-  nodes: Node[];
+  nodes: GraphNode[];
   edges: Edge[];
   currentFloor: number;
   path?: string[];
@@ -11,13 +11,22 @@ interface MapViewProps {
   floors?: React.FC<React.SVGProps<SVGSVGElement>>[];
 }
 
-export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => {}, floors }) => {
+export const MapView3dV4: React.FC<MapViewProps> = ({
+  nodes,
+  edges,
+  currentFloor,
+  path,
+  handleRoomClick = () => {},
+  floors,
+}) => {
   const svgElement = useRef<SVGSVGElement>(null);
   useEffect(() => {
     if (!svgElement.current) return;
 
     const prefixes = ["H.", "WN.", "WD."];
-    const allRooms = svgElement.current.querySelectorAll(prefixes.map((p) => `g[id^='${p}']`).join(", "));
+    const allRooms = svgElement.current.querySelectorAll(
+      prefixes.map((p) => `g[id^='${p}']`).join(", "),
+    );
 
     const cleanups: Array<() => void> = [];
 
@@ -90,7 +99,10 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
     });
 
     const formattedData = doorData
-      .map((d) => `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`)
+      .map(
+        (d) =>
+          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`,
+      )
       .join("\n");
 
     navigator.clipboard.writeText(formattedData);
@@ -100,7 +112,10 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
 
   return (
     <>
-      <button onClick={copyDoors} style={{ margin: "10px", padding: "5px 10px" }}>
+      <button
+        onClick={copyDoors}
+        style={{ margin: "10px", padding: "5px 10px" }}
+      >
         Copy doors (original coordinates)
       </button>
 
@@ -118,7 +133,12 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
           ref={svgElement}
           viewBox="0 0 2412.61 1344.75"
           className="MapView3d4"
-          style={{ backgroundColor: "#f5f5f5", width: "100%", height: "auto", display: "block" }}
+          style={{
+            backgroundColor: "#f5f5f5",
+            width: "100%",
+            height: "auto",
+            display: "block",
+          }}
         >
           {SelectedFloor && <SelectedFloor />}
 
@@ -151,7 +171,11 @@ export const MapView3dV4: React.FC<MapViewProps> = ({ nodes, edges, currentFloor
           {path && (
             <path
               d={(() => {
-                const points = path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)).filter(Boolean) as {
+                const points = path
+                  .map((id) =>
+                    nodes.find((n) => n.id === id && n.floor === currentFloor),
+                  )
+                  .filter(Boolean) as {
                   x: number;
                   y: number;
                 }[];

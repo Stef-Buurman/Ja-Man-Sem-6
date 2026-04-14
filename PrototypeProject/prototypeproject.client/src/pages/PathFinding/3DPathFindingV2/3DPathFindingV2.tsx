@@ -1,6 +1,6 @@
 import "./3DPathFindingV2.css";
-import { graph3d2v2 } from "../data/graph3dv2";
-import { MapView3dV2 } from "../../components/PathFinding/MapViewer3DV2/MapView3dV2";
+import { graph3d2v2 } from "../../../components/data/graph3dv2";
+import { MapView3dV2 } from "../../../components/PathFinding/MapViewer3DV2/MapView3dV2";
 
 export const PathFinding3DV2: React.FC = () => {
   return (

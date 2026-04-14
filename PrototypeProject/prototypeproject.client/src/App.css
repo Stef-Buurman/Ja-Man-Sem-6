@@ -1,12 +1,49 @@
 ﻿#root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-th,
-td {
-  padding-left: 1rem;
-  padding-right: 1rem;
+.cls-2 {
+  fill: #d3114c;
+}
+.cls-4 {
+  width: 50%;
+}
+.cls-7 {
+  display: none;
+}
+
+.room {
+  fill: #d3114c;
+  stroke: #342626;
+  stroke-width: 1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.room:hover {
+  transform: scale(1.0075);
+  transform-origin: center;
+  filter: drop-shadow(0 0 6px rgba(232, 73, 43, 0.6));
+}
+
+.cls-3 {
+  fill: #f8efe3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fdf1e3;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.clickable-room {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.clickable-room:hover {
+  fill-opacity: 0.85 !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }

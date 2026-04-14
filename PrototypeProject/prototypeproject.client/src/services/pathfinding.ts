@@ -1,5 +1,5 @@
 import type { Graph } from "../Types/types";
-import type { Node } from "../Types/types";
+import type { GraphNode } from "../Types/types";
 
 export function findPath(startId: string, endId: string, graph: Graph): string[] {
   const visited = new Set<string>();
@@ -42,15 +42,15 @@ export function buildAdjacencyMap(graph: Graph) {
   return map;
 }
 
-export function distance(a: Node, b: Node) {
+export function distance(a: GraphNode, b: GraphNode) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
-export function heuristic(a: Node, b: Node) {
+export function heuristic(a: GraphNode, b: GraphNode) {
   return distance(a, b);
 }
 
-export function getEdgeCost(from: Node, to: Node) {
+export function getEdgeCost(from: GraphNode, to: GraphNode) {
   let cost = distance(from, to);
 
   if (to.type === "door") cost += 5;
@@ -62,7 +62,7 @@ export function getEdgeCost(from: Node, to: Node) {
   return cost;
 }
 
-export function getNode(graph: Graph, id: string): Node {
+export function getNode(graph: Graph, id: string): GraphNode {
   const node = graph.nodes.find((n) => n.id === id || n.id === id + "_door");
   if (!node) throw new Error(`Node ${id} not found`);
   return node;

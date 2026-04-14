@@ -1,8 +1,8 @@
 import React from "react";
-import { Node, Edge } from "../../Types/types";
+import type { Edge, GraphNode } from "../../../Types/types";
 
 interface MapViewProps {
-  nodes: Node[];
+  nodes: GraphNode[];
   edges: Edge[];
   currentFloor: number;
   path?: string[];

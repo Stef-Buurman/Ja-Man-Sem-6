@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { findPathAStar } from "../../services/pathfinding";
+import { findPathAStar } from "../../../services/pathfinding";
 import "./3DPathFindingV3.css";
-import { FloorSelector } from "../../components/PathFinding/FloorSelector/FloorSelector";
-import { MapView3dV3 } from "../../components/PathFinding/MapViewer3DV3/MapView3dv3";
-import type { Graph, Node } from "../../Types/types";
-import { getGraph3dv2 } from "../data/graph3dv3";
+import { FloorSelector } from "../../../components/PathFinding/FloorSelector/FloorSelector";
+import { MapView3dV3 } from "../../../components/PathFinding/MapViewer3DV3/MapView3dv3";
+import type { Graph, GraphNode } from "../../../Types/types";
+import { getGraph3dv2 } from "../../../components/data/graph3dv3";
 
 const floors = [1, 2, 3];
 
@@ -26,7 +26,7 @@ export const PathFinding3DV3: React.FC = () => {
     if (!graph) return;
     const result = findPathAStar("hall_WN_1_1", roomId, graph);
     setPath(result);
-    const floor = (graph.nodes.find((n) => n.id === result[0]) as Node)?.floor ?? floors[0];
+    const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0];
     setCurrentFloor(floor);
     console.log("Path to " + roomId + ": ", result);
     setSelectedRoom(roomId);

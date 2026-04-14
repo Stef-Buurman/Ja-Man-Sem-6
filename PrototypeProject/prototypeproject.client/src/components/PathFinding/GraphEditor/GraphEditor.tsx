@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import type { Graph, Edge, Node } from "../../../Types/types";
+import type { Graph, Edge, GraphNode } from "../../../Types/types";
 
-type Door = Omit<Node, "type"> & { type: "door" };
+type Door = Omit<GraphNode, "type"> & { type: "door" };
 
 type GraphEditorProps = {
   background?: React.ReactNode;
@@ -11,7 +11,7 @@ type GraphEditorProps = {
 };
 
 export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, curFloor, initialGraph }) => {
-  const [nodes, setNodes] = useState<Node[]>(initialGraph?.nodes ?? []);
+  const [nodes, setNodes] = useState<GraphNode[]>(initialGraph?.nodes ?? []);
   const [edges, setEdges] = useState<Edge[]>(initialGraph?.edges ?? []);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, cur
     const nodeWidth = 10;
     const nodeHeight = 10;
 
-    const newNode: Node = {
+    const newNode: GraphNode = {
       id: `node_${Date.now()}`,
       x: snap(svgPoint.x - nodeWidth / 4, nodeWidth / 4),
       y: snap(svgPoint.y - nodeHeight / 4, nodeHeight / 4),
@@ -83,7 +83,7 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, cur
         return from && to;
       }),
     );
-    const formatNode = (n: Node) => `    {
+    const formatNode = (n: GraphNode) => `    {
       id: "${n.id}",
       x: ${Number(n.x.toFixed(2))},
       y: ${Number(n.y.toFixed(2))},

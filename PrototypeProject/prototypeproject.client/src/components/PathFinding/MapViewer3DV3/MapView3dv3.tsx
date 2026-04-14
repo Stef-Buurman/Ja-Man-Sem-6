@@ -1,10 +1,10 @@
 import React from "react";
-import type { Node } from "../../../Types/types";
+import type { GraphNode } from "../../../Types/types";
 import test3 from "../../../assets/2e_verdieping.svg";
 import "./MapView3dv3.css";
 
 interface MapViewProps {
-  nodes: Node[];
+  nodes: GraphNode[];
   currentFloor: number;
   path?: string[];
   handleRoomClick?: (roomId: string) => void;

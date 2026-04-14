@@ -6,7 +6,7 @@ export type NodeType =
   | "entrance"
   | "door";
 
-export interface Node {
+export interface GraphNode {
   id: string;
   x: number;
   y: number;
@@ -24,6 +24,6 @@ export interface Edge {
 }
 
 export interface Graph {
-  nodes: Node[];
+  nodes: GraphNode[];
   edges: Edge[];
 }

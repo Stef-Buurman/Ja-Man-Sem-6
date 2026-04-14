@@ -7,10 +7,10 @@ export const Layout: React.FC = () => {
     <div className="layout-container">
       <header className="layout-header">
         <div className="header-content">
-          <h1 className="logo">Pathfinding Prototype</h1>
+          <h1 className="logo">Prototype Project</h1>
           <nav className="nav-links">
             <Link to="/">Home</Link>
-            <Link to="/2d">2D Map</Link>
+            <Link to="/2dV1">2D Map</Link>
             <Link to="/3dV1">3D V1</Link>
             <Link to="/3dV2">3D V2</Link>
             <Link to="/3dV3">3D V3</Link>
@@ -27,7 +27,7 @@ export const Layout: React.FC = () => {
       </main>
 
       <footer className="layout-footer">
-        © {new Date().getFullYear()} Indoor Navigation App
+        © {new Date().getFullYear()} Prototype Project. All rights reserved.
       </footer>
     </div>
   );

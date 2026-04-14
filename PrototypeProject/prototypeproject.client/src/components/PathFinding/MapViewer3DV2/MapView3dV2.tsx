@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import test3 from "../../../assets/2e_verdieping.svg";
-import { RouteOverlay } from "../RouteOverlay/RouteOverlay";
 import "./MapView3dV2.css";
-import type { Edge, Node } from "../../../Types/types";
-import { graph3d2v2 } from "../../../pages/data/graph3dv2";
+import type { Edge, GraphNode } from "../../../Types/types";
+import { graph3d2v2 } from "../../data/graph3dv2";
 import { findPath } from "../../../services/pathfinding";
 
 interface MapViewProps {
-  nodes: Node[];
+  nodes: GraphNode[];
   edges: Edge[];
   currentFloor: number;
   path?: string[];
@@ -167,11 +166,6 @@ export const MapView3dV2: React.FC<MapViewProps> = ({
           opacity={0.3}
         /> */}
       </svg>
-      <RouteOverlay
-        path={path2}
-        nodes={graph3d2v2.nodes}
-        currentFloor={0}
-      />
     </>
   );
 };

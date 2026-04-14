@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import test3 from "../../../assets/test3.svg";
-import { RouteOverlay } from "../RouteOverlay/RouteOverlay";
-import type { Edge, Node} from "../../../Types/types";
-import { graph3dv1 } from "../../../pages/data/graph3dv1";
+import type { Edge, GraphNode} from "../../../Types/types";
+import { graph3dv1 } from "../../data/graph3dv1";
 import { findPath } from "../../../services/pathfinding";
 
 interface MapViewProps {
-  nodes: Node[];
+  nodes: GraphNode[];
   edges: Edge[];
   currentFloor: number;
   path?: string[];
@@ -148,11 +147,6 @@ export const MapViewer3DV1: React.FC<MapViewProps> = ({
           opacity={0.3}
         /> */}
       </svg>
-      <RouteOverlay
-        path={path2}
-        nodes={graph3dv1.nodes}
-        currentFloor={0}
-      />
     </>
   );
 };
