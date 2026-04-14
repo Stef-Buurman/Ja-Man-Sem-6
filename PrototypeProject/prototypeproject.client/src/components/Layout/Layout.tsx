@@ -15,7 +15,7 @@ export const Layout: React.FC = () => {
             <Link to="/3dV2">3D V2</Link>
             <Link to="/3dV3">3D V3</Link>
             <Link to="/3dV4">3D V4</Link>
-            <Link to="/editor">Graph Editor</Link>
+            <Link to="/graph-editor">Graph Editor</Link>
             <Link to="/heatmap">Heatmap</Link>
             <Link to="/editor">Heatmap Editor</Link>
             <Link to="/Encryption">Encryption</Link>
@@ -29,9 +29,7 @@ export const Layout: React.FC = () => {
         </div>
       </main>
 
-      <footer className="layout-footer">
-        © {new Date().getFullYear()} Prototype Project. All rights reserved.
-      </footer>
+      <footer className="layout-footer">© {new Date().getFullYear()} Prototype Project. All rights reserved.</footer>
     </div>
   );
 };

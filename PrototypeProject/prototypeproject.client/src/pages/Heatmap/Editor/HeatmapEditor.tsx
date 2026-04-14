@@ -79,9 +79,7 @@ const HeatmapEditor: React.FC = () => {
               onChange={(e) => {
                 const value = clampMin0(parseFloat(e.target.value));
 
-                const updated = areas.map((area) =>
-                  area.id === a.id ? { ...area, x: value } : area,
-                );
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, x: value } : area));
 
                 setAreas(updated);
               }}
@@ -97,9 +95,7 @@ const HeatmapEditor: React.FC = () => {
               onChange={(e) => {
                 const value = clampMin0(parseFloat(e.target.value));
 
-                const updated = areas.map((area) =>
-                  area.id === a.id ? { ...area, y: value } : area,
-                );
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, y: value } : area));
 
                 setAreas(updated);
               }}
@@ -115,9 +111,7 @@ const HeatmapEditor: React.FC = () => {
               onChange={(e) => {
                 const value = clampMin0(parseFloat(e.target.value));
 
-                const updated = areas.map((area) =>
-                  area.id === a.id ? { ...area, value } : area,
-                );
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, value } : area));
 
                 setAreas(updated);
               }}
@@ -129,9 +123,7 @@ const HeatmapEditor: React.FC = () => {
               disabled={a.value >= 30}
               className="heatmap-button"
               onClick={() => {
-                const updated = areas.map((area) =>
-                  area.id === a.id ? { ...area, value: area.value + 1 } : area,
-                );
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, value: area.value + 1 } : area));
                 setAreas(updated);
                 handleAreaUpdate();
               }}
@@ -143,9 +135,7 @@ const HeatmapEditor: React.FC = () => {
               disabled={a.value <= 0}
               className="heatmap-button"
               onClick={() => {
-                const updated = areas.map((area) =>
-                  area.id === a.id ? { ...area, value: area.value - 1 } : area,
-                );
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, value: area.value - 1 } : area));
                 setAreas(updated);
                 handleAreaUpdate();
               }}
@@ -153,10 +143,7 @@ const HeatmapEditor: React.FC = () => {
               -
             </button>
 
-            <button
-              className="heatmap-button delete"
-              onClick={() => areYouSurePopup(a.id)}
-            >
+            <button className="heatmap-button delete" onClick={() => areYouSurePopup(a.id)}>
               Delete
             </button>
           </div>

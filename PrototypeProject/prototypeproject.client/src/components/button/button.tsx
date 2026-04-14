@@ -7,14 +7,7 @@ export type ButtonProps = {
   ref?: React.Ref<HTMLButtonElement>;
   btnKey?: string | number;
   title?: string;
-  variant?:
-    | "primary"
-    | "secondary"
-    | "tertiary"
-    | "red"
-    | "nav-item-primary"
-    | "nav-item-secondary"
-    | "no-style";
+  variant?: "primary" | "secondary" | "tertiary" | "red" | "nav-item-primary" | "nav-item-secondary" | "no-style";
   children?: React.ReactNode;
   customCss?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
@@ -84,15 +77,7 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button
-      ref={ref}
-      key={btnKey}
-      type={type}
-      onClick={to ? undefined : onClick}
-      disabled={disabled}
-      style={style}
-      className={GetClassNames()}
-    >
+    <button ref={ref} key={btnKey} type={type} onClick={to ? undefined : onClick} disabled={disabled} style={style} className={GetClassNames()}>
       {to ? (
         <Link className="reset-link full-link" to={to}>
           {GetContent(

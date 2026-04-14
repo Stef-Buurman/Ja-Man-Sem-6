@@ -134,11 +134,7 @@ export function findPathAStar(startId: string, endId: string, graph: Graph): str
   return [];
 }
 
-export function findPathAStarMultiStart(
-  startIds: string[],
-  endId: string,
-  graph: Graph
-): string[] {
+export function findPathAStarMultiStart(startIds: string[], endId: string, graph: Graph): string[] {
   const tryFindPath = (targetId: string): string[] => {
     const adjacency = buildAdjacencyMap(graph);
 
@@ -158,10 +154,6 @@ export function findPathAStarMultiStart(
       return [];
     }
 
-    console.log(
-      `End node: ${endNode.id} at (${endNode.x}, ${endNode.y}) on floor ${endNode.floor}`
-    );
-
     for (const startId of startIds) {
       const startNode = getNode(graph, startId);
       if (!startNode) continue;
@@ -171,9 +163,7 @@ export function findPathAStarMultiStart(
     }
 
     while (openSet.size > 0) {
-      const current = [...openSet].reduce((a, b) =>
-        fScore.get(a)! < fScore.get(b)! ? a : b
-      );
+      const current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
 
       if (current === targetId) {
         return reconstructPath(cameFrom, current);
@@ -188,16 +178,12 @@ export function findPathAStarMultiStart(
         const neighborNode = getNode(graph, neighborId);
         if (!neighborNode) continue;
 
-        const tentativeG =
-          gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
+        const tentativeG = gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
 
         if (tentativeG < gScore.get(neighborId)!) {
           cameFrom.set(neighborId, current);
           gScore.set(neighborId, tentativeG);
-          fScore.set(
-            neighborId,
-            tentativeG + heuristic(neighborNode, endNode)
-          );
+          fScore.set(neighborId, tentativeG + heuristic(neighborNode, endNode));
           openSet.add(neighborId);
         }
       }
@@ -208,13 +194,11 @@ export function findPathAStarMultiStart(
 
   const normalPath = tryFindPath(endId);
   if (normalPath.length > 0) {
-    console.log("Path found to " + endId);
     return normalPath;
   }
 
   const doorPath = tryFindPath(endId + "_door");
   if (doorPath.length > 0) {
-    console.log("Path found to fallback target " + endId + "_door");
     return doorPath;
   }
 

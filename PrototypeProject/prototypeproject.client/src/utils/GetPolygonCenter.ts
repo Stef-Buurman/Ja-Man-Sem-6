@@ -1,7 +1,7 @@
 export function getPolygonCenter(points: string): { x: number; y: number } {
   const coords = points
     .trim()
-    .split(' ')
+    .split(" ")
     .reduce<number[][]>((acc, val, i, arr) => {
       if (i % 2 === 0) {
         acc.push([Number(val), Number(arr[i + 1])]);

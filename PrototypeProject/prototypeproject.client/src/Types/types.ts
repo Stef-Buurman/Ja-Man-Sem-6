@@ -1,10 +1,4 @@
-export type NodeType =
-  | "hallway"
-  | "room"
-  | "stairs"
-  | "elevator"
-  | "entrance"
-  | "door";
+export type NodeType = "hallway" | "room" | "stairs" | "elevator" | "entrance" | "door";
 
 export interface GraphNode {
   id: string;
@@ -27,3 +21,8 @@ export interface Graph {
   nodes: GraphNode[];
   edges: Edge[];
 }
+
+export type Floor = {
+  svg: React.FC<React.SVGProps<SVGSVGElement>>;
+  floorNumber: number;
+};

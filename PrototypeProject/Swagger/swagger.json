@@ -7,9 +7,7 @@
   "paths": {
     "/api/Auth/get-jwt": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "GetJwt",
         "responses": {
           "200": {
@@ -37,9 +35,7 @@
     },
     "/api/Encryption/encrypt": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "EncryptData",
         "requestBody": {
           "content": {
@@ -86,9 +82,7 @@
     },
     "/api/Encryption/protected-data": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetProtectedData",
         "responses": {
           "200": {
@@ -99,9 +93,7 @@
     },
     "/api/Encryption/decrypt": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "DecryptData",
         "requestBody": {
           "content": {
@@ -148,9 +140,7 @@
     },
     "/api/Encryption/hash": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "HashData",
         "requestBody": {
           "content": {
@@ -197,9 +187,7 @@
     },
     "/api/Encryption/keys": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetKeyOptions",
         "parameters": [
           {
@@ -238,9 +226,7 @@
     },
     "/api/Encryption/public-key": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetPublicKey",
         "responses": {
           "200": {
@@ -268,9 +254,7 @@
     },
     "/api/Heatmap": {
       "post": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "AddPoint",
         "requestBody": {
           "content": {
@@ -298,9 +282,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "GetHeatmap",
         "responses": {
           "200": {
@@ -311,9 +293,7 @@
     },
     "/api/Heatmap/areas": {
       "get": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "GetHeatpointAreas",
         "responses": {
           "200": {
@@ -322,9 +302,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "AddHeatpointArea",
         "requestBody": {
           "content": {
@@ -352,9 +330,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "UpdateRangeHeatpointArea",
         "requestBody": {
           "content": {
@@ -393,9 +369,7 @@
     },
     "/api/Heatmap/areas/{id}": {
       "put": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "UpdateHeatpointArea",
         "parameters": [
           {
@@ -434,9 +408,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Heatmap"
-        ],
+        "tags": ["Heatmap"],
         "operationId": "DeleteHeatpointArea",
         "parameters": [
           {
@@ -460,10 +432,7 @@
   "components": {
     "schemas": {
       "ApiResponse": {
-        "required": [
-          "message",
-          "success"
-        ],
+        "required": ["message", "success"],
         "type": "object",
         "properties": {
           "success": {
@@ -480,10 +449,7 @@
         "additionalProperties": false
       },
       "EncryptDecryptRequest": {
-        "required": [
-          "data",
-          "key"
-        ],
+        "required": ["data", "key"],
         "type": "object",
         "properties": {
           "data": {
@@ -498,9 +464,7 @@
         "additionalProperties": false
       },
       "GetJwtResponse": {
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "type": "object",
         "properties": {
           "token": {
@@ -511,9 +475,7 @@
         "additionalProperties": false
       },
       "HashRequest": {
-        "required": [
-          "data"
-        ],
+        "required": ["data"],
         "type": "object",
         "properties": {
           "data": {
@@ -524,12 +486,7 @@
         "additionalProperties": false
       },
       "HeatPoint": {
-        "required": [
-          "createdAt",
-          "id",
-          "x",
-          "y"
-        ],
+        "required": ["createdAt", "id", "x", "y"],
         "type": "object",
         "properties": {
           "id": {
@@ -552,15 +509,7 @@
         "additionalProperties": false
       },
       "HeatpointArea": {
-        "required": [
-          "color",
-          "id",
-          "level",
-          "soundLevel",
-          "value",
-          "x",
-          "y"
-        ],
+        "required": ["color", "id", "level", "soundLevel", "value", "x", "y"],
         "type": "object",
         "properties": {
           "id": {

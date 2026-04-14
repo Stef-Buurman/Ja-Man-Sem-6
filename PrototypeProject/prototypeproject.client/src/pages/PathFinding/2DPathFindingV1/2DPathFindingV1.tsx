@@ -16,30 +16,16 @@ export const PathFinding2DV1: React.FC = () => {
   const handleSelectRoom = () => {
     const newPath = findPath("entrance", selectedRoom, graph);
     setPath(newPath);
-    const floor =
-      (graph.nodes.find((n) => n.id === newPath[0]) as GraphNode)?.floor ?? 0;
+    const floor = (graph.nodes.find((n) => n.id === newPath[0]) as GraphNode)?.floor ?? 0;
     setCurrentFloor(floor);
   };
 
   return (
     <>
-      <FloorSelector
-        floors={floors}
-        currentFloor={currentFloor}
-        setFloor={setCurrentFloor}
-      />
-      <MapView
-        nodes={graph.nodes}
-        edges={graph.edges}
-        currentFloor={currentFloor}
-        path={path}
-      />
+      <FloorSelector floors={floors} currentFloor={currentFloor} setFloor={setCurrentFloor} />
+      <MapView nodes={graph.nodes} edges={graph.edges} currentFloor={currentFloor} path={path} />
       <label htmlFor="room-input">Enter Room ID:</label>
-      <input
-        type="text"
-        id="room-input"
-        onChange={(e) => setSelectedRoom(e.target.value)}
-      />
+      <input type="text" id="room-input" onChange={(e) => setSelectedRoom(e.target.value)} />
       <button onClick={handleSelectRoom}>Go to Room</button>
     </>
   );

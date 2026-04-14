@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface FloorSelectorProps {
   floors: number[];
@@ -7,8 +7,8 @@ interface FloorSelectorProps {
 }
 
 export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFloor, setFloor }) => (
-  <select value={currentFloor} onChange={e => setFloor(Number(e.target.value))}>
-    {floors.map(floor => (
+  <select value={currentFloor} onChange={(e) => setFloor(Number(e.target.value))}>
+    {floors.map((floor) => (
       <option key={floor} value={floor}>
         Floor {floor}
       </option>

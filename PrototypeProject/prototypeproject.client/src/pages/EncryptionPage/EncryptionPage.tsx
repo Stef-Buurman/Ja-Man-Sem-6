@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "./EncryptionPage.css";
-import {
-  encryptData,
-  decryptData,
-  hashData,
-  getKeyOptions,
-} from "../../api/methods/Encryption.api";
+import { encryptData, decryptData, hashData, getKeyOptions } from "../../api/methods/Encryption.api";
 import { toast } from "../../components/toast-manager/toast-context";
 import { getJwt } from "../../api/methods/Auth.api";
 
@@ -131,22 +126,12 @@ export default function EncryptionPage() {
 
       <div className="section">
         <label>Data</label>
-        <textarea
-          className="input-area"
-          value={data}
-          onChange={(e) => setData(e.target.value)}
-          placeholder="Enter text or JSON here..."
-        />
+        <textarea className="input-area" value={data} onChange={(e) => setData(e.target.value)} placeholder="Enter text or JSON here..." />
       </div>
 
       <div className="section">
         <label>Key</label>
-        <input
-          className="input-field"
-          value={key}
-          onChange={(e) => setKey(e.target.value)}
-          placeholder="Enter or select a key"
-        />
+        <input className="input-field" value={key} onChange={(e) => setKey(e.target.value)} placeholder="Enter or select a key" />
       </div>
 
       <div className="button-group">

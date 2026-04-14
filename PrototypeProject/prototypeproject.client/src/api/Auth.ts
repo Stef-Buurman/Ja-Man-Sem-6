@@ -14,9 +14,7 @@ import type { GetJwtResponse } from "./data-contracts";
 import { HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
 
-export class Auth<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class Auth<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

@@ -44,13 +44,7 @@ export type WithoutRequestParams<T extends any[]> = T extends [infer First, ...i
 
 const apiFiles = fs
   .readdirSync(apiDir)
-  .filter(
-    (f) =>
-      f.endsWith(".ts") &&
-      f !== "http-client.ts" &&
-      f !== "data-contracts.ts" &&
-      !f.includes(".api"),
-  );
+  .filter((f) => f.endsWith(".ts") && f !== "http-client.ts" && f !== "data-contracts.ts" && !f.includes(".api"));
 
 const pascalCase = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 const toQueryName = (str) => `${pascalCase(str)}Query`;
@@ -60,14 +54,9 @@ const toQueryName = (str) => `${pascalCase(str)}Query`;
     const filePath = path.join(apiDir, file);
     const source = fs.readFileSync(filePath, "utf8");
 
-    const className = file
-      .replace(".ts", "")
-      .split("-")
-      .map(pascalCase)
-      .join("");
+    const className = file.replace(".ts", "").split("-").map(pascalCase).join("");
 
-    const instanceName =
-      className.charAt(0).toLowerCase() + className.slice(1) + "Api";
+    const instanceName = className.charAt(0).toLowerCase() + className.slice(1) + "Api";
 
     const methodRegex = /^\s*(\w+)\s*=\s*\(/gm;
 
@@ -80,27 +69,19 @@ const toQueryName = (str) => `${pascalCase(str)}Query`;
     while ((match = methodRegex.exec(source)) !== null) {
       const methodName = match[1];
 
-      const signatureRegex = new RegExp(
-        `${methodName}\\s*=\\s*\\(([^)]*)\\)\\s*=>`,
-        "m",
-      );
+      const signatureRegex = new RegExp(`${methodName}\\s*=\\s*\\(([^)]*)\\)\\s*=>`, "m");
       const signatureMatch = source.match(signatureRegex);
       if (!signatureMatch) continue;
 
       const params = signatureMatch[1].trim();
 
       // Extract return type
-      const returnTypeRegex = new RegExp(
-        `${methodName}[\\s\\S]*?this\\.request<([^,>]+)`,
-        "m",
-      );
+      const returnTypeRegex = new RegExp(`${methodName}[\\s\\S]*?this\\.request<([^,>]+)`, "m");
 
       const returnMatch = source.match(returnTypeRegex);
       const returnType = returnMatch?.[1] ?? "";
 
-      const isPaginated =
-        returnType.includes("ApiPaginationResponse") ||
-        returnType.trim().endsWith("[]");
+      const isPaginated = returnType.includes("ApiPaginationResponse") || returnType.trim().endsWith("[]");
 
       if (params.startsWith("query")) {
         if (isPaginated) {

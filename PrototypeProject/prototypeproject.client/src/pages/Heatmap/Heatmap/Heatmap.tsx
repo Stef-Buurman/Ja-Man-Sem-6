@@ -34,10 +34,7 @@ const Heatmap: React.FC = () => {
   useEffect(() => {
     let isActive = true;
 
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl("/api/heatmapHub")
-      .withAutomaticReconnect()
-      .build();
+    const connection = new signalR.HubConnectionBuilder().withUrl("/api/heatmapHub").withAutomaticReconnect().build();
 
     connection.on("ReceivePoint", () => {
       if (isActive) {
@@ -127,10 +124,7 @@ const Heatmap: React.FC = () => {
 
   return (
     <div>
-      <svg
-        viewBox="0 0 454 627.31"
-        style={{ width: "400px", border: "1px solid black" }}
-      >
+      <svg viewBox="0 0 454 627.31" style={{ width: "400px", border: "1px solid black", margin: "20px auto", display: "block" }}>
         <image href={test3} x="0" y="0" width="454" height="627.31" />
 
         <defs>
@@ -141,15 +135,7 @@ const Heatmap: React.FC = () => {
 
         {areas.flatMap((a) =>
           generateHeatPoints(a.x + 25, a.y + 25, a.value).map((p, i) => (
-            <circle
-              key={`${a.id}-${i}`}
-              cx={p.x}
-              cy={p.y}
-              r={5}
-              fill={getColor(p.value)}
-              opacity={p.opacity}
-              filter="url(#heat-blur)"
-            />
+            <circle key={`${a.id}-${i}`} cx={p.x} cy={p.y} r={5} fill={getColor(p.value)} opacity={p.opacity} filter="url(#heat-blur)" />
           )),
         )}
       </svg>

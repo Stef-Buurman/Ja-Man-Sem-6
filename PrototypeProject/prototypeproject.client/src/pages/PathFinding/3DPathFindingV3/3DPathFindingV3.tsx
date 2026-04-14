@@ -38,7 +38,9 @@ export const PathFinding3DV3: React.FC = () => {
     graph && (
       <div className="PathFinding3DV2">
         <h1>3D Pathfinding Prototype V2</h1>
-        <h2>Current Floor: {currentFloor} {selectedRoom && `(Rout send to: ${selectedRoom})`}</h2>
+        <h2>
+          Current Floor: {currentFloor} {selectedRoom && `(Rout send to: ${selectedRoom})`}
+        </h2>
         <FloorSelector floors={floors} currentFloor={currentFloor} setFloor={setCurrentFloor} />
         <MapView3dV3 nodes={graph.nodes} currentFloor={currentFloor} path={path} handleRoomClick={handleRoomClick} />
       </div>

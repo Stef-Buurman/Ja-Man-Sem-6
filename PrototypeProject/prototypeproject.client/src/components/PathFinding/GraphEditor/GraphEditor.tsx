@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import type { Graph, Edge, GraphNode } from "../../../Types/types";
+import type { Graph, Edge, GraphNode, Floor } from "../../../Types/types";
+import { distinctBy } from "../../../utils/DistinctBy";
 
 type Door = Omit<GraphNode, "type"> & { type: "door" };
 
 type GraphEditorProps = {
-  background?: React.ReactNode;
+  floors?: Floor[];
   doors?: Door[];
   curFloor?: number;
   initialGraph?: Graph;
 };
 
-export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, curFloor, initialGraph }) => {
+export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloor, initialGraph }) => {
   const [nodes, setNodes] = useState<GraphNode[]>(initialGraph?.nodes ?? []);
   const [edges, setEdges] = useState<Edge[]>(initialGraph?.edges ?? []);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
@@ -51,8 +52,6 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, cur
   };
 
   const handleNodeClick = (nodeId: string) => {
-    console.log("Node clicked: ", nodeId + " selectedNode: " + selectedNode);
-
     if (!selectedNode) {
       setSelectedNode(nodeId);
     } else {
@@ -102,10 +101,14 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ background, doors, cur
 
 export const exportedGraph: Graph = {
   nodes: [
-${nodes.concat(visibleDoors).map(formatNode).join(",\n")}
+${distinctBy(nodes.concat(visibleDoors), (n) => n.id)
+  .map(formatNode)
+  .join(",\n")}
   ],
   edges: [
-${edges.map(formatEdge).join(",\n")}
+${distinctBy(edges, (e) => [e.from, e.to].sort().join("-"))
+  .map(formatEdge)
+  .join(",\n")}
   ]
 };`;
 
@@ -117,6 +120,7 @@ ${edges.map(formatEdge).join(",\n")}
   const visibleDoors = (doors ? doors : (initialGraph?.nodes.filter((n) => n.type === "door") ?? [])).filter((d) => d.floor === currentFloor);
 
   const allVisibleNodes = [...visibleNodes, ...visibleDoors];
+  const FloorSvg = floors?.find((f) => f.floorNumber === curFloor)?.svg;
 
   return (
     <div>
@@ -131,7 +135,7 @@ ${edges.map(formatEdge).join(",\n")}
       </button>
 
       <svg viewBox="0 0 2412.61 1344.75" style={{ border: "1px solid #ccc", marginTop: 10 }} onClick={handleMapClick}>
-        {background}
+        {FloorSvg && <FloorSvg />}
 
         {edges.map((e, i) => {
           const from = allVisibleNodes.find((n) => n.id === e.from);

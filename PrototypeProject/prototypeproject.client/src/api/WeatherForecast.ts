@@ -14,9 +14,7 @@ import type { WeatherForecast } from "./data-contracts";
 import { HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
 
-export class WeatherForecast<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class WeatherForecast<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *

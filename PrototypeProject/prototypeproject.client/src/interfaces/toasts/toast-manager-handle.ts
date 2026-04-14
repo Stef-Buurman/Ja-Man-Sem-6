@@ -11,13 +11,7 @@ export interface ToastManagerHandle {
   showToastWarning: ShowToastDefault;
   showToastInfo: ShowToastDefault;
   showToastDefault: ShowToastDefault;
-  showToastCustom?: (
-    content: React.ReactNode,
-    title?: string,
-    position?: any,
-    options?: any,
-    autoClose?: number,
-  ) => number | undefined;
+  showToastCustom?: (content: React.ReactNode, title?: string, position?: any, options?: any, autoClose?: number) => number | undefined;
   updateToast?: (id: number, content: React.ReactNode, options?: any) => void;
   showToastInfoWithId?: (
     message: React.ReactNode,

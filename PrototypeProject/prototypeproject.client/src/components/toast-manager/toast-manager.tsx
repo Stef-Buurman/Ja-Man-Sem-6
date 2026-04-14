@@ -12,11 +12,7 @@ import type { ToastManagerHandle } from "../../interfaces/toasts/toast-manager-h
 import Button from "../button/button";
 
 const ToastManager = forwardRef<ToastManagerHandle>((_, ref) => {
-  const buildContent = (
-    title: string,
-    message?: string,
-    buttons: ToastButtonConfig[] = [],
-  ) => {
+  const buildContent = (title: string, message?: string, buttons: ToastButtonConfig[] = []) => {
     return ({ closeToast }: { closeToast?: () => void }) => (
       <div>
         <strong>{title}</strong>
@@ -116,102 +112,35 @@ const ToastManager = forwardRef<ToastManagerHandle>((_, ref) => {
     buttons: ToastButtonConfig[] = [],
     autoClose = 500,
   ) => {
-    showToast(
-      type,
-      message,
-      title,
-      position,
-      options,
-      response,
-      buttons,
-      autoClose,
-    );
+    showToast(type, message, title, position, options, response, buttons, autoClose);
   };
 
   useImperativeHandle(ref, () => ({
     showToast,
     showToastError: ((message, title, position, options, buttons) => {
-      callMainToast(
-        ToastType.Error,
-        message,
-        title,
-        position,
-        options,
-        undefined,
-        buttons,
-        2000,
-      );
+      callMainToast(ToastType.Error, message, title, position, options, undefined, buttons, 2000);
     }) as ShowToastDefault,
 
     showToastErrorResponse: ((response, options, position, buttons) => {
-      callMainToast(
-        ToastType.Error,
-        "",
-        "",
-        position,
-        options,
-        response,
-        buttons,
-        2000,
-      );
+      callMainToast(ToastType.Error, "", "", position, options, response, buttons, 2000);
     }) as ShowToastError,
 
     showToastSuccess: ((message, title, position, options, buttons) => {
-      callMainToast(
-        ToastType.Success,
-        message,
-        title,
-        position,
-        options,
-        undefined,
-        buttons,
-      );
+      callMainToast(ToastType.Success, message, title, position, options, undefined, buttons);
     }) as ShowToastDefault,
 
     showToastWarning: ((message, title, position, options, buttons) => {
-      callMainToast(
-        ToastType.Warning,
-        message,
-        title,
-        position,
-        options,
-        undefined,
-        buttons,
-        2000,
-      );
+      callMainToast(ToastType.Warning, message, title, position, options, undefined, buttons, 2000);
     }) as ShowToastDefault,
 
     showToastInfo: ((message, title, position, options, buttons) => {
-      callMainToast(
-        ToastType.Info,
-        message,
-        title,
-        position,
-        options,
-        undefined,
-        buttons,
-        2000,
-      );
+      callMainToast(ToastType.Info, message, title, position, options, undefined, buttons, 2000);
     }) as ShowToastDefault,
 
     showToastDefault: ((message, title, position, options, buttons) => {
-      callMainToast(
-        ToastType.Default,
-        message,
-        title,
-        position,
-        options,
-        undefined,
-        buttons,
-      );
+      callMainToast(ToastType.Default, message, title, position, options, undefined, buttons);
     }) as ShowToastDefault,
-    showToastCustom: ((
-      content: React.ReactNode,
-      title?: string,
-      position?: ToastPosition,
-      options: ToastOptions = {},
-      autoClose = 500,
-    ) => {
+    showToastCustom: ((content: React.ReactNode, title?: string, position?: ToastPosition, options: ToastOptions = {}, autoClose = 500) => {
       const finalPosition = position ?? ToastPosition.BottomRight;
       const defaultClass = "toast-info toast";
       const finalOptions: ToastOptions = {
@@ -235,11 +164,7 @@ const ToastManager = forwardRef<ToastManagerHandle>((_, ref) => {
       }
     }) as any,
 
-    updateToast: ((
-      id: number,
-      content: React.ReactNode,
-      options?: ToastOptions,
-    ) => {
+    updateToast: ((id: number, content: React.ReactNode, options?: ToastOptions) => {
       try {
         toast.update(id, { render: <div>{content}</div>, ...options });
       } catch (e) {}

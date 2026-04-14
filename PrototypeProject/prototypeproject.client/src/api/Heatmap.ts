@@ -10,18 +10,11 @@
  * ---------------------------------------------------------------
  */
 
-import type {
-  DeleteHeatpointAreaParams,
-  HeatPoint,
-  HeatpointArea,
-  UpdateHeatpointAreaParams,
-} from "./data-contracts";
+import type { DeleteHeatpointAreaParams, HeatPoint, HeatpointArea, UpdateHeatpointAreaParams } from "./data-contracts";
 import { ContentType, HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
 
-export class Heatmap<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class Heatmap<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *
@@ -85,10 +78,7 @@ export class Heatmap<
    * @name UpdateRangeHeatpointArea
    * @request PUT:/api/Heatmap/areas
    */
-  updateRangeHeatpointArea = (
-    data: HeatpointArea[],
-    params: RequestParams = {},
-  ) =>
+  updateRangeHeatpointArea = (data: HeatpointArea[], params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/Heatmap/areas`,
       method: "PUT",
@@ -103,11 +93,7 @@ export class Heatmap<
    * @name UpdateHeatpointArea
    * @request PUT:/api/Heatmap/areas/{id}
    */
-  updateHeatpointArea = (
-    { id }: UpdateHeatpointAreaParams,
-    data: HeatpointArea,
-    params: RequestParams = {},
-  ) =>
+  updateHeatpointArea = ({ id }: UpdateHeatpointAreaParams, data: HeatpointArea, params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/Heatmap/areas/${id}`,
       method: "PUT",
@@ -122,10 +108,7 @@ export class Heatmap<
    * @name DeleteHeatpointArea
    * @request DELETE:/api/Heatmap/areas/{id}
    */
-  deleteHeatpointArea = (
-    { id }: DeleteHeatpointAreaParams,
-    params: RequestParams = {},
-  ) =>
+  deleteHeatpointArea = ({ id }: DeleteHeatpointAreaParams, params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/Heatmap/areas/${id}`,
       method: "DELETE",

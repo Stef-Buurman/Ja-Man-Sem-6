@@ -35,33 +35,26 @@ for (const file of walk(apiDir)) {
   );
 
   // 2) http-client => split value/type imports
-  text = text.replace(
-    /import\s*\{([\s\S]*?)\}\s*from\s*["']\.\/http-client["'];?/g,
-    (_, namesRaw) => {
-      const parts = namesRaw
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean);
+  text = text.replace(/import\s*\{([\s\S]*?)\}\s*from\s*["']\.\/http-client["'];?/g, (_, namesRaw) => {
+    const parts = namesRaw
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
-      const valueParts = [];
-      const typeParts = [];
+    const valueParts = [];
+    const typeParts = [];
 
-      for (const p of parts) {
-        const base = p.replace(/\s+as\s+.+$/, "").trim();
-        if (httpClientValueImports.has(base)) valueParts.push(p);
-        else typeParts.push(p);
-      }
+    for (const p of parts) {
+      const base = p.replace(/\s+as\s+.+$/, "").trim();
+      if (httpClientValueImports.has(base)) valueParts.push(p);
+      else typeParts.push(p);
+    }
 
-      const lines = [];
-      if (valueParts.length)
-        lines.push(`import { ${valueParts.join(", ")} } from "./http-client";`);
-      if (typeParts.length)
-        lines.push(
-          `import type { ${typeParts.join(", ")} } from "./http-client";`,
-        );
-      return lines.join("\n");
-    },
-  );
+    const lines = [];
+    if (valueParts.length) lines.push(`import { ${valueParts.join(", ")} } from "./http-client";`);
+    if (typeParts.length) lines.push(`import type { ${typeParts.join(", ")} } from "./http-client";`);
+    return lines.join("\n");
+  });
 
   if (text !== original) {
     fs.writeFileSync(file, text, "utf8");

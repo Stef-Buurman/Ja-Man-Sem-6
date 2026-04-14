@@ -3,10 +3,7 @@ import type { ToastOptions } from "../api/methods/Types";
 import { toast } from "../components/toast-manager/toast-context";
 import type { ApiResult } from "../interfaces/responses/ApiResult";
 
-export async function handleApiResponse<T>(
-  call: () => Promise<HttpResponse<T, any>>,
-  toastOptions: ToastOptions | undefined,
-): Promise<ApiResult<T>> {
+export async function handleApiResponse<T>(call: () => Promise<HttpResponse<T, any>>, toastOptions: ToastOptions | undefined): Promise<ApiResult<T>> {
   let response: HttpResponse<T, any> | undefined;
 
   try {

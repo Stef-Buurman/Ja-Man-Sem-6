@@ -7,11 +7,7 @@ import { safeRun } from "./Helpers/SafeRun.mjs";
 import { swaggerFilePath, serverFolderName } from "./Helpers/Globals.mjs";
 
 const API_START_COMMAND = "dotnet";
-const API_ARGS = [
-  "run",
-  "--project",
-  `${serverFolderName}/${serverFolderName}.csproj`,
-];
+const API_ARGS = ["run", "--project", `${serverFolderName}/${serverFolderName}.csproj`];
 const SWAGGER_URL = "http://localhost:5183/swagger/v1/swagger.json";
 const OUTPUT_FILE = path.resolve("./" + swaggerFilePath);
 

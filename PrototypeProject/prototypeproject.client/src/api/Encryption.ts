@@ -10,18 +10,11 @@
  * ---------------------------------------------------------------
  */
 
-import type {
-  ApiResponse,
-  EncryptDecryptRequest,
-  GetKeyOptionsParams,
-  HashRequest,
-} from "./data-contracts";
+import type { ApiResponse, EncryptDecryptRequest, GetKeyOptionsParams, HashRequest } from "./data-contracts";
 import { ContentType, HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
 
-export class Encryption<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class Encryption<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *
