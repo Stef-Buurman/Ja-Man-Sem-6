@@ -6,5 +6,5 @@ runCommandAsync("dotnet watch run", serverFolderName);
 runCommandAsync("npm run dev", clientFolderName);
 
 setTimeout(() => {
-  open("https://localhost:58895");
+  open("https://localhost:49164");
 }, 5000);

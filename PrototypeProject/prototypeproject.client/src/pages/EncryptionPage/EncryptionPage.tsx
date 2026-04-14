@@ -92,12 +92,20 @@ export default function EncryptionPage() {
 
   const generateKeys = async () => {
     try {
-      const result = await getKeyOptions(undefined, {
-        toastSuccess: {
-          message: "Keys generated successfully",
-          title: "Key Generation Successful",
+      const result = await getKeyOptions(
+        undefined,
+        {
+          toastSuccess: {
+            message: "Keys generated successfully",
+            title: "Key Generation Successful",
+          },
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        },
+      );
       if (result.ok) {
         setKeys(result.response.data || []);
       }

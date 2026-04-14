@@ -12,7 +12,6 @@ export function extractArgsToastsAndParams<TArgs extends any[]>(
   let toastOptions: ToastOptions | undefined;
   let params: RequestParams | undefined;
 
-  // Check last argument for RequestParams
   const lastArg = args[args.length - 1];
   if (
     lastArg &&
@@ -24,7 +23,6 @@ export function extractArgsToastsAndParams<TArgs extends any[]>(
     args.pop();
   }
 
-  // Check last argument for ToastOptions
   const newLast = args[args.length - 1];
   if (
     newLast &&

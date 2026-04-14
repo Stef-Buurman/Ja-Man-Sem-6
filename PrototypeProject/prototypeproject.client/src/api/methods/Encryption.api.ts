@@ -12,8 +12,6 @@ import { extractArgsToastsAndParams } from "../../utils/ExtractArgsToastsAndPara
 /* =======================
    Query Types
    ======================= */
-export type HashDataQuery = NonNullable<Parameters<Encryption["hashData"]>[0]>;
-
 export type GetKeyOptionsQuery = NonNullable<
   Parameters<Encryption["getKeyOptions"]>[0]
 >;
@@ -26,17 +24,6 @@ const encryptionApi = new Encryption();
 /* =======================
    Simple Query Methods
    ======================= */
-export async function hashData(
-  query?: HashDataQuery,
-  toastOptions?: ToastOptions,
-  params?: RequestParams,
-): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["hashData"]>>>> {
-  return handleApiResponse(
-    () => encryptionApi.hashData(query, params),
-    toastOptions,
-  );
-}
-
 export async function getKeyOptions(
   query?: GetKeyOptionsQuery,
   toastOptions?: ToastOptions,
@@ -96,6 +83,21 @@ export async function decryptData(
     extractArgsToastsAndParams(argsWithToast);
   return handleApiResponse(
     () => encryptionApi.decryptData(...args, params),
+    toastOptions,
+  );
+}
+
+export async function hashData(
+  ...argsWithToast: [
+    ...WithoutRequestParams<Parameters<Encryption["hashData"]>>,
+    ToastOptions?,
+    RequestParams?,
+  ]
+): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["hashData"]>>>> {
+  const { args, toastOptions, params } =
+    extractArgsToastsAndParams(argsWithToast);
+  return handleApiResponse(
+    () => encryptionApi.hashData(...args, params),
     toastOptions,
   );
 }

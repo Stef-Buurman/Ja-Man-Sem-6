@@ -25,18 +25,8 @@ export interface GetJwtResponse {
   token: string | null;
 }
 
-export interface WeatherForecast {
-  /** @format date */
-  date: string;
-  /** @format int32 */
-  temperatureC: number;
-  /** @format int32 */
-  temperatureF: number;
-  summary?: string | null;
-}
-
-export interface HashDataParams {
-  data?: string;
+export interface HashRequest {
+  data: string | null;
 }
 
 export interface GetKeyOptionsParams {

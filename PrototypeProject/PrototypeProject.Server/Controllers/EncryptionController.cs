@@ -76,12 +76,12 @@ namespace EncryptionHashingPrototype.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("hash")]
-        public ActionResult<ApiResponse> HashData(string data)
+        [HttpPost("hash")]
+        public ActionResult<ApiResponse> HashData([FromBody] HashRequest request)
         {
             try
             {
-                var hash = _encryptionService.Hash(data);
+                var hash = _encryptionService.Hash(request.Data);
 
                 return Ok(new ApiResponse
                 {
@@ -99,6 +99,11 @@ namespace EncryptionHashingPrototype.Server.Controllers
                     Message = $"Hashing failed: {ex.Message}"
                 });
             }
+        }
+
+        public class HashRequest
+        {
+            public string Data { get; set; } = string.Empty;
         }
 
         // [Authorize]

@@ -14,7 +14,7 @@ import type {
   ApiResponse,
   EncryptDecryptRequest,
   GetKeyOptionsParams,
-  HashDataParams,
+  HashRequest,
 } from "./data-contracts";
 import { ContentType, HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
@@ -72,13 +72,14 @@ export class Encryption<
    *
    * @tags Encryption
    * @name HashData
-   * @request GET:/api/Encryption/hash
+   * @request POST:/api/Encryption/hash
    */
-  hashData = (query: HashDataParams, params: RequestParams = {}) =>
+  hashData = (data: HashRequest, params: RequestParams = {}) =>
     this.request<ApiResponse, any>({
       path: `/api/Encryption/hash`,
-      method: "GET",
-      query: query,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
