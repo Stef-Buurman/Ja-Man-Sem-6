@@ -1,11 +1,11 @@
 import { fileURLToPath, URL } from "node:url";
-
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-react";
 import fs from "fs";
 import path from "path";
 import child_process from "child_process";
 import { env } from "process";
+import svgr from "vite-plugin-svgr";
 
 const baseFolder =
   env.APPDATA !== undefined && env.APPDATA !== ""
@@ -49,7 +49,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [plugin()],
+  plugins: [plugin(), svgr()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
