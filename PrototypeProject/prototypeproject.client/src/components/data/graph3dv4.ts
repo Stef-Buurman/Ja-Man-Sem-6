@@ -388,6 +388,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.403",
     },
     {
       id: "H.3.319_door",
@@ -397,6 +398,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.319",
     },
     {
       id: "H.3.312_door",
@@ -406,6 +408,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.312",
     },
     {
       id: "H.3.308_door",
@@ -415,6 +418,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.308",
     },
     {
       id: "H.3.306_door",
@@ -424,6 +428,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.306",
     },
     {
       id: "H.3.206_door",
@@ -433,6 +438,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.206",
     },
     {
       id: "H.3.204_door",
@@ -442,6 +448,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.204",
     },
     {
       id: "H.3.Trap1_door",
@@ -451,6 +458,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.Trap1",
     },
     {
       id: "H.3.Lift1_door",
@@ -460,6 +468,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.Lift1",
     },
     {
       id: "H.3.Lift2_door",
@@ -469,6 +478,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.Lift2",
     },
     {
       id: "H.3.Lift3_door",
@@ -478,6 +488,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.Lift3",
     },
     {
       id: "H.3.Trap2_door",
@@ -487,6 +498,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.Trap2",
     },
     {
       id: "H.3.117_door",
@@ -496,6 +508,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.117",
     },
     {
       id: "H.3.116_door",
@@ -505,6 +518,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.116",
     },
     {
       id: "H.3.114_door",
@@ -514,6 +528,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.114",
     },
     {
       id: "H.3.111_door",
@@ -523,6 +538,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.111",
     },
     {
       id: "H.3.109_door",
@@ -532,6 +548,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.109",
     },
     {
       id: "H.3.107_door",
@@ -541,6 +558,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.107",
     },
     {
       id: "H.3.104_door",
@@ -550,6 +568,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.104",
     },
     {
       id: "H.3.318_door",
@@ -559,6 +578,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.318",
     },
     {
       id: "H.3.405_door",
@@ -568,6 +588,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "H.3.405",
     },
     {
       id: "WD.03.023_door",
@@ -577,6 +598,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.023",
     },
     {
       id: "WD.03.021_door",
@@ -586,6 +608,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.021",
     },
     {
       id: "WD.03.019_door",
@@ -595,6 +618,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.019",
     },
     {
       id: "WD.03.Trap1_door",
@@ -604,6 +628,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.Trap1",
     },
     {
       id: "WD.03.lift_door",
@@ -613,6 +638,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.lift",
     },
     {
       id: "WD.03.Trap2_door",
@@ -622,6 +648,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.Trap2",
     },
     {
       id: "WD.03.028_door",
@@ -631,6 +658,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.028",
     },
     {
       id: "WD.03.029_door",
@@ -640,6 +668,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.029",
     },
     {
       id: "WD.03.030_door",
@@ -649,6 +678,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.030",
     },
     {
       id: "WD.03.033_door",
@@ -658,6 +688,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.033",
     },
     {
       id: "WD.03.005_door",
@@ -667,6 +698,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WD.03.005",
     },
     {
       id: "WN.03.029_door",
@@ -676,6 +708,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.029",
     },
     {
       id: "WN.03.028_door",
@@ -685,6 +718,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.028",
     },
     {
       id: "WN.03.022_door",
@@ -694,6 +728,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.022",
     },
     {
       id: "WN.03.017_door",
@@ -703,6 +738,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.017",
     },
     {
       id: "WN.03.014_door",
@@ -712,6 +748,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.014",
     },
     {
       id: "WN.03.007_door",
@@ -721,6 +758,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.007",
     },
     {
       id: "WN.03.Trap1_door",
@@ -730,6 +768,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.Trap1",
     },
     {
       id: "WN.03.Lift_door",
@@ -739,6 +778,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
+      roomId: "WN.03.Lift",
     },
     {
       id: "WN.03.Trap2_door",
@@ -748,24 +788,7 @@ export const graph3d2v4: Graph = {
       type: "door",
       width: 20,
       height: 20,
-    },
-    {
-      id: "node_1776102657388",
-      x: 330,
-      y: 470,
-      floor: 3,
-      type: "hallway",
-      width: 10,
-      height: 10,
-    },
-    {
-      id: "node_1776102701370",
-      x: 405,
-      y: 450,
-      floor: 3,
-      type: "hallway",
-      width: 10,
-      height: 10,
+      roomId: "WN.03.Trap2",
     },
   ],
   edges: [

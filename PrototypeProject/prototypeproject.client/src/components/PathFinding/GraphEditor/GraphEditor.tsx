@@ -90,6 +90,8 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
       type: "${n.type}",
       width: ${n.width ?? 10},
       height: ${n.height ?? 10}
+      ${n.roomId ? `,      roomId: "${n.roomId}"` : ""}
+      ${n.label ? `,      label: "${n.label}"` : ""}
     }`;
 
     const formatEdge = (e: Edge) => `    {

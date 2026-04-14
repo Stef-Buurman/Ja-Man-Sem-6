@@ -8,6 +8,37 @@
 .cls-4 {
   width: 50%;
 }
+
+.cls-1 {
+  cursor: pointer;
+}
+
+.cls-4,
+.cls-5,
+.cls-6 {
+  fill: #f8efe3;
+  stroke: #342626;
+  stroke-width: 1;
+  cursor: pointer;
+}
+
+[data-name="noClick"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cls-4:hover,
+.cls-5:hover,
+.cls-6:hover {
+  opacity: 0.8;
+  stroke-width: 3;
+  stroke: black;
+}
+
+.cls-6:hover {
+  stroke: white;
+}
+
 .cls-7 {
   display: none;
 }

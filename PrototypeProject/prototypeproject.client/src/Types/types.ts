@@ -1,15 +1,17 @@
-export type NodeType = "hallway" | "room" | "stairs" | "elevator" | "entrance" | "door";
+export type NodeType = "room" | "door" | "hallway" | "intersection" | "stairs" | "elevator" | "entrance";
 
-export interface GraphNode {
+export type GraphNode = {
   id: string;
   x: number;
   y: number;
   floor: number;
   type: NodeType;
-
   width?: number;
   height?: number;
-}
+
+  roomId?: string;
+  label?: string;
+};
 
 export interface Edge {
   from: string;

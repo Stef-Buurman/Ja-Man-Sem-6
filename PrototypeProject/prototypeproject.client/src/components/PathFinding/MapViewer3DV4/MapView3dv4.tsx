@@ -1,61 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./MapView3dv4.css";
 import type { MapView3dv4Props } from "./MapView3dv4.props";
+import type { GraphNode } from "../../../Types/types";
 
 export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => {}, floors }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!svgElement.current) return;
-
-    const prefixes = ["H.", "WN.", "WD."];
-    const allRooms = svgElement.current.querySelectorAll(prefixes.map((p) => `g[id^='${p}']`).join(", "));
-
-    const cleanups: Array<() => void> = [];
-
-    allRooms.forEach((room) => {
-      const polygon = room.querySelector("polygon");
-      const roomId = room.id;
-
-      if (!polygon) return;
-
-      const onClick = (event: Event) => {
-        event.stopPropagation();
-        handleRoomClick(roomId);
-      };
-
-      const onEnter = () => {
-        polygon.style.fillOpacity = "0.8";
-        polygon.style.stroke = "#ff5722";
-        polygon.style.strokeWidth = "3";
-      };
-
-      const onLeave = () => {
-        polygon.style.fillOpacity = "0.6";
-        polygon.style.stroke = "";
-        polygon.style.strokeWidth = "";
-      };
-
-      polygon.style.cursor = "pointer";
-      polygon.style.transition = "all 0.2s ease";
-
-      polygon.addEventListener("click", onClick);
-      polygon.addEventListener("mouseenter", onEnter);
-      polygon.addEventListener("mouseleave", onLeave);
-
-      cleanups.push(() => {
-        polygon.removeEventListener("click", onClick);
-        polygon.removeEventListener("mouseenter", onEnter);
-        polygon.removeEventListener("mouseleave", onLeave);
-      });
-    });
-
-    return () => {
-      cleanups.forEach((fn) => fn());
-    };
-  }, [currentFloor, floors, handleRoomClick]);
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -71,7 +22,7 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, edges, currentF
 
     const doors = doorGroup.querySelectorAll("circle");
 
-    const doorData = Array.from(doors).map((door) => {
+    const doorData: GraphNode[] = Array.from(doors).map((door) => {
       const rawId = door.getAttribute("data-name") || door.id;
       const cleanId = rawId.replace(/-\d+$/, "");
 
@@ -86,17 +37,30 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, edges, currentF
         type: "door",
         width: 20,
         height: 20,
+        roomId: cleanId,
       };
     });
 
     const formattedData = doorData
-      .map((d) => `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} },`)
+      .map(
+        (d) =>
+          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height}, roomId: "${d.roomId}" },`,
+      )
       .join("\n");
 
     navigator.clipboard.writeText(formattedData);
   };
 
   const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
+
+  const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    const target = e.target as Element;
+    const roomGroup = target.closest("g[id^='H.'], g[id^='WN.'], g[id^='WD.']");
+    if (roomGroup?.id) {
+      const cleanId = roomGroup.id.replace(/-\d+$/, "");
+      handleRoomClick(cleanId);
+    }
+  };
 
   return (
     <>
@@ -124,6 +88,7 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, edges, currentF
             height: "auto",
             display: "block",
           }}
+          onClick={onSvgClick}
         >
           {SelectedFloor && <SelectedFloor ref={gottenSVGElement} />}
 
