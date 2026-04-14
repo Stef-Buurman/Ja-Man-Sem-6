@@ -7,7 +7,9 @@
   "paths": {
     "/api/Auth/get-jwt": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "operationId": "GetJwt",
         "responses": {
           "200": {
@@ -35,7 +37,9 @@
     },
     "/api/Encryption/encrypt": {
       "post": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "EncryptData",
         "requestBody": {
           "content": {
@@ -82,7 +86,9 @@
     },
     "/api/Encryption/protected-data": {
       "get": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "GetProtectedData",
         "responses": {
           "200": {
@@ -93,7 +99,9 @@
     },
     "/api/Encryption/decrypt": {
       "post": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "DecryptData",
         "requestBody": {
           "content": {
@@ -140,7 +148,9 @@
     },
     "/api/Encryption/hash": {
       "post": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "HashData",
         "requestBody": {
           "content": {
@@ -187,7 +197,9 @@
     },
     "/api/Encryption/keys": {
       "get": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "GetKeyOptions",
         "parameters": [
           {
@@ -226,7 +238,9 @@
     },
     "/api/Encryption/public-key": {
       "get": {
-        "tags": ["Encryption"],
+        "tags": [
+          "Encryption"
+        ],
         "operationId": "GetPublicKey",
         "responses": {
           "200": {
@@ -251,12 +265,205 @@
           }
         }
       }
+    },
+    "/api/Heatmap": {
+      "post": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "AddPoint",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatPoint"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatPoint"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatPoint"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "GetHeatmap",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Heatmap/areas": {
+      "get": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "GetHeatpointAreas",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "AddHeatpointArea",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "UpdateRangeHeatpointArea",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Heatmap/areas/{id}": {
+      "put": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "UpdateHeatpointArea",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeatpointArea"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Heatmap"
+        ],
+        "operationId": "DeleteHeatpointArea",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "ApiResponse": {
-        "required": ["message", "success"],
+        "required": [
+          "message",
+          "success"
+        ],
         "type": "object",
         "properties": {
           "success": {
@@ -273,7 +480,10 @@
         "additionalProperties": false
       },
       "EncryptDecryptRequest": {
-        "required": ["data", "key"],
+        "required": [
+          "data",
+          "key"
+        ],
         "type": "object",
         "properties": {
           "data": {
@@ -288,7 +498,9 @@
         "additionalProperties": false
       },
       "GetJwtResponse": {
-        "required": ["token"],
+        "required": [
+          "token"
+        ],
         "type": "object",
         "properties": {
           "token": {
@@ -299,12 +511,86 @@
         "additionalProperties": false
       },
       "HashRequest": {
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "type": "object",
         "properties": {
           "data": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeatPoint": {
+        "required": [
+          "createdAt",
+          "id",
+          "x",
+          "y"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HeatpointArea": {
+        "required": [
+          "color",
+          "id",
+          "level",
+          "soundLevel",
+          "value",
+          "x",
+          "y"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "value": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soundLevel": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "level": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "color": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -317,6 +603,9 @@
     },
     {
       "name": "Encryption"
+    },
+    {
+      "name": "Heatmap"
     }
   ]
 }

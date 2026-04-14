@@ -1,5 +1,8 @@
 using EncryptionHashingPrototype.Server.Services;
+using HeatmapAPI.Data;
+using HeatmapAPI.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -41,6 +44,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=heatmap.db"));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactCors", policy =>
+        policy.WithOrigins("https://localhost:49164") 
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
+});
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -55,12 +73,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("ReactCors");
 
-// Important: authentication must come before authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
+app.MapHub<HeatmapHub>("/api/heatmapHub");
 
 app.Run();

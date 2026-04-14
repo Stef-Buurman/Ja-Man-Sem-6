@@ -10,6 +10,8 @@ import { graph3d2v4 } from "./components/data/graph3dv4";
 import Verdieping3 from "./assets/Verdieping3_2.svg";
 import "./App.css";
 import { PathFinding2DV1 } from "./pages/PathFinding/2DPathFindingV1/2DPathFindingV1";
+import Heatmap from "./pages/Heatmap/Heatmap/Heatmap";
+import HeatmapEditor from "./pages/Heatmap/Editor/HeatmapEditor";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path="/3dV2" element={<PathFinding3DV2 />} />
         <Route path="/3dV3" element={<PathFinding3DV3 />} />
         <Route path="/3dV4" element={<PathFinding3DV4 />} />
+        <Route path="/editor" element={<HeatmapEditor />} />
+        <Route path="/heatmap" element={<Heatmap />} />
         <Route
           path="/editor"
           element={

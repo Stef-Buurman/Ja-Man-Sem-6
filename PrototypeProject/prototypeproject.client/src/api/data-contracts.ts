@@ -29,10 +29,47 @@ export interface HashRequest {
   data: string | null;
 }
 
+export interface HeatPoint {
+  /** @format int32 */
+  id: number;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
+  /** @format date-time */
+  createdAt: string;
+}
+
+export interface HeatpointArea {
+  /** @format int32 */
+  id: number;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
+  /** @format int32 */
+  value: number;
+  /** @format int32 */
+  soundLevel: number;
+  /** @format int32 */
+  level: number;
+  color: string | null;
+}
+
 export interface GetKeyOptionsParams {
   /**
    * @format int32
    * @default 5
    */
   amount?: number;
+}
+
+export interface UpdateHeatpointAreaParams {
+  /** @format int32 */
+  id: number;
+}
+
+export interface DeleteHeatpointAreaParams {
+  /** @format int32 */
+  id: number;
 }
