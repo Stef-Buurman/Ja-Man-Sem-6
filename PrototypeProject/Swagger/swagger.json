@@ -7,9 +7,7 @@
   "paths": {
     "/api/Auth/get-jwt": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "GetJwt",
         "responses": {
           "200": {
@@ -37,9 +35,7 @@
     },
     "/api/Encryption/encrypt": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "EncryptData",
         "requestBody": {
           "content": {
@@ -86,9 +82,7 @@
     },
     "/api/Encryption/protected-data": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetProtectedData",
         "responses": {
           "200": {
@@ -99,9 +93,7 @@
     },
     "/api/Encryption/decrypt": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "DecryptData",
         "requestBody": {
           "content": {
@@ -148,9 +140,7 @@
     },
     "/api/Encryption/hash": {
       "post": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "HashData",
         "requestBody": {
           "content": {
@@ -197,9 +187,7 @@
     },
     "/api/Encryption/keys": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetKeyOptions",
         "parameters": [
           {
@@ -238,9 +226,7 @@
     },
     "/api/Encryption/public-key": {
       "get": {
-        "tags": [
-          "Encryption"
-        ],
+        "tags": ["Encryption"],
         "operationId": "GetPublicKey",
         "responses": {
           "200": {
@@ -270,10 +256,7 @@
   "components": {
     "schemas": {
       "ApiResponse": {
-        "required": [
-          "message",
-          "success"
-        ],
+        "required": ["message", "success"],
         "type": "object",
         "properties": {
           "success": {
@@ -290,10 +273,7 @@
         "additionalProperties": false
       },
       "EncryptDecryptRequest": {
-        "required": [
-          "data",
-          "key"
-        ],
+        "required": ["data", "key"],
         "type": "object",
         "properties": {
           "data": {
@@ -308,9 +288,7 @@
         "additionalProperties": false
       },
       "GetJwtResponse": {
-        "required": [
-          "token"
-        ],
+        "required": ["token"],
         "type": "object",
         "properties": {
           "token": {
@@ -321,9 +299,7 @@
         "additionalProperties": false
       },
       "HashRequest": {
-        "required": [
-          "data"
-        ],
+        "required": ["data"],
         "type": "object",
         "properties": {
           "data": {
