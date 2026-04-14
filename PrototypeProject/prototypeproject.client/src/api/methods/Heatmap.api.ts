@@ -21,20 +21,6 @@ const heatmapApi = new Heatmap();
 /* =======================
    Non-Query Methods
    ======================= */
-export async function addPoint(
-  ...argsWithToast: [...WithoutRequestParams<Parameters<Heatmap["addPoint"]>>, ToastOptions?, RequestParams?]
-): Promise<ApiResult<ExtractResponse<ReturnType<Heatmap["addPoint"]>>>> {
-  const { args, toastOptions, params } = extractArgsToastsAndParams(argsWithToast);
-  return handleApiResponse(() => heatmapApi.addPoint(...args, params), toastOptions);
-}
-
-export async function getHeatmap(
-  ...argsWithToast: [...WithoutRequestParams<Parameters<Heatmap["getHeatmap"]>>, ToastOptions?, RequestParams?]
-): Promise<ApiResult<ExtractResponse<ReturnType<Heatmap["getHeatmap"]>>>> {
-  const { args, toastOptions, params } = extractArgsToastsAndParams(argsWithToast);
-  return handleApiResponse(() => heatmapApi.getHeatmap(...args, params), toastOptions);
-}
-
 export async function getHeatpointAreas(
   ...argsWithToast: [...WithoutRequestParams<Parameters<Heatmap["getHeatpointAreas"]>>, ToastOptions?, RequestParams?]
 ): Promise<ApiResult<ExtractResponse<ReturnType<Heatmap["getHeatpointAreas"]>>>> {

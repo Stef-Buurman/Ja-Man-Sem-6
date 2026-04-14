@@ -5,9 +5,6 @@ import { PathFinding3DV3 } from "./pages/PathFinding/3DPathFindingV3/3DPathFindi
 import { PathFinding3DV4 } from "./pages/PathFinding/3DPathFindingV4/3DPathFindingV4";
 import { PathFinding3DV2 } from "./pages/PathFinding/3DPathFindingV2/3DPathFindingV2";
 import { PathFinding3DV1 } from "./pages/PathFinding/3DPathFindingV1/3DPathFindingV1";
-import { GraphEditor } from "./components/PathFinding/GraphEditor/GraphEditor";
-import { graph3d2v4 } from "./components/data/graph3dv4";
-import Verdieping3 from "./assets/Verdieping3_2.svg";
 import "./App.css";
 import { PathFinding2DV1 } from "./pages/PathFinding/2DPathFindingV1/2DPathFindingV1";
 import Heatmap from "./pages/Heatmap/Heatmap/Heatmap";

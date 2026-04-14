@@ -253,51 +253,38 @@
       }
     },
     "/api/Heatmap": {
-      "post": {
-        "tags": ["Heatmap"],
-        "operationId": "AddPoint",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeatPoint"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeatPoint"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/HeatPoint"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Heatmap"],
-        "operationId": "GetHeatmap",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Heatmap/areas": {
       "get": {
         "tags": ["Heatmap"],
         "operationId": "GetHeatpointAreas",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -325,7 +312,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              }
+            }
           }
         }
       },
@@ -362,12 +366,38 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HeatpointArea"
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/Heatmap/areas/{id}": {
+    "/api/Heatmap/{id}": {
       "put": {
         "tags": ["Heatmap"],
         "operationId": "UpdateHeatpointArea",
@@ -403,7 +433,24 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeatpointArea"
+                }
+              }
+            }
           }
         }
       },
@@ -481,29 +528,6 @@
           "data": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "HeatPoint": {
-        "required": ["createdAt", "id", "x", "y"],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x": {
-            "type": "number",
-            "format": "double"
-          },
-          "y": {
-            "type": "number",
-            "format": "double"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false

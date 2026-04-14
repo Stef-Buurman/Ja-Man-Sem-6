@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -27,21 +26,6 @@ namespace PrototypeProject.Server.Migrations
                 {
                     table.PrimaryKey("PK_HeatpointAreas", x => x.Id);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "HeatPoints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    X = table.Column<double>(type: "REAL", nullable: false),
-                    Y = table.Column<double>(type: "REAL", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HeatPoints", x => x.Id);
-                });
         }
 
         /// <inheritdoc />
@@ -49,9 +33,6 @@ namespace PrototypeProject.Server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "HeatpointAreas");
-
-            migrationBuilder.DropTable(
-                name: "HeatPoints");
         }
     }
 }

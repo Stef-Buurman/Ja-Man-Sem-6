@@ -1,46 +1,21 @@
 import React, { useEffect, useState } from "react";
 import test3 from "../../../assets/2e_verdieping.svg";
 import * as signalR from "@microsoft/signalr";
-import type { HeatPoint, HeatpointArea } from "../../../api/data-contracts";
-
-const API_URL = "/api/heatmap";
+import type { HeatpointArea } from "../../../api/data-contracts";
+import { getHeatpointAreas } from "../../../api/methods/Heatmap.api";
 
 const Heatmap: React.FC = () => {
-  const [points, setPoints] = useState<HeatPoint[]>([]);
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
 
-  const fetchHeatmap = async () => {
-    try {
-      const res = await fetch(API_URL);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      setPoints(data);
-    } catch (err) {
-      console.error("Failed to fetch heatmap points:", err);
-    }
-  };
-
   const fetchHeatmapAreas = async () => {
-    try {
-      const res = await fetch(`${API_URL}/areas`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      setAreas(data);
-    } catch (err) {
-      console.error("Failed to fetch heatmap areas:", err);
-    }
+    const res = await getHeatpointAreas();
+    if (res.ok) setAreas(res.response);
   };
 
   useEffect(() => {
     let isActive = true;
 
     const connection = new signalR.HubConnectionBuilder().withUrl("/api/heatmapHub").withAutomaticReconnect().build();
-
-    connection.on("ReceivePoint", () => {
-      if (isActive) {
-        fetchHeatmap();
-      }
-    });
 
     connection.on("ReceiveAreaUpdate", () => {
       if (isActive) {
@@ -54,7 +29,6 @@ const Heatmap: React.FC = () => {
         console.log("SignalR connected");
 
         if (isActive) {
-          await fetchHeatmap();
           await fetchHeatmapAreas();
         }
       } catch (err) {

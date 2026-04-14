@@ -29,17 +29,6 @@ export interface HashRequest {
   data: string | null;
 }
 
-export interface HeatPoint {
-  /** @format int32 */
-  id: number;
-  /** @format double */
-  x: number;
-  /** @format double */
-  y: number;
-  /** @format date-time */
-  createdAt: string;
-}
-
 export interface HeatpointArea {
   /** @format int32 */
   id: number;

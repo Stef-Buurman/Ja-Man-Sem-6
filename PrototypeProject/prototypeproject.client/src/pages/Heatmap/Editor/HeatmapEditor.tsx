@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./HeatmapEditor.css";
 import type { HeatpointArea } from "../../../api/data-contracts";
-
-const API_URL = "/api/heatmap";
+import { addHeatpointArea, deleteHeatpointArea, getHeatpointAreas, updateRangeHeatpointArea } from "../../../api/methods/Heatmap.api";
 
 const HeatmapEditor: React.FC = () => {
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
 
   const handleAreaUpdate = async () => {
-    await fetch(`${API_URL}/areas`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    await updateRangeHeatpointArea(areas, {
+      toastSuccess: {
+        title: "Areas Updated",
+        message: `Heatmap areas updated successfully!`,
       },
-      body: JSON.stringify(areas),
     });
   };
 
   const fetchHeatmapAreas = async () => {
-    const res = await fetch(`${API_URL}/areas`);
-    const data = await res.json();
-    setAreas(data);
+    const res = await getHeatpointAreas();
+    if (res.ok) setAreas(res.response);
   };
 
   useEffect(() => {
@@ -30,7 +27,7 @@ const HeatmapEditor: React.FC = () => {
   const clampMin0 = (value: number) => Math.max(0, value || 0);
 
   const handleAddArea = async () => {
-    const newArea = {
+    const newArea: HeatpointArea = {
       id: areas.length > 0 ? Math.max(...areas.map((a) => a.id)) + 1 : 1,
       x: 0,
       y: 0,
@@ -39,20 +36,27 @@ const HeatmapEditor: React.FC = () => {
       level: 0,
       color: "rgba(0,0,255,0.6)",
     };
-    await fetch(`${API_URL}/areas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    await addHeatpointArea(newArea, {
+      toastSuccess: {
+        title: "Area Added",
+        message: `Area with ID ${newArea.id} added successfully!`,
       },
-      body: JSON.stringify(newArea),
     });
     setAreas([...areas, newArea]);
   };
 
   const handleDeleteArea = async (id: number) => {
-    await fetch(`${API_URL}/areas/${id}`, {
-      method: "DELETE",
-    });
+    await deleteHeatpointArea(
+      {
+        id,
+      },
+      {
+        toastSuccess: {
+          title: "Area Deleted",
+          message: `Area with ID ${id} deleted successfully!`,
+        },
+      },
+    );
     setAreas(areas.filter((a) => a.id !== id));
   };
 

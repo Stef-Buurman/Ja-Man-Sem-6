@@ -19,69 +19,24 @@ namespace HeatmapAPI.Controllers
             _hubContext = hubContext;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddPoint([FromBody] HeatPoint point)
-        {
-            _context.HeatPoints.Add(point);
-            await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceivePoint", "New point added");
-            return Ok();
-        }
-
         [HttpGet]
-        public IActionResult GetHeatmap()
-        {
-            int gridSize = 25;
-
-            var data = _context.HeatPoints
-                .AsEnumerable()
-                .GroupBy(p => new
-                {
-                    X = Math.Floor(p.X / gridSize),
-                    Y = Math.Floor(p.Y / gridSize)
-                })
-                .Select(g =>
-                {
-                    int count = g.Count();
-
-                    string level = count switch
-                    {
-                        <= 3 => "green",
-                        <= 10 => "yellow",
-                        _ => "red"
-                    };
-
-                    return new
-                    {
-                        x = (g.Key.X * gridSize) + gridSize / 2,
-                        y = (g.Key.Y * gridSize) + gridSize / 2,
-                        value = count,
-                        level
-                    };
-                })
-                .ToList();
-
-            return Ok(data);
-        }
-
-        [HttpGet("areas")]
-        public IActionResult GetHeatpointAreas()
+        public ActionResult<IEnumerable<HeatpointArea>> GetHeatpointAreas()
         {
             var data = _context.HeatpointAreas.ToList();
             return Ok(data);
         }
 
-        [HttpPost("areas")]
-        public async Task<IActionResult> AddHeatpointArea([FromBody] HeatpointArea area)
+        [HttpPost]
+        public async Task<ActionResult<HeatpointArea>> AddHeatpointArea([FromBody] HeatpointArea area)
         {
             _context.HeatpointAreas.Add(area);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area updated");
-            return Ok();
+            return Ok(area);
         }
 
-        [HttpPut("areas/{id}")]
-        public async Task<IActionResult> UpdateHeatpointArea(int id, [FromBody] HeatpointArea area)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<HeatpointArea>> UpdateHeatpointArea(int id, [FromBody] HeatpointArea area)
         {
             if (id != area.Id || !_context.HeatpointAreas.Any(a => a.Id == id))
             {
@@ -94,8 +49,8 @@ namespace HeatmapAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("areas")]
-        public async Task<IActionResult> UpdateRangeHeatpointArea([FromBody] List<HeatpointArea> area)
+        [HttpPut]
+        public async Task<ActionResult<IEnumerable<HeatpointArea>>> UpdateRangeHeatpointArea([FromBody] List<HeatpointArea> area)
         {
             foreach (var a in area)
             {
@@ -108,10 +63,10 @@ namespace HeatmapAPI.Controllers
             _context.HeatpointAreas.UpdateRange(area);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint areas updated");
-            return Ok();
+            return Ok(area);
         }
 
-        [HttpDelete("areas/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHeatpointArea(int id)
         {
             var area = await _context.HeatpointAreas.FindAsync(id);
