@@ -23,7 +23,7 @@ export async function getKeyOptions(
   toastOptions?: ToastOptions,
   params?: RequestParams,
 ): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["getKeyOptions"]>>>> {
-  return handleApiResponse(() => encryptionApi.getKeyOptions(query, params), toastOptions);
+  return handleApiResponse(() => encryptionApi.getKeyOptions(query ?? {}, params), toastOptions);
 }
 
 /* =======================

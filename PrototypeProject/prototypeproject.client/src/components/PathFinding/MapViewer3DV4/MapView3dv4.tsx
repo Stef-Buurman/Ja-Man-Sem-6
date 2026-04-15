@@ -3,7 +3,7 @@ import "./MapView3dv4.css";
 import type { MapView3dv4Props } from "./MapView3dv4.props";
 import type { GraphNode } from "../../../Types/types";
 
-export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, edges, currentFloor, path, handleRoomClick = () => {}, floors }) => {
+export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, path, handleRoomClick = () => {}, floors }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);

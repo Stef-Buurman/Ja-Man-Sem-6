@@ -11,7 +11,7 @@ interface MapViewProps {
   path?: string[];
 }
 
-export const MapViewer3DV1: React.FC<MapViewProps> = ({ nodes, edges, currentFloor, path }) => {
+export const MapViewer3DV1: React.FC<MapViewProps> = ({ nodes, currentFloor }) => {
   const [path2, setPath] = useState<string[]>([]);
 
   const handleRoomClick = (roomId: string) => {
