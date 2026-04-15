@@ -17,7 +17,8 @@ const Heatmap: React.FC = () => {
 
     const connection = new signalR.HubConnectionBuilder()
       .withUrl("/api/heatmapHub", {
-        transport: signalR.HttpTransportType.LongPolling,
+        transport: signalR.HttpTransportType.WebSockets,
+        skipNegotiation: true,
       })
       .withAutomaticReconnect()
       .build();
