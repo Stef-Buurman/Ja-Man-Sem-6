@@ -56,7 +56,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ReactCors", policy =>
         policy.WithOrigins(
                 "https://localhost:49164",
-                "https://prototype.buurmans.info")
+                "http://10.0.20.244:5000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());

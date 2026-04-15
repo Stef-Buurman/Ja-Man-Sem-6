@@ -42,7 +42,6 @@ const Heatmap: React.FC = () => {
 
     return () => {
       isActive = false;
-      connection.off("ReceivePoint");
       connection.off("ReceiveAreaUpdate");
       void connection.stop();
     };
