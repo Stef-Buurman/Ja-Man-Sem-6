@@ -5,6 +5,7 @@
 .cls-2 {
   fill: #d3114c;
 }
+
 .cls-4 {
   width: 50%;
 }
@@ -32,11 +33,18 @@
 .cls-6:hover {
   opacity: 0.8;
   stroke-width: 3;
+}
+
+.cls-5:hover {
   stroke: black;
 }
 
 .cls-6:hover {
   stroke: white;
+}
+
+.cls-4:hover {
+  stroke: #d3114c;
 }
 
 .cls-7 {
