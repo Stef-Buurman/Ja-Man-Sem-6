@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Text;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,9 +67,22 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-app.UseForwardedHeaders(new ForwardedHeadersOptions
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
-    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    // Trust your proxy/container network
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+
+    // Option A: trust the proxy container IP exactly
+    // options.KnownProxies.Add(IPAddress.Parse("10.0.20.xxx"));
+
+    // Option B: for testing, trust the whole docker subnet
+    options.KnownNetworks.Add(
+    new Microsoft.AspNetCore.HttpOverrides.IPNetwork(
+        IPAddress.Parse("10.0.20.0"), 24));
 });
 
 using (var scope = app.Services.CreateScope())
