@@ -104,7 +104,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<HeatmapHub>("/hubs/heatmapHub");
+app.MapHub<HeatmapHub>("/hubs/heatmaphub");
 app.MapFallbackToFile("index.html");
 
 app.Run();
