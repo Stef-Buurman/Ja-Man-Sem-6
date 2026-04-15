@@ -44,7 +44,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? "Data Source=heatmap.db";
 
@@ -54,7 +53,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactCors", policy =>
-        policy.WithOrigins("https://localhost:49164") 
+        policy.WithOrigins("https://localhost:49164")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
@@ -63,6 +62,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
 
 app.UseDefaultFiles();
 app.MapStaticAssets();
