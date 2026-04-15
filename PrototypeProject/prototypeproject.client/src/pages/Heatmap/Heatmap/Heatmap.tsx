@@ -15,7 +15,12 @@ const Heatmap: React.FC = () => {
   useEffect(() => {
     let isActive = true;
 
-    const connection = new signalR.HubConnectionBuilder().withUrl("/api/heatmapHub").withAutomaticReconnect().build();
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("/api/heatmapHub", {
+        transport: signalR.HttpTransportType.LongPolling,
+      })
+      .withAutomaticReconnect()
+      .build();
 
     connection.on("ReceiveAreaUpdate", () => {
       if (isActive) {
