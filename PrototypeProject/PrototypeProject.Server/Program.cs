@@ -53,7 +53,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactCors", policy =>
-        policy.WithOrigins("https://localhost:49164")
+        policy.WithOrigins(
+                "https://localhost:49164",
+                "https://prototype.buurmans.info")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
@@ -87,7 +89,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapFallbackToFile("/index.html");
 app.MapHub<HeatmapHub>("/api/heatmapHub");
+app.MapFallbackToFile("/index.html");
 
 app.Run();
