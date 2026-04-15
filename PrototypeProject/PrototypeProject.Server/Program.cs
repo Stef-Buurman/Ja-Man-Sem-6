@@ -93,6 +93,7 @@ app.UseCors("ReactCors");
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseForwardedHeaders();
 
 app.MapControllers();
 app.MapHub<HeatmapHub>("/hubs/heatmapHub");
