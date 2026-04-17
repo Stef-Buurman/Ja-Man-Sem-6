@@ -43,7 +43,7 @@ export const PathFinding3DV4: React.FC = () => {
     <div className="pathfinding-page">
       <div className="pathfinding-shell">
         <header className="pathfinding-header">
-          <h1 className="pathfinding-title">3D Pathfinding Prototype V4</h1>
+          <h1 className="pathfinding-title">3D Pathfinding Prototype V45</h1>
           <h2 className="pathfinding-subtitle">
             Current Floor: {currentFloor}
             {selectedRoom && ` (Route sent to: ${selectedRoom})`}
