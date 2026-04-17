@@ -1,4 +1,53 @@
+.map-view-v4 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.map-view-v4__copy-button {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #342626;
+  background-color: #f8efe3;
+  border: 1px solid #342626;
+  border-radius: 8px;
+  padding: 9px 14px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 10px rgba(52, 38, 38, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+  align-self: flex-start;
+}
+
+.map-view-v4__copy-button:hover {
+  background-color: #fdf1e3;
+}
+
+.map-view-v4__copy-button:focus {
+  border-color: #d3114c;
+  box-shadow: 0 0 0 2px rgba(211, 17, 76, 0.15);
+  outline: none;
+}
+
+.map-view-v4__copy-button:active {
+  transform: scale(0.97);
+}
+
+.map-view-v4__svg-wrapper {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
 .MapView3d4 {
-  border: 2px solid var(--quaternary-JaMan-color);
-  background-color: var(--primary-JaMan-color);
+  width: 100%;
+  height: 100%;
+  display: block;
 }

@@ -96,9 +96,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// leave this out for now
-// app.UseHttpsRedirection();
-
 app.UseCors("ReactCors");
 app.UseAuthentication();
 app.UseAuthorization();

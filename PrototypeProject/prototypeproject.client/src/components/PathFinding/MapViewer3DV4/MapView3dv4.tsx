@@ -10,8 +10,8 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
-    var viewbox = gottenSVGElement.current.getAttribute("viewBox");
-    if (viewbox) setViewBox(viewbox);
+    const vb = gottenSVGElement.current.getAttribute("viewBox");
+    if (vb) setViewBox(vb);
   }, [currentFloor, floors, handleRoomClick]);
 
   const copyDoors = () => {
@@ -63,35 +63,14 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
   };
 
   return (
-    <>
-      <button onClick={copyDoors} style={{ margin: "10px", padding: "5px 10px" }}>
-        Copy doors
+    <div className="map-view-v4">
+      <button className="map-view-v4__copy-button" onClick={copyDoors}>
+        📋 Copy doors
       </button>
 
-      <div
-        style={{
-          position: "relative",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          overflow: "hidden",
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        <svg
-          ref={svgElement}
-          viewBox={viewBox || "0 0 1000 1000"}
-          className="MapView3d4"
-          style={{
-            backgroundColor: "#f5f5f5",
-            width: "100%",
-            height: "auto",
-            display: "block",
-          }}
-          onClick={onSvgClick}
-        >
+      <div className="map-view-v4__svg-wrapper">
+        <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
           {SelectedFloor && <SelectedFloor ref={gottenSVGElement} />}
-
           {/* {nodes
             .filter((n) => n.floor === currentFloor)
             .map((n) => (
@@ -117,7 +96,6 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
 
             return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
           })} */}
-
           {path && (
             <path
               d={(() => {
@@ -156,6 +134,6 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
           )}
         </svg>
       </div>
-    </>
+    </div>
   );
 };

@@ -1,0 +1,118 @@
+.search-box-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0;
+  padding: 12px;
+  background-color: #f8efe3;
+  border: 1px solid #342626;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(52, 38, 38, 0.1);
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.search-box-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #342626;
+  text-align: left;
+}
+
+.search-box-input {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #342626;
+  background-color: #fdf1e3;
+  border: 1px solid #342626;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.search-box-input:focus {
+  border-color: #d3114c;
+  box-shadow: 0 0 0 2px rgba(211, 17, 76, 0.15);
+}
+
+.search-results-wrapper {
+  position: absolute;
+  top: calc(100% - 2px);
+  left: 12px;
+  right: 12px;
+  margin-top: 6px;
+  z-index: 9999;
+}
+
+.search-results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #342626;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8efe3;
+  box-shadow: 0 8px 20px rgba(52, 38, 38, 0.18);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.search-result-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(52, 38, 38, 0.15);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.search-result-button:hover {
+  background-color: rgba(211, 17, 76, 0.08);
+}
+
+.search-result-button:active {
+  transform: scale(0.995);
+}
+
+.search-results-list li:last-child .search-result-button {
+  border-bottom: none;
+}
+
+.search-result-text {
+  color: #342626;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.search-result-count {
+  min-width: 24px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background-color: #d3114c;
+  color: #fdf1e3;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.search-no-results {
+  padding: 10px 12px;
+  border: 1px solid #342626;
+  border-radius: 8px;
+  background-color: #f8efe3;
+  color: #342626;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(52, 38, 38, 0.18);
+  font-size: 14px;
+}
