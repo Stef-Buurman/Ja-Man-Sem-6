@@ -1,7 +1,9 @@
+using System.Net;
 using EncryptionHashingPrototype.Server.Services;
 using HeatmapAPI.Data;
 using HeatmapAPI.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -27,7 +29,6 @@ builder.Services.AddSwaggerGen(options =>
     options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
 });
 
-// Add JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -63,7 +64,21 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSignalR();
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+    options.KnownNetworks.Add(
+        new Microsoft.AspNetCore.HttpOverrides.IPNetwork(
+            IPAddress.Parse("10.0.20.0"), 24));
+});
+
 var app = builder.Build();
+
+app.UseForwardedHeaders();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -74,7 +89,6 @@ using (var scope = app.Services.CreateScope())
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -82,14 +96,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseCors("ReactCors");
+// leave this out for now
+// app.UseHttpsRedirection();
 
+app.UseCors("ReactCors");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<HeatmapHub>("/api/heatmapHub");
-app.MapFallbackToFile("/index.html");
+app.MapHub<HeatmapHub>("/hubs/heatmaphub");
+app.MapFallbackToFile("index.html");
 
 app.Run();
