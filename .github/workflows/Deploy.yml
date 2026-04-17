@@ -1,0 +1,23 @@
+name: Deploy program
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+    env:
+      SSH_KEY: ${{ secrets.UPDATE_PROJECT_SSH_KEY }}
+      SSH_USER: ${{ secrets.UPDATE_PROJECT_USER }}
+      SSH_IP: ${{ secrets.UPDATE_PROJECT_IP }}
+      REMOTE_SCRIPT_PATH: ${{ secrets.UPDATE_PROJECT_FILE_PATH }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test SSH Connection
+        run: ssh $SSH_USER@$SSH_IP "echo Connection Successful"
+
+      - name: Set up virtual environment
+        run: ssh $SSH_KEY $SSH_USER@$SSH_IP $REMOTE_SCRIPT_PATH
