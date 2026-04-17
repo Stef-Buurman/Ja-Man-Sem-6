@@ -20,7 +20,7 @@ export const PathFinding3DV4: React.FC = () => {
     },
   ]);
 
-  const startNodes = ["H.3.Trap1_door", "H.3.Trap2_door", "WN.03.Trap1_door", "WD.03.Trap1_door"];
+  const startNodes = ["H.3.Trap1_door"]; //, "H.3.Trap2_door", "WN.03.Trap1_door", "WD.03.Trap1_door"
 
   const graph = graph3d2v4;
 
