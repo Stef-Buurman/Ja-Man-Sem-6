@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import { graph3d2v4 } from "../../data/graph3dv4";
+import { findPathAStarMultiStart } from "../../services/pathfinding";
+import "./3DPathFindingV4.css";
+import { FloorSelector } from "../../Components/FloorSelector/FloorSelector";
+import { Graph, Node } from "../../Types/types";
+import { MapView3dV4 } from "../../Components/MapViewer3DV4/MapView3dv4";
+import Test3Svg from "../../assets/Verdieping3_2.svg?react";
+import TestGroundFloor from "../../assets/Verdieping_0.svg?react";
+
+const floors = [1, 2, 3];
+
+export const PathFinding3DV4: React.FC = () => {
+  const [path, setPath] = useState<string[]>([]);
+
+  const handleRoomClick = (roomId: string) => {
+    const result = findPathAStarMultiStart(["H.3.Trap1_door"], roomId, graph3d2v4);
+    setPath(result);
+    const floor = (graph3d2v4.nodes.find((n) => n.id === result[0]) as Node)?.floor ?? floors[0];
+    setCurrentFloor(floor);
+    setSelectedRoom(roomId);
+  };
+
+  const [currentFloor, setCurrentFloor] = useState<number>(floors[0]);
+  const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
+  return (
+    <div className="PathFinding3DV2">
+      <h1>3D Pathfinding Prototype V4</h1>
+      <h2>
+        Current Floor: {currentFloor} {selectedRoom && `(Rout send to: ${selectedRoom})`}
+      </h2>
+      <FloorSelector floors={floors} currentFloor={currentFloor} setFloor={setCurrentFloor} />
+      <MapView3dV4
+        nodes={graph3d2v4.nodes}
+        edges={graph3d2v4.edges}
+        currentFloor={currentFloor}
+        path={path}
+        handleRoomClick={handleRoomClick}
+        floors={[Test3Svg]}
+      />
+    </div>
+  );
+};
