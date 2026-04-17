@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PathfindingPrototype/pathfindingprototype.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

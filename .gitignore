@@ -428,3 +428,5 @@ FodyWeavers.xsd
 *.msp
 
 dist/
+*.db
+launch.json

@@ -1,0 +1,33 @@
+import { Graph } from "../Types/types";
+
+export const graph3dv1: Graph = {
+  nodes: [
+    { id: "entrance", x: 360, y: 450, floor: 0, type: "entrance", width: 50, height: 50 },
+    { id: "hall_WN_1", x: 330, y: 300, floor: 0, type: "hallway", width: 10, height: 10 },
+    { id: "hall_WN_2", x: 220, y: 310, floor: 0, type: "hallway", width: 10, height: 10 },
+    { id: "hall_WN_3", x: 205, y: 250, floor: 0, type: "hallway", width: 10, height: 10 },
+    { id: "hall_WN_4", x: 190, y: 195, floor: 0, type: "hallway", width: 10, height: 10 },
+    { id: "hall_WN_5", x: 180, y: 140, floor: 0, type: "hallway", width: 10, height: 10 },
+
+    { id: "class_101", x: 200, y: 346, floor: 0, type: "door", width: 20, height: 20 },
+    { id: "class_102", x: 180, y: 320, floor: 0, type: "door", width: 20, height: 20 },
+    { id: "class_103", x: 172, y: 260, floor: 0, type: "door", width: 20, height: 20 },
+    { id: "class_104", x: 160, y: 200, floor: 0, type: "door", width: 20, height: 20 },
+    { id: "class_105", x: 140, y: 110, floor: 0, type: "door", width: 20, height: 20 },
+    { id: "class_106", x: 150, y: 85, floor: 0, type: "door", width: 20, height: 20 },
+  ],
+
+  edges: [
+    { from: "entrance", to: "hall_WN_1" },
+    { from: "hall_WN_1", to: "hall_WN_2" },
+    { from: "hall_WN_2", to: "hall_WN_3" },
+    { from: "hall_WN_3", to: "hall_WN_4" },
+    { from: "hall_WN_4", to: "hall_WN_5" },
+    { from: "hall_WN_2", to: "class_101" },
+    { from: "hall_WN_2", to: "class_102" },
+    { from: "hall_WN_3", to: "class_103" },
+    { from: "hall_WN_4", to: "class_104" },
+    { from: "hall_WN_5", to: "class_105" },
+    { from: "hall_WN_5", to: "class_106" },
+  ],
+};
