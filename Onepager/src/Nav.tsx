@@ -43,6 +43,10 @@ function Nav() {
           <a href="#sprint2" className="hover:text-[#e8492b] transition">
             Sprint 2
           </a>
+
+          <a href="#sprint3" className="hover:text-[#e8492b] transition">
+            Sprint 3
+          </a>
         </div>
 
         {/* Mobile menu */}
@@ -56,6 +60,9 @@ function Nav() {
             </a>
             <a href="#sprint2" onClick={() => setMenuOpen(false)}>
               Sprint 2
+            </a>
+            <a href="#sprint3" onClick={() => setMenuOpen(false)}>
+              Sprint 3
             </a>
           </div>
         )}

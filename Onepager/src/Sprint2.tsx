@@ -6,13 +6,12 @@ import HeatmapsImg from "./assets/images/heatmaps.png";
 import Stats_Wayfinding from "./assets/images/stats_wayfinding.png";
 import Stats_Werkplekken from "./assets/images/stats_werkplekken.png";
 import Prototype from "./assets/images/prototype.png";
-import {prototypejs} from "globals";
 
 function Sprint2() {
   return (
       <section id="sprint2" className="overflow-visible relative">
         <section className="pb-40 pt-24 z-10 bg-[#342626] text-[#fdf1e3]">
-          <h1 id="sprint2" className="text-2xl sm:text-4xl font-bold text-center mb-12">
+          <h1 className="text-2xl sm:text-4xl font-bold text-center mb-12">
             SPRINT 2
           </h1>
           <div className="max-w-5xl mx-auto px-6">
@@ -63,7 +62,20 @@ function Sprint2() {
                                       Hoe kunnen we de interactie en het vertrouwen tussen mensen
                                       en een robot verbeteren, zodat deze robot op een inclusieve
                                       en transparante manier studenten en bezoekers helpt bij het
-                                      CMI gebouw, en tegelijkertijd een sociale verbinding
+                                      CMI gebouw, en tegelijkertijd een{" "}
+                                      <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>sociale verbinding
+                                      <span
+                                          style={{
+                                              position: "absolute",
+                                              top: "90%",
+                                              left: "7%",
+                                              width: "90%",
+                                              borderTop: "2px solid red",
+                                              transform: "rotate(-7deg) translateY(-50%)",
+                                              transformOrigin: "left center",
+                                          }}
+                                          ></span></span>
+                                      {" "}
                                       stimuleert?
                                   </p>
                               </div>
@@ -185,20 +197,22 @@ function Sprint2() {
                               />
                           </div>
                       </div>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col space-y-6 sm:space-y-10">
                           <h2 className="text-4xl sm:text-4xl font-bold">Fieldresearch</h2>
-                          <p className="text-base sm:text-xl leading-relaxed md:flex-[1] text-left">
-                              Om onze aannames vast te stellen hebben wij een enquête afgenomen bij
-                              studenten en docenten van de Hogeschool Rotterdam.
+                         <div className="space-y-2">
+                             <p className="text-base sm:text-xl leading-relaxed md:flex-[1] text-left">
+                                 Om onze aannames vast te stellen hebben wij een enquête afgenomen bij
+                                 studenten en docenten van de Hogeschool Rotterdam.
 
-                              Hieruit blijkt dat:
-                          </p>
-                          <ul className="list-disc pl-6 space-y-2 text-left text-base sm:text-xl">
-                              <li>Studenten van het CMI moeite hebben met de weg vinden in ons gebouw.</li>
-                              <li>De kwaliteit van werkplekken laag zijn.</li>
-                              <li>Er een grote vraag is naar een route-tool.</li>
-                              <li>Er een grote vraag is naar een drukte-indicator.</li>
-                          </ul>
+                                 Hieruit blijkt dat:
+                             </p>
+                             <ul className="list-disc pl-6 space-y-2 text-left text-base sm:text-xl">
+                                 <li>Studenten van het CMI moeite hebben met de weg vinden in ons gebouw.</li>
+                                 <li>De kwaliteit van werkplekken laag zijn.</li>
+                                 <li>Er een grote vraag is naar een route-tool.</li>
+                                 <li>Er een grote vraag is naar een drukte-indicator.</li>
+                             </ul>
+                         </div>
                       </div>
                   </div>
               </div>
@@ -211,9 +225,9 @@ function Sprint2() {
           >
               <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
                   <div className="flex flex-col md:flex-row gap-6">
-                      <div className="flex flex-col">
+                      <div className="flex flex-col space-y-6 sm:space-y-10">
                           <h2 className="text-4xl sm:text-4xl font-bold">Prototype</h2>
-                          <div className="space-y-4 leading-relaxed">
+                          <div className="space-y-4 leading-relaxed space-y-2">
                               <p className="text-base sm:text-xl leading-relaxed md:flex-[1] text-left">
                                   Na het onderzoeken van bestaande wayfinding methodes zijn wij
                                   terechtgekomen op de kaart van zuidplein. Hier hebben wij inspiratie

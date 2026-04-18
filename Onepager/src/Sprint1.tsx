@@ -79,11 +79,47 @@ function Sprint1() {
                     Oude ontwerpvraag
                   </h3>
                   <p className="text-base leading-relaxed opacity-90">
-                    Hoe kunnen we de interactie, het vertrouwen en de
-                    samenwerking tussen mensen en bezorgrobots en de sociale
-                    verbinding tussen bewoners in de openbare ruimte faciliteren
-                    en verbeteren door middel van inclusieve en transparante
-                    digitale oplossingen?
+                    Hoe kunnen we de interactie, het vertrouwen en de{""}
+                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>samenwerking
+                    <span
+                        style={{
+                          position: "absolute",
+                          top: "90%",
+                          left: "7%",
+                          width: "90%",
+                          borderTop: "2px solid red",
+                          transform: "rotate(-10deg) translateY(-50%)",
+                          transformOrigin: "left center",
+                        }}
+                    ></span></span>
+                    {" "}tussen mensen en bezorgrobots en de sociale
+                    verbinding tussen bewoners in de openbare ruimte{" "}
+                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>faciliteren
+                    <span
+                        style={{
+                          position: "absolute",
+                          top: "80%",
+                          left: "7%",
+                          width: "90%",
+                          borderTop: "2px solid red",
+                          transform: "rotate(-10deg) translateY(-50%)",
+                          transformOrigin: "left center",
+                        }}
+                    ></span></span>
+                    {" "}en{" "}
+                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>verbeteren
+                    <span
+                        style={{
+                          position: "absolute",
+                          top: "80%",
+                          left: "7%",
+                          width: "90%",
+                          borderTop: "2px solid red",
+                          transform: "rotate(-10deg) translateY(-50%)",
+                          transformOrigin: "left center",
+                        }}
+                    ></span></span>
+                    {" "}door middel van inclusieve en transparante digitale oplossingen?
                   </p>
                 </div>
 
@@ -93,7 +129,6 @@ function Sprint1() {
                   <span className="text-3xl animate-bounce">↓</span>
                   <span className="text-xs uppercase tracking-wider">Naar</span>
                 </div>
-
                 {/* AFTER */}
                 <div className="border border-[#fdf1e3]/30 rounded-2xl p-6 shadow-md scale-[1.02]">
                   <h3 className="text-sm uppercase tracking-widest opacity-80 mb-4">

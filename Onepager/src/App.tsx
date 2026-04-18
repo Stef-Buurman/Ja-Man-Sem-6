@@ -5,6 +5,7 @@ import Sprint1 from "./Sprint1.jsx";
 import Nav from "./Nav.js";
 import { Routes, Route } from "react-router-dom";
 import Sprint2 from "./Sprint2";
+import Sprint3 from "./Sprint3";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                   <Sprint0 />
                   <Sprint1 />
                   <Sprint2 />
+                  <Sprint3 />
                 </main>
               </>
             }
