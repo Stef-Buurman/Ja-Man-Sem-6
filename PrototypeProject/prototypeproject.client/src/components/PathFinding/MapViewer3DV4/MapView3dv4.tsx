@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./MapView3dv4.css";
 import type { MapView3dv4Props } from "./MapView3dv4.props";
-import type { GraphNode } from "../../../Types/types";
+import type { GraphNode, NodeType } from "../../../Types/types";
 
-export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, path, handleRoomClick = () => {}, floors }) => {
+export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, path, handleRoomClick = () => { }, floors }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
@@ -22,12 +22,36 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
 
     const doors = doorGroup.querySelectorAll("circle");
 
-    const doorData: GraphNode[] = Array.from(doors).map((door) => {
+    var doorData: GraphNode[] = Array.from(doors).map((door) => {
       const rawId = door.getAttribute("data-name") || door.id;
       const cleanId = rawId.replace(/-\d+$/, "");
 
       const x = parseFloat(door.getAttribute("cx") || "0");
       const y = parseFloat(door.getAttribute("cy") || "0");
+
+      if (cleanId.includes("Trap")) {
+        return {
+          id: `${cleanId}_door`,
+          x: Math.round(x),
+          y: Math.round(y),
+          floor: currentFloor,
+          type: "door",
+          width: 20,
+          height: 20,
+          roomId: cleanId,
+        };
+      } else if (cleanId.includes("Lift")) {
+        return {
+          id: `${cleanId}_door`,
+          x: Math.round(x),
+          y: Math.round(y),
+          floor: currentFloor,
+          type: "door",
+          width: 20,
+          height: 20,
+          roomId: cleanId,
+        };
+      }
 
       return {
         id: `${cleanId}_door`,
@@ -40,11 +64,23 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
         roomId: cleanId,
       };
     });
+    doorData.filter((d) => d.id.toLowerCase().includes("trap") || d.id.toLowerCase().includes("lift")).forEach(element => {
+      var type: NodeType = element.id.toLowerCase().includes("trap") ? "stairs" : "elevator";
+      doorData.push({
+        id: element.roomId || element.id.replace("_door", ""),
+        x: element.x,
+        y: element.y,
+        floor: element.floor,
+        type: type,
+        width: element.width,
+        height: element.height,
+      });
+    });
 
     const formattedData = doorData
       .map(
         (d) =>
-          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height}, roomId: "${d.roomId}" },`,
+          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} ${d.roomId ? `,roomId: "${d.roomId}"` : ""} },`,
       )
       .join("\n");
 

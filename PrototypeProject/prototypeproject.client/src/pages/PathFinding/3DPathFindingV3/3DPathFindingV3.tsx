@@ -24,11 +24,10 @@ export const PathFinding3DV3: React.FC = () => {
 
   const handleRoomClick = (roomId: string) => {
     if (!graph) return;
-    const result = findPathAStar("hall_WN_1_1", roomId, graph);
+    const result = findPathAStar("hall_WN_1_1", roomId, graph, { accessibleRoute: false });
     setPath(result);
     const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0];
     setCurrentFloor(floor);
-    console.log("Path to " + roomId + ": ", result);
     setSelectedRoom(roomId);
   };
 

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import type { Graph, Edge, GraphNode, Floor } from "../../../Types/types";
 import { distinctBy } from "../../../utils/DistinctBy";
+import { IsNodeElevator, IsNodeStairs } from "../../../utils/IsNode";
 
 type Door = Omit<GraphNode, "type"> & { type: "door" };
+type Stairs = Omit<GraphNode, "type"> & { type: "stairs" };
+type Elevator = Omit<GraphNode, "type"> & { type: "elevator" };
 
 type GraphEditorProps = {
   floors?: Floor[];
-  doors?: Door[];
+  doors?: (Door | Stairs | Elevator)[];
   curFloor?: number;
   initialGraph?: Graph;
 };
@@ -99,18 +102,51 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
       to: "${e.to}"
     }`;
 
+    var x: GraphNode[] = visibleDoors
+      .filter(d => IsNodeStairs(d) || IsNodeElevator(d))
+      .map(d => {
+        if (IsNodeStairs(d)) {
+          return {
+            id: d.roomId || d.id.replace("_door", ""),
+            x: d.x,
+            y: d.y,
+            floor: d.floor,
+            type: "stairs",
+            width: d.width,
+            height: d.height
+          };
+        } else {
+          return {
+            id: d.roomId || d.id.replace("_door", ""),
+            x: d.x,
+            y: d.y,
+            floor: d.floor,
+            type: "elevator",
+            width: d.width,
+            height: d.height
+          };
+        }
+      });
+
+    var y: Edge[] = x.map(element => {
+      return {
+        from: element.id,
+        to: element.id + "_door"
+      };
+    });
+
     const tsString = `import { Graph } from "../Types/types";
 
 export const exportedGraph: Graph = {
   nodes: [
-${distinctBy(nodes.concat(visibleDoors), (n) => n.id)
-  .map(formatNode)
-  .join(",\n")}
+${distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id)
+        .map(formatNode)
+        .join(",\n")}
   ],
   edges: [
-${distinctBy(edges, (e) => [e.from, e.to].sort().join("-"))
-  .map(formatEdge)
-  .join(",\n")}
+${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
+        .map(formatEdge)
+        .join(",\n")}
   ]
 };`;
 
@@ -118,8 +154,8 @@ ${distinctBy(edges, (e) => [e.from, e.to].sort().join("-"))
     alert("Graph copied to clipboard!");
   };
 
-  const visibleNodes = nodes.filter((n) => n.floor === currentFloor && n.type !== "door");
-  const visibleDoors = (doors ? doors : (initialGraph?.nodes.filter((n) => n.type === "door") ?? [])).filter((d) => d.floor === currentFloor);
+  const visibleNodes = nodes.filter((n) => n.floor === currentFloor && n.type !== "door" && n.type !== "stairs" && n.type !== "elevator");
+  const visibleDoors = (doors ? doors : (initialGraph?.nodes.filter((n) => n.type === "door" || n.type === "stairs" || n.type === "elevator") ?? [])).filter((d) => d.floor === currentFloor);
 
   const allVisibleNodes = [...visibleNodes, ...visibleDoors];
   const FloorSvg = floors?.find((f) => f.floorNumber === curFloor)?.svg;

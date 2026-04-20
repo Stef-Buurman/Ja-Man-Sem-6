@@ -16,6 +16,7 @@ export const PathFinding3DV4: React.FC = () => {
   const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
   const [startNodes, setStartNodes] = useState<string[]>(defaultStartNodes);
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
+  const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
 
   const [floors] = useState<Floor[]>([
     {
@@ -29,18 +30,19 @@ export const PathFinding3DV4: React.FC = () => {
   const handleStartClick = (roomId: string) => {
     const updatedStartNodes = [roomId];
     setStartNodes(updatedStartNodes);
-
+    var settings = { accessibleRoute: isAccessibleRoute };
     if (destinationNode) {
-      var result = findPathAStarMultiStart(updatedStartNodes, destinationNode, graph);
+      var result = findPathAStarMultiStart(updatedStartNodes, destinationNode, graph, settings);
       if (result.length === 0) {
-        result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode, graph);
+        result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode, graph, settings);
         if (result.length === 0) {
-          result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode + "_door", graph);
+          result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode + "_door", graph, settings);
           if (result.length === 0) {
-            result = findPathAStarMultiStart(updatedStartNodes, destinationNode + "_door", graph);
+            result = findPathAStarMultiStart(updatedStartNodes, destinationNode + "_door", graph, settings);
           }
         }
       }
+
       setPath(result);
 
       const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0].floorNumber;
@@ -52,9 +54,15 @@ export const PathFinding3DV4: React.FC = () => {
 
   const handleDestinationClick = (roomId: string) => {
     setDestinationNode(roomId);
-    var result = findPathAStarMultiStart(startNodes, roomId, graph);
+    var result = findPathAStarMultiStart(startNodes, roomId, graph, { accessibleRoute: isAccessibleRoute });
     if (result.length === 0) {
-      result = findPathAStarMultiStart(startNodes.map((n) => n + "_door"), roomId, graph);
+      result = findPathAStarMultiStart(startNodes.map((n) => n + "_door"), roomId, graph, { accessibleRoute: isAccessibleRoute });
+      if (result.length === 0) {
+        result = findPathAStarMultiStart(startNodes.map((n) => n + "_door"), roomId + "_door", graph, { accessibleRoute: isAccessibleRoute });
+        if (result.length === 0) {
+          result = findPathAStarMultiStart(startNodes, roomId + "_door", graph, { accessibleRoute: isAccessibleRoute });
+        }
+      }
     }
     setPath(result);
 
@@ -83,6 +91,17 @@ export const PathFinding3DV4: React.FC = () => {
         <section className="pathfinding-controls">
           <div className="pathfinding-control-group">
             <FloorSelector floors={floors.map((f) => f.floorNumber)} currentFloor={currentFloor} setFloor={setCurrentFloor} />
+          </div>
+
+          <div className="pathfinding-control-group">
+            <label className="pathfinding-checkbox">
+              <input
+                type="checkbox"
+                checked={isAccessibleRoute}
+                onChange={(e) => setIsAccessibleRoute(e.target.checked)}
+              />
+              <span>Route for disabled persons</span>
+            </label>
           </div>
 
           <div className="pathfinding-search">

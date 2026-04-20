@@ -1,4 +1,4 @@
-import type { Graph } from "../Types/types";
+import type { Graph, PathfindingSettings } from "../Types/types";
 import type { GraphNode } from "../Types/types";
 
 export function findPath(startId: string, endId: string, graph: Graph): string[] {
@@ -26,10 +26,11 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
   return [];
 }
 
-export function buildAdjacencyMap(graph: Graph) {
+export function buildAdjacencyMap(graph: Graph, settings: PathfindingSettings): Map<string, string[]> {
   const map = new Map<string, string[]>();
-
-  graph.nodes.forEach((n) => map.set(n.id, []));
+  const nodes = graph.nodes;
+  if (settings.accessibleRoute) nodes.filter((n) => n.type === "stairs"); 
+  nodes.forEach((n) => map.set(n.id, []));
 
   graph.edges.forEach((e) => {
     if (!map.has(e.from)) map.set(e.from, []);
@@ -85,8 +86,8 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
   return path;
 }
 
-export function findPathAStar(startId: string, endId: string, graph: Graph): string[] {
-  const adjacency = buildAdjacencyMap(graph);
+export function findPathAStar(startId: string, endId: string, graph: Graph, settings: PathfindingSettings): string[] {
+  const adjacency = buildAdjacencyMap(graph, settings);
 
   const openSet = new Set<string>([startId]);
   const cameFrom = new Map<string, string>();
@@ -141,8 +142,8 @@ export function findPathAStar(startId: string, endId: string, graph: Graph): str
   return [];
 }
 
-export function findPathAStarMultiStart(startIds: string[], endId: string, graph: Graph): string[] {
-  const adjacency = buildAdjacencyMap(graph);
+export function findPathAStarMultiStart(startIds: string[], endId: string, graph: Graph, settings: PathfindingSettings): string[] {
+  const adjacency = buildAdjacencyMap(graph, settings);
 
   const tryFindPath = (targetId: string): string[] => {
     const openSet = new Set<string>(startIds);

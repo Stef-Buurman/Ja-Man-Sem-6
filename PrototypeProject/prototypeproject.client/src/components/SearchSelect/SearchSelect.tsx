@@ -35,7 +35,7 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
       const normalizedItem = item.trim();
       const lower = normalizedItem.toLowerCase();
 
-      if (lower.startsWith(trimmed) && lower === trimmed) {
+      if ((lower.includes(trimmed) && lower !== trimmed) || lower === trimmed) {
         counts.set(normalizedItem, (counts.get(normalizedItem) || 0) + 1);
       }
     }
