@@ -2,13 +2,12 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import "./SearchSelect.css";
 import { SearchSelectProps } from "./SearchSelect.props";
 
-export default function SearchSelect({ title, data, onSelect }: SearchSelectProps) {
-  const [query, setQuery] = useState("");
+export default function SearchSelect({ title, data, onSelect, value }: SearchSelectProps) {
+  const [query, setQuery] = useState(value || "");
   const [isOpen, setIsOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 👇 CLOSE WHEN CLICKING OUTSIDE
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -19,6 +18,12 @@ export default function SearchSelect({ title, data, onSelect }: SearchSelectProp
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setQuery(value);
+    }
+  }, [value]);
 
   const suggestions = useMemo(() => {
     const trimmed = query.trim().toLowerCase();

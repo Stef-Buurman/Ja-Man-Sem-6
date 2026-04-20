@@ -8,10 +8,14 @@ import { graph3d2v4 } from "../../../components/data/graph3dv4";
 import type { Floor, GraphNode } from "../../../Types/types";
 import SearchSelect from "../../../components/SearchSelect/SearchSelect";
 
+const defaultStartNodes = ["H.3.Trap1_door"]; //, "H.3.Trap2_door", "WN.03.Trap1_door", "WD.03.Trap1_door"
+
 export const PathFinding3DV4: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
   const [currentFloor, setCurrentFloor] = useState<number>(3);
   const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
+  const [startNodes, setStartNodes] = useState<string[]>(defaultStartNodes);
+  const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
 
   const [floors] = useState<Floor[]>([
     {
@@ -20,12 +24,38 @@ export const PathFinding3DV4: React.FC = () => {
     },
   ]);
 
-  const startNodes = ["H.3.Trap1_door"]; //, "H.3.Trap2_door", "WN.03.Trap1_door", "WD.03.Trap1_door"
-
   const graph = graph3d2v4;
 
-  const handleRoomClick = (roomId: string) => {
-    const result = findPathAStarMultiStart(startNodes, roomId, graph);
+  const handleStartClick = (roomId: string) => {
+    const updatedStartNodes = [roomId];
+    setStartNodes(updatedStartNodes);
+
+    if (destinationNode) {
+      var result = findPathAStarMultiStart(updatedStartNodes, destinationNode, graph);
+      if (result.length === 0) {
+        result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode, graph);
+        if (result.length === 0) {
+          result = findPathAStarMultiStart(updatedStartNodes.map((n) => n + "_door"), destinationNode + "_door", graph);
+          if (result.length === 0) {
+            result = findPathAStarMultiStart(updatedStartNodes, destinationNode + "_door", graph);
+          }
+        }
+      }
+      setPath(result);
+
+      const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0].floorNumber;
+
+      setCurrentFloor(floor);
+      setSelectedRoom(destinationNode);
+    }
+  };
+
+  const handleDestinationClick = (roomId: string) => {
+    setDestinationNode(roomId);
+    var result = findPathAStarMultiStart(startNodes, roomId, graph);
+    if (result.length === 0) {
+      result = findPathAStarMultiStart(startNodes.map((n) => n + "_door"), roomId, graph);
+    }
     setPath(result);
 
     const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0].floorNumber;
@@ -56,7 +86,10 @@ export const PathFinding3DV4: React.FC = () => {
           </div>
 
           <div className="pathfinding-search">
-            <SearchSelect title="Search for a classroom" data={roomOptions} onSelect={(value) => handleRoomClick(value)} />
+            <SearchSelect title="Enter start room" data={roomOptions} onSelect={handleStartClick} />
+          </div>
+          <div className="pathfinding-search">
+            <SearchSelect title="Enter destination room" data={roomOptions} onSelect={handleDestinationClick} value={destinationNode} />
           </div>
         </section>
 
@@ -66,7 +99,7 @@ export const PathFinding3DV4: React.FC = () => {
             edges={graph.edges}
             currentFloor={currentFloor}
             path={path}
-            handleRoomClick={handleRoomClick}
+            handleRoomClick={handleDestinationClick}
             floors={floors}
           />
         </section>
