@@ -109,13 +109,13 @@ function Sprint3() {
                     <img
                         src={wireframe_default}
                         alt="Uitkomsten wayfinding"
-                        className="rounded-2xl shadow-xl w-full h-[40vh] object-cover"/>
+                        className="shadow-xl w-full h-[40vh] object-cover"/>
                 </div>
                 <div className="flex-[1]">
                     <img
                         src={wireframe_extended}
                         alt="Uitkomsten wayfinding"
-                        className="rounded-2xl shadow-xl w-full h-[60vh] object-cover"/>
+                        className="shadow-xl w-full h-[60vh] object-cover"/>
                 </div>
             </div>
         </section>
@@ -124,7 +124,7 @@ function Sprint3() {
         <section className="pb-40 pt-24 z-10 bg-[#e8492b] text-[#fdf1e3]">
             <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
                 <h2 className="text-3xl sm:text-4xl font-bold">
-                    Planning sprint 3
+                    Planning sprint 4
                 </h2>
 
                 <p className="text-base sm:text-lg leading-relaxed">

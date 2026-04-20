@@ -45,7 +45,7 @@ function Sprint2() {
         </section>
           <section
               id="ontwerpvraag-verandering"
-              className="py-2 bg-[#beddfc] text-[#342626] z-20 md:sticky md:top-12"
+              className="py-2 bg-[#beddfc] text-[#342626]"
           >
               <div className="max-w-6xl mx-auto px-4 space-y-6 sm:space-y-10">
                   <div className="max-w-5xl mx-auto px-4 py-3">
@@ -58,23 +58,26 @@ function Sprint2() {
                                   <h3 className="text-sm uppercase tracking-widest opacity-60 mb-4">
                                       Oude ontwerpvraag
                                   </h3>
-                                  <p className="text-base leading-relaxed opacity-90">
-                                      Hoe kunnen we de interactie en het vertrouwen tussen mensen
-                                      en een robot verbeteren, zodat deze robot op een inclusieve
-                                      en transparante manier studenten en bezoekers helpt bij het
-                                      CMI gebouw, en tegelijkertijd een{" "}
-                                      <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>sociale verbinding
+                                  <p className="text-base leading-relaxed font-medium">
+                                      Hoe kunnen we de
+                                      <span className="text-[#e8492b] font-bold"> interactie</span> en het
+                                      <span className="text-[#e8492b] font-bold"> vertrouwen</span> tussen mensen
+                                      en een robot verbeteren, zodat deze robot op een
+                                      <span className="text-[#e8492b] font-bold"> inclusieve</span> en
+                                      <span className="text-[#e8492b] font-bold"> transparante</span> manier studenten
+                                      en bezoekers helpt bij het CMI gebouw, en tegelijkertijd een
+                                      <span style={{position: "relative", display: "inline-block", color: "#e8492b", fontWeight: "bold",}}>sociale verbinding
                                       <span
                                           style={{
                                               position: "absolute",
                                               top: "90%",
                                               left: "7%",
                                               width: "90%",
-                                              borderTop: "2px solid red",
+                                              borderTop: "3px solid #e8492b",
                                               transform: "rotate(-7deg) translateY(-50%)",
                                               transformOrigin: "left center",
                                           }}
-                                          ></span></span>
+                                      ></span></span>
                                       {" "}
                                       stimuleert?
                                   </p>
@@ -93,8 +96,11 @@ function Sprint2() {
                                       Nieuwe ontwerpvraag
                                   </h3>
                                   <p className="text-base leading-relaxed font-medium">
-                                      Hoe kunnen we studenten en docenten op locatie Wijnhaven via
-                                      een gebruiksvriendelijke applicatie helpen om:
+                                      Hoe kunnen we
+                                      <span className="text-[#e8492b] font-bold"> studenten</span> en
+                                      <span className="text-[#e8492b] font-bold"> docenten</span> op locatie Wijnhaven via
+                                      een gebruiksvriendelijke
+                                      <span className="text-[#e8492b] font-bold"> applicatie</span> helpen om:
                                   </p>
                                   <ul className="list-disc pl-6 space-y-1 font-medium">
                                       <li>
@@ -136,7 +142,7 @@ function Sprint2() {
           {/* Heatmaps */}
           <section
               id="heatmaps"
-              className="py-16 bg-[#e8492b] z-20 md:sticky md:top-12 text-[#fdf1e3]"
+              className="py-16 bg-[#e8492b] text-[#fdf1e3]"
           >
               <div className="max-w-5xl mx-auto px-6 flex flex-col gap-6">
                   <div className="flex flex-col md:flex-row gap-10 md:gap-20">
@@ -177,7 +183,7 @@ function Sprint2() {
           {/* Enquete */}
           <section
               id="enquete"
-              className="py-16 bg-[#fdf1e3] z-20 md:sticky md:top-12 text-[#e8492b]"
+              className="py-16 bg-[#fdf1e3]  text-[#e8492b]"
           >
               <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
                   <div className="flex flex-col md:flex-row gap-6">
@@ -221,7 +227,7 @@ function Sprint2() {
           {/* Prototype */}
           <section
               id="prototype"
-              className="py-16 bg-[#342626] z-20 md:sticky md:top-12 text-[#fdf1e3]"
+              className="py-16 bg-[#342626] text-[#fdf1e3]"
           >
               <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
                   <div className="flex flex-col md:flex-row gap-6">
@@ -257,7 +263,7 @@ function Sprint2() {
           {/* Planning sprint 3 */}
           <section
               id="sprint-planning"
-              className="py-16 z-40 md:sticky md:top-12 bg-[#beddfc] text-[#342626]"
+              className="py-16 z-40  bg-[#beddfc] text-[#342626]"
           >
               <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
                   <h2 className="text-3xl sm:text-4xl font-bold">
@@ -287,7 +293,7 @@ function Sprint2() {
         {/* Logo */}
       <section
         id="logo"
-        className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center"
+        className="md:h-[44vh] py-16 bg-[#e8492b] flex justify-center items-center"
       >
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <div className="flex flex-col justify-center items-center text-center">

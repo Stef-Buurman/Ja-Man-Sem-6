@@ -79,47 +79,51 @@ function Sprint1() {
                     Oude ontwerpvraag
                   </h3>
                   <p className="text-base leading-relaxed opacity-90">
-                    Hoe kunnen we de interactie, het vertrouwen en de{""}
-                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>samenwerking
+                    Hoe kunnen we de
+                    <span className="text-[#e8492b] font-bold"> interactie</span>, het
+                    <span className="text-[#e8492b] font-bold"> vertrouwen</span> en de{""}
+                    <span style={{position: "relative", display: "inline-block", color: "#e8492b", fontWeight: "bold",}}>samenwerking
                     <span
                         style={{
                           position: "absolute",
                           top: "90%",
                           left: "7%",
                           width: "90%",
-                          borderTop: "2px solid red",
+                          borderTop: "3px solid #e8492b",
                           transform: "rotate(-10deg) translateY(-50%)",
                           transformOrigin: "left center",
                         }}
                     ></span></span>
-                    {" "}tussen mensen en bezorgrobots en de sociale
-                    verbinding tussen bewoners in de openbare ruimte{" "}
-                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>faciliteren
+                    {" "}tussen mensen en bezorgrobots en de
+                    <span className="text-[#e8492b] font-bold"> sociale verbinding</span> tussen bewoners in de openbare ruimte{" "}
+                    <span style={{position: "relative", display: "inline-block", color: "#e8492b", fontWeight: "bold",}}>faciliteren
                     <span
                         style={{
                           position: "absolute",
                           top: "80%",
                           left: "7%",
                           width: "90%",
-                          borderTop: "2px solid red",
+                          borderTop: "3px solid #e8492b",
                           transform: "rotate(-10deg) translateY(-50%)",
                           transformOrigin: "left center",
                         }}
                     ></span></span>
                     {" "}en{" "}
-                    <span style={{position: "relative", display: "inline-block", color: "red", fontWeight: "bold",}}>verbeteren
+                    <span style={{position: "relative", display: "inline-block", color: "#e8492b", fontWeight: "bold",}}>verbeteren
                     <span
                         style={{
                           position: "absolute",
                           top: "80%",
                           left: "7%",
                           width: "90%",
-                          borderTop: "2px solid red",
+                          borderTop: "3px solid #e8492b",
                           transform: "rotate(-10deg) translateY(-50%)",
                           transformOrigin: "left center",
                         }}
                     ></span></span>
-                    {" "}door middel van inclusieve en transparante digitale oplossingen?
+                    {" "}door middel van
+                    <span className="text-[#e8492b] font-bold"> inclusieve</span> en
+                    <span className="text-[#e8492b] font-bold"> transparante</span> digitale oplossingen?
                   </p>
                 </div>
 
@@ -135,11 +139,14 @@ function Sprint1() {
                     Nieuwe ontwerpvraag
                   </h3>
                   <p className="text-base leading-relaxed font-medium">
-                    Hoe kunnen we de interactie en het vertrouwen tussen mensen
-                    en een robot verbeteren, zodat deze robot op een inclusieve
-                    en transparante manier studenten en bezoekers helpt bij het
-                    CMI gebouw, en tegelijkertijd een sociale verbinding
-                    stimuleert?
+                    Hoe kunnen we de
+                    <span className="text-[#e8492b] font-bold"> interactie</span> en het
+                    <span className="text-[#e8492b] font-bold"> vertrouwen</span> tussen mensen
+                    en een robot verbeteren, zodat deze robot op een
+                    <span className="text-[#e8492b] font-bold"> inclusieve</span> en
+                    <span className="text-[#e8492b] font-bold"> transparante</span> manier studenten
+                    en bezoekers helpt bij het CMI gebouw, en tegelijkertijd een
+                    <span className="text-[#e8492b] font-bold"> sociale verbinding</span> stimuleert?
                   </p>
                 </div>
               </div>
