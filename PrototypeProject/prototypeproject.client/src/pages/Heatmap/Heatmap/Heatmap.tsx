@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import test3 from "../../../assets/2e_verdieping.svg";
+import React, { useEffect, useRef, useState } from "react";
+import Test3 from "../../../assets/Verdieping3_2.svg?react";
 import * as signalR from "@microsoft/signalr";
 import type { HeatpointArea } from "../../../api/data-contracts";
 import { getHeatpointAreas } from "../../../api/methods/Heatmap.api";
 
 const Heatmap: React.FC = () => {
+  const svgElement = useRef<SVGSVGElement>(null);
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
+  const [viewBox, setViewBox] = useState<string | null>(null);
 
   const fetchHeatmapAreas = async () => {
     const res = await getHeatpointAreas();
@@ -13,6 +15,9 @@ const Heatmap: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!svgElement.current) return;
+    const vb = svgElement.current.getAttribute("viewBox");
+    if (vb) setViewBox(vb);
     let isActive = true;
 
     const connection = new signalR.HubConnectionBuilder().withUrl("/hubs/heatmaphub").withAutomaticReconnect().build();
@@ -97,9 +102,8 @@ const Heatmap: React.FC = () => {
 
   return (
     <div>
-      <svg viewBox="0 0 454 627.31" style={{ width: "400px", border: "1px solid black", margin: "20px auto", display: "block" }}>
-        <image href={test3} x="0" y="0" width="454" height="627.31" />
-
+      <svg viewBox={viewBox || "0 0 454 627.31"} style={{ border: "1px solid black", margin: "20px auto", display: "block" }}>
+        <Test3 ref={svgElement} />
         <defs>
           <filter id="heat-blur">
             <feGaussianBlur stdDeviation="8" />
