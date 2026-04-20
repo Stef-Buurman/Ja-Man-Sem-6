@@ -3,7 +3,7 @@ import "./MapView3dv4.css";
 import type { MapView3dv4Props } from "./MapView3dv4.props";
 import type { GraphNode, NodeType } from "../../../Types/types";
 
-export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, path, handleRoomClick = () => { }, floors }) => {
+export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, path, handleRoomClick = () => {}, floors }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
@@ -64,18 +64,20 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
         roomId: cleanId,
       };
     });
-    doorData.filter((d) => d.id.toLowerCase().includes("trap") || d.id.toLowerCase().includes("lift")).forEach(element => {
-      var type: NodeType = element.id.toLowerCase().includes("trap") ? "stairs" : "elevator";
-      doorData.push({
-        id: element.roomId || element.id.replace("_door", ""),
-        x: element.x,
-        y: element.y,
-        floor: element.floor,
-        type: type,
-        width: element.width,
-        height: element.height,
+    doorData
+      .filter((d) => d.id.toLowerCase().includes("trap") || d.id.toLowerCase().includes("lift"))
+      .forEach((element) => {
+        var type: NodeType = element.id.toLowerCase().includes("trap") ? "stairs" : "elevator";
+        doorData.push({
+          id: element.roomId || element.id.replace("_door", ""),
+          x: element.x,
+          y: element.y,
+          floor: element.floor,
+          type: type,
+          width: element.width,
+          height: element.height,
+        });
       });
-    });
 
     const formattedData = doorData
       .map(
@@ -100,9 +102,9 @@ export const MapView3dV4: React.FC<MapView3dv4Props> = ({ nodes, currentFloor, p
 
   return (
     <div className="map-view-v4">
-      <button className="map-view-v4__copy-button" onClick={copyDoors}>
+      {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
-      </button>
+      </button> */}
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>

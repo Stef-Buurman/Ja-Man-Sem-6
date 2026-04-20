@@ -9,9 +9,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687244068",
@@ -20,9 +18,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687245558",
@@ -31,9 +27,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687246705",
@@ -42,9 +36,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687248052",
@@ -53,9 +45,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687249252",
@@ -64,9 +54,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687250626",
@@ -75,9 +63,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687252187",
@@ -86,9 +72,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687253521",
@@ -97,9 +81,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687254533",
@@ -108,9 +90,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687255869",
@@ -119,9 +99,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687256845",
@@ -130,9 +108,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687258586",
@@ -141,9 +117,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687259753",
@@ -152,9 +126,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687260796",
@@ -163,9 +135,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687261739",
@@ -174,9 +144,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687271861",
@@ -185,9 +153,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687281191",
@@ -196,9 +162,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687283654",
@@ -207,9 +171,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687285405",
@@ -218,9 +180,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687286192",
@@ -229,9 +189,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687287523",
@@ -240,9 +198,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687288229",
@@ -251,9 +207,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687314638",
@@ -262,9 +216,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687327053",
@@ -273,9 +225,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687376683",
@@ -284,9 +234,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687378811",
@@ -295,9 +243,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687379615",
@@ -306,9 +252,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687387036",
@@ -317,9 +261,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687388317",
@@ -328,9 +270,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687389541",
@@ -339,9 +279,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687390709",
@@ -350,9 +288,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687392020",
@@ -361,9 +297,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687392785",
@@ -372,9 +306,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687425203",
@@ -383,9 +315,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687426455",
@@ -394,9 +324,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687427655",
@@ -405,9 +333,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687428148",
@@ -416,9 +342,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687429114",
@@ -427,9 +351,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687430125",
@@ -438,9 +360,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687430646",
@@ -449,9 +369,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687433029",
@@ -460,9 +378,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687434028",
@@ -471,9 +387,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687434633",
@@ -482,9 +396,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687445224",
@@ -493,9 +405,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687446085",
@@ -504,9 +414,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687446968",
@@ -515,9 +423,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687447741",
@@ -526,9 +432,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687486111",
@@ -537,9 +441,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687486623",
@@ -548,9 +450,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687495393",
@@ -559,9 +459,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687496235",
@@ -570,9 +468,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687497797",
@@ -581,9 +477,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687499851",
@@ -592,9 +486,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687501141",
@@ -603,9 +495,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687501901",
@@ -614,9 +504,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687503477",
@@ -625,9 +513,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687504617",
@@ -636,9 +522,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687543109",
@@ -647,9 +531,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687544897",
@@ -658,9 +540,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "node_1776687553864",
@@ -669,9 +549,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "hallway",
       width: 10,
-      height: 10
-
-
+      height: 10,
     },
     {
       id: "H.3.403_door",
@@ -680,9 +558,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.403"
-
+      height: 20,
+      roomId: "H.3.403",
     },
     {
       id: "H.3.319_door",
@@ -691,9 +568,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.319"
-
+      height: 20,
+      roomId: "H.3.319",
     },
     {
       id: "H.3.312_door",
@@ -702,9 +578,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.312"
-
+      height: 20,
+      roomId: "H.3.312",
     },
     {
       id: "H.3.308_door",
@@ -713,9 +588,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.308"
-
+      height: 20,
+      roomId: "H.3.308",
     },
     {
       id: "H.3.306_door",
@@ -724,9 +598,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.306"
-
+      height: 20,
+      roomId: "H.3.306",
     },
     {
       id: "H.3.206_door",
@@ -735,9 +608,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.206"
-
+      height: 20,
+      roomId: "H.3.206",
     },
     {
       id: "H.3.204_door",
@@ -746,9 +618,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.204"
-
+      height: 20,
+      roomId: "H.3.204",
     },
     {
       id: "H.3.Trap1_door",
@@ -757,9 +628,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.Trap1"
-
+      height: 20,
+      roomId: "H.3.Trap1",
     },
     {
       id: "H.3.Lift1_door",
@@ -768,9 +638,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.Lift1"
-
+      height: 20,
+      roomId: "H.3.Lift1",
     },
     {
       id: "H.3.Lift2_door",
@@ -779,9 +648,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.Lift2"
-
+      height: 20,
+      roomId: "H.3.Lift2",
     },
     {
       id: "H.3.Lift3_door",
@@ -790,9 +658,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.Lift3"
-
+      height: 20,
+      roomId: "H.3.Lift3",
     },
     {
       id: "H.3.Trap2_door",
@@ -801,9 +668,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.Trap2"
-
+      height: 20,
+      roomId: "H.3.Trap2",
     },
     {
       id: "H.3.117_door",
@@ -812,9 +678,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.117"
-
+      height: 20,
+      roomId: "H.3.117",
     },
     {
       id: "H.3.116_door",
@@ -823,9 +688,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.116"
-
+      height: 20,
+      roomId: "H.3.116",
     },
     {
       id: "H.3.114_door",
@@ -834,9 +698,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.114"
-
+      height: 20,
+      roomId: "H.3.114",
     },
     {
       id: "H.3.111_door",
@@ -845,9 +708,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.111"
-
+      height: 20,
+      roomId: "H.3.111",
     },
     {
       id: "H.3.109_door",
@@ -856,9 +718,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.109"
-
+      height: 20,
+      roomId: "H.3.109",
     },
     {
       id: "H.3.107_door",
@@ -867,9 +728,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.107"
-
+      height: 20,
+      roomId: "H.3.107",
     },
     {
       id: "H.3.104_door",
@@ -878,9 +738,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.104"
-
+      height: 20,
+      roomId: "H.3.104",
     },
     {
       id: "H.3.318_door",
@@ -889,9 +748,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.318"
-
+      height: 20,
+      roomId: "H.3.318",
     },
     {
       id: "H.3.405_door",
@@ -900,9 +758,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "H.3.405"
-
+      height: 20,
+      roomId: "H.3.405",
     },
     {
       id: "WD.03.023_door",
@@ -911,9 +768,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.023"
-
+      height: 20,
+      roomId: "WD.03.023",
     },
     {
       id: "WD.03.021_door",
@@ -922,9 +778,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.021"
-
+      height: 20,
+      roomId: "WD.03.021",
     },
     {
       id: "WD.03.019_door",
@@ -933,9 +788,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.019"
-
+      height: 20,
+      roomId: "WD.03.019",
     },
     {
       id: "WD.03.Trap1_door",
@@ -944,9 +798,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.Trap1"
-
+      height: 20,
+      roomId: "WD.03.Trap1",
     },
     {
       id: "WD.03.lift_door",
@@ -955,9 +808,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.lift"
-
+      height: 20,
+      roomId: "WD.03.lift",
     },
     {
       id: "WD.03.Trap2_door",
@@ -966,9 +818,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.Trap2"
-
+      height: 20,
+      roomId: "WD.03.Trap2",
     },
     {
       id: "WD.03.028_door",
@@ -977,9 +828,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.028"
-
+      height: 20,
+      roomId: "WD.03.028",
     },
     {
       id: "WD.03.029_door",
@@ -988,9 +838,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.029"
-
+      height: 20,
+      roomId: "WD.03.029",
     },
     {
       id: "WD.03.030_door",
@@ -999,9 +848,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.030"
-
+      height: 20,
+      roomId: "WD.03.030",
     },
     {
       id: "WD.03.033_door",
@@ -1010,9 +858,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.033"
-
+      height: 20,
+      roomId: "WD.03.033",
     },
     {
       id: "WD.03.005_door",
@@ -1021,9 +868,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WD.03.005"
-
+      height: 20,
+      roomId: "WD.03.005",
     },
     {
       id: "WN.03.029_door",
@@ -1032,9 +878,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.029"
-
+      height: 20,
+      roomId: "WN.03.029",
     },
     {
       id: "WN.03.028_door",
@@ -1043,9 +888,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.028"
-
+      height: 20,
+      roomId: "WN.03.028",
     },
     {
       id: "WN.03.022_door",
@@ -1054,9 +898,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.022"
-
+      height: 20,
+      roomId: "WN.03.022",
     },
     {
       id: "WN.03.017_door",
@@ -1065,9 +908,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.017"
-
+      height: 20,
+      roomId: "WN.03.017",
     },
     {
       id: "WN.03.014_door",
@@ -1076,9 +918,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.014"
-
+      height: 20,
+      roomId: "WN.03.014",
     },
     {
       id: "WN.03.007_door",
@@ -1087,9 +928,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.007"
-
+      height: 20,
+      roomId: "WN.03.007",
     },
     {
       id: "WN.03.Trap1_door",
@@ -1098,9 +938,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.Trap1"
-
+      height: 20,
+      roomId: "WN.03.Trap1",
     },
     {
       id: "WN.03.Lift_door",
@@ -1109,9 +948,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.Lift"
-
+      height: 20,
+      roomId: "WN.03.Lift",
     },
     {
       id: "WN.03.Trap2_door",
@@ -1120,9 +958,8 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "door",
       width: 20,
-      height: 20
-      , roomId: "WN.03.Trap2"
-
+      height: 20,
+      roomId: "WN.03.Trap2",
     },
     {
       id: "H.3.Trap1",
@@ -1131,9 +968,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "H.3.Lift1",
@@ -1142,9 +977,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "elevator",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "H.3.Lift2",
@@ -1153,9 +986,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "elevator",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "H.3.Lift3",
@@ -1164,9 +995,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "elevator",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "H.3.Trap2",
@@ -1175,9 +1004,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WD.03.Trap1",
@@ -1186,9 +1013,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WD.03.lift",
@@ -1197,9 +1022,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "elevator",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WD.03.Trap2",
@@ -1208,9 +1031,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WN.03.Trap1",
@@ -1219,9 +1040,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WN.03.Lift",
@@ -1230,9 +1049,7 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "elevator",
       width: 20,
-      height: 20
-
-
+      height: 20,
     },
     {
       id: "WN.03.Trap2",
@@ -1241,619 +1058,617 @@ export const graph3d2v4: Graph = {
       floor: 3,
       type: "stairs",
       width: 20,
-      height: 20
-
-
-    }
+      height: 20,
+    },
   ],
   edges: [
     {
       from: "H.3.Trap1",
-      to: "H.3.Lift1"
+      to: "H.3.Lift1",
     },
     {
       from: "node_1776687271861",
-      to: "H.3.Trap2"
+      to: "H.3.Trap2",
     },
     {
       from: "node_1776687271861",
-      to: "H.3.104_door"
+      to: "H.3.104_door",
     },
     {
       from: "node_1776687271861",
-      to: "node_1776687260796"
+      to: "node_1776687260796",
     },
     {
       from: "node_1776687260796",
-      to: "H.3.107_door"
+      to: "H.3.107_door",
     },
     {
       from: "H.3.107_door",
-      to: "node_1776687259753"
+      to: "node_1776687259753",
     },
     {
       from: "node_1776687259753",
-      to: "node_1776687260796"
+      to: "node_1776687260796",
     },
     {
       from: "node_1776687260796",
-      to: "node_1776687281191"
+      to: "node_1776687281191",
     },
     {
       from: "node_1776687288229",
-      to: "H.3.318_door"
+      to: "H.3.318_door",
     },
     {
       from: "H.3.318_door",
-      to: "node_1776687287523"
+      to: "node_1776687287523",
     },
     {
       from: "node_1776687287523",
-      to: "node_1776687288229"
+      to: "node_1776687288229",
     },
     {
       from: "H.3.319_door",
-      to: "node_1776687287523"
+      to: "node_1776687287523",
     },
     {
       from: "node_1776687287523",
-      to: "H.3.403_door"
+      to: "H.3.403_door",
     },
     {
       from: "node_1776687287523",
-      to: "node_1776687286192"
+      to: "node_1776687286192",
     },
     {
       from: "node_1776687286192",
-      to: "H.3.405_door"
+      to: "H.3.405_door",
     },
     {
       from: "node_1776687286192",
-      to: "H.3.403_door"
+      to: "H.3.403_door",
     },
     {
       from: "node_1776687286192",
-      to: "node_1776687285405"
+      to: "node_1776687285405",
     },
     {
       from: "node_1776687285405",
-      to: "H.3.405_door"
+      to: "H.3.405_door",
     },
     {
       from: "node_1776687285405",
-      to: "node_1776687283654"
+      to: "node_1776687283654",
     },
     {
       from: "node_1776687283654",
-      to: "node_1776687281191"
+      to: "node_1776687281191",
     },
     {
       from: "node_1776687261739",
-      to: "node_1776687314638"
+      to: "node_1776687314638",
     },
     {
       from: "node_1776687314638",
-      to: "node_1776687283654"
+      to: "node_1776687283654",
     },
     {
       from: "node_1776687261739",
-      to: "node_1776687259753"
+      to: "node_1776687259753",
     },
     {
       from: "node_1776687259753",
-      to: "node_1776687258586"
+      to: "node_1776687258586",
     },
     {
       from: "node_1776687258586",
-      to: "node_1776687261739"
+      to: "node_1776687261739",
     },
     {
       from: "node_1776687258586",
-      to: "node_1776687327053"
+      to: "node_1776687327053",
     },
     {
       from: "node_1776687327053",
-      to: "H.3.109_door"
+      to: "H.3.109_door",
     },
     {
       from: "H.3.109_door",
-      to: "node_1776687258586"
+      to: "node_1776687258586",
     },
     {
       from: "node_1776687327053",
-      to: "node_1776687256845"
+      to: "node_1776687256845",
     },
     {
       from: "node_1776687256845",
-      to: "H.3.111_door"
+      to: "H.3.111_door",
     },
     {
       from: "H.3.111_door",
-      to: "node_1776687255869"
+      to: "node_1776687255869",
     },
     {
       from: "node_1776687255869",
-      to: "node_1776687256845"
+      to: "node_1776687256845",
     },
     {
       from: "node_1776687255869",
-      to: "node_1776687254533"
+      to: "node_1776687254533",
     },
     {
       from: "node_1776687254533",
-      to: "H.3.114_door"
+      to: "H.3.114_door",
     },
     {
       from: "H.3.114_door",
-      to: "node_1776687253521"
+      to: "node_1776687253521",
     },
     {
       from: "node_1776687253521",
-      to: "node_1776687254533"
+      to: "node_1776687254533",
     },
     {
       from: "node_1776687253521",
-      to: "node_1776687252187"
+      to: "node_1776687252187",
     },
     {
       from: "node_1776687252187",
-      to: "node_1776687250626"
+      to: "node_1776687250626",
     },
     {
       from: "node_1776687250626",
-      to: "H.3.116_door"
+      to: "H.3.116_door",
     },
     {
       from: "H.3.116_door",
-      to: "node_1776687252187"
+      to: "node_1776687252187",
     },
     {
       from: "node_1776687250626",
-      to: "H.3.117_door"
+      to: "H.3.117_door",
     },
     {
       from: "H.3.117_door",
-      to: "node_1776687249252"
+      to: "node_1776687249252",
     },
     {
       from: "node_1776687249252",
-      to: "node_1776687250626"
+      to: "node_1776687250626",
     },
     {
       from: "node_1776687249252",
-      to: "node_1776687248052"
+      to: "node_1776687248052",
     },
     {
       from: "node_1776687248052",
-      to: "H.3.Lift3"
+      to: "H.3.Lift3",
     },
     {
       from: "H.3.Lift3",
-      to: "node_1776687246705"
+      to: "node_1776687246705",
     },
     {
       from: "node_1776687248052",
-      to: "node_1776687246705"
+      to: "node_1776687246705",
     },
     {
       from: "node_1776687246705",
-      to: "node_1776687245558"
+      to: "node_1776687245558",
     },
     {
       from: "node_1776687245558",
-      to: "node_1776687244068"
+      to: "node_1776687244068",
     },
     {
       from: "node_1776687244068",
-      to: "node_1776687241545"
+      to: "node_1776687241545",
     },
     {
       from: "node_1776687241545",
-      to: "H.3.Trap1"
+      to: "H.3.Trap1",
     },
     {
       from: "H.3.Lift1",
-      to: "node_1776687241545"
+      to: "node_1776687241545",
     },
     {
       from: "node_1776687245558",
-      to: "H.3.Lift2"
+      to: "H.3.Lift2",
     },
     {
       from: "node_1776687288229",
-      to: "node_1776687392785"
+      to: "node_1776687392785",
     },
     {
       from: "node_1776687392785",
-      to: "H.3.312_door"
+      to: "H.3.312_door",
     },
     {
       from: "H.3.312_door",
-      to: "node_1776687392020"
+      to: "node_1776687392020",
     },
     {
       from: "node_1776687392020",
-      to: "node_1776687392785"
+      to: "node_1776687392785",
     },
     {
       from: "node_1776687392020",
-      to: "node_1776687390709"
+      to: "node_1776687390709",
     },
     {
       from: "node_1776687390709",
-      to: "H.3.308_door"
+      to: "H.3.308_door",
     },
     {
       from: "node_1776687390709",
-      to: "node_1776687389541"
+      to: "node_1776687389541",
     },
     {
       from: "node_1776687389541",
-      to: "H.3.308_door"
+      to: "H.3.308_door",
     },
     {
       from: "node_1776687389541",
-      to: "node_1776687388317"
+      to: "node_1776687388317",
     },
     {
       from: "node_1776687388317",
-      to: "H.3.306_door"
+      to: "H.3.306_door",
     },
     {
       from: "node_1776687388317",
-      to: "node_1776687387036"
+      to: "node_1776687387036",
     },
     {
       from: "node_1776687387036",
-      to: "H.3.206_door"
+      to: "H.3.206_door",
     },
     {
       from: "node_1776687387036",
-      to: "H.3.306_door"
+      to: "H.3.306_door",
     },
     {
       from: "node_1776687387036",
-      to: "node_1776687379615"
+      to: "node_1776687379615",
     },
     {
       from: "node_1776687379615",
-      to: "H.3.204_door"
+      to: "H.3.204_door",
     },
     {
       from: "H.3.204_door",
-      to: "node_1776687378811"
+      to: "node_1776687378811",
     },
     {
       from: "node_1776687378811",
-      to: "node_1776687379615"
+      to: "node_1776687379615",
     },
     {
       from: "node_1776687378811",
-      to: "node_1776687376683"
+      to: "node_1776687376683",
     },
     {
       from: "node_1776687376683",
-      to: "node_1776687245558"
+      to: "node_1776687245558",
     },
     {
       from: "node_1776687376683",
-      to: "node_1776687246705"
+      to: "node_1776687246705",
     },
     {
       from: "WD.03.Trap1",
-      to: "WD.03.lift"
+      to: "WD.03.lift",
     },
     {
       from: "WD.03.lift",
-      to: "node_1776687433029"
+      to: "node_1776687433029",
     },
     {
       from: "node_1776687433029",
-      to: "WD.03.Trap1"
+      to: "WD.03.Trap1",
     },
     {
       from: "node_1776687433029",
-      to: "node_1776687430646"
+      to: "node_1776687430646",
     },
     {
       from: "node_1776687430646",
-      to: "WD.03.021_door"
+      to: "WD.03.021_door",
     },
     {
       from: "WD.03.021_door",
-      to: "node_1776687430125"
+      to: "node_1776687430125",
     },
     {
       from: "node_1776687430125",
-      to: "node_1776687430646"
+      to: "node_1776687430646",
     },
     {
       from: "node_1776687430125",
-      to: "node_1776687429114"
+      to: "node_1776687429114",
     },
     {
       from: "WD.03.Trap2",
-      to: "node_1776687447741"
+      to: "node_1776687447741",
     },
     {
       from: "node_1776687447741",
-      to: "WD.03.030_door"
+      to: "WD.03.030_door",
     },
     {
       from: "WD.03.029_door",
-      to: "node_1776687447741"
+      to: "node_1776687447741",
     },
     {
       from: "WD.03.029_door",
-      to: "node_1776687446968"
+      to: "node_1776687446968",
     },
     {
       from: "node_1776687446968",
-      to: "node_1776687447741"
+      to: "node_1776687447741",
     },
     {
       from: "node_1776687446968",
-      to: "WD.03.033_door"
+      to: "WD.03.033_door",
     },
     {
       from: "WD.03.033_door",
-      to: "node_1776687446085"
+      to: "node_1776687446085",
     },
     {
       from: "node_1776687446085",
-      to: "node_1776687446968"
+      to: "node_1776687446968",
     },
     {
       from: "WD.03.028_door",
-      to: "node_1776687446085"
+      to: "node_1776687446085",
     },
     {
       from: "node_1776687446085",
-      to: "node_1776687445224"
+      to: "node_1776687445224",
     },
     {
       from: "node_1776687445224",
-      to: "node_1776687429114"
+      to: "node_1776687429114",
     },
     {
       from: "node_1776687429114",
-      to: "node_1776687428148"
+      to: "node_1776687428148",
     },
     {
       from: "node_1776687445224",
-      to: "WD.03.028_door"
+      to: "WD.03.028_door",
     },
     {
       from: "node_1776687428148",
-      to: "WD.03.023_door"
+      to: "WD.03.023_door",
     },
     {
       from: "WD.03.023_door",
-      to: "node_1776687427655"
+      to: "node_1776687427655",
     },
     {
       from: "node_1776687427655",
-      to: "node_1776687428148"
+      to: "node_1776687428148",
     },
     {
       from: "node_1776687427655",
-      to: "node_1776687426455"
+      to: "node_1776687426455",
     },
     {
       from: "node_1776687426455",
-      to: "node_1776687425203"
+      to: "node_1776687425203",
     },
     {
       from: "node_1776687425203",
-      to: "H.3.Trap1"
+      to: "H.3.Trap1",
     },
     {
       from: "H.3.Lift1",
-      to: "node_1776687425203"
+      to: "node_1776687425203",
     },
     {
       from: "node_1776687434028",
-      to: "WD.03.019_door"
+      to: "WD.03.019_door",
     },
     {
       from: "WD.03.019_door",
-      to: "node_1776687434633"
+      to: "node_1776687434633",
     },
     {
       from: "node_1776687434633",
-      to: "node_1776687434028"
+      to: "node_1776687434028",
     },
     {
       from: "node_1776687434028",
-      to: "node_1776687433029"
+      to: "node_1776687433029",
     },
     {
       from: "node_1776687486623",
-      to: "node_1776687486111"
+      to: "node_1776687486111",
     },
     {
       from: "node_1776687486111",
-      to: "WD.03.005_door"
+      to: "WD.03.005_door",
     },
     {
       from: "WD.03.005_door",
-      to: "node_1776687486623"
+      to: "node_1776687486623",
     },
     {
       from: "node_1776687486111",
-      to: "node_1776687434633"
+      to: "node_1776687434633",
     },
     {
       from: "node_1776687503477",
-      to: "WN.03.014_door"
+      to: "WN.03.014_door",
     },
     {
       from: "WN.03.014_door",
-      to: "node_1776687504617"
+      to: "node_1776687504617",
     },
     {
       from: "node_1776687504617",
-      to: "WN.03.007_door"
+      to: "WN.03.007_door",
     },
     {
       from: "node_1776687504617",
-      to: "node_1776687503477"
+      to: "node_1776687503477",
     },
     {
       from: "node_1776687504617",
-      to: "WN.03.Trap1"
+      to: "WN.03.Trap1",
     },
     {
       from: "WN.03.Trap1",
-      to: "WN.03.Lift"
+      to: "WN.03.Lift",
     },
     {
       from: "node_1776687503477",
-      to: "node_1776687501901"
+      to: "node_1776687501901",
     },
     {
       from: "node_1776687501901",
-      to: "WN.03.017_door"
+      to: "WN.03.017_door",
     },
     {
       from: "node_1776687501141",
-      to: "WN.03.017_door"
+      to: "WN.03.017_door",
     },
     {
       from: "node_1776687517552",
-      to: "node_1776687501141"
+      to: "node_1776687501141",
     },
     {
       from: "node_1776687501901",
-      to: "node_1776687501141"
+      to: "node_1776687501141",
     },
     {
       from: "node_1776687501141",
-      to: "node_1776687499851"
+      to: "node_1776687499851",
     },
     {
       from: "WN.03.022_door",
-      to: "node_1776687499851"
+      to: "node_1776687499851",
     },
     {
       from: "node_1776687497797",
-      to: "node_1776687499851"
+      to: "node_1776687499851",
     },
     {
       from: "node_1776687497797",
-      to: "WN.03.022_door"
+      to: "WN.03.022_door",
     },
     {
       from: "node_1776687496235",
-      to: "node_1776687497797"
+      to: "node_1776687497797",
     },
     {
       from: "node_1776687496235",
-      to: "node_1776687495393"
+      to: "node_1776687495393",
     },
     {
       from: "node_1776687495393",
-      to: "node_1776687486623"
+      to: "node_1776687486623",
     },
     {
       from: "node_1776687544897",
-      to: "WN.03.Trap2"
+      to: "WN.03.Trap2",
     },
     {
       from: "WN.03.029_door",
-      to: "WN.03.Trap2"
+      to: "WN.03.Trap2",
     },
     {
       from: "WN.03.Trap2",
-      to: "WN.03.028_door"
+      to: "WN.03.028_door",
     },
     {
       from: "node_1776687553864",
-      to: "WN.03.029_door"
+      to: "WN.03.029_door",
     },
     {
       from: "node_1776687553864",
-      to: "WN.03.Trap2"
+      to: "WN.03.Trap2",
     },
     {
       from: "node_1776687553864",
-      to: "WN.03.028_door"
+      to: "WN.03.028_door",
     },
     {
       from: "node_1776687553864",
-      to: "node_1776687544897"
+      to: "node_1776687544897",
     },
     {
       from: "node_1776687544897",
-      to: "node_1776687543109"
+      to: "node_1776687543109",
     },
     {
       from: "node_1776687543109",
-      to: "node_1776687496235"
+      to: "node_1776687496235",
     },
     {
       from: "node_1776687281191",
-      to: "node_1776687271861"
+      to: "node_1776687271861",
     },
     {
       from: "node_1776687379615",
-      to: "node_1776687388317"
+      to: "node_1776687388317",
     },
     {
       from: "node_1776687288229",
-      to: "node_1776687314638"
+      to: "node_1776687314638",
     },
     {
       from: "H.3.Trap1",
-      to: "H.3.Trap1_door"
+      to: "H.3.Trap1_door",
     },
     {
       from: "H.3.Lift1",
-      to: "H.3.Lift1_door"
+      to: "H.3.Lift1_door",
     },
     {
       from: "H.3.Lift2",
-      to: "H.3.Lift2_door"
+      to: "H.3.Lift2_door",
     },
     {
       from: "H.3.Lift3",
-      to: "H.3.Lift3_door"
+      to: "H.3.Lift3_door",
     },
     {
       from: "H.3.Trap2",
-      to: "H.3.Trap2_door"
+      to: "H.3.Trap2_door",
     },
     {
       from: "WD.03.Trap1",
-      to: "WD.03.Trap1_door"
+      to: "WD.03.Trap1_door",
     },
     {
       from: "WD.03.lift",
-      to: "WD.03.lift_door"
+      to: "WD.03.lift_door",
     },
     {
       from: "WD.03.Trap2",
-      to: "WD.03.Trap2_door"
+      to: "WD.03.Trap2_door",
     },
     {
       from: "WN.03.Trap1",
-      to: "WN.03.Trap1_door"
+      to: "WN.03.Trap1_door",
     },
     {
       from: "WN.03.Lift",
-      to: "WN.03.Lift_door"
+      to: "WN.03.Lift_door",
     },
     {
       from: "WN.03.Trap2",
-      to: "WN.03.Trap2_door"
+      to: "WN.03.Trap2_door",
     },
     {
       from: "node_1776687428148",
-      to: "node_1776687430125"
+      to: "node_1776687430125",
     },
     {
       from: "node_1776687430646",
-      to: "node_1776687434028"
-    }
-  ]
+      to: "node_1776687434028",
+    },
+  ],
 };

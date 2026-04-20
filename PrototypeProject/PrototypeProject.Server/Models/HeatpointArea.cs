@@ -8,6 +8,9 @@ namespace HeatmapAPI.Models
         public int Value { get; set; }
         public int SoundLevel { get; set; }
         public int Level { get; set; }
+        public int Floor { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public string Color => Value switch
         {
             <= 3 => "green",

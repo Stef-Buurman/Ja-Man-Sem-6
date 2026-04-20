@@ -29,7 +29,7 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
 export function buildAdjacencyMap(graph: Graph, settings: PathfindingSettings): Map<string, string[]> {
   const map = new Map<string, string[]>();
   const nodes = graph.nodes;
-  if (settings.accessibleRoute) nodes.filter((n) => n.type === "stairs"); 
+  if (settings.accessibleRoute) nodes.filter((n) => n.type === "stairs");
   nodes.forEach((n) => map.set(n.id, []));
 
   graph.edges.forEach((e) => {
@@ -142,7 +142,7 @@ export function findPathAStar(startId: string, endId: string, graph: Graph, sett
   return [];
 }
 
-export function findPathAStarMultiStart(startIds: string[], endId: string, graph: Graph, settings: PathfindingSettings): string[] {
+export function findPathAStarMultiStart(startIds: string[], endIds: string[], graph: Graph, settings: PathfindingSettings): string[] {
   const adjacency = buildAdjacencyMap(graph, settings);
 
   const tryFindPath = (targetId: string): string[] => {
@@ -200,23 +200,15 @@ export function findPathAStarMultiStart(startIds: string[], endId: string, graph
     return [];
   };
 
-  const doors = getDoorsForRoom(graph, endId);
+  for (const targetId of endIds) {
+    const doors = getDoorsForRoom(graph, targetId);
 
-  for (const door of doors) {
-    const path = tryFindPath(door.id);
-    if (path.length > 0) {
-      return path;
+    for (const door of doors) {
+      const path = tryFindPath(door.id);
+      if (path.length > 0) {
+        return path;
+      }
     }
   }
-  // const doorPath = tryFindPath(endId + "_door");
-  // if (doorPath.length > 0) {
-  //   return doorPath;
-  // }
-
-  // const normalPath = tryFindPath(endId);
-  // if (normalPath.length > 0) {
-  //   return normalPath;
-  // }
-
   return [];
 }

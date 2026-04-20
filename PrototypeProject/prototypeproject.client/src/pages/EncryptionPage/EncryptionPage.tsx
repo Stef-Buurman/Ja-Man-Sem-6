@@ -88,7 +88,7 @@ export default function EncryptionPage() {
   const generateKeys = async () => {
     try {
       const result = await getKeyOptions(
-        undefined,
+        { Amount: 5 },
         {
           toastSuccess: {
             message: "Keys generated successfully",

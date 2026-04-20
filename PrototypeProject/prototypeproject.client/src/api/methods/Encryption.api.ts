@@ -19,11 +19,11 @@ const encryptionApi = new Encryption();
    Simple Query Methods
    ======================= */
 export async function getKeyOptions(
-  query?: GetKeyOptionsQuery,
+  query: GetKeyOptionsQuery,
   toastOptions?: ToastOptions,
   params?: RequestParams,
 ): Promise<ApiResult<ExtractResponse<ReturnType<Encryption["getKeyOptions"]>>>> {
-  return handleApiResponse(() => encryptionApi.getKeyOptions(query ?? {}, params), toastOptions);
+  return handleApiResponse(() => encryptionApi.getKeyOptions(query, params), toastOptions);
 }
 
 /* =======================

@@ -16,7 +16,7 @@ namespace EncryptionHashingPrototype.Server.Controllers
             _encryptionService = encryptionService;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPost("encrypt")]
         public ActionResult<ApiResponse> EncryptData([FromBody] EncryptDecryptRequest request)
         {
@@ -42,8 +42,8 @@ namespace EncryptionHashingPrototype.Server.Controllers
             }
         }
 
-        [HttpGet("protected-data")]
         [Authorize]
+        [HttpGet("protected-data")]
         public IActionResult GetProtectedData()
         {
             return Ok(new { data = "This is protected!" });
@@ -106,13 +106,18 @@ namespace EncryptionHashingPrototype.Server.Controllers
             public string Data { get; set; } = string.Empty;
         }
 
-        // [Authorize]
+        public class GetKeyOptionsRequest
+        {
+            public int Amount { get; set; } = 5;
+        }
+
+        [Authorize]
         [HttpGet("keys")]
-        public ActionResult<ApiResponse> GetKeyOptions(int amount = 5)
+        public ActionResult<ApiResponse> GetKeyOptions([FromQuery] GetKeyOptionsRequest? request)
         {
             try
             {
-                var keys = _encryptionService.GenerateKeys(amount);
+                var keys = _encryptionService.GenerateKeys(request?.Amount ?? 5);
 
                 return Ok(new ApiResponse
                 {

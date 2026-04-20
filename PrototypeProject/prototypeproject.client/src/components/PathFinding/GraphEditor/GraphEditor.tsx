@@ -103,8 +103,8 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
     }`;
 
     var x: GraphNode[] = visibleDoors
-      .filter(d => IsNodeStairs(d) || IsNodeElevator(d))
-      .map(d => {
+      .filter((d) => IsNodeStairs(d) || IsNodeElevator(d))
+      .map((d) => {
         if (IsNodeStairs(d)) {
           return {
             id: d.roomId || d.id.replace("_door", ""),
@@ -113,7 +113,7 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
             floor: d.floor,
             type: "stairs",
             width: d.width,
-            height: d.height
+            height: d.height,
           };
         } else {
           return {
@@ -123,15 +123,15 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
             floor: d.floor,
             type: "elevator",
             width: d.width,
-            height: d.height
+            height: d.height,
           };
         }
       });
 
-    var y: Edge[] = x.map(element => {
+    var y: Edge[] = x.map((element) => {
       return {
         from: element.id,
-        to: element.id + "_door"
+        to: element.id + "_door",
       };
     });
 
@@ -140,13 +140,13 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
 export const exportedGraph: Graph = {
   nodes: [
 ${distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id)
-        .map(formatNode)
-        .join(",\n")}
+  .map(formatNode)
+  .join(",\n")}
   ],
   edges: [
 ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
-        .map(formatEdge)
-        .join(",\n")}
+  .map(formatEdge)
+  .join(",\n")}
   ]
 };`;
 
@@ -155,7 +155,9 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
   };
 
   const visibleNodes = nodes.filter((n) => n.floor === currentFloor && n.type !== "door" && n.type !== "stairs" && n.type !== "elevator");
-  const visibleDoors = (doors ? doors : (initialGraph?.nodes.filter((n) => n.type === "door" || n.type === "stairs" || n.type === "elevator") ?? [])).filter((d) => d.floor === currentFloor);
+  const visibleDoors = (
+    doors ? doors : (initialGraph?.nodes.filter((n) => n.type === "door" || n.type === "stairs" || n.type === "elevator") ?? [])
+  ).filter((d) => d.floor === currentFloor);
 
   const allVisibleNodes = [...visibleNodes, ...visibleDoors];
   const FloorSvg = floors?.find((f) => f.floorNumber === curFloor)?.svg;

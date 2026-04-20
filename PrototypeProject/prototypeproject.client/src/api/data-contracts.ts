@@ -42,15 +42,18 @@ export interface HeatpointArea {
   soundLevel: number;
   /** @format int32 */
   level: number;
+  /** @format int32 */
+  floor: number;
+  /** @format int32 */
+  width: number;
+  /** @format int32 */
+  height: number;
   color: string | null;
 }
 
 export interface GetKeyOptionsParams {
-  /**
-   * @format int32
-   * @default 5
-   */
-  amount?: number;
+  /** @format int32 */
+  Amount?: number;
 }
 
 export interface UpdateHeatpointAreaParams {

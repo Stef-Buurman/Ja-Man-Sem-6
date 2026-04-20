@@ -35,6 +35,9 @@ const HeatmapEditor: React.FC = () => {
       soundLevel: 0,
       level: 0,
       color: "rgba(0,0,255,0.6)",
+      floor: 0,
+      width: 50,
+      height: 50,
     };
     await addHeatpointArea(newArea, {
       toastSuccess: {
@@ -100,6 +103,54 @@ const HeatmapEditor: React.FC = () => {
                 const value = clampMin0(parseFloat(e.target.value));
 
                 const updated = areas.map((area) => (area.id === a.id ? { ...area, y: value } : area));
+
+                setAreas(updated);
+              }}
+            />
+          </label>
+
+          <label>
+            Width:
+            <input
+              min={0}
+              type="number"
+              value={a.width}
+              onChange={(e) => {
+                const value = clampMin0(parseFloat(e.target.value));
+
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, width: value } : area));
+
+                setAreas(updated);
+              }}
+            />
+          </label>
+
+          <label>
+            Height:
+            <input
+              min={0}
+              type="number"
+              value={a.height}
+              onChange={(e) => {
+                const value = clampMin0(parseFloat(e.target.value));
+
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, height: value } : area));
+
+                setAreas(updated);
+              }}
+            />
+          </label>
+
+          <label>
+            Floor:
+            <input
+              min={0}
+              type="number"
+              value={a.floor}
+              onChange={(e) => {
+                const value = clampMin0(parseFloat(e.target.value));
+
+                const updated = areas.map((area) => (area.id === a.id ? { ...area, floor: value } : area));
 
                 setAreas(updated);
               }}

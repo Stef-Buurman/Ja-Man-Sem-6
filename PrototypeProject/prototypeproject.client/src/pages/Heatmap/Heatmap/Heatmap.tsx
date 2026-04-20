@@ -3,11 +3,14 @@ import Test3 from "../../../assets/Verdieping3_2.svg?react";
 import * as signalR from "@microsoft/signalr";
 import type { HeatpointArea } from "../../../api/data-contracts";
 import { getHeatpointAreas } from "../../../api/methods/Heatmap.api";
+import { floors } from "../../../utils/Globals";
+import { FloorSelector } from "../../../components/PathFinding/FloorSelector/FloorSelector";
 
 const Heatmap: React.FC = () => {
   const svgElement = useRef<SVGSVGElement>(null);
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
   const [viewBox, setViewBox] = useState<string | null>(null);
+  const [currentFloor, setCurrentFloor] = useState<number>(3);
 
   const fetchHeatmapAreas = async () => {
     const res = await getHeatpointAreas();
@@ -77,44 +80,38 @@ const Heatmap: React.FC = () => {
     return `rgba(${r}, ${g}, ${b}, 0.7)`;
   };
 
-  const generateHeatPoints = (x: number, y: number, value: number) => {
-    const generatedPoints = [];
-    const spread = 80;
-    const density = 500;
-
-    for (let i = 0; i < density; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const radius = Math.random() * spread;
-
-      const offsetX = Math.cos(angle) * radius;
-      const offsetY = Math.sin(angle) * radius;
-
-      generatedPoints.push({
-        x: x + offsetX,
-        y: y + offsetY,
-        opacity: 1 - radius / spread,
-        value,
-      });
-    }
-
-    return generatedPoints;
-  };
+  const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
+  const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
+  const areasForCurrentFloor = areas.filter((a) => a.floor === currentFloor);
 
   return (
     <div>
+      <div className="pathfinding-control-group">
+        <FloorSelector floors={floors.map((f) => f.floorNumber)} currentFloor={currentFloor} setFloor={setCurrentFloor} />
+      </div>
       <svg viewBox={viewBox || "0 0 454 627.31"} style={{ border: "1px solid black", margin: "20px auto", display: "block" }}>
-        <Test3 ref={svgElement} />
+        {SelectedFloor && <SelectedFloor ref={svgElement} />}
         <defs>
-          <filter id="heat-blur">
-            <feGaussianBlur stdDeviation="8" />
-          </filter>
+          {areasForCurrentFloor.map((a) => {
+            const color = getColor(a.value);
+            return (
+              <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor={color} stopOpacity="0.9" />
+                <stop offset="45%" stopColor={color} stopOpacity="0.5" />
+                <stop offset="100%" stopColor={color} stopOpacity="0" />
+              </radialGradient>
+            );
+          })}
+          {areasForCurrentFloor.map((a) => (
+            <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
+              <rect x={a.x} y={a.y} width={a.width} height={a.height} />
+            </clipPath>
+          ))}
         </defs>
 
-        {areas.flatMap((a) =>
-          generateHeatPoints(a.x + 25, a.y + 25, a.value).map((p, i) => (
-            <circle key={`${a.id}-${i}`} cx={p.x} cy={p.y} r={5} fill={getColor(p.value)} opacity={p.opacity} filter="url(#heat-blur)" />
-          )),
-        )}
+        {areasForCurrentFloor.map((a) => (
+          <rect key={a.id} x={a.x} y={a.y} width={a.width} height={a.height} fill={`url(#${getGradientId(a.id)})`} clipPath={`url(#clip-${a.id})`} />
+        ))}
       </svg>
     </div>
   );
