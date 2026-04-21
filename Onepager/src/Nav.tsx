@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  
+
   const scrollToTop = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -18,6 +18,8 @@ function Nav() {
     const element = document.getElementById(location);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }else{
+      console.warn(`Element with id "${location}" not found.`);
     }
   }
 
