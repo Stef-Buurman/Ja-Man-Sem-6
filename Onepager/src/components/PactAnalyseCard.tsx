@@ -21,7 +21,7 @@ export default function PactAnalyseCard({
     blue: "bg-blue-200 text-gray-800",
     dark: "bg-[#3b2626] text-white",
     brown: "bg-[#4b2e2e] text-white",
-    red: "bg-orange-500 text-white",
+    red: "bg-[#e8492b] text-white",
   };
 
   const variantLabels: Record<PactAnalyseCardProps["variant"], string> = {
@@ -33,8 +33,8 @@ export default function PactAnalyseCard({
 
   const variantLabelStyling: Record<PactAnalyseCardProps["variant"], string> = {
     dark: "bg-blue-200 text-gray-800",
-    brown: "bg-orange-500 text-white",
-    red: "bg-[#4b2e2e] text-white",
+    brown: "bg-[#e8492b] text-white",
+    red: "bg-[#e8492b] text-white",
     blue: "bg-[#4b2e2e] text-white",
   };
 

@@ -6,7 +6,7 @@ export interface FieldResearchCardProps {
   title: string;
   content?: string;
   label: string;
-  variant: "blue" | "dark" | "brown" | "red";
+  variant: "blue" | "white" | "brown" | "red";
 }
 
 export default function FieldResearchCard({
@@ -17,14 +17,14 @@ export default function FieldResearchCard({
 }: FieldResearchCardProps) {
   const variantStyles: Record<FieldResearchCardProps["variant"], string> = {
     blue: "bg-blue-200 text-gray-800",
-    dark: "bg-[#3b2626] text-white",
+    white: "bg-[#FDF1E3] text-[#342626]",
     brown: "bg-[#4b2e2e] text-white",
-    red: "bg-orange-500 text-white",
+    red: "bg-[#E8492B] text-white",
   };
 
   const variantLabelStyling: Record<FieldResearchCardProps["variant"], string> =
     {
-      dark: "bg-blue-200 text-gray-800",
+      white: "bg-blue-200 text-gray-800",
       brown: "bg-orange-500 text-white",
       red: "bg-[#4b2e2e] text-white",
       blue: "bg-[#4b2e2e] text-white",
@@ -32,7 +32,7 @@ export default function FieldResearchCard({
 
   const variantLogos: Record<FieldResearchCardProps["variant"], string> = {
     blue: logo_brown,
-    dark: logo_white,
+    white: logo_brown,
     brown: logo_white,
     red: logo_white,
   };

@@ -149,10 +149,7 @@ function Sprint0() {
       </section>
 
       {/* ONTWERPVRAAG */}
-      <section
-        id="ontwerpvraag"
-        className="py-24 sm:py-28 bg-[#fdf1e3] z-10 md:sticky md:top-2"
-      >
+      <section id="ontwerpvraag" className="py-24 sm:py-28 bg-[#fdf1e3] z-10 md:sticky md:top-2">
         <div className="max-w-3xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <h2 className="text-3xl sm:text-4xl font-bold">Ontwerpvraag</h2>
 
@@ -173,10 +170,7 @@ function Sprint0() {
       </section>
 
       {/* RANDVOORWAARDEN */}
-      <section
-        id="randvoorwaarden"
-        className="py-16 bg-[#342626] z-20 md:sticky md:top-48"
-      >
+      <section id="randvoorwaarden" className="py-16 bg-[#342626] z-20 md:sticky md:top-48">
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#fdf1e3]">
           <h2 className="text-3xl sm:text-4xl font-bold">Randvoorwaarden</h2>
 
@@ -204,10 +198,7 @@ function Sprint0() {
       </section>
 
       {/* PROJECT SCOPE */}
-      <section
-        id="scope"
-        className="py-16 bg-[#beddfc] z-30 md:sticky md:top-84"
-      >
+      <section id="scope" className="py-16 bg-[#beddfc] z-30 md:sticky md:top-84">
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <h2 className="text-3xl sm:text-4xl font-bold">Scope</h2>
 
@@ -235,10 +226,7 @@ function Sprint0() {
       </section>
 
       {/* Logo */}
-      <section
-        id="logo"
-        className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center"
-      >
+      <section id="logo" className="md:h-[44vh] py-16 bg-[#e8492b] z-40 md:sticky md:top-120 flex justify-center items-center">
         <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10 text-[#342626]">
           <div className="flex flex-col justify-center items-center text-center">
             <img
