@@ -4,13 +4,13 @@ import "./output.css";
 import "./custom.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
+import { isDev } from "./utils/globals.js";
 
 const rootElement = document.getElementById("root");
-const viteEnv = (import.meta as ImportMeta & { env: { BASE_URL: string } }).env;
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-        <BrowserRouter basename={viteEnv.BASE_URL}>
+        <BrowserRouter basename={isDev ? "/" : "/2025_2026/idp_so_t3/"}>
         <App />
       </BrowserRouter>
     </StrictMode>,
