@@ -15,6 +15,7 @@
   },
   "scripts": {
     "dev": "node Scripts/Node/dev.mjs",
+    "dev:no": "node Scripts/Node/dev.mjs --no",
     "stop": "node Scripts/Node/stop.mjs",
     "swagger": "node Scripts/Node/swagger.mjs && npm run stop",
     "generate:ts-api": "swagger-typescript-api generate -p %npm_package_config_swaggerInput% -o %npm_package_config_apiOutput% --modular --module-name-first-tag --fetch --extractRequestParams --templates swagger-templates && node Scripts/JS/convertFilesArrayToFormdata.js ",

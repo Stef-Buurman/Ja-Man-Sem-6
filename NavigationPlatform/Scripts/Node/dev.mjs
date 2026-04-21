@@ -7,14 +7,11 @@ const shouldOpenBrowser = !process.argv.includes("--no");
 runCommand("docker compose up postgres pgadmin --build -d");
 runCommand("dotnet ef database update", serverFolderName);
 runCommandAsync("dotnet watch run", serverFolderName);
-
-setTimeout(() => {
-  runCommandAsync("npm run dev", clientFolderName);
-}, 5000);
+runCommandAsync("npm run dev", clientFolderName);
 
 if (shouldOpenBrowser) {
   setTimeout(() => {
-    open("https://localhost:49164");
+    open("https://localhost:59957");
     open("http://localhost:5294/swagger");
-  }, 7500);
+  }, 5000);
 }
