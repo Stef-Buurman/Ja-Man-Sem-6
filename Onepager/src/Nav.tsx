@@ -18,7 +18,7 @@ function Nav() {
     const element = document.getElementById(location);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }else{
+    } else {
       console.warn(`Element with id "${location}" not found.`);
     }
   }
@@ -27,9 +27,9 @@ function Nav() {
     <>
       <nav className="w-full bg-[#fdf1e3] flex items-center justify-between px-6 py-4 fixed top-0 left-0 z-20">
         {/* Logo */}
-        <a href="#top" onClick={scrollToTop}>
+        <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={scrollToTop}>
           <img src={logo_brown} alt="JaMan logo" className="w-10" />
-        </a>
+        </button>
 
         {/* Hamburger button */}
         <button
