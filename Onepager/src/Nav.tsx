@@ -2,17 +2,24 @@ import { Outlet } from "react-router";
 import logo_brown from "./assets/logo/jaman_brown.svg";
 import { useState } from "react";
 
-const scrollToTop = (e: { preventDefault: () => void }) => {
-  e.preventDefault();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
-
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  const scrollToTop = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToSection = (location: string): void => {
+    const element = document.getElementById(location);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
   return (
     <>
@@ -32,38 +39,38 @@ function Nav() {
 
         {/* Menu midden */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8 text-[#342626]">
-          <a href="#sprint0" className="hover:text-[#e8492b] transition">
+          <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint0")}>
             Sprint 0
-          </a>
+          </button>
 
-          <a href="#sprint1" className="hover:text-[#e8492b] transition">
+          <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint1")}>
             Sprint 1
-          </a>
+          </button>
 
-          <a href="#sprint2" className="hover:text-[#e8492b] transition">
+          <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint2")}>
             Sprint 2
-          </a>
+          </button>
 
-          <a href="#sprint3" className="hover:text-[#e8492b] transition">
+          <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint3")}>
             Sprint 3
-          </a>
+          </button>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
           <div className="absolute top-full left-0 w-full bg-[#fdf1e3] flex flex-col items-center py-6 space-y-4 md:hidden">
-            <a href="#sprint0" onClick={() => setMenuOpen(false)}>
+            <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint0"); setMenuOpen(false); }}>
               Sprint 0
-            </a>
-            <a href="#sprint1" onClick={() => setMenuOpen(false)}>
+            </button>
+            <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint1"); setMenuOpen(false); }}>
               Sprint 1
-            </a>
-            <a href="#sprint2" onClick={() => setMenuOpen(false)}>
+            </button>
+            <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint2"); setMenuOpen(false); }}>
               Sprint 2
-            </a>
-            <a href="#sprint3" onClick={() => setMenuOpen(false)}>
+            </button>
+            <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint3"); setMenuOpen(false); }}>
               Sprint 3
-            </a>
+            </button>
           </div>
         )}
       </nav>
