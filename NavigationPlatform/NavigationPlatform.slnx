@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="navigationplatform.client/navigationplatform.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="NavigationPlatform.Server/NavigationPlatform.Server.csproj" />
+</Solution>
