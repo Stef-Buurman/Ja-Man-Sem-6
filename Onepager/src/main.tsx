@@ -6,10 +6,11 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 
 const rootElement = document.getElementById("root");
+const viteEnv = (import.meta as ImportMeta & { env: { BASE_URL: string } }).env;
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-        <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <BrowserRouter basename={viteEnv.BASE_URL}>
         <App />
       </BrowserRouter>
     </StrictMode>,
