@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.3 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -241,6 +241,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .my-16 {
+    margin-block: calc(var(--spacing) * 16);
+  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
@@ -249,9 +252,6 @@
   }
   .mt-16 {
     margin-top: calc(var(--spacing) * 16);
-  }
-  .mt-24 {
-    margin-top: calc(var(--spacing) * 24);
   }
   .mt-\[100vh\] {
     margin-top: 100vh;
@@ -270,9 +270,6 @@
   }
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
-  }
-  .mb-8 {
-    margin-bottom: calc(var(--spacing) * 8);
   }
   .mb-10 {
     margin-bottom: calc(var(--spacing) * 10);
@@ -312,9 +309,6 @@
   }
   .h-\[60vh\] {
     height: 60vh;
-  }
-  .h-full {
-    height: 100%;
   }
   .h-screen {
     height: 100vh;
@@ -497,12 +491,6 @@
   .border-\[\#fdf1e3\] {
     border-color: #fdf1e3;
   }
-  .border-\[\#fdf1e3\]\/20 {
-    border-color: color-mix(in oklab, #fdf1e3 20%, transparent);
-  }
-  .border-\[\#fdf1e3\]\/30 {
-    border-color: color-mix(in oklab, #fdf1e3 30%, transparent);
-  }
   .border-white\/30 {
     border-color: color-mix(in srgb, #fff 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -560,9 +548,6 @@
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
-  .py-2 {
-    padding-block: calc(var(--spacing) * 2);
-  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
@@ -590,17 +575,14 @@
   .pt-3 {
     padding-top: calc(var(--spacing) * 3);
   }
-  .pt-10 {
-    padding-top: calc(var(--spacing) * 10);
-  }
   .pt-24 {
     padding-top: calc(var(--spacing) * 24);
   }
+  .pb-6 {
+    padding-bottom: calc(var(--spacing) * 6);
+  }
   .pb-40 {
     padding-bottom: calc(var(--spacing) * 40);
-  }
-  .pb-70 {
-    padding-bottom: calc(var(--spacing) * 70);
   }
   .pl-6 {
     padding-left: calc(var(--spacing) * 6);
@@ -835,11 +817,6 @@
   .md\:sticky {
     @media (width >= 48rem) {
       position: sticky;
-    }
-  }
-  .md\:top-0 {
-    @media (width >= 48rem) {
-      top: calc(var(--spacing) * 0);
     }
   }
   .md\:top-2 {

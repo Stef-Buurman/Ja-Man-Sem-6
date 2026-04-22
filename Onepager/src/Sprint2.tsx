@@ -3,6 +3,8 @@ import deliveryHumanImg from "./assets/images/delivery_human.png";
 import logo_white from "./assets/logo/jaman_white.svg";
 import UserPersonaImg from "./assets/images/userpersona.png";
 import HeatmapsImg from "./assets/images/heatmaps.png";
+import mapv1 from "./assets/images/3dv1.png";
+import mapv2 from "./assets/images/3dv2.png";
 import Stats_Wayfinding from "./assets/images/stats_wayfinding.png";
 import Stats_Werkplekken from "./assets/images/stats_werkplekken.png";
 import Prototype from "./assets/images/prototype.png";
@@ -17,7 +19,7 @@ function Sprint2() {
                     SPRINT 2
                 </h1>
 
-                <div className="max-w-5xl mx-auto px-6 mt-16">
+                <div className="max-w-5xl mx-auto px-6 my-16">
                     <div className="flex flex-col md:flex-row gap-10 md:gap-20">
 
                         {/* Sticky afbeelding */}
@@ -26,7 +28,7 @@ function Sprint2() {
                                 <img
                                     src={UserPersonaImg}
                                     alt="Gebruikers persona"
-                                    className="rounded-xl shadow-xl w-full object-cover"
+                                    className="rounded-xl w-full object-cover"
                                 />
                             </div>
                         </div>
@@ -48,9 +50,6 @@ function Sprint2() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section className="pb-40 pt-24 z-10 bg-[#342626] text-[#fdf1e3]">
                 <div className="max-w-5xl mx-auto px-6 space-y-10">
 
                     <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -100,6 +99,74 @@ function Sprint2() {
                             </p>
                         </div>
 
+                    </div>
+                </div>
+            </section>
+
+            <section className="pb-40 pt-24 z-10 bg-[#342626] text-[#fdf1e3]">
+                <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-10 mb-16 items-center">
+
+                    {/* Afbeelding links */}
+                    <div>
+                        <img
+                            src={HeatmapsImg}
+                            alt="Heatmaps prototype"
+                            className="rounded-xl shadow-xl w-full object-cover"
+                        />
+                    </div>
+
+                    {/* Tekst rechts */}
+                    <div className="space-y-6">
+                        <h3 className="text-2xl sm:text-3xl font-bold">
+                            Heatmaps
+                        </h3>
+
+                        <p className="leading-relaxed">
+                            Uit de resultaten van onze interviews en enquêtes bleek dat veel CMI-studenten moeite hebben
+                            met het vinden van rustige plekken om te studeren. Op basis van deze inzichten hebben wij
+                            een visualisatie ontwikkeld die aantoond hoe wij dit probleem willen aanpakken.
+                        </p>
+
+                        <p className="leading-relaxed">
+                            Het idee van heatmaps is dat wij met sensoren de drukte en het geluidsniveau kunnen meten.
+                            Deze informatie kan vervolgens in real-time aan studenten worden weergegeven, waardoor zij
+                            gemakkelijk een rustige studeerplek kunnen vinden.
+                        </p>
+                    </div>
+                </div>
+                <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+
+                    {/* Tekst rechts */}
+                    <div className="space-y-6">
+                        <h3 className="text-2xl sm:text-3xl font-bold">
+                            Wayfinding
+                        </h3>
+
+                        <p className="leading-relaxed">
+                            Na het verder onderzoeken van onze doelgroep hebben we aanvullend deskresearch gedaan naar
+                            bestaande methodes van wayfinding. Op basis hiervan hebben we een eerste prototype
+                            ontwikkeld.
+                        </p>
+
+                        <p className="leading-relaxed">
+                            In dit prototype hebben we een plattegrond gemaakt van een gedeelte van het schoolgebouw,
+                            waarbij gebruikers eenvoudig een lokaal kunnen selecteren. Vervolgens wordt de snelste route
+                            naar dit lokaal berekend en visueel weergegeven.
+                        </p>
+                    </div>
+
+                    {/* Afbeelding links */}
+                    <div className="space-y-6">
+                        <img
+                            src={mapv1}
+                            alt="3d map v1"
+                            className="rounded-xl shadow-xl w-full object-cover"
+                        />
+                        <img
+                            src={mapv2}
+                            alt="3d map v2"
+                            className="rounded-xl shadow-xl w-full object-cover"
+                        />
                     </div>
                 </div>
             </section>
@@ -200,86 +267,6 @@ function Sprint2() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* Heatmaps */}
-            <section id="heatmaps" className="py-16 bg-[#e8492b] text-[#fdf1e3]">
-                <div className="max-w-5xl mx-auto px-6 flex flex-col gap-6">
-                    <div className="flex flex-col md:flex-row gap-10 md:gap-20">
-
-                        {/* Sticky afbeelding */}
-                        <div className="relative">
-                            <div>
-                                <img
-                                    src={HeatmapsImg}
-                                    alt="Heatmaps prototype"
-                                    className="rounded-xl shadow-xl w-full object-cover"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Scroll tekst content */}
-                        <div
-                            className="md:flex-[2] space-y-6 sm:space-y-8 md:space-y-10 text-[#fdf1e3] text-base leading-relaxed">
-                            <h3 className="text-2xl sm:text-3xl font-bold">
-                                Heatmaps
-                            </h3>
-                            <p>
-                                Uit onze eigen ervaringen nemen wij aan dat CMI studenten moeite hebben
-                                met het vinden van rustige plekken om te studeren. Hierom hebben wij een
-                                prototype gemaakt die dit probleem op lost.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="pt-10">
-                        <p className="text-base leading-relaxed">
-                            Het idee van heatmaps is dat wij met sensoren de drukte en het
-                            geluidsniveau kunnen zien. Dit kunnen wij dan in real-time aan studenten
-                            laten zien waardoor zij gemakkelijk een rustige studeerplek kunnen vinden.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Enquete */}
-            <section id="enquete" className="py-16 bg-[#fdf1e3]  text-[#342626]">
-                <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
-                    <div className="flex flex-col md:flex-row gap-6">
-                        <div className="flex flex-col space-y-6 sm:space-y-10">
-                            <h2 className="text-4xl sm:text-4xl font-bold">Prototype</h2>
-                            <div className="space-y-4 leading-relaxed space-y-2">
-                                <p className="text-base sm:text-xl leading-relaxed md:flex-[1] text-left">
-                                    Na het onderzoeken van bestaande wayfinding methodes zijn wij
-                                    terechtgekomen op de kaart van zuidplein. Hier hebben wij inspiratie
-                                    van opgedaan waarna wij in illustrator zelf een prototype hebben gemaakt.
-                                </p>
-                                <p className="text-base sm:text-xl leading-relaxed md:flex-[1] text-left">
-                                    Wat wij nu hebben is een kaart die wij als applicatie kunne
-                                    gebruiken om te laten zien waar de lokalen zijn in het gebouw.
-                                    Ook kan je drukken op het lokaal waar je moet zijn, waarna je een
-                                    route krijgt te zien.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex flex-col md:flex-[1]">
-                            <div>
-                                <img
-                                    src={Prototype}
-                                    alt="Prototype"
-                                    className="rounded-xl shadow-xl w-full max-h-[80vh] object-cover"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Prototype */}
-            <section id="prototype" className="py-16 bg-[#342626] text-[#fdf1e3]">
-            </section>
-
-            {/* Planning sprint 3 */}
-            <section id="sprint-planning" className="py-16 z-40  bg-[#beddfc] text-[#342626]">
             </section>
 
             {/* Logo */}
