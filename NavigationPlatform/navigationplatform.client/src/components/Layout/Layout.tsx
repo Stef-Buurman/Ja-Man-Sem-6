@@ -10,15 +10,7 @@ export const Layout: React.FC = () => {
           <h1 className="logo">Prototype Project</h1>
           <nav className="nav-links">
             <Link to="/">Home</Link>
-            <Link to="/2dV1">2D Map</Link>
-            <Link to="/3dV1">3D V1</Link>
-            <Link to="/3dV2">3D V2</Link>
-            <Link to="/3dV3">3D V3</Link>
-            <Link to="/3dV4">3D V4</Link>
-            <Link to="/graph-editor">Graph Editor</Link>
-            <Link to="/heatmap">Heatmap</Link>
-            <Link to="/editor">Heatmap Editor</Link>
-            <Link to="/Encryption">Encryption</Link>
+            <Link to="/pathfinding">2D Map</Link>
           </nav>
         </div>
       </header>
