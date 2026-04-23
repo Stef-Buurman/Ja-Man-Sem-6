@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NavigationPlatform.Server.DB;
+using NavigationPlatform.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,12 +20,16 @@ builder.Services.AddSwaggerGen(options =>
     options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
 });
 
+builder.Services.AddScoped<GraphImportService>();
+
 var connectionString = builder.Configuration.GetConnectionString("Postgres");
 
 builder.Services.AddDbContextFactory<NavigationPlatformContext>(options =>
 {
     options.UseNpgsql(connectionString);
 });
+
+builder.Services.AddHostedService<DatabaseInitializationHostedService>();
 
 var app = builder.Build();
 
