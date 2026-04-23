@@ -1,9 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./PathfindingMap.css";
 import type { PathfindingMapProps } from "./PathfindingMap.props";
-import type { GraphNode, NodeType } from "../../Types/types";
+import type { GraphNodeDto } from "../../api/data-contracts";
+import type { NodeType } from "../../Types/nodeType";
+import { GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
+// import type { GraphNode, NodeType } from "../../Types/types";
 
-export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFloor, path, handleRoomClick = () => {}, floors }) => {
+export const PathfindingMap: React.FC<PathfindingMapProps> = ({
+  nodes,
+  currentFloor,
+  path,
+  handleRoomClick = () => {},
+  floors,
+}) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
@@ -22,7 +31,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
 
     const doors = doorGroup.querySelectorAll("circle");
 
-    var doorData: GraphNode[] = Array.from(doors).map((door) => {
+    var doorData: GraphNodeDto[] = Array.from(doors).map((door) => {
       const rawId = door.getAttribute("data-name") || door.id;
       const cleanId = rawId.replace(/-\d+$/, "");
 
@@ -35,7 +44,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
           x: Math.round(x),
           y: Math.round(y),
           floor: currentFloor,
-          type: "door",
+          type: GetTypeFromNodeType("door"),
           width: 20,
           height: 20,
           roomId: cleanId,
@@ -46,7 +55,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
           x: Math.round(x),
           y: Math.round(y),
           floor: currentFloor,
-          type: "door",
+          type: GetTypeFromNodeType("door"),
           width: 20,
           height: 20,
           roomId: cleanId,
@@ -58,22 +67,22 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
         x: Math.round(x),
         y: Math.round(y),
         floor: currentFloor,
-        type: "door",
+        type: GetTypeFromNodeType("door"),
         width: 20,
         height: 20,
         roomId: cleanId,
       };
     });
     doorData
-      .filter((d) => d.id.toLowerCase().includes("trap") || d.id.toLowerCase().includes("lift"))
+      .filter((d) => d.id?.toLowerCase().includes("trap") || d.id?.toLowerCase().includes("lift"))
       .forEach((element) => {
-        var type: NodeType = element.id.toLowerCase().includes("trap") ? "stairs" : "elevator";
+        var type: NodeType = element.id?.toLowerCase().includes("trap") ? "stairs" : "elevator";
         doorData.push({
-          id: element.roomId || element.id.replace("_door", ""),
+          id: element.roomId || (element.id ? element.id.replace("_door", "") : ""),
           x: element.x,
           y: element.y,
           floor: element.floor,
-          type: type,
+          type: GetTypeFromNodeType(type),
           width: element.width,
           height: element.height,
         });
@@ -87,6 +96,53 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
       .join("\n");
 
     navigator.clipboard.writeText(formattedData);
+  };
+
+  const copyDoorsJson = () => {
+    if (!svgElement.current) return;
+
+    const doorGroup = svgElement.current.getElementById("DataPoints");
+    if (!doorGroup) return;
+
+    const doors = doorGroup.querySelectorAll("circle");
+
+    const doorData: GraphNodeDto[] = Array.from(doors).map((door) => {
+      const rawId = door.getAttribute("data-name") || door.id;
+      const cleanId = rawId.replace(/-\d+$/, "");
+
+      const x = parseFloat(door.getAttribute("cx") || "0");
+      const y = parseFloat(door.getAttribute("cy") || "0");
+
+      return {
+        id: `${cleanId}_door`,
+        x: Math.round(x),
+        y: Math.round(y),
+        floor: currentFloor,
+        type: GetTypeFromNodeType("door"),
+        width: 20,
+        height: 20,
+        roomId: cleanId,
+      };
+    });
+
+    doorData
+      .filter((d) => d.id?.toLowerCase().includes("trap") || d.id?.toLowerCase().includes("lift"))
+      .forEach((element) => {
+        const type: NodeType = element.id?.toLowerCase().includes("trap") ? "stairs" : "elevator";
+
+        doorData.push({
+          id: element.roomId || (element.id ? element.id.replace("_door", "") : ""),
+          x: element.x,
+          y: element.y,
+          floor: element.floor,
+          type: GetTypeFromNodeType(type),
+          width: element.width,
+          height: element.height,
+        });
+      });
+
+    const jsonData = JSON.stringify(doorData, null, 2);
+    navigator.clipboard.writeText(jsonData);
   };
 
   const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
@@ -105,6 +161,10 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
+
+      <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
+        📋 Copy doors JSON
+      </button>
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
@@ -137,7 +197,9 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({ nodes, currentFl
           {path && (
             <path
               d={(() => {
-                const points = path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)).filter(Boolean) as {
+                const points = path
+                  .map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor))
+                  .filter(Boolean) as {
                   x: number;
                   y: number;
                 }[];

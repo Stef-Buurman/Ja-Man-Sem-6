@@ -1,7 +1,8 @@
-import type { Graph, PathfindingSettings } from "../Types/types";
-import type { GraphNode } from "../Types/types";
+import type { GraphDto, GraphNodeDto } from "../api/data-contracts";
+import type { PathfindingSettings } from "../Types/types";
+import { GetNodeTypeFromInteger } from "../utils/NodeTypeFromType";
 
-export function findPath(startId: string, endId: string, graph: Graph): string[] {
+export function findPath(startId: string, endId: string, graph: GraphDto): string[] {
   const visited = new Set<string>();
   const queue: { node: string; path: string[] }[] = [{ node: startId, path: [startId] }];
 
@@ -14,61 +15,67 @@ export function findPath(startId: string, endId: string, graph: Graph): string[]
     visited.add(node);
 
     const neighbors = graph.edges
-      .filter((e) => e.from === node || e.to === node)
+      ?.filter((e) => e.from === node || e.to === node)
       .map((e) => (e.from === node ? e.to : e.from))
-      .filter((n) => !visited.has(n));
+      .filter((n) => !visited.has(n ?? ""));
 
-    neighbors.forEach((neighbor) => {
-      queue.push({ node: neighbor, path: [...path, neighbor] });
-    });
+    if (neighbors) {
+      neighbors
+        .filter((n): n is string => !!n)
+        .forEach((neighbor) => {
+          queue.push({ node: neighbor, path: [...path, neighbor] });
+        });
+    }
   }
 
   return [];
 }
 
-export function buildAdjacencyMap(graph: Graph, settings: PathfindingSettings): Map<string, string[]> {
+export function buildAdjacencyMap(graph: GraphDto, settings: PathfindingSettings): Map<string, string[]> {
   const map = new Map<string, string[]>();
   const nodes = graph.nodes;
-  if (settings.accessibleRoute) nodes.filter((n) => n.type === "stairs");
-  nodes.forEach((n) => map.set(n.id, []));
+  if (settings.accessibleRoute) nodes?.filter((n) => GetNodeTypeFromInteger(n.type) === "stairs");
+  nodes?.forEach((n) => n.id && map.set(n.id, []));
 
-  graph.edges.forEach((e) => {
-    if (!map.has(e.from)) map.set(e.from, []);
-    if (!map.has(e.to)) map.set(e.to, []);
+  graph.edges?.forEach((e) => {
+    if (e.from && !map.has(e.from)) map.set(e.from, []);
+    if (e.to && !map.has(e.to)) map.set(e.to, []);
 
-    map.get(e.from)?.push(e.to);
-    map.get(e.to)?.push(e.from);
+    if (e.from && e.to) {
+      map.get(e.from)?.push(e.to);
+      map.get(e.to)?.push(e.from);
+    }
   });
 
   return map;
 }
 
-export function distance(a: GraphNode, b: GraphNode) {
+export function distance(a: GraphNodeDto, b: GraphNodeDto) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
-export function heuristic(a: GraphNode, b: GraphNode) {
+export function heuristic(a: GraphNodeDto, b: GraphNodeDto) {
   return distance(a, b);
 }
 
-export function getEdgeCost(from: GraphNode, to: GraphNode) {
+export function getEdgeCost(from: GraphNodeDto, to: GraphNodeDto) {
   let cost = distance(from, to);
 
-  if (to.type === "door") cost += 5;
-  if (to.type === "stairs") cost += 20;
-  if (to.type === "elevator") cost += 10;
+  if (GetNodeTypeFromInteger(to.type) === "door") cost += 5;
+  if (GetNodeTypeFromInteger(to.type) === "stairs") cost += 20;
+  if (GetNodeTypeFromInteger(to.type) === "elevator") cost += 10;
 
   if (from.floor !== to.floor) cost += 50;
 
   return cost;
 }
 
-export function getNode(graph: Graph, id: string): GraphNode | undefined {
-  return graph.nodes.find((n) => n.id === id);
+export function getNode(graph: GraphDto, id: string): GraphNodeDto | undefined {
+  return graph.nodes?.find((n) => n.id === id);
 }
 
-export function getDoorsForRoom(graph: Graph, roomId: string): GraphNode[] {
-  return graph.nodes.filter((n) => n.type === "door" && n.roomId === roomId);
+export function getDoorsForRoom(graph: GraphDto, roomId: string): GraphNodeDto[] {
+  return graph.nodes?.filter((n) => GetNodeTypeFromInteger(n.type) === "door" && n.roomId === roomId) || [];
 }
 
 export function getNeighbors(id: string, adjacency: Map<string, string[]>) {
@@ -86,7 +93,12 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
   return path;
 }
 
-export function findPathAStar(startId: string, endId: string, graph: Graph, settings: PathfindingSettings): string[] {
+export function findPathAStar(
+  startId: string,
+  endId: string,
+  graph: GraphDto,
+  settings: PathfindingSettings,
+): string[] {
   const adjacency = buildAdjacencyMap(graph, settings);
 
   const openSet = new Set<string>([startId]);
@@ -95,9 +107,11 @@ export function findPathAStar(startId: string, endId: string, graph: Graph, sett
   const gScore = new Map<string, number>();
   const fScore = new Map<string, number>();
 
-  graph.nodes.forEach((n) => {
-    gScore.set(n.id, Infinity);
-    fScore.set(n.id, Infinity);
+  graph.nodes?.forEach((n) => {
+    if (n.id) {
+      gScore.set(n.id, Infinity);
+      fScore.set(n.id, Infinity);
+    }
   });
 
   gScore.set(startId, 0);
@@ -142,7 +156,12 @@ export function findPathAStar(startId: string, endId: string, graph: Graph, sett
   return [];
 }
 
-export function findPathAStarMultiStart(startIds: string[], endIds: string[], graph: Graph, settings: PathfindingSettings): string[] {
+export function findPathAStarMultiStart(
+  startIds: string[],
+  endIds: string[],
+  graph: GraphDto,
+  settings: PathfindingSettings,
+): string[] {
   const adjacency = buildAdjacencyMap(graph, settings);
 
   const tryFindPath = (targetId: string): string[] => {
@@ -152,9 +171,11 @@ export function findPathAStarMultiStart(startIds: string[], endIds: string[], gr
     const gScore = new Map<string, number>();
     const fScore = new Map<string, number>();
 
-    graph.nodes.forEach((n) => {
-      gScore.set(n.id, Infinity);
-      fScore.set(n.id, Infinity);
+    graph.nodes?.forEach((n) => {
+      if (n.id) {
+        gScore.set(n.id, Infinity);
+        fScore.set(n.id, Infinity);
+      }
     });
 
     const endNode = getNode(graph, targetId);
@@ -204,9 +225,13 @@ export function findPathAStarMultiStart(startIds: string[], endIds: string[], gr
     const doors = getDoorsForRoom(graph, targetId);
 
     for (const door of doors) {
-      const path = tryFindPath(door.id);
-      if (path.length > 0) {
-        return path;
+      console.log(`Attempting pathfinding to door ${door.id} for target ${targetId}`);
+      if (door.id) {
+        const path = tryFindPath(door.id);
+        console.log(`Trying path to ${door.id} for target ${targetId}:`, path);
+        if (path.length > 0) {
+          return path;
+        }
       }
     }
   }

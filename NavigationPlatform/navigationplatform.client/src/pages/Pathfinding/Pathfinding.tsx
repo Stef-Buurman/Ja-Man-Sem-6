@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Pathfinding.css";
 import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
 import SearchSelect from "../../components/SearchSelect/SearchSelect";
-import { Verdieping3Graph } from "../../data/Verdieping3";
-import type { PathfindingSettings, GraphNode } from "../../Types/types";
+// import { Verdieping3Graph } from "../../data/Verdieping3";
+import type { PathfindingSettings } from "../../Types/types";
 import { defaultStartNodes, floors } from "../../utils/Globals";
 import { findPathAStarMultiStart } from "../../services/pathfinding";
+import type { GraphDto, GraphNodeDto } from "../../api/data-contracts";
+import { getGraph } from "../../api/methods/Graph.api";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -15,6 +17,7 @@ export const Pathfinding: React.FC = () => {
   const [startNodes, setStartNodes] = useState<string[]>(defaultStartNodes);
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
+  const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
 
   const handleSettingChange = (settings: PathfindingSettings) => {
     if (settings.accessibleRoute !== isAccessibleRoute) {
@@ -31,8 +34,22 @@ export const Pathfinding: React.FC = () => {
     }
   };
 
-  const graph = Verdieping3Graph;
-
+  useEffect(() => {
+    const fetchGraph = async () => {
+      const res = await getGraph(
+        { Floor: currentFloor },
+        {
+          toastSuccess: {
+            message: `Graph for floor ${currentFloor} loaded successfully!`,
+          },
+        },
+      );
+      if (res.ok) {
+        setGraph(res.response);
+      }
+    };
+    fetchGraph();
+  }, [currentFloor]);
   const handleStartClick = (roomId: string) => {
     const updatedStartNodes = [roomId];
     setStartNodes(updatedStartNodes);
@@ -46,7 +63,7 @@ export const Pathfinding: React.FC = () => {
       );
       setPath(result);
 
-      const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0].floorNumber;
+      const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floors[0].floorNumber;
 
       setCurrentFloor(floor);
       setSelectedRoom(destinationNode);
@@ -55,19 +72,24 @@ export const Pathfinding: React.FC = () => {
 
   const handleDestinationClick = (roomId: string) => {
     setDestinationNode(roomId);
-    var result = findPathAStarMultiStart(startNodes.concat(startNodes.map((n) => n + "_door")), [roomId, roomId + "_door"], graph, {
-      accessibleRoute: isAccessibleRoute,
-    });
+    var result = findPathAStarMultiStart(
+      startNodes.concat(startNodes.map((n) => n + "_door")),
+      [roomId, roomId + "_door"],
+      graph,
+      {
+        accessibleRoute: isAccessibleRoute,
+      },
+    );
     setPath(result);
 
-    const floor = (graph.nodes.find((n) => n.id === result[0]) as GraphNode)?.floor ?? floors[0].floorNumber;
+    const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floors[0].floorNumber;
 
     setCurrentFloor(floor);
     setSelectedRoom(roomId);
   };
 
   const roomOptions = graph.nodes
-    .filter((node) => node.id.includes("_door"))
+    ?.filter((node) => node.id?.includes("_door"))
     .map((node) => node.roomId)
     .filter((roomId): roomId is string => roomId !== undefined);
 
@@ -84,7 +106,11 @@ export const Pathfinding: React.FC = () => {
 
         <section className="pathfinding-controls">
           <div className="pathfinding-control-group">
-            <FloorSelector floors={floors.map((f) => f.floorNumber)} currentFloor={currentFloor} setFloor={setCurrentFloor} />
+            <FloorSelector
+              floors={floors.map((f) => f.floorNumber)}
+              currentFloor={currentFloor}
+              setFloor={setCurrentFloor}
+            />
           </div>
 
           {/* <div className="pathfinding-control-group">
@@ -94,23 +120,32 @@ export const Pathfinding: React.FC = () => {
             </label>
           </div> */}
 
-          <div className="pathfinding-search">
-            <SearchSelect title="Enter start room" data={roomOptions} onSelect={handleStartClick} value={defaultStartNodes[0].replace("_door", "")} />
-          </div>
-          <div className="pathfinding-search">
-            <SearchSelect
-              title="Enter destination room"
-              data={roomOptions}
-              onSelect={handleDestinationClick}
-              value={destinationNode?.replace("_door", "")}
-            />
-          </div>
+          {roomOptions && (
+            <>
+              <div className="pathfinding-search">
+                <SearchSelect
+                  title="Enter start room"
+                  data={roomOptions}
+                  onSelect={handleStartClick}
+                  value={defaultStartNodes[0].replace("_door", "")}
+                />
+              </div>
+              <div className="pathfinding-search">
+                <SearchSelect
+                  title="Enter destination room"
+                  data={roomOptions}
+                  onSelect={handleDestinationClick}
+                  value={destinationNode?.replace("_door", "")}
+                />
+              </div>
+            </>
+          )}
         </section>
 
         <section className="pathfinding-map-card">
           <PathfindingMap
-            nodes={graph.nodes}
-            edges={graph.edges}
+            nodes={graph.nodes ?? []}
+            edges={graph.edges ?? []}
             currentFloor={currentFloor}
             path={path}
             handleRoomClick={handleDestinationClick}

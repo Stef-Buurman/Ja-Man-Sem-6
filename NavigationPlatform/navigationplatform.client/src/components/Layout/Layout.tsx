@@ -11,6 +11,7 @@ export const Layout: React.FC = () => {
           <nav className="nav-links">
             <Link to="/">Home</Link>
             <Link to="/pathfinding">2D Map</Link>
+            <Link to="/graph-editor">Graph Editor</Link>
           </nav>
         </div>
       </header>

@@ -10,12 +10,47 @@
  * ---------------------------------------------------------------
  */
 
-export interface WeatherForecast {
-  /** @format date */
-  date: string;
+/** @format int32 */
+export enum NodeType {
+  Value0 = 0,
+  Value1 = 1,
+  Value2 = 2,
+  Value3 = 3,
+  Value4 = 4,
+  Value5 = 5,
+  Value6 = 6,
+}
+
+export interface GraphDto {
+  nodes: GraphNodeDto[] | null;
+  edges: GraphEdgeDto[] | null;
+}
+
+export interface GraphEdgeDto {
+  from: string | null;
+  to: string | null;
+  /** @format double */
+  weight?: number | null;
+}
+
+export interface GraphNodeDto {
+  id: string | null;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
   /** @format int32 */
-  temperatureC: number;
+  floor: number;
+  type: NodeType;
+  /** @format double */
+  width?: number | null;
+  /** @format double */
+  height?: number | null;
+  roomId?: string | null;
+  label?: string | null;
+}
+
+export interface GetGraphParams {
   /** @format int32 */
-  temperatureF: number;
-  summary?: string | null;
+  Floor?: number;
 }

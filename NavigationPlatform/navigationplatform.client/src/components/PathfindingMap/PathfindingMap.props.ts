@@ -1,8 +1,9 @@
-import type { GraphNode, Edge, Floor } from "../../Types/types";
+import type { GraphEdgeDto, GraphNodeDto } from "../../api/data-contracts";
+import type { Floor } from "../../Types/types";
 
 export interface PathfindingMapProps {
-  nodes: GraphNode[];
-  edges: Edge[];
+  nodes: GraphNodeDto[];
+  edges: GraphEdgeDto[];
   currentFloor: number;
   path?: string[];
   handleRoomClick?: (roomId: string) => void;

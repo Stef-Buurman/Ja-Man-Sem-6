@@ -110,7 +110,7 @@ const ToastManager = forwardRef<ToastManagerHandle>((_, ref) => {
     options?: ToastOptions,
     response?: Response,
     buttons: ToastButtonConfig[] = [],
-    autoClose = 500,
+    autoClose = 1500,
   ) => {
     showToast(type, message, title, position, options, response, buttons, autoClose);
   };
