@@ -16,6 +16,9 @@ const POLL_TIMEOUT = 20000;
 
 async function main() {
   try {
+    console.info("Starting dependent services...");
+    runCommand("docker compose up postgres --build -d");
+
     const outputDir = path.dirname(OUTPUT_FILE);
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
@@ -37,6 +40,7 @@ async function main() {
     console.info(`swagger.json saved to ${OUTPUT_FILE}`);
 
     console.info("Stopping API...");
+    safeRun("docker compose stop");
     safeRun("taskkill /IM dotnet.exe /F");
 
     console.info("Done!");
