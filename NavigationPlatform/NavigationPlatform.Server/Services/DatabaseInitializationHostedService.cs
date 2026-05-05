@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NavigationPlatform.Server.DB;
 
 namespace NavigationPlatform.Server.Services
@@ -18,9 +19,13 @@ namespace NavigationPlatform.Server.Services
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _scopeFactory.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<NavigationPlatformContext>();
 
             try
             {
+                if (!await context.Database.CanConnectAsync(cancellationToken))
+                    throw new Exception("Cannot connect to database!");
+                await context.Database.MigrateAsync(cancellationToken);
                 var graphImportService = scope.ServiceProvider.GetRequiredService<GraphImportService>();
                 await graphImportService.ImportGraphFromFileAsync("Data/Verdieping3.json");
             }
