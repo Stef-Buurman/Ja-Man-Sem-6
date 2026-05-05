@@ -25,6 +25,7 @@ namespace NavigationPlatform.Server.Services
             {
                 if (!await context.Database.CanConnectAsync(cancellationToken))
                     throw new Exception("Cannot connect to database!");
+
                 await context.Database.MigrateAsync(cancellationToken);
                 var graphImportService = scope.ServiceProvider.GetRequiredService<GraphImportService>();
                 await graphImportService.ImportGraphFromFileAsync("Data/Verdieping3.json");
