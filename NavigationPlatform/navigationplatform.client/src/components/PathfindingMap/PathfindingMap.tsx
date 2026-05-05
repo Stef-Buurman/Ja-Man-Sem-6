@@ -16,6 +16,50 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
+  const [heading, setHeading] = useState<number | null>(null);
+  const [compassEnabled, setCompassEnabled] = useState(false);
+
+  const startCompass = async () => {
+    if (!("DeviceOrientationEvent" in window)) {
+      alert("Compass is not supported on this device.");
+      return;
+    }
+
+    const DeviceOrientation = DeviceOrientationEvent as any;
+
+    if (typeof DeviceOrientation.requestPermission === "function") {
+      const permission = await DeviceOrientation.requestPermission();
+      if (permission !== "granted") return;
+    }
+
+    setCompassEnabled(true);
+  };
+
+  useEffect(() => {
+    if (!compassEnabled) return;
+
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      const safariHeading = (event as any).webkitCompassHeading;
+
+      let newHeading: number | null = null;
+
+      if (typeof safariHeading === "number") {
+        newHeading = safariHeading;
+      } else if (typeof event.alpha === "number") {
+        newHeading = 360 - event.alpha;
+      }
+
+      if (newHeading !== null) {
+        setHeading(Math.round(newHeading));
+      }
+    };
+
+    window.addEventListener("deviceorientation", handleOrientation, true);
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleOrientation, true);
+    };
+  }, [compassEnabled]);
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -165,6 +209,21 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
         📋 Copy doors JSON
       </button>
+      <button className="map-view-v4__compass-button" onClick={startCompass}>
+        Enable compass
+      </button>
+
+      <div className="map-view-v4__compass">
+        <div
+          className="map-view-v4__compass-arrow"
+          style={{
+            transform: `rotate(${heading ?? 0}deg)`,
+          }}
+        >
+          ▲
+        </div>
+        <span>{heading !== null ? `${heading}°` : "Compass off"}</span>
+      </div>
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
