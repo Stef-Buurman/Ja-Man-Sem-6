@@ -24,6 +24,10 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   });
   const MAP_NORTH_OFFSET = -25;
 
+  useEffect(() => {
+    startCompass();
+  }, []);
+
   const startCompass = async () => {
     if (!("DeviceOrientationEvent" in window)) {
       alert("Compass is not supported on this device.");
@@ -39,35 +43,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
     setCompassEnabled(true);
   };
-
-  const [gpsPosition, setGpsPosition] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-
-  useEffect(() => {
-    if (!navigator.geolocation) return;
-
-    const watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        setGpsPosition({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        console.log("GPS position updated:", position);
-      },
-      (error) => {
-        console.error(error);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 1000,
-        timeout: 10000,
-      },
-    );
-
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
 
   useEffect(() => {
     if (!compassEnabled) return;
