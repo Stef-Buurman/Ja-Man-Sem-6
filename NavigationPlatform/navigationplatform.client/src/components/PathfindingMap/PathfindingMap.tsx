@@ -18,6 +18,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const [viewBox, setViewBox] = useState<string | null>(null);
   const [heading, setHeading] = useState<number | null>(null);
   const [compassEnabled, setCompassEnabled] = useState(false);
+  const [userPosition, setUserPosition] = useState<{ x: number; y: number } | null>({
+    x: 400,
+    y: 700,
+  });
+  const MAP_NORTH_OFFSET = -25;
 
   const startCompass = async () => {
     if (!("DeviceOrientationEvent" in window)) {
@@ -34,6 +39,35 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
     setCompassEnabled(true);
   };
+
+  const [gpsPosition, setGpsPosition] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        setGpsPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        console.log("GPS position updated:", position);
+      },
+      (error) => {
+        console.error(error);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+        timeout: 10000,
+      },
+    );
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, []);
 
   useEffect(() => {
     if (!compassEnabled) return;
@@ -253,6 +287,16 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
             return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
           })} */}
+          {userPosition && (
+            <g transform={`translate(${userPosition.x}, ${userPosition.y})`} style={{ pointerEvents: "none" }}>
+              <g transform={`rotate(${(heading ?? 0) + MAP_NORTH_OFFSET})`}>
+                <polygon points="0,-35 14,10 0,3 -14,10" fill="#2563eb" stroke="white" strokeWidth={3} />
+              </g>
+
+              <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
+            </g>
+          )}
+
           {path && (
             <path
               d={(() => {
