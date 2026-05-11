@@ -19,5 +19,10 @@ jobs:
       - name: Test SSH Connection
         run: ssh $SSH_USER@$SSH_IP "echo Connection Successful"
 
+      - name: Install SSH Client
+        run: 
+          cd /NavigationPlatform
+          git reset --hard HEAD
+
       - name: Set up virtual environment
         run: ssh $SSH_KEY $SSH_USER@$SSH_IP $REMOTE_SCRIPT_PATH
