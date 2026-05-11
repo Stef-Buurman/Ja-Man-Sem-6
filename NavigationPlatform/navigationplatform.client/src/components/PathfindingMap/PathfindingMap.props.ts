@@ -8,4 +8,12 @@ export interface PathfindingMapProps {
   path?: string[];
   handleRoomClick?: (roomId: string) => void;
   floors?: Floor[];
+  currentPosition?: {
+    x: number;
+    y: number;
+    altitude?: number;
+    accuracy?: number;
+    latitude?: number;
+    longitude?: number;
+  };
 }
