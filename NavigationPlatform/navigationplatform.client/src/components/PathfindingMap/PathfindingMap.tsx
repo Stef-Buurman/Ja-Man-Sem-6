@@ -66,7 +66,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     x: 400,
     y: 700,
   });
-  const MAP_NORTH_OFFSET = -25;
+  const MAP_NORTH_OFFSET = -99.5;
 
   useEffect(() => {
     startCompass();
