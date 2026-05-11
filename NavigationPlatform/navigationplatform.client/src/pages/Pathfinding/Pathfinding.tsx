@@ -228,6 +228,8 @@ export const Pathfinding: React.FC = () => {
   const handleStartClick = (roomId: string) => {
     const updatedStartNodes = [roomId];
     setStartNodes(updatedStartNodes);
+    var node = graph.nodes?.find((n) => n.id === roomId || n.id === roomId + "_door") as GraphNodeDto;
+    if (node) setUserPosition({ x: node.x ?? 0, y: node.y ?? 0 });
     var settings = { accessibleRoute: isAccessibleRoute };
     if (destinationNode) {
       var result = findPathAStarMultiStart(
@@ -272,7 +274,7 @@ export const Pathfinding: React.FC = () => {
     if (floor === undefined && x === undefined && y === undefined) {
       requestLocation();
     }
-    else{
+    else {
       setUserPosition(startingPosition);
     }
   }, []);
