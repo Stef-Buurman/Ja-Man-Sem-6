@@ -19,8 +19,8 @@ jobs:
       - name: Test SSH Connection
         run: ssh $SSH_USER@$SSH_IP "echo Connection Successful"
 
-      - name: Install SSH Client
-        run: 
+      - name: Reset repository
+        run: |
           cd /NavigationPlatform
           git reset --hard HEAD
 
