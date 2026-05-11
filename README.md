@@ -46,8 +46,6 @@ The project is considered **Done** when all requirements below have been fully c
 
 ## Security Requirements
 
-* The application follows **OWASP security guidelines**.
-* Sensitive data is securely stored and protected.
 * Input validation is implemented on both frontend and backend.
 * Protection against common vulnerabilities is included, such as:
 
