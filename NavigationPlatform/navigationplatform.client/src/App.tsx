@@ -10,6 +10,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<div>Home</div>} />
         <Route path="/pathfinding" element={<Pathfinding />} />
+        <Route path="/pathfinding/:floor/:x/:y" element={<Pathfinding />} />
         <Route path="/graph-editor" element={<GraphEditorPage />} />
       </Route>
     </Routes>

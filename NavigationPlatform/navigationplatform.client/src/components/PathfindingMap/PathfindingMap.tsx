@@ -11,167 +11,13 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   path,
   handleRoomClick = () => { },
   floors,
+  currentPosition,
 }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
   const [heading, setHeading] = useState<number | null>(null);
   const [compassEnabled, setCompassEnabled] = useState(false);
-  const [gpsCoordinates, setGpsCoordinates] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
-  const [altitude, setAltitude] = useState<number | null>(null);
-  const [accuracy, setAccuracy] = useState<number | null>(null);
-
-  const points: {
-    x: number;
-    y: number;
-    latitude: number;
-    longitude: number;
-  }[] = [{
-    x: 251.53619384765625,
-    y: 1224.0107421875,
-    latitude: 51.91715719790956,
-    longitude: 4.483883238035342,
-  },
-  {
-    x: 18.018529891967773,
-    y: 199.71731567382812,
-    latitude: 51.91752948335425,
-    longitude: 4.483673268444348,
-  }, {
-    x: 532.81884765625,
-    y: 112.14818572998047,
-    latitude: 51.91759879937042,
-    longitude: 4.483997858981437,
-  }, {
-    x: 673.4601440429688,
-    y: 738.4000854492188,
-    latitude: 51.91735398999769,
-    longitude: 4.484133105081396,
-  }, {
-    x: 2289.508544921875,
-    y: 523.4577026367188,
-    latitude: 51.91749814898966,
-    longitude: 4.484866138799322,
-  }, {
-    x: 2374.424072265625,
-    y: 902.9238891601562,
-    latitude: 51.91736715461671,
-    longitude: 4.484931395104481,
-  }];
-  type CalibrationPoint = {
-    x: number;
-    y: number;
-    latitude: number;
-    longitude: number;
-  };
-
-  function distanceGps(
-    lat1: number,
-    lng1: number,
-    lat2: number,
-    lng2: number,
-  ) {
-    return Math.sqrt(
-      Math.pow(lat1 - lat2, 2) +
-      Math.pow(lng1 - lng2, 2),
-    );
-  }
-
-  function gpsToMapPosition(
-    latitude: number,
-    longitude: number,
-    points: CalibrationPoint[],
-  ): { x: number; y: number } {
-    const nearest = [...points]
-      .map((p) => ({
-        ...p,
-        distance: distanceGps(latitude, longitude, p.latitude, p.longitude),
-      }))
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, 3);
-
-    let totalWeight = 0;
-    let resultX = 0;
-    let resultY = 0;
-
-    for (const point of nearest) {
-      const weight = 1 / Math.pow(
-        Math.max(point.distance, 0.000000001),
-        2,
-      );
-
-      resultX += point.x * weight;
-      resultY += point.y * weight;
-      totalWeight += weight;
-    }
-
-    const calculated = {
-      x: resultX / totalWeight,
-      y: resultY / totalWeight,
-    };
-
-    return {
-      x: calculated.x + 265,
-      y: calculated.y - 60,
-    };
-  }
-  const requestLocation = () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by this browser.");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        setGpsCoordinates({
-          latitude,
-          longitude,
-        });
-
-        setAltitude(position.coords.altitude);
-        setAccuracy(position.coords.accuracy);
-
-        const calculatedPosition = gpsToMapPosition(
-          position.coords.latitude,
-          position.coords.longitude,
-          points,
-        );
-
-        setUserPosition(calculatedPosition);
-
-        console.log("Calculated position:", calculatedPosition);
-      },
-      (error) => {
-        console.error(error);
-
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            alert("Location permission denied.");
-            break;
-          case error.POSITION_UNAVAILABLE:
-            alert("Location unavailable.");
-            break;
-          case error.TIMEOUT:
-            alert("Location request timed out.");
-            break;
-        }
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-      },
-    );
-  };
-  const [userPosition, setUserPosition] = useState<{ x: number; y: number } | null>({
-    x: 400,
-    y: 700,
-  });
   const MAP_NORTH_OFFSET = -9.5;
 
   useEffect(() => {
@@ -393,24 +239,21 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       <button className="map-view-v4__compass-button" onClick={startCompass}>
         Enable compass
       </button>
-      <button onClick={requestLocation}>
-        Get location
-      </button>
-      {gpsCoordinates && (
+      {currentPosition && (
         <div>
-          Lat: {gpsCoordinates.latitude}
+          Lat: {currentPosition.latitude}
           <br />
-          Lng: {gpsCoordinates.longitude}
+          Lng: {currentPosition.longitude}
         </div>
       )}
-      {altitude !== null && (
+      {currentPosition !== undefined && currentPosition.altitude !== undefined && (
         <div>
-          Altitude: {altitude} meters
+          Altitude: {currentPosition.altitude} meters
         </div>
       )}
-      {accuracy !== null && (
+      {currentPosition !== undefined && currentPosition.accuracy !== undefined && (
         <div>
-          Accuracy: {accuracy} meters
+          Accuracy: {currentPosition.accuracy} meters
         </div>
       )}
 
@@ -454,8 +297,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
             return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
           })} */}
-          {userPosition && (
-            <g transform={`translate(${userPosition.x}, ${userPosition.y})`} style={{ pointerEvents: "none" }}>
+          {currentPosition && (
+            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
               <g transform={`rotate(${(heading ?? 0) + MAP_NORTH_OFFSET})`}>
                 <polygon points="0,-35 14,10 0,3 -14,10" fill="#2563eb" stroke="white" strokeWidth={3} />
               </g>
@@ -476,13 +319,17 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
                 if (points.length === 0) return "";
 
-                let d = `M ${points[0].x},${points[0].y}`;
+                const pathPoints = currentPosition
+                  ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
+                  : points;
 
-                for (let i = 0; i < points.length - 1; i++) {
-                  const p0 = points[i - 1] || points[i];
-                  const p1 = points[i];
-                  const p2 = points[i + 1];
-                  const p3 = points[i + 2] || p2;
+                let d = `M ${pathPoints[0].x},${pathPoints[0].y}`;
+
+                for (let i = 0; i < pathPoints.length - 1; i++) {
+                  const p0 = pathPoints[i - 1] || pathPoints[i];
+                  const p1 = pathPoints[i];
+                  const p2 = pathPoints[i + 1];
+                  const p3 = pathPoints[i + 2] || p2;
 
                   const cp1x = p1.x + (p2.x - p0.x) / 6;
                   const cp1y = p1.y + (p2.y - p0.y) / 6;
