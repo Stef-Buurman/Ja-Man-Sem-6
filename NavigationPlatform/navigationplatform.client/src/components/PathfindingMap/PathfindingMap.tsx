@@ -21,7 +21,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const [gpsCoordinates, setGpsCoordinates] = useState<{
     latitude: number;
     longitude: number;
-    altitude?: number;
   } | null>(null);
 
   const requestLocation = () => {
@@ -35,7 +34,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         setGpsCoordinates({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          altitude: position.coords.altitude ?? undefined,
         });
         console.log(position)
         console.log("Latitude:", position.coords.latitude);
@@ -66,7 +64,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     x: 400,
     y: 700,
   });
-  const MAP_NORTH_OFFSET = 65;
+  const MAP_NORTH_OFFSET = -25;
 
   useEffect(() => {
     startCompass();
@@ -273,8 +271,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
           Lat: {gpsCoordinates.latitude}
           <br />
           Lng: {gpsCoordinates.longitude}
-          <br />
-          altitude: {gpsCoordinates.altitude}
         </div>
       )}
 
