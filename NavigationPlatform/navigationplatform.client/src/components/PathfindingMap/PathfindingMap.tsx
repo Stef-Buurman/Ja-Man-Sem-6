@@ -264,7 +264,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         Enable compass
       </button>
       <button onClick={requestLocation}>
-        Get my location
+        Get location
       </button>
       {gpsCoordinates && (
         <div>
