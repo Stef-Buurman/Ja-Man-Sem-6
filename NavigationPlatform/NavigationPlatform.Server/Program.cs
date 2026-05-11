@@ -4,27 +4,19 @@ using NavigationPlatform.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-
-builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.None);
-builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
-
 // Add services to the container.
+
 builder.Services.AddControllers();
-
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.TagActionsBy(api =>
         new[] { api.GroupName ?? api.ActionDescriptor.RouteValues["controller"] }
     );
-
     options.CustomOperationIds(apiDesc =>
         apiDesc.ActionDescriptor.RouteValues["action"]
     );
-
     options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
 });
 
@@ -44,6 +36,7 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
