@@ -10,7 +10,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
 }) => {
   const svgElement = useRef<SVGSVGElement>(null);
@@ -18,6 +18,48 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const [viewBox, setViewBox] = useState<string | null>(null);
   const [heading, setHeading] = useState<number | null>(null);
   const [compassEnabled, setCompassEnabled] = useState(false);
+  const [gpsCoordinates, setGpsCoordinates] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setGpsCoordinates({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        console.log(position)
+        console.log("Latitude:", position.coords.latitude);
+        console.log("Longitude:", position.coords.longitude);
+      },
+      (error) => {
+        console.error(error);
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            alert("Location permission denied.");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert("Location unavailable.");
+            break;
+          case error.TIMEOUT:
+            alert("Location request timed out.");
+            break;
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+      },
+    );
+  };
   const [userPosition, setUserPosition] = useState<{ x: number; y: number } | null>({
     x: 400,
     y: 700,
@@ -221,6 +263,16 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       <button className="map-view-v4__compass-button" onClick={startCompass}>
         Enable compass
       </button>
+      <button onClick={requestLocation}>
+        Get my location
+      </button>
+      {gpsCoordinates && (
+        <div>
+          Lat: {gpsCoordinates.latitude}
+          <br />
+          Lng: {gpsCoordinates.longitude}
+        </div>
+      )}
 
       <div className="map-view-v4__compass">
         <div
@@ -278,9 +330,9 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                 const points = path
                   .map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor))
                   .filter(Boolean) as {
-                  x: number;
-                  y: number;
-                }[];
+                    x: number;
+                    y: number;
+                  }[];
 
                 if (points.length === 0) return "";
 
