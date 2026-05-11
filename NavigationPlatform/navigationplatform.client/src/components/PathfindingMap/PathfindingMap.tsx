@@ -24,6 +24,100 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   } | null>(null);
   const [altitude, setAltitude] = useState<number | null>(null);
 
+  const points: {
+    x: number;
+    y: number;
+    latitude: number;
+    longitude: number;
+  }[] = [{
+    x: 251.53619384765625,
+    y: 1224.0107421875,
+    latitude: 51.91715719790956,
+    longitude: 4.483883238035342,
+  },
+  {
+    x: 18.018529891967773,
+    y: 199.71731567382812,
+    latitude: 51.91752948335425,
+    longitude: 4.483673268444348,
+  }, {
+    x: 532.81884765625,
+    y: 112.14818572998047,
+    latitude: 51.91759879937042,
+    longitude: 4.483997858981437,
+  }, {
+    x: 673.4601440429688,
+    y: 738.4000854492188,
+    latitude: 51.91735398999769,
+    longitude: 4.484133105081396,
+  }, {
+    x: 2289.508544921875,
+    y: 523.4577026367188,
+    latitude: 51.91749814898966,
+    longitude: 4.484866138799322,
+  }, {
+    x: 2374.424072265625,
+    y: 902.9238891601562,
+    latitude: 51.91736715461671,
+    longitude: 4.484931395104481,
+  }];
+  type CalibrationPoint = {
+    x: number;
+    y: number;
+    latitude: number;
+    longitude: number;
+  };
+
+  function distanceGps(
+    lat1: number,
+    lng1: number,
+    lat2: number,
+    lng2: number,
+  ) {
+    return Math.sqrt(
+      Math.pow(lat1 - lat2, 2) +
+      Math.pow(lng1 - lng2, 2),
+    );
+  }
+
+  function gpsToMapPosition(
+    latitude: number,
+    longitude: number,
+    points: CalibrationPoint[],
+  ): { x: number; y: number } {
+    const nearest = [...points]
+      .map((p) => ({
+        ...p,
+        distance: distanceGps(latitude, longitude, p.latitude, p.longitude),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 3);
+
+    let totalWeight = 0;
+    let resultX = 0;
+    let resultY = 0;
+
+    for (const point of nearest) {
+      const weight = 1 / Math.pow(
+        Math.max(point.distance, 0.000000001),
+        2,
+      );
+
+      resultX += point.x * weight;
+      resultY += point.y * weight;
+      totalWeight += weight;
+    }
+
+    const calculated = {
+      x: resultX / totalWeight,
+      y: resultY / totalWeight,
+    };
+
+    return {
+      x: calculated.x + 265,
+      y: calculated.y - 60,
+    };
+  }
   const requestLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by this browser.");
@@ -32,14 +126,25 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
         setGpsCoordinates({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude,
+          longitude,
         });
+
         setAltitude(position.coords.altitude);
-        console.log(position)
-        console.log("Latitude:", position.coords.latitude);
-        console.log("Longitude:", position.coords.longitude);
+
+        const calculatedPosition = gpsToMapPosition(
+          position.coords.latitude,
+          position.coords.longitude,
+          points,
+        );
+
+        setUserPosition(calculatedPosition);
+
+        console.log("Calculated position:", calculatedPosition);
       },
       (error) => {
         console.error(error);
@@ -245,10 +350,32 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
 
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (!svgElement.current) return;
+
+    const svg = svgElement.current;
+
+    // Create SVG point
+    const point = svg.createSVGPoint();
+
+    point.x = e.clientX;
+    point.y = e.clientY;
+
+    // Convert screen coords -> SVG coords
+    const svgPoint = point.matrixTransform(
+      svg.getScreenCTM()?.inverse(),
+    );
+
+    console.log("SVG X:", svgPoint.x);
+    console.log("SVG Y:", svgPoint.y);
+
     const target = e.target as Element;
-    const roomGroup = target.closest("g[id^='H.'], g[id^='WN.'], g[id^='WD.']");
+
+    const roomGroup = target.closest(
+      "g[id^='H.'], g[id^='WN.'], g[id^='WD.']",
+    );
+
     if (roomGroup?.id) {
-      const cleanId = roomGroup.id.replace(/-\d+$/, "");
+      const cleanId = roomGroup.id.replace(/-\\d+$/, "");
       handleRoomClick(cleanId);
     }
   };
