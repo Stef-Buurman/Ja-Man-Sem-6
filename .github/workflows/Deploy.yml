@@ -23,7 +23,8 @@ jobs:
         run: |
           cd /Ja-Man-Sem-6-Repo
           ls
-          cd Ja-Man-Sem-6-Repo
+          cd Ja-Man-Sem-6
+          ls
           git reset --hard HEAD
           cd ..
 
