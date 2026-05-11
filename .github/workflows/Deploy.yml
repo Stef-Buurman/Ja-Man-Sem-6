@@ -22,6 +22,8 @@ jobs:
       - name: Reset repository
         run: |
           cd /Ja-Man-Sem-6-Repo
+          ls
+          cd Ja-Man-Sem-6-Repo
           git reset --hard HEAD
           cd ..
 
