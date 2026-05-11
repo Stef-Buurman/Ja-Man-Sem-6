@@ -4,7 +4,6 @@ import type { PathfindingMapProps } from "./PathfindingMap.props";
 import type { GraphNodeDto } from "../../api/data-contracts";
 import type { NodeType } from "../../Types/nodeType";
 import { GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
-// import type { GraphNode, NodeType } from "../../Types/types";
 
 export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
@@ -171,7 +170,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     x: 400,
     y: 700,
   });
-  const MAP_NORTH_OFFSET = -99.5;
+  const MAP_NORTH_OFFSET = -9.5;
 
   useEffect(() => {
     startCompass();
