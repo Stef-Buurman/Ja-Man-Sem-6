@@ -21,9 +21,9 @@ jobs:
 
       - name: Reset repository
         run: |
-          cd /
-          ls
+          cd /Ja-Man-Sem-6-Repo
           git reset --hard HEAD
+          cd ..
 
       - name: Set up virtual environment
         run: ssh $SSH_KEY $SSH_USER@$SSH_IP $REMOTE_SCRIPT_PATH
