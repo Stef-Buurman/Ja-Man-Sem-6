@@ -1,4 +1,4 @@
-import type { GraphEdgeDto, GraphNodeDto } from "../../api/data-contracts";
+import type { GraphEdgeDto, GraphNodeDto, HeatpointArea } from "../../api/data-contracts";
 import type { Floor } from "../../Types/types";
 
 export interface PathfindingMapProps {
@@ -16,4 +16,5 @@ export interface PathfindingMapProps {
     latitude?: number;
     longitude?: number;
   };
+  areas?: HeatpointArea[];
 }

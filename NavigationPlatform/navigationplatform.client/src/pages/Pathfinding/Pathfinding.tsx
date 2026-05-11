@@ -6,9 +6,11 @@ import SearchSelect from "../../components/SearchSelect/SearchSelect";
 import type { PathfindingSettings } from "../../Types/types";
 import { defaultStartNodes, floors } from "../../utils/Globals";
 import { findPathAStarMultiStart } from "../../services/pathfinding";
-import type { GraphDto, GraphNodeDto } from "../../api/data-contracts";
+import type { GraphDto, GraphNodeDto, HeatpointArea } from "../../api/data-contracts";
 import { getGraph } from "../../api/methods/Graph.api";
 import { useParams } from "react-router-dom";
+import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
+import * as signalR from "@microsoft/signalr";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -35,45 +37,51 @@ export const Pathfinding: React.FC = () => {
 
   const nodeAvailable = (nodeId: string) => {
     return roomOptions?.some((node) => node === nodeId);
-  }
+  };
 
   const points: {
     x: number;
     y: number;
     latitude: number;
     longitude: number;
-  }[] = [{
-    x: 251.53619384765625,
-    y: 1224.0107421875,
-    latitude: 51.91715719790956,
-    longitude: 4.483883238035342,
-  },
-  {
-    x: 18.018529891967773,
-    y: 199.71731567382812,
-    latitude: 51.91752948335425,
-    longitude: 4.483673268444348,
-  }, {
-    x: 532.81884765625,
-    y: 112.14818572998047,
-    latitude: 51.91759879937042,
-    longitude: 4.483997858981437,
-  }, {
-    x: 673.4601440429688,
-    y: 738.4000854492188,
-    latitude: 51.91735398999769,
-    longitude: 4.484133105081396,
-  }, {
-    x: 2289.508544921875,
-    y: 523.4577026367188,
-    latitude: 51.91749814898966,
-    longitude: 4.484866138799322,
-  }, {
-    x: 2374.424072265625,
-    y: 902.9238891601562,
-    latitude: 51.91736715461671,
-    longitude: 4.484931395104481,
-  }];
+  }[] = [
+    {
+      x: 251.53619384765625,
+      y: 1224.0107421875,
+      latitude: 51.91715719790956,
+      longitude: 4.483883238035342,
+    },
+    {
+      x: 18.018529891967773,
+      y: 199.71731567382812,
+      latitude: 51.91752948335425,
+      longitude: 4.483673268444348,
+    },
+    {
+      x: 532.81884765625,
+      y: 112.14818572998047,
+      latitude: 51.91759879937042,
+      longitude: 4.483997858981437,
+    },
+    {
+      x: 673.4601440429688,
+      y: 738.4000854492188,
+      latitude: 51.91735398999769,
+      longitude: 4.484133105081396,
+    },
+    {
+      x: 2289.508544921875,
+      y: 523.4577026367188,
+      latitude: 51.91749814898966,
+      longitude: 4.484866138799322,
+    },
+    {
+      x: 2374.424072265625,
+      y: 902.9238891601562,
+      latitude: 51.91736715461671,
+      longitude: 4.484931395104481,
+    },
+  ];
   type CalibrationPoint = {
     x: number;
     y: number;
@@ -81,23 +89,11 @@ export const Pathfinding: React.FC = () => {
     longitude: number;
   };
 
-  function distanceGps(
-    lat1: number,
-    lng1: number,
-    lat2: number,
-    lng2: number,
-  ) {
-    return Math.sqrt(
-      Math.pow(lat1 - lat2, 2) +
-      Math.pow(lng1 - lng2, 2),
-    );
+  function distanceGps(lat1: number, lng1: number, lat2: number, lng2: number) {
+    return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lng1 - lng2, 2));
   }
 
-  function gpsToMapPosition(
-    latitude: number,
-    longitude: number,
-    points: CalibrationPoint[],
-  ): { x: number; y: number } {
+  function gpsToMapPosition(latitude: number, longitude: number, points: CalibrationPoint[]): { x: number; y: number } {
     const nearest = [...points]
       .map((p) => ({
         ...p,
@@ -111,10 +107,7 @@ export const Pathfinding: React.FC = () => {
     let resultY = 0;
 
     for (const point of nearest) {
-      const weight = 1 / Math.pow(
-        Math.max(point.distance, 0.000000001),
-        2,
-      );
+      const weight = 1 / Math.pow(Math.max(point.distance, 0.000000001), 2);
 
       resultX += point.x * weight;
       resultY += point.y * weight;
@@ -146,11 +139,7 @@ export const Pathfinding: React.FC = () => {
         setAltitude(position.coords.altitude);
         setAccuracy(position.coords.accuracy);
 
-        const calculatedPosition = gpsToMapPosition(
-          latitude,
-          longitude,
-          points,
-        );
+        const calculatedPosition = gpsToMapPosition(latitude, longitude, points);
 
         setUserPosition(calculatedPosition);
 
@@ -212,7 +201,10 @@ export const Pathfinding: React.FC = () => {
             .filter((node) => node.x != null && node.y != null && !node.id?.includes("_door"))
             .reduce((best, node) => {
               const bestDistance = Math.hypot((best.x ?? 0) - startingPosition.x, (best.y ?? 0) - startingPosition.y);
-              const currentDistance = Math.hypot((node.x ?? 0) - startingPosition.x, (node.y ?? 0) - startingPosition.y);
+              const currentDistance = Math.hypot(
+                (node.x ?? 0) - startingPosition.x,
+                (node.y ?? 0) - startingPosition.y,
+              );
               return currentDistance < bestDistance ? node : best;
             });
 
@@ -273,10 +265,53 @@ export const Pathfinding: React.FC = () => {
   useEffect(() => {
     if (floor === undefined && x === undefined && y === undefined) {
       requestLocation();
-    }
-    else {
+    } else {
       setUserPosition(startingPosition);
     }
+    fetchHeatmapAreas();
+  }, []);
+
+    const [areas, setAreas] = useState<HeatpointArea[]>([]);
+
+  const fetchHeatmapAreas = async () => {
+    const res = await getHeatpointAreas();
+    console.log("Fetched heatmap areas:", res);
+    if (res.ok) setAreas(res.response);
+  };
+
+  useEffect(() => {
+    let isActive = true;
+
+    const connection = new signalR.HubConnectionBuilder().withUrl("/hubs/heatmaphub").withAutomaticReconnect().build();
+
+    connection.on("ReceiveAreaUpdate", () => {
+      if (isActive) {
+        fetchHeatmapAreas();
+      }
+    });
+
+    const start = async () => {
+      try {
+        await connection.start();
+        console.log("SignalR connected");
+
+        if (isActive) {
+          await fetchHeatmapAreas();
+        }
+      } catch (err) {
+        if (isActive) {
+          console.error("Failed to start connection:", err);
+        }
+      }
+    };
+
+    void start();
+
+    return () => {
+      isActive = false;
+      connection.off("ReceiveAreaUpdate");
+      void connection.stop();
+    };
   }, []);
 
   return (
@@ -321,7 +356,11 @@ export const Pathfinding: React.FC = () => {
                   title="Enter destination room"
                   data={roomOptions}
                   onSelect={handleDestinationClick}
-                  value={destinationNode && nodeAvailable(destinationNode) ? destinationNode?.replace("_door", "") : undefined}
+                  value={
+                    destinationNode && nodeAvailable(destinationNode)
+                      ? destinationNode?.replace("_door", "")
+                      : undefined
+                  }
                 />
               </div>
             </>
@@ -344,6 +383,7 @@ export const Pathfinding: React.FC = () => {
               latitude: gpsCoordinates?.latitude ?? undefined,
               longitude: gpsCoordinates?.longitude ?? undefined,
             }}
+            areas={areas}
           />
         </section>
       </div>

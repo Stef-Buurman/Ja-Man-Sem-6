@@ -50,7 +50,39 @@ export interface GraphNodeDto {
   label?: string | null;
 }
 
+export interface HeatpointArea {
+  /** @format int32 */
+  id: number;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
+  /** @format int32 */
+  value: number;
+  /** @format int32 */
+  soundLevel: number;
+  /** @format int32 */
+  level: number;
+  /** @format int32 */
+  floor: number;
+  /** @format int32 */
+  width: number;
+  /** @format int32 */
+  height: number;
+  color: string | null;
+}
+
 export interface GetGraphParams {
   /** @format int32 */
   Floor?: number;
+}
+
+export interface UpdateHeatpointAreaParams {
+  /** @format int32 */
+  id: number;
+}
+
+export interface DeleteHeatpointAreaParams {
+  /** @format int32 */
+  id: number;
 }

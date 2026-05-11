@@ -16,7 +16,7 @@ public class GraphImportService
     public async Task<GraphDto> GetGraphAsync(int floor)
     {
         var nodes = await _context.GraphNodes
-            .Where(n => n.Floor == floor)
+            .Where(n => n.Floor.Number == floor)
             .ToListAsync();
 
         var nodeIds = nodes.Select(n => n.Id).ToHashSet();
@@ -32,7 +32,7 @@ public class GraphImportService
                 Id = n.Name,  // DB Name -> JSON id
                 X = n.X,
                 Y = n.Y,
-                Floor = n.Floor,
+                Floor = n.Floor.Number,
                 Type = n.Type,
                 Width = n.Width,
                 Height = n.Height,
@@ -106,7 +106,7 @@ public class GraphImportService
             {
                 existingNode.X = nodeDto.X;
                 existingNode.Y = nodeDto.Y;
-                existingNode.Floor = nodeDto.Floor;
+                existingNode.Floor.Number = nodeDto.Floor;
                 existingNode.Type = nodeDto.Type;
                 existingNode.Width = nodeDto.Width;
                 existingNode.Height = nodeDto.Height;
@@ -117,10 +117,10 @@ public class GraphImportService
             {
                 var newNode = new GraphNode
                 {
-                    Name = nodeDto.Id,   // JSON id -> DB Name
+                    Name = nodeDto.Id,
                     X = nodeDto.X,
                     Y = nodeDto.Y,
-                    Floor = nodeDto.Floor,
+                    Floor = new Floor { Number = nodeDto.Floor, FileName = $"Floor{nodeDto.Floor}.png" },
                     Type = nodeDto.Type,
                     Width = nodeDto.Width,
                     Height = nodeDto.Height,
@@ -224,7 +224,7 @@ public class GraphImportService
             {
                 existingNode.X = nodeDto.X;
                 existingNode.Y = nodeDto.Y;
-                existingNode.Floor = nodeDto.Floor;
+                existingNode.Floor.Number = nodeDto.Floor;
                 existingNode.Type = nodeDto.Type;
                 existingNode.Width = nodeDto.Width;
                 existingNode.Height = nodeDto.Height;
@@ -238,7 +238,7 @@ public class GraphImportService
                     Name = nodeDto.Id,
                     X = nodeDto.X,
                     Y = nodeDto.Y,
-                    Floor = nodeDto.Floor,
+                    Floor = new Floor { Number = nodeDto.Floor, FileName = $"Floor{nodeDto.Floor}.png" },
                     Type = nodeDto.Type,
                     Width = nodeDto.Width,
                     Height = nodeDto.Height,

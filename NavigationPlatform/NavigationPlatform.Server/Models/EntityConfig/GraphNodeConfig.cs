@@ -25,6 +25,11 @@ namespace NavigationPlatform.Server.Models.EntityConfig
                 .WithOne(x => x.ToNode)
                 .HasForeignKey(x => x.ToNodeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Floor)
+                .WithMany(f => f.GraphNodes)
+                .HasForeignKey(x => x.FloorId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

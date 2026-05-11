@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavigationPlatform.Server.DB;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NavigationPlatform.Server.Migrations
 {
     [DbContext(typeof(NavigationPlatformContext))]
-    partial class NavigationPlatformContextModelSnapshot : ModelSnapshot
+    [Migration("20260511164207_CreatedForeignKeysForFloor")]
+    partial class CreatedForeignKeysForFloor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NavigationPlatform.Server.DB;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NavigationPlatform.Server.Migrations
 {
     [DbContext(typeof(NavigationPlatformContext))]
-    partial class NavigationPlatformContextModelSnapshot : ModelSnapshot
+    [Migration("20260511150320_AddedHeatmapAreas")]
+    partial class AddedHeatmapAreas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,24 +24,6 @@ namespace NavigationPlatform.Server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("NavigationPlatform.Server.Models.Floor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Floors");
-                });
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.GraphEdge", b =>
                 {
@@ -70,8 +55,8 @@ namespace NavigationPlatform.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("FloorId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Floor")
+                        .HasColumnType("integer");
 
                     b.Property<double?>("Height")
                         .HasColumnType("double precision");
@@ -101,8 +86,6 @@ namespace NavigationPlatform.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FloorId");
-
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -117,8 +100,8 @@ namespace NavigationPlatform.Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("FloorId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Floor")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Height")
                         .HasColumnType("integer");
@@ -143,8 +126,6 @@ namespace NavigationPlatform.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FloorId");
-
                     b.ToTable("HeatpointAreas");
                 });
 
@@ -165,35 +146,6 @@ namespace NavigationPlatform.Server.Migrations
                     b.Navigation("FromNode");
 
                     b.Navigation("ToNode");
-                });
-
-            modelBuilder.Entity("NavigationPlatform.Server.Models.GraphNode", b =>
-                {
-                    b.HasOne("NavigationPlatform.Server.Models.Floor", "Floor")
-                        .WithMany("GraphNodes")
-                        .HasForeignKey("FloorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Floor");
-                });
-
-            modelBuilder.Entity("NavigationPlatform.Server.Models.HeatpointArea", b =>
-                {
-                    b.HasOne("NavigationPlatform.Server.Models.Floor", "Floor")
-                        .WithMany("HeatpointAreas")
-                        .HasForeignKey("FloorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Floor");
-                });
-
-            modelBuilder.Entity("NavigationPlatform.Server.Models.Floor", b =>
-                {
-                    b.Navigation("GraphNodes");
-
-                    b.Navigation("HeatpointAreas");
                 });
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.GraphNode", b =>
