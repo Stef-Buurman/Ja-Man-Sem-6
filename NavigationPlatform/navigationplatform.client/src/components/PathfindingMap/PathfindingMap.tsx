@@ -22,6 +22,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     longitude: number;
   } | null>(null);
   const [altitude, setAltitude] = useState<number | null>(null);
+  const [accuracy, setAccuracy] = useState<number | null>(null);
 
   const points: {
     x: number;
@@ -134,6 +135,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         });
 
         setAltitude(position.coords.altitude);
+        setAccuracy(position.coords.accuracy);
 
         const calculatedPosition = gpsToMapPosition(
           position.coords.latitude,
@@ -404,6 +406,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       {altitude !== null && (
         <div>
           Altitude: {altitude} meters
+        </div>
+      )}
+      {accuracy !== null && (
+        <div>
+          Accuracy: {accuracy} meters
         </div>
       )}
 
