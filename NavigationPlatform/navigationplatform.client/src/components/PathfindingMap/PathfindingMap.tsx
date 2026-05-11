@@ -22,6 +22,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     latitude: number;
     longitude: number;
   } | null>(null);
+  const [altitude, setAltitude] = useState<number | null>(null);
 
   const requestLocation = () => {
     if (!navigator.geolocation) {
@@ -35,6 +36,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
+        setAltitude(position.coords.altitude);
         console.log(position)
         console.log("Latitude:", position.coords.latitude);
         console.log("Longitude:", position.coords.longitude);
@@ -271,6 +273,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
           Lat: {gpsCoordinates.latitude}
           <br />
           Lng: {gpsCoordinates.longitude}
+        </div>
+      )}
+      {altitude !== null && (
+        <div>
+          Altitude: {altitude} meters
         </div>
       )}
 
