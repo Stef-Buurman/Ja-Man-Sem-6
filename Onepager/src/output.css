@@ -304,11 +304,17 @@
   .h-48 {
     height: calc(var(--spacing) * 48);
   }
+  .h-64 {
+    height: calc(var(--spacing) * 64);
+  }
   .h-\[40vh\] {
     height: 40vh;
   }
   .h-\[60vh\] {
     height: 60vh;
+  }
+  .h-full {
+    height: 100%;
   }
   .h-screen {
     height: 100vh;
@@ -331,6 +337,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-\[200px\] {
+    width: 200px;
+  }
   .w-full {
     width: 100%;
   }
@@ -343,8 +352,17 @@
   .max-w-6xl {
     max-width: var(--container-6xl);
   }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-2 {
+    flex: 2;
+  }
   .flex-\[1\] {
     flex: 1;
+  }
+  .flex-\[2\] {
+    flex: 2;
   }
   .flex-shrink-0 {
     flex-shrink: 0;
@@ -377,6 +395,9 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .items-center {
     align-items: center;
   }
@@ -400,6 +421,9 @@
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
+  }
+  .gap-8 {
+    gap: calc(var(--spacing) * 8);
   }
   .gap-10 {
     gap: calc(var(--spacing) * 10);
@@ -527,11 +551,17 @@
   .bg-orange-500 {
     background-color: var(--color-orange-500);
   }
+  .bg-white {
+    background-color: var(--color-white);
+  }
   .object-contain {
     object-fit: contain;
   }
   .object-cover {
     object-fit: cover;
+  }
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
@@ -714,6 +744,40 @@
   .duration-200 {
     --tw-duration: 200ms;
     transition-duration: 200ms;
+  }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
+  }
+  .hover\:scale-110 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 110%;
+        --tw-scale-y: 110%;
+        --tw-scale-z: 110%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
+  .hover\:scale-150 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 150%;
+        --tw-scale-y: 150%;
+        --tw-scale-z: 150%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
+  }
+  .hover\:scale-200 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 200%;
+        --tw-scale-y: 200%;
+        --tw-scale-z: 200%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
+      }
+    }
   }
   .hover\:scale-\[1\.02\] {
     &:hover {
@@ -1113,6 +1177,21 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
@@ -1155,6 +1234,9 @@
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-duration: initial;
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
     }
   }
 }

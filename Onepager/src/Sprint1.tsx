@@ -8,7 +8,7 @@ function Sprint1() {
     return (
         <section id="sprint1" className="overflow-visible relative">
             {/* Pact Analyse */}
-            <section className="pb-40 pt-24 bg-[#fdf1e3] justify-center h-100vh]">
+            <section className="py-24 bg-[#fdf1e3]">
                 <h1 id="sprint1" className="text-2xl mb-10 sm:text-4xl font-bold text-center">
                     SPRINT 1
                 </h1>

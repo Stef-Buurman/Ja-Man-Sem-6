@@ -12,8 +12,8 @@ import PactAnalyseCardGrid from "./components/PactAnalyseCardGrid";
 
 function Sprint2() {
     return (
-        <section id="sprint2" className="overflow-visible relative">
-            <section className="pb-40 pt-24 bg-[#fdf1e3] justify-center h-100vh]">
+        <section id="sprint2" className="">
+            <section className="py-24 bg-[#fdf1e3]">
 
                 <h1 id="sprint1" className="text-2xl sm:text-4xl font-bold text-center">
                     SPRINT 2
@@ -50,7 +50,7 @@ function Sprint2() {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-5xl mx-auto px-6 space-y-10">
+                <div className="max-w-5xl mx-auto px-6 ">
 
                     <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                         Doelgroep, behoeften & context
