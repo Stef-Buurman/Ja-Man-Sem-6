@@ -76,7 +76,14 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
   };
 
   const save = () => {
-    updateGraph(buildExportGraph());
+    updateGraph(buildExportGraph(), {
+      toastError: {
+        message: "Failed to save graph",
+      },
+      toastSuccess: {
+        message: "Graph saved successfully",
+      },
+    });
   };
 
   const exportGraph = () => {

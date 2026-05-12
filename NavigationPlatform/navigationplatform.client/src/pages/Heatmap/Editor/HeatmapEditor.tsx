@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./HeatmapEditor.css";
-import type { HeatpointArea } from "../../../api/data-contracts";
+import type { HeatpointArea, HeatpointAreaDto } from "../../../api/data-contracts";
 import {
   addHeatpointArea,
   deleteHeatpointArea,
@@ -12,7 +12,19 @@ const HeatmapEditor: React.FC = () => {
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
 
   const handleAreaUpdate = async () => {
-    await updateRangeHeatpointArea(areas, {
+    let areasMap: HeatpointAreaDto[] = areas.map((a) => ({
+      color: a.color,
+      floor: a.floor?.number || 0,
+      height: a.height,
+      id: a.id,
+      level: a.level,
+      soundLevel: a.soundLevel,
+      value: a.value,
+      width: a.width,
+      x: a.x,
+      y: a.y,
+    }))
+    await updateRangeHeatpointArea(areasMap, {
       toastSuccess: {
         title: "Areas Updated",
         message: `Heatmap areas updated successfully!`,
@@ -32,7 +44,7 @@ const HeatmapEditor: React.FC = () => {
   const clampMin0 = (value: number) => Math.max(0, value || 0);
 
   const handleAddArea = async () => {
-    const newArea: HeatpointArea = {
+    const newArea: HeatpointAreaDto = {
       id: areas.length > 0 ? Math.max(...areas.map((a) => a.id)) + 1 : 1,
       x: 0,
       y: 0,
@@ -44,13 +56,13 @@ const HeatmapEditor: React.FC = () => {
       width: 50,
       height: 50,
     };
-    await addHeatpointArea(newArea, {
+    var res = await addHeatpointArea(newArea, {
       toastSuccess: {
         title: "Area Added",
         message: `Area with ID ${newArea.id} added successfully!`,
       },
     });
-    setAreas([...areas, newArea]);
+    if (res.ok) setAreas([...areas, res.response]);
   };
 
   const handleDeleteArea = async (id: number) => {
@@ -151,11 +163,19 @@ const HeatmapEditor: React.FC = () => {
             <input
               min={0}
               type="number"
-              value={a.floor}
+              value={a.floor?.number || 0}
               onChange={(e) => {
                 const value = clampMin0(parseFloat(e.target.value));
 
-                const updated = areas.map((area) => (area.id === a.id ? { ...area, floor: value } : area));
+                const updated = areas.map((area) =>
+                  area.id === a.id
+                    ? {
+                      ...area,
+                      floor: area.floor ? { ...area.floor, number: value } : { id: "", fileName: "", number: value, graphNodes: [], heatpointAreas: [] },
+                    }
+                    : area,
+                );
+                console.log(updated);
 
                 setAreas(updated);
               }}

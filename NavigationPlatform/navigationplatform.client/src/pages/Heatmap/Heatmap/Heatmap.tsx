@@ -81,7 +81,7 @@ const Heatmap: React.FC = () => {
 
   const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
   const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
-  const areasForCurrentFloor = areas.filter((a) => a.floor === currentFloor);
+  const areasForCurrentFloor = areas.filter((a) => a.floor?.number === currentFloor);
 
   return (
     <div>

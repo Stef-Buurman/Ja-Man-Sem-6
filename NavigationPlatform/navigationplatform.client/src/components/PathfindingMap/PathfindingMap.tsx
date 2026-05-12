@@ -249,7 +249,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     return `rgba(${r}, ${g}, ${b}, 0.7)`;
   };
 
-  const areasForCurrentFloor = areas.filter((a) => a.floor === currentFloor);
+  const areasForCurrentFloor = areas.filter((a) => a.floor?.number === currentFloor);
   const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
 
   return (
@@ -257,8 +257,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
-      {areasForCurrentFloor.length}
-      {areas.length}
 
       <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
         📋 Copy doors JSON
