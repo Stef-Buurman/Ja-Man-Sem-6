@@ -26,7 +26,9 @@
     "create:api-instance": "node Scripts/JS/createApiInstance.js && npm run prettier",
     "generate:api": "node Scripts/Node/swagger.mjs && npm run generate:api-minimal && npm run stop",
     "generate:api-minimal": "npm run generate:ts-api && npm run create:api-instance",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "db-drop": "dotnet ef database drop -p NavigationPlatform.Server -s NavigationPlatform.Server --force",
+    "db-migrate": "dotnet ef database update -p NavigationPlatform.Server -s NavigationPlatform.Server"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
