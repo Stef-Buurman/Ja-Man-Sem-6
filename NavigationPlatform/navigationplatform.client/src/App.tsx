@@ -13,7 +13,6 @@ function App() {
         <Route path="/pathfinding" element={<Pathfinding />} />
         <Route path="/pathfinding/:floor/:x/:y" element={<Pathfinding />} />
         <Route path="/graph-editor" element={<GraphEditorPage />} />
-        {/* <Route path="/heatmap" element={<div>Heatmap</div>} /> */}
         <Route path="/heatmap/editor" element={<HeatmapEditor />} />
       </Route>
     </Routes>
