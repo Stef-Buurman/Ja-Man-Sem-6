@@ -1,10 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using NavigationPlatform.Server.Models.EntityConfig;
-
 namespace NavigationPlatform.Server.Models
 {
-    [EntityTypeConfiguration(typeof(HeatpointAreaConfig))]
-    public class HeatpointArea
+    public class HeatpointAreaDto
     {
         public int Id { get; set; }
         public double X { get; set; }
@@ -12,8 +8,7 @@ namespace NavigationPlatform.Server.Models
         public int Value { get; set; }
         public int SoundLevel { get; set; }
         public int Level { get; set; }
-        public Guid? FloorId { get; set; } = null!; 
-        public Floor? Floor { get; set; } = null!;
+        public int Floor { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string Color => Value switch

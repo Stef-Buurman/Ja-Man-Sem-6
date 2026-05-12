@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using NavigationPlatform.Server.DB;
-using NavigationPlatform.Server.Hubs;
 using NavigationPlatform.Server.Models;
+using NavigationPlatform.Server.Services;
 
 namespace HeatmapAPI.Controllers
 {
@@ -10,75 +8,70 @@ namespace HeatmapAPI.Controllers
     [Route("api/[controller]")]
     public class HeatmapController : ControllerBase
     {
-        private readonly NavigationPlatformContext _context;
-        private readonly IHubContext<HeatmapHub> _hubContext;
+        private readonly HeatpointAreaService _heatpointAreaService;
 
-        public HeatmapController(NavigationPlatformContext context, IHubContext<HeatmapHub> hubContext)
+        public HeatmapController(HeatpointAreaService heatpointAreaService)
         {
-            _context = context;
-            _hubContext = hubContext;
+            _heatpointAreaService = heatpointAreaService;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<HeatpointArea>> GetHeatpointAreas()
-        {
-            var data = _context.HeatpointAreas.ToList();
-            return Ok(data);
-        }
+        public ActionResult<IEnumerable<HeatpointArea>> GetHeatpointAreas() => Ok(_heatpointAreaService.GetHeatpointAreas());
 
         [HttpPost]
-        public async Task<ActionResult<HeatpointArea>> AddHeatpointArea([FromBody] HeatpointArea area)
+        public async Task<ActionResult<HeatpointArea>> AddHeatpointArea([FromBody] HeatpointAreaDto area)
         {
-            _context.HeatpointAreas.Add(area);
-            await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area updated");
-            return Ok(area);
+            try
+            {
+                await _heatpointAreaService.AddHeatpointArea(area);
+                return Ok(area);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<HeatpointArea>> UpdateHeatpointArea(int id, [FromBody] HeatpointArea area)
+        public async Task<ActionResult<HeatpointArea>> UpdateHeatpointArea(int id, [FromBody] HeatpointAreaDto area)
         {
-            if (id != area.Id || !_context.HeatpointAreas.Any(a => a.Id == id))
+            try
             {
-                return BadRequest();
+                await _heatpointAreaService.UpdateHeatpointArea(id, area);
+                return Ok(area);
             }
-
-            _context.HeatpointAreas.Update(area);
-            await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area updated");
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult<IEnumerable<HeatpointArea>>> UpdateRangeHeatpointArea([FromBody] List<HeatpointArea> area)
+        public async Task<ActionResult<IEnumerable<HeatpointArea>>> UpdateRangeHeatpointArea([FromBody] List<HeatpointAreaDto> area)
         {
-            foreach (var a in area)
+            try
             {
-                if (!_context.HeatpointAreas.Any(existing => existing.Id == a.Id))
-                {
-                    return BadRequest($"Area with ID {a.Id} does not exist.");
-                }
+                await _heatpointAreaService.UpdateRangeHeatpointArea(area);
+                return Ok(area);
             }
-
-            _context.HeatpointAreas.UpdateRange(area);
-            await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint areas updated");
-            return Ok(area);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHeatpointArea(int id)
         {
-            var area = await _context.HeatpointAreas.FindAsync(id);
-            if (area == null)
+            try
             {
-                return BadRequest($"Area with ID {id} does not exist.");
+                await _heatpointAreaService.DeleteHeatpointArea(id);
+                return Ok($"Heatpoint area with ID {id} deleted successfully.");
             }
-
-            _context.HeatpointAreas.Remove(area);
-            await _context.SaveChangesAsync();
-            await _hubContext.Clients.All.SendAsync("ReceiveAreaUpdate", "Heatpoint area deleted");
-            return Ok();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

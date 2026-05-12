@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using NavigationPlatform.Server.Models;
+using NavigationPlatform.Server.Services;
 
 namespace NavigationPlatform.Server.Controllers
 {

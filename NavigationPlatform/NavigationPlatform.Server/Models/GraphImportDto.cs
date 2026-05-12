@@ -25,3 +25,10 @@ public class GraphEdgeDto
     public string To { get; set; } = null!;
     public double? Weight { get; set; }
 }
+
+public class FloorDto
+{
+    public int Number { get; set; }
+    public string FileName { get; set; } = null!;
+    public string DataFileName { get; set; } = null!;
+}   

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using NavigationPlatform.Server.DB;
@@ -22,11 +23,18 @@ builder.Services.AddSwaggerGen(options =>
     options.SchemaFilter<RequireAllPropertiesSchemaFilter>();
 });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 builder.Services.AddScoped<GraphImportService>();
+builder.Services.AddScoped<HeatpointAreaService>();
 
 var connectionString = builder.Configuration.GetConnectionString("Postgres");
 
-builder.Services.AddDbContextFactory<NavigationPlatformContext>(options =>
+builder.Services.AddDbContext<NavigationPlatformContext>(options =>
 {
     options.UseNpgsql(connectionString);
 });
