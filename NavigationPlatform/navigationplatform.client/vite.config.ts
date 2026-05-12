@@ -51,6 +51,14 @@ export default defineConfig({
         target: "http://localhost:5294",
         secure: false,
       },
+      "^/hubs": {
+        target: "http://localhost:5294",
+        secure: false,
+      },
+      "^/floors": {
+        target: "http://localhost:5294",
+        secure: false,
+      },
     },
     port: parseInt(env.DEV_SERVER_PORT || "59957"),
     https: {

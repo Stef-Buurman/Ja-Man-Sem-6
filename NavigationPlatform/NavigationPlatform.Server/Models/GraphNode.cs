@@ -11,7 +11,8 @@ namespace NavigationPlatform.Server.Models
         public string Name { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public int Floor { get; set; }
+        public Guid FloorId { get; set; }
+        public Floor Floor { get; set; } = null!;
         public NodeType Type { get; set; }
         public double? Width { get; set; }
         public double? Height { get; set; }

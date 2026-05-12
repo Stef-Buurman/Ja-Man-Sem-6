@@ -19,11 +19,5 @@ jobs:
       - name: Test SSH Connection
         run: ssh $SSH_USER@$SSH_IP "echo Connection Successful"
 
-      - name: Reset repository
-        run: |
-          cd /Ja-Man-Sem-6-Repo/Ja-Man-Sem-6
-          git reset --hard HEAD
-          cd ..
-
       - name: Set up virtual environment
         run: ssh $SSH_KEY $SSH_USER@$SSH_IP $REMOTE_SCRIPT_PATH

@@ -17,10 +17,28 @@ namespace NavigationPlatform.Server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.6")
+                .HasAnnotation("ProductVersion", "10.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("NavigationPlatform.Server.Models.Floor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Floors");
+                });
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.GraphEdge", b =>
                 {
@@ -52,8 +70,8 @@ namespace NavigationPlatform.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Floor")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("FloorId")
+                        .HasColumnType("uuid");
 
                     b.Property<double?>("Height")
                         .HasColumnType("double precision");
@@ -83,10 +101,51 @@ namespace NavigationPlatform.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FloorId");
+
                     b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("GraphNodes");
+                });
+
+            modelBuilder.Entity("NavigationPlatform.Server.Models.HeatpointArea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid?>("FloorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SoundLevel")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("X")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Y")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FloorId");
+
+                    b.ToTable("HeatpointAreas");
                 });
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.GraphEdge", b =>
@@ -106,6 +165,34 @@ namespace NavigationPlatform.Server.Migrations
                     b.Navigation("FromNode");
 
                     b.Navigation("ToNode");
+                });
+
+            modelBuilder.Entity("NavigationPlatform.Server.Models.GraphNode", b =>
+                {
+                    b.HasOne("NavigationPlatform.Server.Models.Floor", "Floor")
+                        .WithMany("GraphNodes")
+                        .HasForeignKey("FloorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("NavigationPlatform.Server.Models.HeatpointArea", b =>
+                {
+                    b.HasOne("NavigationPlatform.Server.Models.Floor", "Floor")
+                        .WithMany("HeatpointAreas")
+                        .HasForeignKey("FloorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("NavigationPlatform.Server.Models.Floor", b =>
+                {
+                    b.Navigation("GraphNodes");
+
+                    b.Navigation("HeatpointAreas");
                 });
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.GraphNode", b =>

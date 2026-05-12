@@ -6,14 +6,18 @@
     "serverOutput": "NavigationPlatform.Server"
   },
   "dependencies": {
+    "@microsoft/signalr": "^10.0.0",
     "open": "^11.0.0",
     "prettier": "^3.8.2",
     "react-icons": "^5.6.0",
     "react-router": "^7.13.1",
     "react-toastify": "^11.0.5",
+    "signalr": "^2.4.3",
     "swagger-typescript-api": "^13.6.10"
   },
   "scripts": {
+    "i": "node Scripts/Node/install.mjs",
+    "install": "node Scripts/Node/install.mjs",
     "dev": "node Scripts/Node/dev.mjs",
     "dev:no": "node Scripts/Node/dev.mjs --no",
     "stop": "node Scripts/Node/stop.mjs",
@@ -22,7 +26,9 @@
     "create:api-instance": "node Scripts/JS/createApiInstance.js && npm run prettier",
     "generate:api": "node Scripts/Node/swagger.mjs && npm run generate:api-minimal && npm run stop",
     "generate:api-minimal": "npm run generate:ts-api && npm run create:api-instance",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "db-drop": "docker compose up postgres --build -d && dotnet ef database drop -p NavigationPlatform.Server -s NavigationPlatform.Server --force && docker compose stop",
+    "db-migrate": "dotnet ef database update -p NavigationPlatform.Server -s NavigationPlatform.Server"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

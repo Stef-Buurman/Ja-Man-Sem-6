@@ -1,15 +1,13 @@
 import "./GraphEditor.css";
-import Verdieping3 from "../../assets/Verdieping3_2.svg?react";
 import { GraphEditor } from "../../components/GraphEditor/GraphEditor";
-// import { Verdieping3Graph } from "../../data/Verdieping3";
 import { useEffect, useState } from "react";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
-import type { Floor } from "../../Types/types";
-import type { GraphDto } from "../../api/data-contracts";
+import type { FloorDto, GraphDto } from "../../api/data-contracts";
 import { getGraph } from "../../api/methods/Graph.api";
+import { FloorCache } from "../../utils/CachedMethods";
 
 export const GraphEditorPage: React.FC = () => {
-  const [floors] = useState<Floor[]>([{ svg: Verdieping3, floorNumber: 3 }]);
+  const [floors, setFloors] = useState<FloorDto[]>([]);
   const [currentFloor, setCurrentFloor] = useState<number>(3);
   const [currentGraph, setCurrentGraph] = useState<GraphDto | undefined>(undefined);
   const floorChangeHandler = (floor: number) => {
@@ -31,10 +29,26 @@ export const GraphEditorPage: React.FC = () => {
     };
     fetchGraph();
   }, [currentFloor]);
+
+    const fetchFloors = async () => {
+    try {
+      const res = await FloorCache();
+      if (res.ok) {
+        const sortedFloors = res.response.sort((a, b) => a.number - b.number);
+        setFloors(sortedFloors);
+      }
+    } catch (error) {
+      console.error("Failed to fetch floors:", error);
+    }
+  };
+
+    useEffect(() => {
+    fetchFloors();
+  }, []);
   return (
     <>
       <FloorSelector
-        floors={floors.map((f) => f.floorNumber)}
+        floors={floors.map((f) => f.number)}
         currentFloor={currentFloor}
         setFloor={floorChangeHandler}
       />
