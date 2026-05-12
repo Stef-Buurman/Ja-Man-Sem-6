@@ -31,6 +31,15 @@ export interface Floor {
   heatpointAreas: HeatpointArea[] | null;
 }
 
+export interface FloorDto {
+  /** @format uuid */
+  id: string;
+  /** @format int32 */
+  number: number;
+  fileName: string | null;
+  dataFileName: string | null;
+}
+
 export interface GraphDto {
   nodes: GraphNodeDto[] | null;
   edges: GraphEdgeDto[] | null;
@@ -141,6 +150,8 @@ export interface HeatpointAreaDto {
 }
 
 export interface GetGraphParams {
+  /** @format uuid */
+  FloorId?: string;
   /** @format int32 */
   Floor?: number;
 }
