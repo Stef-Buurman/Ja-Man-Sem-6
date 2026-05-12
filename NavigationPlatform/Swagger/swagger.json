@@ -5,6 +5,43 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/floor": {
+      "get": {
+        "tags": ["Floor"],
+        "operationId": "GetFloors",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FloorDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FloorDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FloorDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/graph": {
       "post": {
         "tags": ["Graph"],
@@ -38,6 +75,14 @@
         "tags": ["Graph"],
         "operationId": "GetGraph",
         "parameters": [
+          {
+            "name": "FloorId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           {
             "name": "Floor",
             "in": "query",
@@ -358,6 +403,29 @@
         },
         "additionalProperties": false
       },
+      "FloorDto": {
+        "required": ["dataFileName", "fileName", "id", "number"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataFileName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GraphDto": {
         "required": ["edges", "nodes"],
         "type": "object",
@@ -646,6 +714,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Floor"
+    },
     {
       "name": "Graph"
     },

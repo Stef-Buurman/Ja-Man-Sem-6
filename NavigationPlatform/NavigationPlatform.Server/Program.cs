@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using NavigationPlatform.Server.DB;
 using NavigationPlatform.Server.Hubs;
 using NavigationPlatform.Server.Services;
@@ -31,6 +30,7 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<GraphImportService>();
 builder.Services.AddScoped<HeatpointAreaService>();
+builder.Services.AddScoped<FloorService>();
 
 var connectionString = builder.Configuration.GetConnectionString("Postgres");
 

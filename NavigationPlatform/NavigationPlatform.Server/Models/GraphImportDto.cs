@@ -28,6 +28,7 @@ public class GraphEdgeDto
 
 public class FloorDto
 {
+    public Guid Id { get; set; }
     public int Number { get; set; }
     public string FileName { get; set; } = null!;
     public string DataFileName { get; set; } = null!;
