@@ -7,9 +7,11 @@ services:
     ports:
       - 5432:5432
     environment:
+      POSTGRES_DB: NavigationPlatform
+      POSTGRES_USER: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
-      - pgdata:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql/data
       - ./scripts:/scripts
     shm_size: 1g
     networks:
