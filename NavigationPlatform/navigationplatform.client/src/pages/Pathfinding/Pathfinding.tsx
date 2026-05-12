@@ -210,7 +210,7 @@ export const Pathfinding: React.FC = () => {
 
   useEffect(() => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:59957/hubs/heatmaphub", {
+      .withUrl("/hubs/heatmaphub", {
         transport: signalR.HttpTransportType.LongPolling,
       })
       .withAutomaticReconnect()
