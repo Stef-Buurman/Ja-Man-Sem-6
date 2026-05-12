@@ -21,9 +21,32 @@ export enum NodeType {
   Value6 = 6,
 }
 
+export interface Floor {
+  /** @format uuid */
+  id: string;
+  /** @format int32 */
+  number: number;
+  fileName: string | null;
+  graphNodes: GraphNode[] | null;
+  heatpointAreas: HeatpointArea[] | null;
+}
+
 export interface GraphDto {
   nodes: GraphNodeDto[] | null;
   edges: GraphEdgeDto[] | null;
+}
+
+export interface GraphEdge {
+  /** @format uuid */
+  id: string;
+  /** @format uuid */
+  fromNodeId: string;
+  /** @format uuid */
+  toNodeId: string;
+  /** @format double */
+  weight?: number | null;
+  fromNode: GraphNode;
+  toNode: GraphNode;
 }
 
 export interface GraphEdgeDto {
@@ -31,6 +54,28 @@ export interface GraphEdgeDto {
   to: string | null;
   /** @format double */
   weight?: number | null;
+}
+
+export interface GraphNode {
+  /** @format uuid */
+  id: string;
+  name: string | null;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
+  /** @format uuid */
+  floorId: string;
+  floor: Floor;
+  type: NodeType;
+  /** @format double */
+  width?: number | null;
+  /** @format double */
+  height?: number | null;
+  roomId?: string | null;
+  label?: string | null;
+  incomingEdges: GraphEdge[] | null;
+  outgoingEdges: GraphEdge[] | null;
 }
 
 export interface GraphNodeDto {
@@ -51,6 +96,29 @@ export interface GraphNodeDto {
 }
 
 export interface HeatpointArea {
+  /** @format int32 */
+  id: number;
+  /** @format double */
+  x: number;
+  /** @format double */
+  y: number;
+  /** @format int32 */
+  value: number;
+  /** @format int32 */
+  soundLevel: number;
+  /** @format int32 */
+  level: number;
+  /** @format uuid */
+  floorId?: string | null;
+  floor?: Floor;
+  /** @format int32 */
+  width: number;
+  /** @format int32 */
+  height: number;
+  color: string | null;
+}
+
+export interface HeatpointAreaDto {
   /** @format int32 */
   id: number;
   /** @format double */
