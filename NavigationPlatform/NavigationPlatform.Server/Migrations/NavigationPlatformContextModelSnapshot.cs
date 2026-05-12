@@ -117,7 +117,7 @@ namespace NavigationPlatform.Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("FloorId")
+                    b.Property<Guid?>("FloorId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Height")
@@ -183,8 +183,7 @@ namespace NavigationPlatform.Server.Migrations
                     b.HasOne("NavigationPlatform.Server.Models.Floor", "Floor")
                         .WithMany("HeatpointAreas")
                         .HasForeignKey("FloorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Floor");
                 });
