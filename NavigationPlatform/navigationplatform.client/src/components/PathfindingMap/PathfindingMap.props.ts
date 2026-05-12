@@ -1,5 +1,4 @@
-import type { GraphEdgeDto, GraphNodeDto, HeatpointArea } from "../../api/data-contracts";
-import type { Floor } from "../../Types/types";
+import type { FloorDto, GraphEdgeDto, GraphNodeDto, HeatpointArea } from "../../api/data-contracts";
 
 export interface PathfindingMapProps {
   nodes: GraphNodeDto[];
@@ -7,7 +6,7 @@ export interface PathfindingMapProps {
   currentFloor: number;
   path?: string[];
   handleRoomClick?: (roomId: string) => void;
-  floors?: Floor[];
+  floors?: FloorDto[];
   currentPosition?: {
     x: number;
     y: number;

@@ -195,7 +195,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     navigator.clipboard.writeText(jsonData);
   };
 
-  const SelectedFloor = floors?.find((f) => f.floorNumber === currentFloor)?.svg;
+  const selectedFloor = floors?.find((f) => f.number === currentFloor);
 
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
     if (!svgElement.current) return;
@@ -252,15 +252,39 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const areasForCurrentFloor = areas.filter((a) => a.floor?.number === currentFloor);
   const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
 
+  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedFloor?.fileName) return;
+
+    const loadSvg = async () => {
+      const response = await fetch(`/floors/${selectedFloor.fileName}`);
+      const svgText = await response.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const svg = doc.querySelector("svg");
+
+      if (!svg) return;
+
+      const vb = svg.getAttribute("viewBox");
+      if (vb) setViewBox(vb);
+
+      setFloorSvgContent(svg.innerHTML);
+    };
+
+    loadSvg();
+  }, [selectedFloor?.fileName]);
+
   return (
     <div className="map-view-v4">
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
 
-      <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
+      {/* <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
         📋 Copy doors JSON
-      </button>
+      </button> */}
       <button className="map-view-v4__compass-button" onClick={startCompass}>
         Enable compass
       </button>
@@ -292,7 +316,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
-          {SelectedFloor && <SelectedFloor ref={gottenSVGElement} />}
+          {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
           {/* {nodes
             .filter((n) => n.floor === currentFloor)
             .map((n) => (

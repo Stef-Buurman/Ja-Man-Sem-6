@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Pathfinding } from "./pages/Pathfinding/Pathfinding";
 import { GraphEditorPage } from "./pages/GraphEditor/GraphEditor";
-import HeatmapEditor from "./pages/Heatmap/Editor/HeatmapEditor";
+import HeatmapEditor from "./pages/HeatmapEditor/HeatmapEditor";
 
 function App() {
   return (

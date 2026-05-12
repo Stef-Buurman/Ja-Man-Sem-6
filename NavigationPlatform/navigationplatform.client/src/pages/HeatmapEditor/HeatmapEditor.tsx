@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./HeatmapEditor.css";
-import type { HeatpointArea, HeatpointAreaDto } from "../../../api/data-contracts";
+import type { HeatpointArea, HeatpointAreaDto } from "../../api/data-contracts";
 import {
   addHeatpointArea,
   deleteHeatpointArea,
   getHeatpointAreas,
   updateRangeHeatpointArea,
-} from "../../../api/methods/Heatmap.api";
+} from "../../api/methods/Heatmap.api";
 
 const HeatmapEditor: React.FC = () => {
   const [areas, setAreas] = useState<HeatpointArea[]>([]);
@@ -23,7 +23,7 @@ const HeatmapEditor: React.FC = () => {
       width: a.width,
       x: a.x,
       y: a.y,
-    }))
+    }));
     await updateRangeHeatpointArea(areasMap, {
       toastSuccess: {
         title: "Areas Updated",
@@ -170,9 +170,11 @@ const HeatmapEditor: React.FC = () => {
                 const updated = areas.map((area) =>
                   area.id === a.id
                     ? {
-                      ...area,
-                      floor: area.floor ? { ...area.floor, number: value } : { id: "", fileName: "", number: value, graphNodes: [], heatpointAreas: [] },
-                    }
+                        ...area,
+                        floor: area.floor
+                          ? { ...area.floor, number: value }
+                          : { id: "", fileName: "", number: value, graphNodes: [], heatpointAreas: [] },
+                      }
                     : area,
                 );
                 console.log(updated);

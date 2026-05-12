@@ -3,13 +3,14 @@ import { distinctBy } from "../../utils/DistinctBy";
 import { IsNodeElevator, IsNodeStairs } from "../../utils/IsNode";
 import type { GraphEditorProps } from "./GraphEditor.props";
 import type { GraphDto, GraphEdgeDto, GraphNodeDto } from "../../api/data-contracts";
-import { GetNodeTypeFromInteger, GetNodeTypeFromType, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
-import { importGraph, updateGraph } from "../../api/methods/Graph.api";
+import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
+import { updateGraph } from "../../api/methods/Graph.api";
 
 export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloor, initialGraph }) => {
   const [nodes, setNodes] = useState<GraphNodeDto[]>(initialGraph?.nodes ?? []);
   const [edges, setEdges] = useState<GraphEdgeDto[]>(initialGraph?.edges ?? []);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [viewBox, setViewBox] = useState<string | null>(null);
 
   const currentFloor = curFloor ?? 0;
 
@@ -182,7 +183,31 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
   ).filter((d) => d.floor === currentFloor);
 
   const allVisibleNodes = [...visibleNodes, ...visibleDoors];
-  const FloorSvg = floors?.find((f) => f.floorNumber === curFloor)?.svg;
+  const selectedFloor = floors?.find((f) => f.number === currentFloor);
+
+  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedFloor?.fileName) return;
+
+    const loadSvg = async () => {
+      const response = await fetch(`/floors/${selectedFloor.fileName}`);
+      const svgText = await response.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const svg = doc.querySelector("svg");
+
+      if (!svg) return;
+
+      const vb = svg.getAttribute("viewBox");
+      if (vb) setViewBox(vb);
+
+      setFloorSvgContent(svg.innerHTML);
+    };
+
+    loadSvg();
+  }, [selectedFloor?.fileName]);
 
   const buildExportGraph = (): GraphDto => {
     const validEdges = edges.filter((e) => {
@@ -282,8 +307,12 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
       </button>
       <button onClick={save}>Save Graph</button>
 
-      <svg viewBox="0 0 2412.61 1344.75" style={{ border: "1px solid #ccc", marginTop: 10 }} onClick={handleMapClick}>
-        {FloorSvg && <FloorSvg />}
+      <svg
+        viewBox={viewBox || "0 0 2412.61 1344.75"}
+        style={{ border: "1px solid #ccc", marginTop: 10 }}
+        onClick={handleMapClick}
+      >
+        {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
 
         {edges.map((e, i) => {
           const from = allVisibleNodes.find((n) => n.id === e.from);
