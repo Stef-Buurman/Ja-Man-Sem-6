@@ -42,6 +42,34 @@
         }
       }
     },
+    "/api/graph/whole": {
+      "get": {
+        "tags": ["Graph"],
+        "operationId": "GetWholeGraph",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/graph": {
       "post": {
         "tags": ["Graph"],
@@ -114,10 +142,23 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/graph/{id}": {
       "put": {
         "tags": ["Graph"],
         "operationId": "UpdateGraph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -607,7 +648,7 @@
         "additionalProperties": false
       },
       "HeatpointArea": {
-        "required": ["color", "height", "id", "level", "soundLevel", "value", "width", "x", "y"],
+        "required": ["color", "height", "id", "soundLevel", "value", "width", "x", "y"],
         "type": "object",
         "properties": {
           "id": {
@@ -627,10 +668,6 @@
             "format": "int32"
           },
           "soundLevel": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "level": {
             "type": "integer",
             "format": "int32"
           },
@@ -659,7 +696,7 @@
         "additionalProperties": false
       },
       "HeatpointAreaDto": {
-        "required": ["color", "floor", "height", "id", "level", "soundLevel", "value", "width", "x", "y"],
+        "required": ["color", "floor", "height", "id", "soundLevel", "value", "width", "x", "y"],
         "type": "object",
         "properties": {
           "id": {
@@ -679,10 +716,6 @@
             "format": "int32"
           },
           "soundLevel": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "level": {
             "type": "integer",
             "format": "int32"
           },

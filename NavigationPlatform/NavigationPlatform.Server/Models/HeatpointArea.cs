@@ -11,7 +11,6 @@ namespace NavigationPlatform.Server.Models
         public double Y { get; set; }
         public int Value { get; set; }
         public int SoundLevel { get; set; }
-        public int Level { get; set; }
         public Guid? FloorId { get; set; } = null!; 
         public Floor? Floor { get; set; } = null!;
         public int Width { get; set; }
