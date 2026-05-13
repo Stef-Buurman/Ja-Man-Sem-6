@@ -7,7 +7,6 @@ namespace NavigationPlatform.Server.Models
         public double Y { get; set; }
         public int Value { get; set; }
         public int SoundLevel { get; set; }
-        public int Level { get; set; }
         public int Floor { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }

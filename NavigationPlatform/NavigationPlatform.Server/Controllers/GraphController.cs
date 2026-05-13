@@ -16,6 +16,13 @@ namespace NavigationPlatform.Server.Controllers
             _graphImportService = graphImportService;
         }
 
+        [HttpGet("whole")]
+        public async Task<ActionResult<GraphDto>> GetWholeGraph()
+        {
+            var graph = await _graphImportService.GetWholeGraphAsync();
+            return Ok(graph);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ImportGraph([FromBody] GraphDto dto)
         {
@@ -31,10 +38,10 @@ namespace NavigationPlatform.Server.Controllers
             return Ok(graph);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateGraph([FromBody] GraphDto dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGraph([FromBody] GraphDto dto, [FromRoute] Guid id)
         {
-            await _graphImportService.UpdateGraphAsync(dto);
+            await _graphImportService.UpdateGraphAsync(id, dto);
             return Ok(new { message = "Graph updated successfully." });
         }
     }

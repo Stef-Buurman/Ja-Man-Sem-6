@@ -3,5 +3,10 @@
     "number": 3,
     "fileName": "floor3.svg",
     "dataFileName": "Verdieping3.json"
+  },
+  {
+    "number": 0,
+    "fileName": "floor0.svg",
+    "dataFileName": "Verdieping0.json"
   }
 ]

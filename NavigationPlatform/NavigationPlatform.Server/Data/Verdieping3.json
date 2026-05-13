@@ -617,14 +617,14 @@
       "label": null
     },
     {
-      "id": "H.3.Lift3_door",
+      "id": "H.3.Lift1_door",
       "x": 609,
       "y": 940,
       "floor": 3,
       "type": 1,
       "width": 20,
       "height": 20,
-      "roomId": "H.3.Lift3",
+      "roomId": "H.3.Lift1",
       "label": null
     },
     {
@@ -705,14 +705,14 @@
       "label": null
     },
     {
-      "id": "H.3.Lift1_door",
+      "id": "H.3.Lift3_door",
       "x": 686,
       "y": 1037,
       "floor": 3,
       "type": 1,
       "width": 20,
       "height": 20,
-      "roomId": "H.3.Lift1",
+      "roomId": "H.3.Lift3",
       "label": null
     },
     {
@@ -1130,7 +1130,7 @@
       "height": 20
     },
     {
-      "id": "H.3.Lift3",
+      "id": "H.3.Lift1",
       "x": 609,
       "y": 940,
       "floor": 3,
@@ -1157,7 +1157,7 @@
       "height": 20
     },
     {
-      "id": "H.3.Lift1",
+      "id": "H.3.Lift3",
       "x": 686,
       "y": 1037,
       "floor": 3,
@@ -1445,7 +1445,7 @@
   "edges": [
     {
       "from": "H.3.Trap1",
-      "to": "H.3.Lift1",
+      "to": "H.3.Lift3",
       "weight": null
     },
     {
@@ -1654,7 +1654,7 @@
       "weight": null
     },
     {
-      "from": "H.3.Lift1",
+      "from": "H.3.Lift3",
       "to": "node_1776687241545",
       "weight": null
     },
@@ -1670,7 +1670,7 @@
     },
     {
       "from": "node_1776687248052",
-      "to": "H.3.Lift3",
+      "to": "H.3.Lift1",
       "weight": null
     },
     {
@@ -1754,7 +1754,7 @@
       "weight": null
     },
     {
-      "from": "H.3.Lift3",
+      "from": "H.3.Lift1",
       "to": "node_1776687246705",
       "weight": null
     },
@@ -1963,7 +1963,7 @@
       "weight": null
     },
     {
-      "from": "H.3.Lift1",
+      "from": "H.3.Lift3",
       "to": "node_1776687425203",
       "weight": null
     },
@@ -2165,8 +2165,8 @@
       "weight": null
     },
     {
-      "from": "H.3.Lift3",
-      "to": "H.3.Lift3_door"
+      "from": "H.3.Lift1",
+      "to": "H.3.Lift1_door"
     },
     {
       "from": "node_1776687553864",
@@ -2174,8 +2174,8 @@
       "weight": null
     },
     {
-      "from": "H.3.Lift1",
-      "to": "H.3.Lift1_door"
+      "from": "H.3.Lift3",
+      "to": "H.3.Lift3_door"
     },
     {
       "from": "node_1776687446968",

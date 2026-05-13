@@ -1,7 +1,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using NavigationPlatform.Server.DB;
+using NavigationPlatform.Server.Enums;
 using NavigationPlatform.Server.Models;
 
 namespace NavigationPlatform.Server.Services
@@ -20,6 +22,43 @@ namespace NavigationPlatform.Server.Services
             var nodes = await _context.GraphNodes
                 .Include(n => n.Floor)
                 .Where(n => n.Floor.Number == floor)
+                .ToListAsync();
+
+            var nodeIds = nodes.Select(n => n.Id).ToHashSet();
+
+            var edges = await _context.GraphEdges
+                .Where(e => nodeIds.Contains(e.FromNodeId) && nodeIds.Contains(e.ToNodeId))
+                .ToListAsync();
+
+            var graphDto = new GraphDto
+            {
+                Nodes = nodes.Select(n => new GraphNodeDto
+                {
+                    Id = n.Name,  // DB Name -> JSON id
+                    X = n.X,
+                    Y = n.Y,
+                    Floor = n.Floor.Number,
+                    Type = n.Type,
+                    Width = n.Width,
+                    Height = n.Height,
+                    RoomId = n.RoomId,
+                    Label = n.Label
+                }).ToList(),
+                Edges = edges.Select(e => new GraphEdgeDto
+                {
+                    From = nodes.First(n => n.Id == e.FromNodeId).Name, // DB id -> JSON id
+                    To = nodes.First(n => n.Id == e.ToNodeId).Name,     // DB id -> JSON id
+                    Weight = e.Weight
+                }).ToList()
+            };
+
+            return graphDto;
+        }
+
+        public async Task<GraphDto> GetWholeGraphAsync()
+        {
+            var nodes = await _context.GraphNodes
+                .Include(n => n.Floor)
                 .ToListAsync();
 
             var nodeIds = nodes.Select(n => n.Id).ToHashSet();
@@ -82,6 +121,117 @@ namespace NavigationPlatform.Server.Services
                 await _context.SaveChangesAsync();
                 await ImportGraphFromFileAsync($"Data/{floorDto.DataFileName}");
             }
+            await ConnectStairsAndElevatorsAsync();
+        }
+
+        private class StairOrLiftInfo
+        {
+            public string Prefix { get; set; } = "";
+            public string Type { get; set; } = "";
+            public string Number { get; set; } = "";
+        }
+
+        private static StairOrLiftInfo? GetStairOrLiftInfo(string name)
+        {
+            string prefix = name.Split('.')[0];
+
+            Match match = Regex.Match(
+                name,
+                @"(Trap|Lift)\s*(\d*)",
+                RegexOptions.IgnoreCase
+            );
+
+            if (!match.Success)
+                return null;
+
+            return new StairOrLiftInfo
+            {
+                Prefix = prefix,
+                Type = match.Groups[1].Value.ToLower(),
+                Number = match.Groups[2].Value
+            };
+        }
+
+        public async Task ConnectStairsAndElevatorsAsync()
+        {
+            var stairsAndElevators = await _context.GraphNodes
+                .Include(n => n.Floor).OrderBy(n => n.Floor.Number)
+                .Where(n => n.Type == NodeType.Stairs || n.Type == NodeType.Elevator)
+                .ToListAsync();
+
+            var groupedByFloor = stairsAndElevators
+                .GroupBy(n => n.Floor.Number)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            foreach (var group in groupedByFloor)
+            {
+                int currentFloor = group.Key;
+                int floorAbove = currentFloor + 1;
+
+                while (!groupedByFloor.ContainsKey(floorAbove) && floorAbove <= groupedByFloor.Keys.Max())
+                {
+                    floorAbove++;
+                }
+
+                if (!groupedByFloor.TryGetValue(floorAbove, out var nodesAbove))
+                {
+                    Console.WriteLine($"No nodes found for floor above: {floorAbove}");
+                    continue;
+                }
+
+
+                foreach (var node in group.Value)
+                {
+                    var currentInfo = GetStairOrLiftInfo(node.Name);
+
+                    if (currentInfo == null)
+                    {
+                        Console.WriteLine($"No match for node name: {node.Name}");
+                        continue;
+                    }
+
+                    var connectedNode = nodesAbove.FirstOrDefault(nodeAbove =>
+                    {
+                        var aboveInfo = GetStairOrLiftInfo(nodeAbove.Name);
+
+                        if (aboveInfo == null)
+                            return false;
+
+                        return aboveInfo.Prefix.Equals(currentInfo.Prefix, StringComparison.OrdinalIgnoreCase)
+                            && aboveInfo.Type.Equals(currentInfo.Type, StringComparison.OrdinalIgnoreCase)
+                            && aboveInfo.Number == currentInfo.Number;
+                    });
+
+                    if (connectedNode == null)
+                    {
+                        Console.WriteLine($"No node found above for: {node.Name}");
+                        continue;
+                    }
+
+                    bool edgeAlreadyExists = await _context.GraphEdges.AnyAsync(e =>
+                        (e.FromNodeId == node.Id && e.ToNodeId == connectedNode.Id) ||
+                        (e.FromNodeId == connectedNode.Id && e.ToNodeId == node.Id)
+                    );
+
+                    if (edgeAlreadyExists)
+                    {
+                        Console.WriteLine($"Edge already exists between {node.Name} and {connectedNode.Name}");
+                        continue;
+                    }
+
+                    Console.WriteLine($"{node.Name} should connect to {connectedNode.Name}");
+
+                    _context.GraphEdges.Add(new GraphEdge
+                    {
+                        Id = Guid.NewGuid(),
+                        FromNodeId = node.Id,
+                        ToNodeId = connectedNode.Id,
+                        Weight = 1
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task ImportGraphFromFileAsync(string filePath)
@@ -235,7 +385,7 @@ namespace NavigationPlatform.Server.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateGraphAsync(GraphDto graphDto)
+        public async Task UpdateGraphAsync(Guid id, GraphDto graphDto)
         {
             if (graphDto is null)
                 throw new InvalidOperationException("Graph payload is null.");
@@ -276,7 +426,10 @@ namespace NavigationPlatform.Server.Services
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var existingNodes = await _context.GraphNodes.ToListAsync();
+            var existingNodes = await _context.GraphNodes
+                .Where(n => n.Id == id)
+                .ToListAsync();
+
             var existingNodeMap = existingNodes.ToDictionary(n => n.Name, n => n);
 
             foreach (var nodeDto in graphDto.Nodes)
@@ -296,8 +449,9 @@ namespace NavigationPlatform.Server.Services
                 }
                 else
                 {
-                    var newNode = new GraphNode
+                    _context.GraphNodes.Add(new GraphNode
                     {
+                        Id = id,
                         Name = nodeDto.Id,
                         X = nodeDto.X,
                         Y = nodeDto.Y,
@@ -307,15 +461,16 @@ namespace NavigationPlatform.Server.Services
                         Height = nodeDto.Height,
                         RoomId = nodeDto.RoomId,
                         Label = nodeDto.Label
-                    };
-
-                    _context.GraphNodes.Add(newNode);
+                    });
                 }
             }
 
             await _context.SaveChangesAsync();
 
-            var allNodes = await _context.GraphNodes.ToListAsync();
+            var allNodes = await _context.GraphNodes
+                .Where(n => n.Id == id)
+                .ToListAsync();
+
             var nodeMap = allNodes.ToDictionary(n => n.Name, n => n);
 
             var nodesToDelete = allNodes
@@ -333,13 +488,21 @@ namespace NavigationPlatform.Server.Services
                                 nodeIdsToDelete.Contains(e.ToNodeId))
                     .ToListAsync();
 
-                if (edgesConnectedToDeletedNodes.Count > 0)
-                    _context.GraphEdges.RemoveRange(edgesConnectedToDeletedNodes);
-
+                _context.GraphEdges.RemoveRange(edgesConnectedToDeletedNodes);
                 _context.GraphNodes.RemoveRange(nodesToDelete);
 
                 await _context.SaveChangesAsync();
             }
+
+            allNodes = await _context.GraphNodes
+                .Where(n => n.Id == id)
+                .ToListAsync();
+
+            nodeMap = allNodes.ToDictionary(n => n.Name, n => n);
+
+            var currentGraphNodeIds = allNodes
+                .Select(n => n.Id)
+                .ToHashSet();
 
             var resolvedEdges = new List<(Guid FromNodeId, Guid ToNodeId, double? Weight, string Key)>();
 
@@ -363,7 +526,10 @@ namespace NavigationPlatform.Server.Services
                 .Select(e => e.Key)
                 .ToHashSet();
 
-            var existingEdges = await _context.GraphEdges.ToListAsync();
+            var existingEdges = await _context.GraphEdges
+                .Where(e => currentGraphNodeIds.Contains(e.FromNodeId) &&
+                            currentGraphNodeIds.Contains(e.ToNodeId))
+                .ToListAsync();
 
             var existingEdgeMap = existingEdges.ToDictionary(
                 e => GetUndirectedEdgeKey(e.FromNodeId, e.ToNodeId),
