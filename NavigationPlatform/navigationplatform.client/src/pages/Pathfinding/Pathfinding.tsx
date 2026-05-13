@@ -13,7 +13,7 @@ import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
 import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
 import Toggle from "../../components/toggle/toggle";
-import { GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
+import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -95,7 +95,7 @@ export const Pathfinding: React.FC = () => {
           var entranceNodes = graphData.nodes?.filter((n) => n.type === GetTypeFromNodeType("entrance"));
           console.log("Entrance nodes:", entranceNodes);
           if (entranceNodes && entranceNodes.length > 0) {
-            setStartNodes(entranceNodes.map((n) => n.id ?? "").filter((id) => id !== ""));
+            setStartNodes(entranceNodes.map((n) => n.id ?? "").filter((id) => id !== "").slice(0, 1));
           }
         }
       }
@@ -152,7 +152,13 @@ export const Pathfinding: React.FC = () => {
   const roomOptions = graph.nodes
     ?.filter((node) => node.id?.includes("_door"))
     .map((node) => node.roomId)
-    .filter((roomId): roomId is string => roomId !== undefined);
+    .filter((roomId): roomId is string => roomId !== undefined && roomId !== null)
+    .concat(
+      graph.nodes
+        ?.filter((node) => GetNodeTypeFromInteger(node.type) === "entrance")
+        .map((node) => node.id)
+        .filter((id): id is string => id !== undefined && id !== null),
+    );
 
   useEffect(() => {
     fetchFloors();
