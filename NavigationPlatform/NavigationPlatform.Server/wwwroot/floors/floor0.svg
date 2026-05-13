@@ -425,7 +425,7 @@
     <circle id="WN.00.005" class="cls-18" cx="2177.5" cy="585.22" r="11"/>
     <circle id="WN.00.008" class="cls-18" cx="2183.4" cy="756.12" r="11"/>
     <circle id="WN.00.028" class="cls-18" cx="1387.7" cy="807.42" r="11"/>
-    <circle id="WD.00.000_Lift1" data-name="WD.00.000 Lift1" class="cls-18" cx="912.5" cy="922.62" r="11"/>
+    <circle id="WD.00.000_Lift" data-name="WD.00.000 Lift" class="cls-18" cx="912.5" cy="922.62" r="11"/>
     <circle id="H.0.122_Trap1" data-name="H.0.122 Trap1" class="cls-18" cx="677.2" cy="1069.22" r="11"/>
     <circle id="H.0.322a" class="cls-18" cx="133.2" cy="258.82" r="11"/>
   </g>

@@ -31,7 +31,6 @@ namespace NavigationPlatform.Server.Services
                 Y = area.Y,
                 Value = area.Value,
                 SoundLevel = area.SoundLevel,
-                Level = area.Level,
                 FloorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id,
                 Width = area.Width,
                 Height = area.Height
@@ -53,7 +52,6 @@ namespace NavigationPlatform.Server.Services
             existingArea.Y = area.Y;
             existingArea.Value = area.Value;
             existingArea.SoundLevel = area.SoundLevel;
-            existingArea.Level = area.Level;
             existingArea.FloorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id;
             existingArea.Width = area.Width;
             existingArea.Height = area.Height;
