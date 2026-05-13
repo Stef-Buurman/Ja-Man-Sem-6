@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { distinctBy } from "../../utils/DistinctBy";
 import { IsNodeElevator, IsNodeStairs } from "../../utils/IsNode";
 import type { GraphEditorProps } from "./GraphEditor.props";
-import type { GraphDto, GraphEdgeDto, GraphNodeDto } from "../../api/data-contracts";
+import { NodeType, type GraphDto, type GraphEdgeDto, type GraphNodeDto } from "../../api/data-contracts";
 import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 import { updateGraph } from "../../api/methods/Graph.api";
 
@@ -11,6 +11,7 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
   const [edges, setEdges] = useState<GraphEdgeDto[]>(initialGraph?.edges ?? []);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
+  const [newNodeType, setNewNodeType] = useState<NodeType>(GetTypeFromNodeType("hallway"));
 
   const currentFloor = curFloor ?? 0;
 
@@ -31,15 +32,43 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
 
     const svgPoint = pt.matrixTransform(svg.getScreenCTM()?.inverse());
 
-    const nodeWidth = 10;
-    const nodeHeight = 10;
+    let nodeWidth = 10;
+    let nodeHeight = 10;
+    let id = `node_${Date.now()}`;
+
+    if (newNodeType === GetTypeFromNodeType("entrance")) {
+      nodeWidth = 30;
+      nodeHeight = 30;
+
+      const usedNumbers = new Set<number>();
+
+      for (const node of nodes) {
+        const id = node.id;
+
+        if (id?.startsWith("Ingang_")) {
+          const numberPart = id.slice("Ingang_".length);
+          const number = Number(numberPart);
+
+          if (Number.isInteger(number) && number > 0) {
+            usedNumbers.add(number);
+          }
+        }
+      }
+
+      let nextNumber = 1;
+      while (usedNumbers.has(nextNumber)) {
+        nextNumber++;
+      }
+
+      id = `Ingang_${nextNumber}`;
+    }
 
     const newNode: GraphNodeDto = {
-      id: `node_${Date.now()}`,
+      id: id,
       x: snap(svgPoint.x - nodeWidth / 4, nodeWidth / 4),
       y: snap(svgPoint.y - nodeHeight / 4, nodeHeight / 4),
       floor: currentFloor,
-      type: GetTypeFromNodeType("hallway"),
+      type: newNodeType,
       width: nodeWidth,
       height: nodeHeight,
     };
@@ -77,7 +106,12 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
   };
 
   const save = () => {
-    updateGraph(buildExportGraph(), {
+    var floorId = floors?.find((f) => f.number === currentFloor)?.id;
+    if (!floorId) {
+      alert("Floor not found!");
+      return;
+    }
+    updateGraph({ id: floorId }, buildExportGraph(), {
       toastError: {
         message: "Failed to save graph",
       },
@@ -215,7 +249,6 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
       const to = nodes.find((n) => n.id === e.to);
       return from && to;
     });
-
     var x: GraphNodeDto[] = visibleDoors
       .filter((d) => IsNodeStairs(d) || IsNodeElevator(d))
       .map((d) => {
@@ -241,6 +274,9 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
           };
         }
       });
+    console.log(nodes);
+    console.log(visibleDoors);
+    console.log(x);
 
     const generatedEdges: GraphEdgeDto[] = x.map((element) => ({
       from: element.id,
@@ -263,6 +299,10 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
 
   return (
     <div>
+      <select value={newNodeType} onChange={(e) => setNewNodeType(Number(e.target.value) as NodeType)}>
+        <option value={GetTypeFromNodeType("hallway")}>Hallway</option>
+        <option value={GetTypeFromNodeType("entrance")}>Entrance</option>
+      </select>
       <button onClick={exportGraph}>Copy Graph</button>
       <button onClick={exportGraphJson}>Copy Graph JSON</button>
       <button
@@ -307,23 +347,46 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
           />
         ))}
 
-        {visibleNodes.map((n) => (
-          <circle
-            key={n.id}
-            cx={n.x}
-            cy={n.y}
-            r={6}
-            fill={selectedNode === n.id ? "red" : "blue"}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNodeClick(n.id ?? "");
-            }}
-            onContextMenu={(e) => {
-              e.preventDefault();
-              handleDeleteNode(n.id ?? "");
-            }}
-          />
-        ))}
+        {visibleNodes
+          .filter((n) => n.type === GetTypeFromNodeType("hallway"))
+          .map((n) => (
+            <circle
+              key={n.id}
+              cx={n.x}
+              cy={n.y}
+              r={6}
+              fill={selectedNode === n.id ? "red" : "blue"}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNodeClick(n.id ?? "");
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                handleDeleteNode(n.id ?? "");
+              }}
+            />
+          ))}
+
+        {visibleNodes
+          .filter((n) => n.type === GetTypeFromNodeType("entrance"))
+          .map((n) => (
+            <rect
+              key={n.id}
+              x={n.x - (n.width || 50) / 2}
+              y={n.y - (n.height || 50) / 2}
+              width={n.width || 50}
+              height={n.height || 50}
+              fill={selectedNode === n.id ? "red" : "green"}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNodeClick(n.id ?? "");
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                handleDeleteNode(n.id ?? "");
+              }}
+            />
+          ))}
       </svg>
     </div>
   );

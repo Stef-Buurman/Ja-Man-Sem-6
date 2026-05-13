@@ -10,10 +10,7 @@ export interface PathfindingMapProps {
   currentPosition?: {
     x: number;
     y: number;
-    altitude?: number;
-    accuracy?: number;
-    latitude?: number;
-    longitude?: number;
+    floor: number;
   };
   areas?: HeatpointArea[];
   showHeatmap?: boolean;

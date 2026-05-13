@@ -1,4 +1,4 @@
 export interface CacheEntry<T> {
-    data: T;
-    timestamp: number;
+  data: T;
+  timestamp: number;
 }

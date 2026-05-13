@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => { },
+  handleRoomClick = () => {},
   floors,
   currentPosition,
   areas = [],
@@ -19,55 +19,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
-  const [heading, setHeading] = useState<number | null>(null);
-  const [compassEnabled, setCompassEnabled] = useState(false);
-  const MAP_NORTH_OFFSET = -9.5;
-
-  useEffect(() => {
-    startCompass();
-  }, []);
-
-  const startCompass = async () => {
-    if (!("DeviceOrientationEvent" in window)) {
-      alert("Compass is not supported on this device.");
-      return;
-    }
-
-    const DeviceOrientation = DeviceOrientationEvent as any;
-
-    if (typeof DeviceOrientation.requestPermission === "function") {
-      const permission = await DeviceOrientation.requestPermission();
-      if (permission !== "granted") return;
-    }
-
-    setCompassEnabled(true);
-  };
-
-  useEffect(() => {
-    if (!compassEnabled) return;
-
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      const safariHeading = (event as any).webkitCompassHeading;
-
-      let newHeading: number | null = null;
-
-      if (typeof safariHeading === "number") {
-        newHeading = safariHeading;
-      } else if (typeof event.alpha === "number") {
-        newHeading = 360 - event.alpha;
-      }
-
-      if (newHeading !== null) {
-        setHeading(Math.round(newHeading));
-      }
-    };
-
-    window.addEventListener("deviceorientation", handleOrientation, true);
-
-    return () => {
-      window.removeEventListener("deviceorientation", handleOrientation, true);
-    };
-  }, [compassEnabled]);
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -148,53 +99,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       .join("\n");
 
     navigator.clipboard.writeText(formattedData);
-  };
-
-  const copyDoorsJson = () => {
-    if (!svgElement.current) return;
-
-    const doorGroup = svgElement.current.getElementById("DataPoints");
-    if (!doorGroup) return;
-
-    const doors = doorGroup.querySelectorAll("circle");
-
-    const doorData: GraphNodeDto[] = Array.from(doors).map((door) => {
-      const rawId = door.getAttribute("data-name") || door.id;
-      const cleanId = rawId.replace(/-\d+$/, "");
-
-      const x = parseFloat(door.getAttribute("cx") || "0");
-      const y = parseFloat(door.getAttribute("cy") || "0");
-
-      return {
-        id: `${cleanId}_door`,
-        x: Math.round(x),
-        y: Math.round(y),
-        floor: currentFloor,
-        type: GetTypeFromNodeType("door"),
-        width: 20,
-        height: 20,
-        roomId: cleanId,
-      };
-    });
-
-    doorData
-      .filter((d) => d.id?.toLowerCase().includes("trap") || d.id?.toLowerCase().includes("lift"))
-      .forEach((element) => {
-        const type: NodeType = element.id?.toLowerCase().includes("trap") ? "stairs" : "elevator";
-
-        doorData.push({
-          id: element.roomId || (element.id ? element.id.replace("_door", "") : ""),
-          x: element.x,
-          y: element.y,
-          floor: element.floor,
-          type: GetTypeFromNodeType(type),
-          width: element.width,
-          height: element.height,
-        });
-      });
-
-    const jsonData = JSON.stringify(doorData, null, 2);
-    navigator.clipboard.writeText(jsonData);
   };
 
   const selectedFloor = floors?.find((f) => f.number === currentFloor);
@@ -279,42 +183,13 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   return (
     <div className="map-view-v4">
-      {showHeatmap ? <h2>Heatmap</h2> : <h2>Map</h2>}
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
 
-      <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
+      {/* <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
         📋 Copy doors JSON
-      </button>
-      <button className="map-view-v4__compass-button" onClick={startCompass}>
-        Enable compass
-      </button>
-      {currentPosition && (
-        <div>
-          Lat: {currentPosition.latitude}
-          <br />
-          Lng: {currentPosition.longitude}
-        </div>
-      )}
-      {currentPosition !== undefined && currentPosition.altitude !== undefined && (
-        <div>Altitude: {currentPosition.altitude} meters</div>
-      )}
-      {currentPosition !== undefined && currentPosition.accuracy !== undefined && (
-        <div>Accuracy: {currentPosition.accuracy} meters</div>
-      )}
-
-      <div className="map-view-v4__compass">
-        <div
-          className="map-view-v4__compass-arrow"
-          style={{
-            transform: `rotate(${heading ?? 0}deg)`,
-          }}
-        >
-          ▲
-        </div>
-        <span>{heading !== null ? `${heading}°` : "Compass off"}</span>
-      </div>
+      </button> */}
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
@@ -344,11 +219,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
             return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
           })} */}
-          {currentPosition && (
+          {currentPosition && currentPosition.floor === currentFloor && (
             <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
-              <g transform={`rotate(${(heading ?? 0) + MAP_NORTH_OFFSET})`}>
+              {/* <g transform={`rotate(${(heading ?? 0) + MAP_NORTH_OFFSET})`}>
                 <polygon points="0,-35 14,10 0,3 -14,10" fill="#2563eb" stroke="white" strokeWidth={3} />
-              </g>
+              </g> */}
 
               <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
             </g>
@@ -360,15 +235,18 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                 const points = path
                   .map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor))
                   .filter(Boolean) as {
-                    x: number;
-                    y: number;
-                  }[];
+                  x: number;
+                  y: number;
+                }[];
+                console.log(path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)));
+                console.log(points);
 
                 if (points.length === 0) return "";
-
-                const pathPoints = currentPosition
-                  ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
-                  : points;
+                console.log("Current position:", currentPosition);
+                const pathPoints =
+                  currentPosition && currentPosition.floor === currentFloor
+                    ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
+                    : points;
 
                 let d = `M ${pathPoints[0].x},${pathPoints[0].y}`;
 
@@ -397,40 +275,41 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
             />
           )}
 
-          {showHeatmap && (<>
-            <defs>
-              {areasForCurrentFloor.map((a) => {
-                const color = getColor(a.value);
-                return (
-                  <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor={color} stopOpacity="0.9" />
-                    <stop offset="45%" stopColor={color} stopOpacity="0.5" />
-                    <stop offset="100%" stopColor={color} stopOpacity="0" />
-                  </radialGradient>
-                );
-              })}
-              {areasForCurrentFloor.map((a) => (
-                <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
-                  <rect x={a.x} y={a.y} width={a.width} height={a.height} />
-                </clipPath>
-              ))}
-            </defs>
+          {showHeatmap && (
+            <>
+              <defs>
+                {areasForCurrentFloor.map((a) => {
+                  const color = getColor(a.value);
+                  return (
+                    <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor={color} stopOpacity="0.9" />
+                      <stop offset="45%" stopColor={color} stopOpacity="0.5" />
+                      <stop offset="100%" stopColor={color} stopOpacity="0" />
+                    </radialGradient>
+                  );
+                })}
+                {areasForCurrentFloor.map((a) => (
+                  <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
+                    <rect x={a.x} y={a.y} width={a.width} height={a.height} />
+                  </clipPath>
+                ))}
+              </defs>
 
-            {areasForCurrentFloor.map((a) => (
-              <rect
-                key={a.id}
-                x={a.x}
-                y={a.y}
-                width={a.width}
-                height={a.height}
-                fill={`url(#${getGradientId(a.id)})`}
-                clipPath={`url(#clip-${a.id})`}
-              />
-            ))}
-          </>)}
+              {areasForCurrentFloor.map((a) => (
+                <rect
+                  key={a.id}
+                  x={a.x}
+                  y={a.y}
+                  width={a.width}
+                  height={a.height}
+                  fill={`url(#${getGradientId(a.id)})`}
+                  clipPath={`url(#clip-${a.id})`}
+                />
+              ))}
+            </>
+          )}
         </svg>
       </div>
     </div>
   );
 };
-

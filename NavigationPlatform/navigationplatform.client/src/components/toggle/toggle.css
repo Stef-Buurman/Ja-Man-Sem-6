@@ -1,56 +1,56 @@
 .toggle-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #111827;
-    cursor: pointer;
-    user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111827;
+  cursor: pointer;
+  user-select: none;
 }
 
 .toggle-text {
-    display: inline-block;
+  display: inline-block;
 }
 
 .toggle-container {
-    position: relative;
+  position: relative;
 }
 
 .toggle-container:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .toggle-input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .toggle-track {
-    width: 56px;
-    height: 32px;
-    background-color: #e5e7eb;
-    border-radius: 9999px;
-    transition: background-color 0.3s;
+  width: 56px;
+  height: 32px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  transition: background-color 0.3s;
 }
 
 .toggle-dot {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 24px;
-    height: 24px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
 }
 
 .toggle-input:checked + .toggle-track {
-    background-color: var(--quaternary-JaMan-color);
+  background-color: var(--quaternary-JaMan-color);
 }
 
 .toggle-input:checked + .toggle-track + .toggle-dot {
-    transform: translateX(24px);
+  transform: translateX(24px);
 }
