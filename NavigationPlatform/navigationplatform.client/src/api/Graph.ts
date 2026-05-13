@@ -10,11 +10,25 @@
  * ---------------------------------------------------------------
  */
 
-import type { GetGraphParams, GraphDto } from "./data-contracts";
+import type { GetGraphParams, GraphDto, UpdateGraphParams } from "./data-contracts";
 import { ContentType, HttpClient } from "./http-client";
 import type { RequestParams } from "./http-client";
 
 export class Graph<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Graph
+   * @name GetWholeGraph
+   * @request GET:/api/graph/whole
+   */
+  getWholeGraph = (params: RequestParams = {}) =>
+    this.request<GraphDto, any>({
+      path: `/api/graph/whole`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
   /**
    * No description
    *
@@ -50,11 +64,11 @@ export class Graph<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    *
    * @tags Graph
    * @name UpdateGraph
-   * @request PUT:/api/graph
+   * @request PUT:/api/graph/{id}
    */
-  updateGraph = (data: GraphDto, params: RequestParams = {}) =>
+  updateGraph = ({ id }: UpdateGraphParams, data: GraphDto, params: RequestParams = {}) =>
     this.request<void, any>({
-      path: `/api/graph`,
+      path: `/api/graph/${id}`,
       method: "PUT",
       body: data,
       type: ContentType.Json,

@@ -115,8 +115,6 @@ export interface HeatpointArea {
   value: number;
   /** @format int32 */
   soundLevel: number;
-  /** @format int32 */
-  level: number;
   /** @format uuid */
   floorId?: string | null;
   floor?: Floor;
@@ -139,8 +137,6 @@ export interface HeatpointAreaDto {
   /** @format int32 */
   soundLevel: number;
   /** @format int32 */
-  level: number;
-  /** @format int32 */
   floor: number;
   /** @format int32 */
   width: number;
@@ -154,6 +150,11 @@ export interface GetGraphParams {
   FloorId?: string;
   /** @format int32 */
   Floor?: number;
+}
+
+export interface UpdateGraphParams {
+  /** @format uuid */
+  id: string;
 }
 
 export interface UpdateHeatpointAreaParams {

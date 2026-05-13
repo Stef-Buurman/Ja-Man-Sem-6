@@ -35,6 +35,13 @@ export async function getGraph(
 /* =======================
    Non-Query Methods
    ======================= */
+export async function getWholeGraph(
+  ...argsWithToast: [...WithoutRequestParams<Parameters<Graph["getWholeGraph"]>>, ToastOptions?, RequestParams?]
+): Promise<ApiResult<ExtractResponse<ReturnType<Graph["getWholeGraph"]>>>> {
+  const { args, toastOptions, params } = extractArgsToastsAndParams(argsWithToast);
+  return handleApiResponse(() => graphApi.getWholeGraph(...args, params), toastOptions);
+}
+
 export async function importGraph(
   ...argsWithToast: [...WithoutRequestParams<Parameters<Graph["importGraph"]>>, ToastOptions?, RequestParams?]
 ): Promise<ApiResult<ExtractResponse<ReturnType<Graph["importGraph"]>>>> {
