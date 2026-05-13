@@ -30,7 +30,7 @@ export const GraphEditorPage: React.FC = () => {
     fetchGraph();
   }, [currentFloor]);
 
-    const fetchFloors = async () => {
+  const fetchFloors = async () => {
     try {
       const res = await FloorCache();
       if (res.ok) {
@@ -42,7 +42,7 @@ export const GraphEditorPage: React.FC = () => {
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     fetchFloors();
   }, []);
   return (
@@ -55,60 +55,478 @@ export const GraphEditorPage: React.FC = () => {
       <GraphEditor
         curFloor={currentFloor}
         initialGraph={currentGraph}
-        //         doors={[
-        // { id: "H.3.403_door", x: 240, y: 320, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.403" },
-        // { id: "H.3.319_door", x: 229, y: 383, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.319" },
-        // { id: "H.3.312_door", x: 294, y: 673, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.312" },
-        // { id: "H.3.308_door", x: 324, y: 812, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.308" },
-        // { id: "H.3.306_door", x: 360, y: 974, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.306" },
-        // { id: "H.3.206_door", x: 390, y: 1005, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.206" },
-        // { id: "H.3.204_door", x: 477, y: 994, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.204" },
-        // { id: "H.3.Trap1_door", x: 691, y: 1070, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.Trap1" },
-        // { id: "H.3.Lift1_door", x: 686, y: 1037, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.Lift1" },
-        // { id: "H.3.Lift2_door", x: 615, y: 972, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.Lift2" },
-        // { id: "H.3.Lift3_door", x: 609, y: 940, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.Lift3" },
-        // { id: "H.3.Trap2_door", x: 462, y: 242, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.Trap2" },
-        // { id: "H.3.117_door", x: 590, y: 819, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.117" },
-        // { id: "H.3.116_door", x: 580, y: 775, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.116" },
-        // { id: "H.3.114_door", x: 562, y: 695, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.114" },
-        // { id: "H.3.111_door", x: 544, y: 611, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.111" },
-        // { id: "H.3.109_door", x: 526, y: 530, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.109" },
-        // { id: "H.3.107_door", x: 503, y: 396, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.107" },
-        // { id: "H.3.104_door", x: 478, y: 275, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.104" },
-        // { id: "H.3.318_door", x: 240, y: 434, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.318" },
-        // { id: "H.3.405_door", x: 303, y: 309, floor: 3, type: "door", width: 20, height: 20 ,roomId: "H.3.405" },
-        // { id: "WD.03.023_door", x: 821, y: 1018, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.023" },
-        // { id: "WD.03.021_door", x: 923, y: 1002, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.021" },
-        // { id: "WD.03.019_door", x: 1024, y: 991, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.019" },
-        // { id: "WD.03.Trap1_door", x: 990, y: 906, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.Trap1" },
-        // { id: "WD.03.lift_door", x: 922, y: 908, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.lift" },
-        // { id: "WD.03.Trap2_door", x: 812, y: 732, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.Trap2" },
-        // { id: "WD.03.028_door", x: 805, y: 859, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.028" },
-        // { id: "WD.03.029_door", x: 793, y: 810, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.029" },
-        // { id: "WD.03.030_door", x: 787, y: 778, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.030" },
-        // { id: "WD.03.033_door", x: 863, y: 829, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.033" },
-        // { id: "WD.03.005_door", x: 1308, y: 870, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WD.03.005" },
-        // { id: "WN.03.029_door", x: 1426, y: 758, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.029" },
-        // { id: "WN.03.028_door", x: 1462, y: 752, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.028" },
-        // { id: "WN.03.022_door", x: 1779, y: 786, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.022" },
-        // { id: "WN.03.017_door", x: 2004, y: 755, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.017" },
-        // { id: "WN.03.014_door", x: 2167, y: 733, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.014" },
-        // { id: "WN.03.007_door", x: 2189, y: 699, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.007" },
-        // { id: "WN.03.Trap1_door", x: 2156, y: 661, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.Trap1" },
-        // { id: "WN.03.Lift_door", x: 2113, y: 624, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.Lift" },
-        // { id: "WN.03.Trap2_door", x: 1422, y: 713, floor: 3, type: "door", width: 20, height: 20 ,roomId: "WN.03.Trap2" },
-        // { id: "H.3.Trap1", x: 691, y: 1070, floor: 3, type: "stairs", width: 20, height: 20  },
-        // { id: "H.3.Lift1", x: 686, y: 1037, floor: 3, type: "elevator", width: 20, height: 20  },
-        // { id: "H.3.Lift2", x: 615, y: 972, floor: 3, type: "elevator", width: 20, height: 20  },
-        // { id: "H.3.Lift3", x: 609, y: 940, floor: 3, type: "elevator", width: 20, height: 20  },
-        // { id: "H.3.Trap2", x: 462, y: 242, floor: 3, type: "stairs", width: 20, height: 20  },
-        // { id: "WD.03.Trap1", x: 990, y: 906, floor: 3, type: "stairs", width: 20, height: 20  },
-        // { id: "WD.03.lift", x: 922, y: 908, floor: 3, type: "elevator", width: 20, height: 20  },
-        // { id: "WD.03.Trap2", x: 812, y: 732, floor: 3, type: "stairs", width: 20, height: 20  },
-        // { id: "WN.03.Trap1", x: 2156, y: 661, floor: 3, type: "stairs", width: 20, height: 20  },
-        // { id: "WN.03.Lift", x: 2113, y: 624, floor: 3, type: "elevator", width: 20, height: 20  },
-        // { id: "WN.03.Trap2", x: 1422, y: 713, floor: 3, type: "stairs", width: 20, height: 20  },
-        //         ]}
+        doors={[
+          {
+            "id": "H.0.305 Receptie_door",
+            "x": 362,
+            "y": 1027,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.305 Receptie"
+          },
+          {
+            "id": "H.0.304_door",
+            "x": 282,
+            "y": 948,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.304"
+          },
+          {
+            "id": "H.0.309_door",
+            "x": 311,
+            "y": 812,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.309"
+          },
+          {
+            "id": "H.0.319_door",
+            "x": 219,
+            "y": 405,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.319"
+          },
+          {
+            "id": "H.0.321_door",
+            "x": 204,
+            "y": 320,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.321"
+          },
+          {
+            "id": "H.0.405_door",
+            "x": 351,
+            "y": 252,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.405"
+          },
+          {
+            "id": "H.0.104_door",
+            "x": 448,
+            "y": 267,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.104"
+          },
+          {
+            "id": "H.0.103_door",
+            "x": 441,
+            "y": 226,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.103"
+          },
+          {
+            "id": "H.0.107_door",
+            "x": 498,
+            "y": 360,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.107"
+          },
+          {
+            "id": "H.0.110 Kantine_door",
+            "x": 545,
+            "y": 564,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.110 Kantine"
+          },
+          {
+            "id": "H.0.115_door",
+            "x": 547,
+            "y": 723,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.115"
+          },
+          {
+            "id": "H.0.116_door",
+            "x": 556,
+            "y": 767,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.116"
+          },
+          {
+            "id": "H.0.117_door",
+            "x": 567,
+            "y": 811,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.117"
+          },
+          {
+            "id": "H.0.118_door",
+            "x": 578,
+            "y": 859,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.118"
+          },
+          {
+            "id": "H.0.119 Lift1_door",
+            "x": 595,
+            "y": 937,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.119 Lift1"
+          },
+          {
+            "id": "H.0.120 Lift2_door",
+            "x": 599,
+            "y": 972,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.120 Lift2"
+          },
+          {
+            "id": "H.0.409 Lift3_door",
+            "x": 669,
+            "y": 1026,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.409 Lift3"
+          },
+          {
+            "id": "WD.00.032 Trap2_door",
+            "x": 809,
+            "y": 741,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.032 Trap2"
+          },
+          {
+            "id": "WD.00.029_door",
+            "x": 788,
+            "y": 806,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.029"
+          },
+          {
+            "id": "WD.00.034_door",
+            "x": 1004,
+            "y": 817,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.034"
+          },
+          {
+            "id": "WD.00.004_door",
+            "x": 1088,
+            "y": 806,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.004"
+          },
+          {
+            "id": "WD.00.018_door",
+            "x": 1033,
+            "y": 978,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.018"
+          },
+          {
+            "id": "WD.00.000 Trap1_door",
+            "x": 1000,
+            "y": 912,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.000 Trap1"
+          },
+          {
+            "id": "WD.00.015_door",
+            "x": 1264,
+            "y": 812,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.015"
+          },
+          {
+            "id": "WN.00.029_door",
+            "x": 1381,
+            "y": 761,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.029"
+          },
+          {
+            "id": "WN.00.030 Trap2_door",
+            "x": 1417,
+            "y": 724,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.030 Trap2"
+          },
+          {
+            "id": "WN.00.024_door",
+            "x": 1592,
+            "y": 732,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.024"
+          },
+          {
+            "id": "WN.00.099_door",
+            "x": 1787,
+            "y": 706,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.099"
+          },
+          {
+            "id": "WN.00.019 Stadslab_door",
+            "x": 1745,
+            "y": 855,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.019 Stadslab"
+          },
+          {
+            "id": "WN.00.021_door",
+            "x": 1875,
+            "y": 687,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.021"
+          },
+          {
+            "id": "WN.00.004 Lift_door",
+            "x": 2096,
+            "y": 639,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.004 Lift"
+          },
+          {
+            "id": "WN.00.003 Trap1_door",
+            "x": 2120,
+            "y": 669,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.003 Trap1"
+          },
+          {
+            "id": "WN.00.005_door",
+            "x": 2178,
+            "y": 585,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.005"
+          },
+          {
+            "id": "WN.00.008_door",
+            "x": 2183,
+            "y": 756,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.008"
+          },
+          {
+            "id": "WN.00.028_door",
+            "x": 1388,
+            "y": 807,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WN.00.028"
+          },
+          {
+            "id": "WD.00.000 Lift1_door",
+            "x": 913,
+            "y": 923,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "WD.00.000 Lift1"
+          },
+          {
+            "id": "H.0.122 Trap1_door",
+            "x": 677,
+            "y": 1069,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.122 Trap1"
+          },
+          {
+            "id": "H.0.322a2_door",
+            "x": 133,
+            "y": 259,
+            "floor": 0,
+            "type": 1,
+            "width": 20,
+            "height": 20,
+            "roomId": "H.0.322a2"
+          },
+          {
+            "id": "H.0.119 Lift1",
+            "x": 595,
+            "y": 937,
+            "floor": 0,
+            "type": 5,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "H.0.120 Lift2",
+            "x": 599,
+            "y": 972,
+            "floor": 0,
+            "type": 5,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "H.0.409 Lift3",
+            "x": 669,
+            "y": 1026,
+            "floor": 0,
+            "type": 5,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WD.00.032 Trap2",
+            "x": 809,
+            "y": 741,
+            "floor": 0,
+            "type": 4,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WD.00.000 Trap1",
+            "x": 1000,
+            "y": 912,
+            "floor": 0,
+            "type": 4,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WN.00.030 Trap2",
+            "x": 1417,
+            "y": 724,
+            "floor": 0,
+            "type": 4,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WN.00.004 Lift",
+            "x": 2096,
+            "y": 639,
+            "floor": 0,
+            "type": 5,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WN.00.003 Trap1",
+            "x": 2120,
+            "y": 669,
+            "floor": 0,
+            "type": 4,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "WD.00.000 Lift1",
+            "x": 913,
+            "y": 923,
+            "floor": 0,
+            "type": 5,
+            "width": 20,
+            "height": 20
+          },
+          {
+            "id": "H.0.122 Trap1",
+            "x": 677,
+            "y": 1069,
+            "floor": 0,
+            "type": 4,
+            "width": 20,
+            "height": 20
+          }
+        ]}
         floors={floors}
       />
     </>

@@ -9,10 +9,12 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
   currentPosition,
   areas = [],
+  showRoutes = true,
+  showHeatmap = false,
 }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
@@ -198,17 +200,15 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const selectedFloor = floors?.find((f) => f.number === currentFloor);
 
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
-    if (!svgElement.current) return;
+    if (!svgElement.current || !showRoutes) return;
 
     const svg = svgElement.current;
 
-    // Create SVG point
     const point = svg.createSVGPoint();
 
     point.x = e.clientX;
     point.y = e.clientY;
 
-    // Convert screen coords -> SVG coords
     const svgPoint = point.matrixTransform(svg.getScreenCTM()?.inverse());
 
     console.log("SVG X:", svgPoint.x);
@@ -217,6 +217,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     const target = e.target as Element;
 
     const roomGroup = target.closest("g[id^='H.'], g[id^='WN.'], g[id^='WD.']");
+    console.log("Clicked room group:", roomGroup?.id);
 
     if (roomGroup?.id) {
       const cleanId = roomGroup.id.replace(/-\\d+$/, "");
@@ -278,13 +279,14 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   return (
     <div className="map-view-v4">
+      {showHeatmap ? <h2>Heatmap</h2> : <h2>Map</h2>}
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
 
-      {/* <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
+      <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
         📋 Copy doors JSON
-      </button> */}
+      </button>
       <button className="map-view-v4__compass-button" onClick={startCompass}>
         Enable compass
       </button>
@@ -352,15 +354,15 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
             </g>
           )}
 
-          {path && (
+          {path && showRoutes && (
             <path
               d={(() => {
                 const points = path
                   .map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor))
                   .filter(Boolean) as {
-                  x: number;
-                  y: number;
-                }[];
+                    x: number;
+                    y: number;
+                  }[];
 
                 if (points.length === 0) return "";
 
@@ -395,37 +397,40 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
             />
           )}
 
-          <defs>
-            {areasForCurrentFloor.map((a) => {
-              const color = getColor(a.value);
-              return (
-                <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor={color} stopOpacity="0.9" />
-                  <stop offset="45%" stopColor={color} stopOpacity="0.5" />
-                  <stop offset="100%" stopColor={color} stopOpacity="0" />
-                </radialGradient>
-              );
-            })}
-            {areasForCurrentFloor.map((a) => (
-              <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
-                <rect x={a.x} y={a.y} width={a.width} height={a.height} />
-              </clipPath>
-            ))}
-          </defs>
+          {showHeatmap && (<>
+            <defs>
+              {areasForCurrentFloor.map((a) => {
+                const color = getColor(a.value);
+                return (
+                  <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={color} stopOpacity="0.9" />
+                    <stop offset="45%" stopColor={color} stopOpacity="0.5" />
+                    <stop offset="100%" stopColor={color} stopOpacity="0" />
+                  </radialGradient>
+                );
+              })}
+              {areasForCurrentFloor.map((a) => (
+                <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
+                  <rect x={a.x} y={a.y} width={a.width} height={a.height} />
+                </clipPath>
+              ))}
+            </defs>
 
-          {areasForCurrentFloor.map((a) => (
-            <rect
-              key={a.id}
-              x={a.x}
-              y={a.y}
-              width={a.width}
-              height={a.height}
-              fill={`url(#${getGradientId(a.id)})`}
-              clipPath={`url(#clip-${a.id})`}
-            />
-          ))}
+            {areasForCurrentFloor.map((a) => (
+              <rect
+                key={a.id}
+                x={a.x}
+                y={a.y}
+                width={a.width}
+                height={a.height}
+                fill={`url(#${getGradientId(a.id)})`}
+                clipPath={`url(#clip-${a.id})`}
+              />
+            ))}
+          </>)}
         </svg>
       </div>
     </div>
   );
 };
+

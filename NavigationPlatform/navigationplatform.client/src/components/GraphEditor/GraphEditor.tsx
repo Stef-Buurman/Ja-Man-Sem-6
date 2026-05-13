@@ -216,7 +216,7 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
       return from && to;
     });
 
-    const generatedStairsAndElevators: GraphNodeDto[] = visibleDoors
+    var x: GraphNodeDto[] = visibleDoors
       .filter((d) => IsNodeStairs(d) || IsNodeElevator(d))
       .map((d) => {
         if (IsNodeStairs(d)) {
@@ -228,66 +228,34 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
             type: GetTypeFromNodeType("stairs"),
             width: d.width,
             height: d.height,
-          } as GraphNodeDto;
+          };
+        } else {
+          return {
+            id: d.roomId || (d.id != null ? d.id.replace("_door", "") : ""),
+            x: d.x,
+            y: d.y,
+            floor: d.floor,
+            type: GetTypeFromNodeType("elevator"),
+            width: d.width,
+            height: d.height,
+          };
         }
-
-        return {
-          id: d.roomId || (d.id != null ? d.id.replace("_door", "") : ""),
-          x: d.x,
-          y: d.y,
-          floor: d.floor,
-          type: GetTypeFromNodeType("elevator"),
-          width: d.width,
-          height: d.height,
-        } as GraphNodeDto;
       });
 
-    const generatedEdges: GraphEdgeDto[] = generatedStairsAndElevators.map((element) => ({
+    const generatedEdges: GraphEdgeDto[] = x.map((element) => ({
       from: element.id,
       to: `${element.id}_door`,
     }));
 
     return {
-      nodes: distinctBy(nodes.concat(visibleDoors).concat(generatedStairsAndElevators), (n) => n.id),
+      nodes: distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id),
       edges: distinctBy(validEdges.concat(generatedEdges), (e) => [e.from, e.to].sort().join("-")),
     };
   };
 
-  //   const exportGraph = () => {
-  //     const graph = buildExportGraph();
-
-  //     const formatNode = (n: GraphNode) => `    {
-  //       id: "${n.id}",
-  //       x: ${Number(n.x.toFixed(2))},
-  //       y: ${Number(n.y.toFixed(2))},
-  //       floor: ${n.floor},
-  //       type: "${n.type}",
-  //       width: ${n.width ?? 10},
-  //       height: ${n.height ?? 10}${n.roomId ? `,\n      roomId: "${n.roomId}"` : ""}${n.label ? `,\n      label: "${n.label}"` : ""}
-  //     }`;
-
-  //     const formatEdge = (e: Edge) => `    {
-  //       from: "${e.from}",
-  //       to: "${e.to}"
-  //     }`;
-
-  //     const tsString = `import { Graph } from "../Types/types";
-
-  // export const exportedGraph: Graph = {
-  //   nodes: [
-  // ${graph.nodes.map(formatNode).join(",\n")}
-  //   ],
-  //   edges: [
-  // ${graph.edges.map(formatEdge).join(",\n")}
-  //   ]
-  // };`;
-
-  //     navigator.clipboard.writeText(tsString);
-  //     alert("Graph copied to clipboard!");
-  //   };
-
   const exportGraphJson = () => {
     const graph = buildExportGraph();
+    console.log("Exporting graph:", graph);
     const jsonString = JSON.stringify(graph, null, 2);
     navigator.clipboard.writeText(jsonString);
     alert("Graph JSON copied to clipboard!");

@@ -16,4 +16,6 @@ export interface PathfindingMapProps {
     longitude?: number;
   };
   areas?: HeatpointArea[];
+  showHeatmap?: boolean;
+  showRoutes?: boolean;
 }

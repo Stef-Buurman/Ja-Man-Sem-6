@@ -11,12 +11,12 @@ import { getGraph } from "../../api/methods/Graph.api";
 import { useParams } from "react-router-dom";
 import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
 import * as signalR from "@microsoft/signalr";
-import { getFloors } from "../../api/methods/Floor.api";
 import { FloorCache } from "../../utils/CachedMethods";
+import Toggle from "../../components/toggle/toggle";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
-  const [currentFloor, setCurrentFloor] = useState<number>(3);
+  const [currentFloor, setCurrentFloor] = useState<number>(0);
   const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
   const [startNodes, setStartNodes] = useState<string[]>(defaultStartNodes);
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
@@ -26,6 +26,8 @@ export const Pathfinding: React.FC = () => {
   let { y } = useParams<{ y: string }>();
   let { floor } = useParams<{ floor: string }>();
   const startingPosition = x && y ? { x: parseInt(x), y: parseInt(y) } : { x: 373, y: 660 };
+  const [showHeatmap, setShowHeatmap] = useState(false);
+  const [showRoutes, setShowRoutes] = useState(true);
   // const [gpsCoordinates, setGpsCoordinates] = useState<{
   //   latitude: number;
   //   longitude: number;
@@ -47,7 +49,7 @@ export const Pathfinding: React.FC = () => {
   };
 
   useEffect(() => {
-    setCurrentFloor(floor ? parseInt(floor) : 3);
+    setCurrentFloor(floor ? parseInt(floor) : 0);
   }, [x, y, floor]);
 
   const nodeAvailable = (nodeId: string) => {
@@ -127,6 +129,7 @@ export const Pathfinding: React.FC = () => {
       );
       if (res.ok) {
         let graphData = res.response;
+        console.log(graphData)
         setGraph(graphData);
         if (startingPosition && graphData.nodes != null && graphData.nodes.length > 0) {
           const closestNode = graphData.nodes
@@ -182,6 +185,7 @@ export const Pathfinding: React.FC = () => {
       },
     );
     setPath(result);
+    console.log("Pathfinding result:", result);
 
     const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0].number;
 
@@ -270,12 +274,11 @@ export const Pathfinding: React.FC = () => {
             />
           </div>
 
-          {/* <div className="pathfinding-control-group">
-            <label className="pathfinding-checkbox">
-              <input type="checkbox" checked={isAccessibleRoute} onChange={(e) => handleSettingChange({ accessibleRoute: e.target.checked })} />
-              <span>Route for disabled persons</span>
-            </label>
-          </div> */}
+          <div className="pathfinding-control-group">
+            <Toggle title="Route for disabled persons" handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })} />
+            <Toggle title="Show heatmap" handleCheckboxChange={(checked) => setShowHeatmap(checked)} currentValue={showHeatmap} />
+            <Toggle title="Show routes" handleCheckboxChange={(checked) => setShowRoutes(checked)} currentValue={showRoutes} />
+          </div>
 
           {roomOptions && (
             <>
@@ -320,6 +323,8 @@ export const Pathfinding: React.FC = () => {
               // longitude: gpsCoordinates?.longitude ?? undefined,
             }}
             areas={areas}
+            showHeatmap={showHeatmap}
+            showRoutes={showRoutes}
           />
         </section>
       </div>
