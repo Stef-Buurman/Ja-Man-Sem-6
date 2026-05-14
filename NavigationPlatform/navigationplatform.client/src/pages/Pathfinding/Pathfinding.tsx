@@ -239,6 +239,7 @@ export const Pathfinding: React.FC = () => {
             <Toggle
               title="Route for disabled persons"
               handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
+              currentValue={isAccessibleRoute}
             />
             <Toggle
               title="Show heatmap"

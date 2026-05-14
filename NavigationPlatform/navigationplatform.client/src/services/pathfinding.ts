@@ -33,8 +33,8 @@ export function findPath(startId: string, endId: string, graph: GraphDto): strin
 
 export function buildAdjacencyMap(graph: GraphDto, settings: PathfindingSettings): Map<string, string[]> {
   const map = new Map<string, string[]>();
-  const nodes = graph.nodes;
-  if (settings.accessibleRoute) nodes?.filter((n) => GetNodeTypeFromInteger(n.type) === "stairs");
+  let nodes = graph.nodes;
+  if (settings.accessibleRoute) nodes = nodes?.filter((n) => GetNodeTypeFromInteger(n.type) !== "stairs") ?? null;
   nodes?.forEach((n) => n.id && map.set(n.id, []));
 
   graph.edges?.forEach((e) => {
@@ -63,7 +63,7 @@ export function getEdgeCost(from: GraphNodeDto, to: GraphNodeDto) {
 
   if (GetNodeTypeFromInteger(to.type) === "door") cost += 5;
   if (GetNodeTypeFromInteger(to.type) === "stairs") cost += 20;
-  if (GetNodeTypeFromInteger(to.type) === "elevator") cost += 10;
+  if (GetNodeTypeFromInteger(to.type) === "elevator") cost += 20;
 
   if (from.floor !== to.floor) cost += 50;
 
@@ -78,7 +78,25 @@ export function getDoorsForRoom(graph: GraphDto, roomId: string): GraphNodeDto[]
   return graph.nodes?.filter((n) => GetNodeTypeFromInteger(n.type) === "door" && n.roomId === roomId) || [];
 }
 
-export function getNeighbors(id: string, adjacency: Map<string, string[]>) {
+export function getNeighbors(
+  id: string,
+  adjacency: Map<string, string[]>,
+  settings: PathfindingSettings,
+  graph: GraphDto,
+): string[] {
+  if (settings.accessibleRoute) {
+    const neighbors = adjacency.get(id) || [];
+    return neighbors.filter((neighborId) => {
+      const neighborNode = getNode(graph, neighborId);
+      const currentNode = getNode(graph, id);
+      return (
+        neighborNode &&
+        GetNodeTypeFromInteger(neighborNode.type) !== "stairs" &&
+        currentNode &&
+        GetNodeTypeFromInteger(currentNode.type) !== "stairs"
+      );
+    });
+  }
   return adjacency.get(id) || [];
 }
 
@@ -136,7 +154,7 @@ export function findPathAStar(
     const currentNode = getNode(graph, current);
     if (!currentNode) continue;
 
-    for (const neighborId of getNeighbors(current, adjacency)) {
+    for (const neighborId of getNeighbors(current, adjacency, settings, graph)) {
       const neighborNode = getNode(graph, neighborId);
       if (!neighborNode) continue;
 
@@ -203,7 +221,7 @@ export function findPathAStarMultiStart(
       const currentNode = getNode(graph, current);
       if (!currentNode) continue;
 
-      for (const neighborId of getNeighbors(current, adjacency)) {
+      for (const neighborId of getNeighbors(current, adjacency, settings, graph)) {
         const neighborNode = getNode(graph, neighborId);
         if (!neighborNode) continue;
 
