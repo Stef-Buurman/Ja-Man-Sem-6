@@ -8,12 +8,13 @@ import HeatmapEditor from "./pages/HeatmapEditor/HeatmapEditor";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<div>Home</div>} />
-        <Route path="/pathfinding" element={<Pathfinding />} />
-        <Route path="/pathfinding/:floor/:x/:y" element={<Pathfinding />} />
-        <Route path="/graph-editor" element={<GraphEditorPage />} />
-        <Route path="/heatmap/editor" element={<HeatmapEditor />} />
+      <Route path="/" element={<Layout isAdmin={false} />}>
+        <Route index element={<Pathfinding />} />
+        <Route path="/:floor/:x/:y" element={<Pathfinding />} />
+      </Route>
+      <Route path="/admin" element={<Layout isAdmin={true} />}>
+        <Route path="/admin/graph-editor" element={<GraphEditorPage />} />
+        <Route path="/admin/heatmap-editor" element={<HeatmapEditor />} />
       </Route>
     </Routes>
   );

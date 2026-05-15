@@ -1,18 +1,18 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./Layout.css";
+import type { LayoutProps } from "./Layout.props";
 
-export const Layout: React.FC = () => {
+export const Layout: React.FC<LayoutProps> = ({ isAdmin }) => {
   return (
     <div className="layout-container">
       <header className="layout-header">
         <div className="header-content">
           <h1 className="logo">Prototype Project</h1>
           <nav className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/pathfinding">2D Map</Link>
-            <Link to="/graph-editor">Graph Editor</Link>
-            <Link to="/heatmap/editor">Heatmap Editor</Link>
+            {!isAdmin && <Link to="/">2D Map</Link>}
+            {isAdmin && <Link to="/admin/graph-editor">Graph Editor</Link>}
+            {isAdmin && <Link to="/admin/heatmap-editor">Heatmap Editor</Link>}
           </nav>
         </div>
       </header>

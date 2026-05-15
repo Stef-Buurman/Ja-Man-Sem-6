@@ -74,8 +74,13 @@ export function getNode(graph: GraphDto, id: string): GraphNodeDto | undefined {
   return graph.nodes?.find((n) => n.id === id);
 }
 
-export function getDoorsForRoom(graph: GraphDto, roomId: string): GraphNodeDto[] {
-  return graph.nodes?.filter((n) => GetNodeTypeFromInteger(n.type) === "door" && n.roomId === roomId) || [];
+export function getDoorIdsForRoom(graph: GraphDto, roomId: string): string[] {
+  return (
+    graph.nodes
+      ?.filter((n) => GetNodeTypeFromInteger(n.type) === "door" && n.roomId === roomId)
+      ?.map((n) => n.id)
+      .filter((id): id is string => !!id) || []
+  );
 }
 
 export function getNeighbors(
@@ -240,13 +245,15 @@ export function findPathAStarMultiStart(
   };
 
   for (const targetId of endIds) {
-    const doors = getDoorsForRoom(graph, targetId);
+    let doors = getDoorIdsForRoom(graph, targetId);
+    console.log(`Found doors for target ${targetId}:`, doors);
+    if (doors.length === 0) doors = [targetId];
 
     for (const door of doors) {
-      console.log(`Attempting pathfinding to door ${door.id} for target ${targetId}`);
-      if (door.id) {
-        const path = tryFindPath(door.id);
-        console.log(`Trying path to ${door.id} for target ${targetId}:`, path);
+      console.log(`Attempting pathfinding to door ${door} for target ${targetId}`);
+      if (door) {
+        const path = tryFindPath(door);
+        console.log(`Trying path to ${door} for target ${targetId}:`, path);
         if (path.length > 0) {
           return path;
         }

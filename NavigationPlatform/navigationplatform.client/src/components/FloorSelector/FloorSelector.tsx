@@ -11,7 +11,7 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
   <select className="pathfinding-floor-select" value={currentFloor} onChange={(e) => setFloor(Number(e.target.value))}>
     {floors.map((floor) => (
       <option key={floor} value={floor}>
-        Floor {floor}
+        Verdieping {floor}
       </option>
     ))}
   </select>

@@ -19,7 +19,7 @@ export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
   const [currentFloor, setCurrentFloor] = useState<number>(0);
   const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
-  const [startNodes, setStartNodes] = useState<string[]>(defaultStartNodes);
+  const [startNodes, setStartNodes] = useState<string[]>([]);
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
@@ -29,6 +29,8 @@ export const Pathfinding: React.FC = () => {
   const [showHeatmap, setShowHeatmap] = useState(false);
   const [showRoutes, setShowRoutes] = useState(true);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
+  const [screen, setScreen] = useState<"settings" | "map">("settings");
+  const userLocationProvided = x !== undefined && y !== undefined && floor !== undefined;
 
   const fetchFloors = async () => {
     try {
@@ -43,7 +45,10 @@ export const Pathfinding: React.FC = () => {
 
   useEffect(() => {
     setCurrentFloor(floor ? parseInt(floor) : 0);
-    x && y ? setUserPosition({ x: parseInt(x), y: parseInt(y), floor: floor ? parseInt(floor) : 0 }) : null;
+    if (userLocationProvided) {
+      setUserPosition({ x: parseInt(x), y: parseInt(y), floor: parseInt(floor) });
+      setStartNodes(["User Location"]);
+    }
   }, [x, y, floor]);
 
   const nodeAvailable = (nodeId: string) => {
@@ -51,21 +56,6 @@ export const Pathfinding: React.FC = () => {
   };
 
   const [userPosition, setUserPosition] = useState<{ x: number; y: number; floor: number } | null>(null);
-
-  const handleSettingChange = (settings: PathfindingSettings) => {
-    if (settings.accessibleRoute !== isAccessibleRoute) {
-      setIsAccessibleRoute(settings.accessibleRoute);
-      if (destinationNode) {
-        var result = findPathAStarMultiStart(
-          startNodes.concat(startNodes.map((n) => n + "_door")),
-          [destinationNode, destinationNode + "_door"],
-          graph,
-          { accessibleRoute: settings.accessibleRoute },
-        );
-        setPath(result);
-      }
-    }
-  };
 
   useEffect(() => {
     const fetchGraph = async () => {
@@ -89,13 +79,19 @@ export const Pathfinding: React.FC = () => {
             });
 
           if (closestNode?.id) {
+            console.log(closestNode.id);
             setStartNodes([closestNode.id]);
           }
         } else {
           var entranceNodes = graphData.nodes?.filter((n) => n.type === GetTypeFromNodeType("entrance"));
           console.log("Entrance nodes:", entranceNodes);
-          if (entranceNodes && entranceNodes.length > 0) {
-            setStartNodes(entranceNodes.map((n) => n.id ?? "").filter((id) => id !== "").slice(0, 1));
+          if (entranceNodes && entranceNodes.length > 0 && !userLocationProvided) {
+            setStartNodes(
+              entranceNodes
+                .map((n) => n.id ?? "")
+                .filter((id) => id !== "")
+                .slice(0, 1),
+            );
           }
         }
       }
@@ -103,50 +99,27 @@ export const Pathfinding: React.FC = () => {
     fetchGraph();
   }, [currentFloor]);
 
-  const handleStartClick = async (roomId: string) => {
+  const handleSettingChange = (settings: PathfindingSettings) => {
+    setIsAccessibleRoute(settings.accessibleRoute);
+  };
+
+  const handleStartClick = (roomId: string) => {
     const updatedStartNodes = [roomId];
     setStartNodes(updatedStartNodes);
 
-    var node = graph.nodes?.find((n) => n.id === roomId || n.id === roomId + "_door") as GraphNodeDto;
-    if (node) setUserPosition({ x: node.x ?? 0, y: node.y ?? 0, floor: node.floor ?? 0 });
-    var settings = { accessibleRoute: isAccessibleRoute };
-    if (destinationNode) {
-      var result = findPathAStarMultiStart(
-        updatedStartNodes.concat(updatedStartNodes.map((n) => n + "_door")),
-        [destinationNode, destinationNode + "_door"],
-        graph,
-        settings,
-      );
-      setPath(result);
+    const node = graph.nodes?.find((n) => n.id === roomId || n.id === roomId + "_door") as GraphNodeDto;
 
-      const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0].number;
-
-      setCurrentFloor(floor);
-      setUserPosition({ x: node.x ?? 0, y: node.y ?? 0, floor: node.floor ?? 0 });
-      setSelectedRoom(destinationNode);
+    if (node) {
+      setUserPosition({
+        x: node.x ?? 0,
+        y: node.y ?? 0,
+        floor: node.floor ?? 0,
+      });
     }
   };
 
-  const handleDestinationClick = async (roomId: string) => {
-    console.log("Destination clicked:", roomId);
+  const handleDestinationClick = (roomId: string) => {
     setDestinationNode(roomId);
-
-    console.log(startNodes);
-    var result = findPathAStarMultiStart(
-      startNodes.concat(startNodes.map((n) => n + "_door")),
-      [roomId, roomId + "_door"],
-      graph,
-      {
-        accessibleRoute: isAccessibleRoute,
-      },
-    );
-    setPath(result);
-    console.log("Pathfinding result:", result);
-
-    const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0].number;
-
-    setCurrentFloor(floor);
-    setSelectedRoom(roomId);
   };
 
   const roomOptions = graph.nodes
@@ -171,6 +144,44 @@ export const Pathfinding: React.FC = () => {
     const res = await getHeatpointAreas();
     console.log("Fetched heatmap areas:", res);
     if (res.ok) setAreas(res.response);
+  };
+
+  const calculatePathAndGoToMap = (destinationOverride?: string) => {
+    const destinationToUse = destinationOverride ?? destinationNode;
+
+    if (!destinationToUse || startNodes.length === 0 || !graph.nodes) return;
+
+    let startNodesToUse = startNodes.concat(startNodes.map((n) => n + "_door"));
+
+    if (startNodesToUse[0] === "User Location" && userPosition) {
+      const closestNode = graph.nodes
+        .filter((node) => node.x != null && node.y != null && !node.id?.includes("_door"))
+        .reduce((best, node) => {
+          const bestDistance = Math.hypot((best.x ?? 0) - userPosition.x, (best.y ?? 0) - userPosition.y);
+          const currentDistance = Math.hypot((node.x ?? 0) - userPosition.x, (node.y ?? 0) - userPosition.y);
+          const isSameFloor = node.floor === userPosition.floor;
+
+          if (!isSameFloor) return best;
+          return currentDistance < bestDistance ? node : best;
+        });
+
+      if (closestNode?.id) {
+        startNodesToUse = [closestNode.id];
+      }
+    }
+
+    const result = findPathAStarMultiStart(startNodesToUse, [destinationToUse, destinationToUse + "_door"], graph, {
+      accessibleRoute: isAccessibleRoute,
+    });
+
+    setPath(result);
+
+    const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0]?.number ?? 0;
+
+    setCurrentFloor(floor);
+    setDestinationNode(destinationToUse);
+    setSelectedRoom(destinationToUse);
+    setScreen("map");
   };
 
   useEffect(() => {
@@ -219,88 +230,129 @@ export const Pathfinding: React.FC = () => {
     <div className="pathfinding-page">
       <div className="pathfinding-shell">
         <header className="pathfinding-header">
-          <h1 className="pathfinding-title">3D Pathfinding Prototype V4</h1>
-          <h2 className="pathfinding-subtitle">
-            Current Floor: {currentFloor}
-            {selectedRoom && ` (Route sent to: ${selectedRoom})`}
-          </h2>
+          <h1 className="pathfinding-title">{screen === "settings" ? "Waar wil je heen?" : "Map"}</h1>
+
+          {screen === "map" && (
+            <h2 className="pathfinding-subtitle">
+              Huidige verdieping: {currentFloor}
+              {selectedRoom && ` (Route sent to: ${selectedRoom})`}
+            </h2>
+          )}
         </header>
 
-        <section className="pathfinding-controls">
-          <div className="pathfinding-control-group">
-            <FloorSelector
-              floors={floorsList.map((f) => f.number)}
-              currentFloor={currentFloor}
-              setFloor={setCurrentFloor}
-            />
-          </div>
+        {screen === "settings" && (
+          <section className="pathfinding-controls">
+            <div className="pathfinding-control-group">
+              <Toggle
+                title="Route toegankelijk voor rolstoelgebruikers"
+                handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
+                currentValue={isAccessibleRoute}
+              />
+            </div>
 
-          <div className="pathfinding-control-group">
-            <Toggle
-              title="Route for disabled persons"
-              handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
-              currentValue={isAccessibleRoute}
-            />
-            <Toggle
-              title="Show heatmap"
-              handleCheckboxChange={(checked) => setShowHeatmap(checked)}
-              currentValue={showHeatmap}
-            />
-            <Toggle
-              title="Show routes"
-              handleCheckboxChange={(checked) => setShowRoutes(checked)}
-              currentValue={showRoutes}
-            />
-          </div>
+            <div className="pathfinding-search-wrapper">
+              {roomOptions && (
+                <>
+                  <div className="pathfinding-search">
+                    <SearchSelect
+                      title="Vul je startlocatie in"
+                      data={roomOptions.concat(userLocationProvided ? ["User Location"] : [])}
+                      onSelect={handleStartClick}
+                      value={
+                        nodeAvailable(startNodes[0])
+                          ? startNodes[0].replace("_door", "")
+                          : userLocationProvided
+                            ? "User Location"
+                            : undefined
+                      }
+                    />
+                  </div>
 
-          {roomOptions && (
-            <>
-              <div className="pathfinding-search">
-                <SearchSelect
-                  title="Enter start room"
-                  data={roomOptions}
-                  onSelect={handleStartClick}
-                  value={nodeAvailable(startNodes[0]) ? startNodes[0].replace("_door", "") : undefined}
+                  <div className="pathfinding-search">
+                    <SearchSelect
+                      title="Vul je bestemming in"
+                      data={roomOptions}
+                      onSelect={handleDestinationClick}
+                      value={
+                        destinationNode && nodeAvailable(destinationNode)
+                          ? destinationNode.replace("_door", "")
+                          : undefined
+                      }
+                    />
+                  </div>
+                </>
+              )}
+
+              <button
+                className="pathfinding-button"
+                disabled={!destinationNode || startNodes.length === 0}
+                onClick={() => calculatePathAndGoToMap()}
+              >
+                Naar de kaart
+              </button>
+            </div>
+          </section>
+        )}
+
+        {screen === "map" && (
+          <>
+            <section className="pathfinding-map-toolbar">
+              <div className="pathfinding-map-toolbar-left">
+                <button className="pathfinding-button" onClick={() => setScreen("settings")}>
+                  Terug naar instellingen
+                </button>
+              </div>
+
+              <div className="pathfinding-map-toolbar-center">
+                <Toggle
+                  title="Heatmap tonen"
+                  handleCheckboxChange={(checked) => setShowHeatmap(checked)}
+                  currentValue={showHeatmap}
+                />
+
+                <Toggle
+                  title="Routes tonen"
+                  handleCheckboxChange={(checked) => setShowRoutes(checked)}
+                  currentValue={showRoutes}
                 />
               </div>
-              <div className="pathfinding-search">
-                <SearchSelect
-                  title="Enter destination room"
-                  data={roomOptions}
-                  onSelect={handleDestinationClick}
-                  value={
-                    destinationNode && nodeAvailable(destinationNode)
-                      ? destinationNode?.replace("_door", "")
-                      : undefined
-                  }
+
+              <div className="pathfinding-map-toolbar-right">
+                <FloorSelector
+                  floors={floorsList.map((f) => f.number)}
+                  currentFloor={currentFloor}
+                  setFloor={setCurrentFloor}
                 />
               </div>
-            </>
-          )}
-        </section>
+            </section>
 
-        <section className="pathfinding-map-card">
-          <PathfindingMap
-            nodes={graph.nodes ?? []}
-            edges={graph.edges ?? []}
-            currentFloor={currentFloor}
-            path={path}
-            handleRoomClick={handleDestinationClick}
-            floors={floorsList}
-            currentPosition={
-              userPosition
-                ? {
-                    x: userPosition.x,
-                    y: userPosition.y,
-                    floor: userPosition.floor,
-                  }
-                : undefined
-            }
-            areas={areas}
-            showHeatmap={showHeatmap}
-            showRoutes={showRoutes}
-          />
-        </section>
+            <section className="pathfinding-map-card">
+              <PathfindingMap
+                nodes={graph.nodes ?? []}
+                edges={graph.edges ?? []}
+                currentFloor={currentFloor}
+                path={path}
+                handleRoomClick={(roomId) => {
+                  handleDestinationClick(roomId);
+                  calculatePathAndGoToMap(roomId);
+                }}
+                floors={floorsList}
+                currentPosition={
+                  userPosition
+                    ? {
+                        x: userPosition.x,
+                        y: userPosition.y,
+                        floor: userPosition.floor,
+                      }
+                    : undefined
+                }
+                areas={areas}
+                showHeatmap={showHeatmap}
+                showRoutes={showRoutes}
+              />
+            </section>
+          </>
+        )}
       </div>
     </div>
   );
