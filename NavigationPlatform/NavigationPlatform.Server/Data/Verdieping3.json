@@ -97,7 +97,7 @@
       "width": 20,
       "height": 20,
       "roomId": "H.3.116",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "WN.03.Trap1_door",
@@ -119,7 +119,7 @@
       "width": 20,
       "height": 20,
       "roomId": "WD.03.029",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "WN.03.028_door",
@@ -130,7 +130,7 @@
       "width": 20,
       "height": 20,
       "roomId": "WN.03.028",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "node_1776687445224",
@@ -273,7 +273,7 @@
       "width": 20,
       "height": 20,
       "roomId": "H.3.117",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "node_1776687486623",
@@ -449,7 +449,7 @@
       "width": 20,
       "height": 20,
       "roomId": "H.3.107",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "node_1776687495393",
@@ -845,7 +845,7 @@
       "width": 20,
       "height": 20,
       "roomId": "WD.03.030",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "H.3.306_door",
@@ -988,7 +988,7 @@
       "width": 20,
       "height": 20,
       "roomId": "H.3.104",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "node_1776687433029",
@@ -1087,7 +1087,7 @@
       "width": 20,
       "height": 20,
       "roomId": "WN.03.029",
-      "label": null
+      "label": "Toilet"
     },
     {
       "id": "node_1776687314638",
