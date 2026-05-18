@@ -11,6 +11,8 @@ function App() {
       <Route path="/" element={<Layout isAdmin={false} />}>
         <Route index element={<Pathfinding />} />
         <Route path="/:floor/:x/:y" element={<Pathfinding />} />
+        <Route path="/:destination" element={<Pathfinding />} />
+        <Route path="/:floor/:x/:y/:destination" element={<Pathfinding />} />
       </Route>
       <Route path="/admin" element={<Layout isAdmin={true} />}>
         <Route path="/admin/graph-editor" element={<GraphEditorPage />} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Pathfinding.css";
 import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
@@ -26,11 +26,13 @@ export const Pathfinding: React.FC = () => {
   let { x } = useParams<{ x: string }>();
   let { y } = useParams<{ y: string }>();
   let { floor } = useParams<{ floor: string }>();
+  let { destination } = useParams<{ destination: string }>();
   const [showHeatmap, setShowHeatmap] = useState(false);
   const [showRoutes, setShowRoutes] = useState(true);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
   const [screen, setScreen] = useState<"settings" | "map">("settings");
   const userLocationProvided = x !== undefined && y !== undefined && floor !== undefined;
+  const hasAutoCalculatedPath = useRef(false);
 
   const fetchFloors = async () => {
     const res = await FloorCache();
@@ -40,12 +42,22 @@ export const Pathfinding: React.FC = () => {
   };
 
   useEffect(() => {
-    setCurrentFloor(floor ? parseInt(floor) : 0);
+    const floorNumber = floor ? parseInt(floor) : 0;
+
+    setCurrentFloor(floorNumber);
+
     if (userLocationProvided) {
-      setUserPosition({ x: parseInt(x), y: parseInt(y), floor: parseInt(floor) });
-      setStartNodes([UserLocationName]);
+      setUserPosition({
+        x: parseInt(x),
+        y: parseInt(y),
+        floor: floorNumber,
+      });
     }
-  }, [x, y, floor]);
+
+    if (destination) {
+      setDestinationNode(destination);
+    }
+  }, [x, y, floor, destination]);
 
   const nodeAvailable = (nodeId: string) => {
     return roomOptions?.some((node) => node === nodeId);
@@ -94,6 +106,17 @@ export const Pathfinding: React.FC = () => {
     fetchGraph();
   }, [currentFloor]);
 
+  useEffect(() => {
+    if (hasAutoCalculatedPath.current) return;
+    if (!destination) return;
+    if (!userLocationProvided) return;
+    if (!graph.nodes || graph.nodes.length === 0) return;
+    if (startNodes.length === 0) return;
+
+    hasAutoCalculatedPath.current = true;
+    calculatePathAndGoToMap(destination);
+  }, [graph, startNodes, destination, userLocationProvided]);
+
   const handleSettingChange = (settings: PathfindingSettings) => {
     setIsAccessibleRoute(settings.accessibleRoute);
   };
@@ -141,12 +164,11 @@ export const Pathfinding: React.FC = () => {
     if (res.ok) setAreas(res.response);
   };
 
-  const calculatePathAndGoToMap = (destinationOverride?: string) => {
+  const calculatePathAndGoToMap = (destinationOverride?: string, startNodesOverride?: string[]) => {
     let destinationToUse = [destinationOverride ?? destinationNode ?? ""];
+    if (!destinationToUse || destinationToUse.length === 0 || (startNodesOverride ?? startNodes).length === 0 || !graph.nodes) return;
 
-    if (!destinationToUse || destinationToUse.length === 0 || startNodes.length === 0 || !graph.nodes) return;
-
-    let startNodesToUse = startNodes.concat(startNodes.map((n) => n + "_door"));
+    let startNodesToUse = (startNodesOverride ?? startNodes).concat((startNodesOverride ?? startNodes).map((n) => n + "_door"));
     let result: string[] = [];
 
     if (startNodesToUse[0] === UserLocationName && userPosition) {
@@ -164,15 +186,17 @@ export const Pathfinding: React.FC = () => {
         startNodesToUse = [closestNode.id];
       }
     }
-    if (destinationToUse[0] === ToiletNodeName || destinationToUse[0] === EmergencyNodeName) {
+    if (destinationToUse[0].toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase() || destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()) {
       let nodeName = destinationToUse[0];
       if (destinationToUse[0] === ToiletNodeName) {
+        console.log("Finding toilet nodes...");
         destinationToUse =
           graph.nodes
             ?.filter((n) => n.label === "Toilet")
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
       } else if (destinationToUse[0] === EmergencyNodeName) {
+        console.log("Finding emergency nodes...");
         destinationToUse =
           graph.nodes
             ?.filter(
@@ -368,10 +392,10 @@ export const Pathfinding: React.FC = () => {
                 currentPosition={
                   userPosition
                     ? {
-                        x: userPosition.x,
-                        y: userPosition.y,
-                        floor: userPosition.floor,
-                      }
+                      x: userPosition.x,
+                      y: userPosition.y,
+                      floor: userPosition.floor,
+                    }
                     : undefined
                 }
                 areas={areas}
