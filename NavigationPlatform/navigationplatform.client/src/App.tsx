@@ -15,7 +15,7 @@ function App() {
         <Route path="/:floor/:x/:y/:destination" element={<Pathfinding />} />
       </Route>
       <Route path="/admin" element={<Layout isAdmin={true} />}>
-        <Route path="/admin/graph-editor" element={<GraphEditorPage />} />
+        <Route path="/admin/graph-editor" element={<GraphEditorPage  />} />
         <Route path="/admin/heatmap-editor" element={<HeatmapEditor />} />
       </Route>
     </Routes>

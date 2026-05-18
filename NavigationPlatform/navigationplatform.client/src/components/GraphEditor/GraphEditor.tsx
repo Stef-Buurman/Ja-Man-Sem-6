@@ -184,13 +184,13 @@ export const GraphEditor: React.FC<GraphEditorProps> = ({ floors, doors, curFloo
 export const exportedGraph: Graph = {
   nodes: [
 ${distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id)
-  .map(formatNode)
-  .join(",\n")}
+        .map(formatNode)
+        .join(",\n")}
   ],
   edges: [
 ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
-  .map(formatEdge)
-  .join(",\n")}
+        .map(formatEdge)
+        .join(",\n")}
   ]
 };`;
 
@@ -209,11 +209,11 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
     doors
       ? doors
       : (initialGraph?.nodes?.filter(
-          (n) =>
-            GetNodeTypeFromInteger(n.type) === "door" ||
-            GetNodeTypeFromInteger(n.type) === "stairs" ||
-            GetNodeTypeFromInteger(n.type) === "elevator",
-        ) ?? [])
+        (n) =>
+          GetNodeTypeFromInteger(n.type) === "door" ||
+          GetNodeTypeFromInteger(n.type) === "stairs" ||
+          GetNodeTypeFromInteger(n.type) === "elevator",
+      ) ?? [])
   ).filter((d) => d.floor === currentFloor);
 
   const allVisibleNodes = [...visibleNodes, ...visibleDoors];
@@ -245,10 +245,11 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
 
   const buildExportGraph = (): GraphDto => {
     const validEdges = edges.filter((e) => {
-      const from = nodes.find((n) => n.id === e.from);
-      const to = nodes.find((n) => n.id === e.to);
+      const from = nodes.find((n) => n.id === e.from) || visibleDoors.find((d) => d.id === e.from);
+      const to = nodes.find((n) => n.id === e.to) || visibleDoors.find((d) => d.id === e.to);
       return from && to;
     });
+    console.log(doors)
     var x: GraphNodeDto[] = visibleDoors
       .filter((d) => IsNodeStairs(d) || IsNodeElevator(d))
       .map((d) => {
@@ -282,7 +283,7 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
       from: element.id,
       to: `${element.id}_door`,
     }));
-
+    console.log(distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id))
     return {
       nodes: distinctBy(nodes.concat(visibleDoors).concat(x), (n) => n.id),
       edges: distinctBy(validEdges.concat(generatedEdges), (e) => [e.from, e.to].sort().join("-")),
@@ -351,6 +352,7 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
           .filter((n) => n.type === GetTypeFromNodeType("hallway"))
           .map((n) => (
             <circle
+              name={n.id ?? ""}
               key={n.id}
               cx={n.x}
               cy={n.y}

@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
   currentPosition,
   areas = [],
@@ -94,7 +94,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     const formattedData = doorData
       .map(
         (d) =>
-          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: "${d.type}", width: ${d.width}, height: ${d.height} ${d.roomId ? `,roomId: "${d.roomId}"` : ""} },`,
+          `{ id: "${d.id}", x: ${d.x}, y: ${d.y}, floor: ${d.floor}, type: ${d.type}, width: ${d.width}, height: ${d.height} ${d.roomId ? `,roomId: "${d.roomId}"` : ""} },`,
       )
       .join("\n");
 
@@ -183,13 +183,9 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   return (
     <div className="map-view-v4">
-      {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
+      <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
-      </button> */}
-
-      {/* <button className="map-view-v4__copy-button" onClick={copyDoorsJson}>
-        📋 Copy doors JSON
-      </button> */}
+      </button>
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
@@ -229,24 +225,41 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
             </g>
           )}
 
-          {path && showRoutes && (
-            <path
-              d={(() => {
-                const points = path
-                  .map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor))
-                  .filter(Boolean) as {
-                  x: number;
-                  y: number;
-                }[];
-                console.log(path.map((id) => nodes.find((n) => n.id === id && n.floor === currentFloor)));
-                console.log(points);
+          {path && showRoutes &&
+            (() => {
+              const segments: { x: number; y: number }[][] = [];
+              let currentSegment: { x: number; y: number }[] = [];
 
-                if (points.length === 0) return "";
-                console.log("Current position:", currentPosition);
+              for (const id of path) {
+                const node =
+                  typeof id === "string"
+                    ? nodes.find((n) => n.id === id && n.floor === currentFloor)
+                    : undefined;
+
+                if (!node) {
+                  if (currentSegment.length > 0) {
+                    segments.push(currentSegment);
+                    currentSegment = [];
+                  }
+                  continue;
+                }
+
+                currentSegment.push({ x: node.x, y: node.y });
+              }
+
+              if (currentSegment.length > 0) {
+                segments.push(currentSegment);
+              }
+
+              return segments.map((points, index) => {
                 const pathPoints =
-                  currentPosition && currentPosition.floor === currentFloor
+                  index === 0 &&
+                    currentPosition &&
+                    currentPosition.floor === currentFloor
                     ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
                     : points;
+
+                if (pathPoints.length === 0) return null;
 
                 let d = `M ${pathPoints[0].x},${pathPoints[0].y}`;
 
@@ -265,15 +278,19 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                   d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
                 }
 
-                return d;
-              })()}
-              fill="none"
-              stroke="blue"
-              strokeWidth={6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          )}
+                return (
+                  <path
+                    key={index}
+                    d={d}
+                    fill="none"
+                    stroke="blue"
+                    strokeWidth={6}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                );
+              });
+            })()}
 
           {showHeatmap && (
             <>

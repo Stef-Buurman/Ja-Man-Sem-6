@@ -112,7 +112,7 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
     current = cameFrom.get(current)!;
     path.unshift(current);
   }
-
+  console.log("Reconstructed path:", path);
   return path;
 }
 
@@ -202,28 +202,32 @@ export function findPathAStarMultiStart(
     });
 
     const endNode = getNode(graph, targetId);
+    console.log("Finding path to target:", targetId, "End node:", endNode);
     if (!endNode) {
       return [];
     }
 
     for (const startId of startIds) {
       const startNode = getNode(graph, startId);
+      console.log("Initializing start node:", startId, "Start node data:", startNode);
       if (!startNode) continue;
 
       gScore.set(startId, 0);
       fScore.set(startId, heuristic(startNode, endNode));
     }
-
+    console.log(openSet)
     while (openSet.size > 0) {
       const current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
 
       if (current === targetId) {
+        console.log("Reached target:", targetId);
         return reconstructPath(cameFrom, current);
       }
 
       openSet.delete(current);
 
       const currentNode = getNode(graph, current);
+      console.log("Current node:", current, "Node data:", currentNode);
       if (!currentNode) continue;
 
       for (const neighborId of getNeighbors(current, adjacency, settings, graph)) {
@@ -253,7 +257,7 @@ export function findPathAStarMultiStart(
 
     for (const door of doors) {
       const path = tryFindPath(door);
-
+      console.log(`Path to ${door}:`, path);
       if (path.length > 0) {
         const cost = calculatePathCost(path, graph);
 
