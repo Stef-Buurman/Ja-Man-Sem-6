@@ -10,3 +10,13 @@ td {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+.cls-18 {
+  display: none;
+}
+
+.cls-1,
+.cls-2,
+.cls-3 {
+  color: aqua !important;
+}

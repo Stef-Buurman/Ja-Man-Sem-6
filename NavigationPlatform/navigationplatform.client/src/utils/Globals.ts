@@ -1,1 +1,3 @@
-export const defaultStartNodes = ["Ingang_H"];
+export const UserLocationName = "Huidige locatie";
+export const EmergencyNodeName = "Nooduitgang";
+export const ToiletNodeName = "Toilet";

@@ -244,21 +244,43 @@ export function findPathAStarMultiStart(
     return [];
   };
 
+  let bestPath: string[] = [];
+  let bestCost = Infinity;
+
   for (const targetId of endIds) {
     let doors = getDoorIdsForRoom(graph, targetId);
-    console.log(`Found doors for target ${targetId}:`, doors);
     if (doors.length === 0) doors = [targetId];
 
     for (const door of doors) {
-      console.log(`Attempting pathfinding to door ${door} for target ${targetId}`);
-      if (door) {
-        const path = tryFindPath(door);
-        console.log(`Trying path to ${door} for target ${targetId}:`, path);
-        if (path.length > 0) {
-          return path;
+      const path = tryFindPath(door);
+
+      if (path.length > 0) {
+        const cost = calculatePathCost(path, graph);
+
+        if (cost < bestCost) {
+          bestCost = cost;
+          bestPath = path;
         }
       }
     }
   }
-  return [];
+
+  return bestPath;
+}
+
+export function calculatePathCost(path: string[], graph: GraphDto): number {
+  let totalCost = 0;
+
+  for (let i = 0; i < path.length - 1; i++) {
+    const fromNode = getNode(graph, path[i]);
+    const toNode = getNode(graph, path[i + 1]);
+
+    if (!fromNode || !toNode) {
+      return Infinity;
+    }
+
+    totalCost += getEdgeCost(fromNode, toNode);
+  }
+
+  return totalCost;
 }
