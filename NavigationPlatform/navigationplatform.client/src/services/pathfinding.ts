@@ -59,13 +59,22 @@ export function heuristic(a: GraphNodeDto, b: GraphNodeDto) {
 }
 
 export function getEdgeCost(from: GraphNodeDto, to: GraphNodeDto) {
-  let cost = distance(from, to);
+  let cost = Math.hypot(to.x - from.x, to.y - from.y);
 
-  if (GetNodeTypeFromInteger(to.type) === "door") cost += 5;
-  if (GetNodeTypeFromInteger(to.type) === "stairs") cost += 20;
-  if (GetNodeTypeFromInteger(to.type) === "elevator") cost += 20;
+  const floorDifference = Math.abs(from.floor - to.floor);
+  cost += floorDifference * 2000;
 
-  if (from.floor !== to.floor) cost += 50;
+  if (GetNodeTypeFromInteger(to.type) === "stairs") {
+    cost += 50;
+  }
+
+  if (GetNodeTypeFromInteger(to.type) === "elevator") {
+    cost += 20;
+  }
+
+  if (GetNodeTypeFromInteger(to.type) === "door") {
+    cost += 5;
+  }
 
   return cost;
 }
@@ -112,7 +121,6 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
     current = cameFrom.get(current)!;
     path.unshift(current);
   }
-  console.log("Reconstructed path:", path);
   return path;
 }
 
@@ -202,32 +210,28 @@ export function findPathAStarMultiStart(
     });
 
     const endNode = getNode(graph, targetId);
-    console.log("Finding path to target:", targetId, "End node:", endNode);
     if (!endNode) {
       return [];
     }
 
     for (const startId of startIds) {
       const startNode = getNode(graph, startId);
-      console.log("Initializing start node:", startId, "Start node data:", startNode);
       if (!startNode) continue;
 
       gScore.set(startId, 0);
       fScore.set(startId, heuristic(startNode, endNode));
     }
-    console.log(openSet)
     while (openSet.size > 0) {
       const current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
 
       if (current === targetId) {
-        console.log("Reached target:", targetId);
+        console.log(`Path found to target ${reconstructPath(cameFrom, current)}`);
         return reconstructPath(cameFrom, current);
       }
 
       openSet.delete(current);
 
       const currentNode = getNode(graph, current);
-      console.log("Current node:", current, "Node data:", currentNode);
       if (!currentNode) continue;
 
       for (const neighborId of getNeighbors(current, adjacency, settings, graph)) {
@@ -249,20 +253,20 @@ export function findPathAStarMultiStart(
   };
 
   let bestPath: string[] = [];
-  let bestCost = Infinity;
+  let bestDistance = Infinity;
 
   for (const targetId of endIds) {
     let doors = getDoorIdsForRoom(graph, targetId);
+    console.log(`Doors for room ${targetId}:`, doors);
     if (doors.length === 0) doors = [targetId];
-
     for (const door of doors) {
       const path = tryFindPath(door);
       console.log(`Path to ${door}:`, path);
-      if (path.length > 0) {
-        const cost = calculatePathCost(path, graph);
 
-        if (cost < bestCost) {
-          bestCost = cost;
+      if (path.length > 0) {
+        const distance = calculateWalkingDistance(path, graph);
+        if (distance < bestDistance) {
+          bestDistance = distance;
           bestPath = path;
         }
       }
@@ -272,8 +276,8 @@ export function findPathAStarMultiStart(
   return bestPath;
 }
 
-export function calculatePathCost(path: string[], graph: GraphDto): number {
-  let totalCost = 0;
+export function calculateWalkingDistance(path: string[], graph: GraphDto): number {
+  let totalDistance = 0;
 
   for (let i = 0; i < path.length - 1; i++) {
     const fromNode = getNode(graph, path[i]);
@@ -283,8 +287,8 @@ export function calculatePathCost(path: string[], graph: GraphDto): number {
       return Infinity;
     }
 
-    totalCost += getEdgeCost(fromNode, toNode);
+    totalDistance += getEdgeCost(fromNode, toNode);
   }
 
-  return totalCost;
+  return totalDistance;
 }
