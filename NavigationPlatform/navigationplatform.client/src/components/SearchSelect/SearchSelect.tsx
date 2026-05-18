@@ -25,18 +25,21 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
     }
   }, [value]);
 
+  const normalizeRoom = (value: string) =>
+    value.toLowerCase().replace(/\./g, "")
+
   const suggestions = useMemo(() => {
-    const trimmed = query.trim().toLowerCase();
+    const trimmed = normalizeRoom(query)
     if (!trimmed) return [];
 
     const counts = new Map<string, number>();
 
     for (const item of data) {
-      const normalizedItem = item.trim();
-      const lower = normalizedItem.toLowerCase();
+      const normalizedItemRaw = item.trim()
+      const normalizedItem = normalizeRoom(normalizedItemRaw)
 
-      if ((lower.includes(trimmed) && lower !== trimmed) || lower === trimmed) {
-        counts.set(normalizedItem, (counts.get(normalizedItem) || 0) + 1);
+      if ((normalizedItem.includes(trimmed) && normalizedItem !== trimmed) || normalizedItem === trimmed) {
+        counts.set(normalizedItemRaw, (counts.get(normalizedItemRaw) || 0) + 1);
       }
     }
 
@@ -85,7 +88,7 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
               ))}
             </ul>
           ) : (
-            <div className="search-no-results">No matching strings found.</div>
+            <div className="search-no-results">Geen locaties met deze naam gevonden.</div>
           )}
         </div>
       )}
