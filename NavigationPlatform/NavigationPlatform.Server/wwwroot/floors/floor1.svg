@@ -325,7 +325,7 @@
       <text class="cls-3" transform="translate(2216.1424 628.7966) rotate(-8.1092)"><tspan x="0" y="0">WN.01.007</tspan></text>
     </g>
   </g>
-  <g id="Datapoints">
+  <g id="DataPoints">
     <circle id="WN.01.029-2" data-name="WN.01.029" class="cls-10" cx="1431.67" cy="764" r="10.98"/>
     <circle id="WN.01.028-2" data-name="WN.01.028" class="cls-10" cx="1489.04" cy="757.69" r="10.98"/>
     <circle id="WN.01.022-2" data-name="WN.01.022" class="cls-10" cx="1779.59" cy="789.48" r="10.98"/>
@@ -339,7 +339,7 @@
     <circle id="WD.1.019" class="cls-10" cx="965.85" cy="976.98" r="10.98"/>
     <circle id="WD.1.016" class="cls-10" cx="1148.84" cy="934.03" r="10.98"/>
     <circle id="WD.01.Trap1" class="cls-10" cx="990.7" cy="908.86" r="10.98"/>
-    <circle id="WD.01.lift" class="cls-10" cx="922.38" cy="911.67" r="10.98"/>
+    <circle id="WD.01.Lift" class="cls-10" cx="922.38" cy="911.67" r="10.98"/>
     <circle id="WD.01.Trap2" class="cls-10" cx="812.84" cy="702.79" r="10.98"/>
     <circle id="WD.1.029-2" data-name="WD.1.029" class="cls-10" cx="798.89" cy="776.42" r="10.98"/>
     <circle id="WD.01.031-2" data-name="WD.01.031" class="cls-10" cx="778.31" cy="719.26" r="10.98"/>
