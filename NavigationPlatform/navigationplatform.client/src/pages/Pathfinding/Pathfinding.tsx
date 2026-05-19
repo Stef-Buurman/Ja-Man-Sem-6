@@ -13,7 +13,7 @@ import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
 import Toggle from "../../components/toggle/toggle";
 import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
-import { EmergencyNodeName, ToiletNodeName, UserLocationName } from "../../utils/Globals";
+import { CustomDestinationName, EmergencyNodeName, ToiletNodeName, UserLocationName } from "../../utils/Globals";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -23,18 +23,36 @@ export const Pathfinding: React.FC = () => {
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
-  const { x, y, floor, destination } = useParams<{
-    x: string;
-    y: string;
-    floor: string;
-    destination: string;
-  }>();
+  const { floor, x, y, destination, destFloor, destX, destY } = useParams();
+
   const [showHeatmap, setShowHeatmap] = useState(false);
   const [showRoutes, setShowRoutes] = useState(true);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
   const [screen, setScreen] = useState<"settings" | "map">("settings");
   const userLocationProvided = x !== undefined && y !== undefined && floor !== undefined;
+
   const hasAutoCalculatedPath = useRef(false);
+
+  const startPoint =
+    floor && x && y
+      ? {
+          floor,
+          x: Number(x),
+          y: Number(y),
+        }
+      : null;
+
+  const destinationPoint = destination
+    ? { type: "name", value: destination }
+    : destFloor && destX && destY
+      ? {
+          type: "coordinates",
+          floor: destFloor,
+          x: Number(destX),
+          y: Number(destY),
+        }
+      : null;
+  const destinationProvided = destinationPoint !== null;
 
   const fetchFloors = async () => {
     const res = await FloorCache();
@@ -119,9 +137,37 @@ export const Pathfinding: React.FC = () => {
       }, undefined);
   };
 
+  const resolveDestinationNodes = (override?: string): string[] => {
+    if (!graph.nodes) return [];
+
+    if (override) {
+      return [override, override + "_door"];
+    }
+
+    if (destinationPoint?.type === "coordinates") {
+      const closestDestinationNode = getClosestNode(graph.nodes, {
+        floor: Number(destinationPoint.floor),
+        x: Number(destinationPoint.x),
+        y: Number(destinationPoint.y),
+      });
+
+      return closestDestinationNode?.id ? [closestDestinationNode.id] : [];
+    }
+
+    if (destinationPoint?.type === "name" && destinationPoint.value) {
+      return [destinationPoint.value, destinationPoint.value + "_door"];
+    }
+
+    if (destinationNode) {
+      return [destinationNode, destinationNode + "_door"];
+    }
+
+    return [];
+  };
+
   useEffect(() => {
     if (hasAutoCalculatedPath.current) return;
-    if (!destinationNode) return;
+    if (!destinationNode && !destinationPoint) return;
     if (!userLocationProvided) return;
     if (!graph.nodes || graph.nodes.length === 0) return;
 
@@ -195,7 +241,7 @@ export const Pathfinding: React.FC = () => {
   };
 
   const calculatePathAndGoToMap = (destinationOverride?: string, startNodesOverride?: string[]) => {
-    let destinationToUse = [destinationOverride ?? destinationNode ?? ""];
+    let destinationToUse = resolveDestinationNodes(destinationOverride);
     if (
       !destinationToUse ||
       destinationToUse.length === 0 ||
@@ -217,7 +263,8 @@ export const Pathfinding: React.FC = () => {
     }
     if (
       destinationToUse[0].toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase() ||
-      destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()
+      destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase() ||
+      destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase()
     ) {
       let nodeName = destinationToUse[0];
       if (destinationToUse[0] === ToiletNodeName) {
@@ -236,6 +283,16 @@ export const Pathfinding: React.FC = () => {
             )
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
+      } else if (destinationToUse[0] === CustomDestinationName && destinationPoint?.type === "coordinates") {
+        console.log("Finding closest node to custom destination...");
+        const closestNode = getClosestNode(graph.nodes, {
+          floor: Number(destinationPoint.floor),
+          x: Number(destinationPoint.x),
+          y: Number(destinationPoint.y),
+        });
+        if (closestNode?.id) {
+          destinationToUse = [closestNode.id];
+        }
       }
       result = findPathAStarMultiStart(startNodesToUse, destinationToUse, graph, {
         accessibleRoute: isAccessibleRoute,
@@ -250,7 +307,7 @@ export const Pathfinding: React.FC = () => {
       setScreen("map");
       return;
     }
-    result = findPathAStarMultiStart(startNodesToUse, [...destinationToUse, destinationToUse[0] + "_door"], graph, {
+    result = findPathAStarMultiStart(startNodesToUse, destinationToUse, graph, {
       accessibleRoute: isAccessibleRoute,
     });
     setPath(result);
@@ -350,12 +407,14 @@ export const Pathfinding: React.FC = () => {
                   <div className="pathfinding-search">
                     <SearchSelect
                       title="Vul je bestemming in"
-                      data={roomOptions}
+                      data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
                       onSelect={handleDestinationClick}
                       value={
                         destinationNode && nodeAvailable(destinationNode)
                           ? destinationNode.replace("_door", "")
-                          : undefined
+                          : destinationPoint != null && destinationPoint.type !== "name"
+                            ? CustomDestinationName
+                            : undefined
                       }
                     />
                   </div>
@@ -387,20 +446,6 @@ export const Pathfinding: React.FC = () => {
                 </button>
               </div>
 
-              <div className="pathfinding-map-toolbar-center">
-                <Toggle
-                  title="Heatmap tonen"
-                  handleCheckboxChange={(checked) => setShowHeatmap(checked)}
-                  currentValue={showHeatmap}
-                />
-
-                <Toggle
-                  title="Routes tonen"
-                  handleCheckboxChange={(checked) => setShowRoutes(checked)}
-                  currentValue={showRoutes}
-                />
-              </div>
-
               <div className="pathfinding-map-toolbar-right">
                 <FloorSelector
                   floors={floorsList.map((f) => f.number)}
@@ -430,9 +475,6 @@ export const Pathfinding: React.FC = () => {
                       }
                     : undefined
                 }
-                areas={areas}
-                showHeatmap={showHeatmap}
-                showRoutes={showRoutes}
               />
             </section>
           </>

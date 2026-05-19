@@ -1,48 +1,54 @@
 .floor-card {
-  width: clamp(90px, 10vw, 120px);
-  height: clamp(90px, 10vw, 120px);
+  width: 72px;
+  height: 110px;
   background: #000;
-  border-radius: 14px;
+  border-radius: 12px;
   color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
   position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .floor-title {
-  font-size: 16px;
+  font-size: 10px;
   font-weight: 300;
-  line-height: 1;
-  margin-top: 10px;
+  margin-top: 6px;
+  color: #d6d6d6;
 }
 
 .floor-number {
-  font-size: 72px;
-  font-weight: 800;
+  font-size: 42px;
+  font-weight: 700;
   line-height: 1;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .floor-button {
   position: absolute;
-  right: 8px;
-  width: 24px;
-  height: 24px;
+  right: 5px;
+
+  width: 16px;
+  height: 16px;
+
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
+
   background: white;
   color: black;
-  font-size: 12px;
+
+  font-size: 8px;
   font-weight: bold;
-  cursor: pointer;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  transition: 0.2s ease;
+  cursor: pointer;
+  transition: 0.15s ease;
 }
 
 .floor-button:hover:not(:disabled) {
@@ -56,9 +62,9 @@
 }
 
 .floor-button-up {
-  top: 34px;
+  top: 28px;
 }
 
 .floor-button-down {
-  bottom: 12px;
+  bottom: 10px;
 }

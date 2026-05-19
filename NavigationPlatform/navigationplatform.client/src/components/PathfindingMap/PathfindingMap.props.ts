@@ -12,7 +12,4 @@ export interface PathfindingMapProps {
     y: number;
     floor: number;
   };
-  areas?: HeatpointArea[];
-  showHeatmap?: boolean;
-  showRoutes?: boolean;
 }

@@ -12,9 +12,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   handleRoomClick = () => { },
   floors,
   currentPosition,
-  areas = [],
-  showRoutes = true,
-  showHeatmap = false,
 }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
@@ -104,7 +101,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const selectedFloor = floors?.find((f) => f.number === currentFloor);
 
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
-    if (!svgElement.current || !showRoutes) return;
+    if (!svgElement.current) return;
 
     const svg = svgElement.current;
 
@@ -128,34 +125,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       handleRoomClick(cleanId);
     }
   };
-
-  const getColor = (value: number) => {
-    if (value <= 3) {
-      const ratio = value / 3;
-      const r = 0;
-      const g = Math.round(150 + 105 * ratio);
-      const b = 0;
-      return `rgba(${r}, ${g}, ${b}, 0.7)`;
-    }
-
-    if (value <= 10) {
-      const ratio = (value - 3) / 7;
-      const r = Math.round(255 * ratio);
-      const g = 255;
-      const b = 0;
-      return `rgba(${r}, ${g}, ${b}, 0.7)`;
-    }
-
-    const max = 20;
-    const ratio = Math.min(1, (value - 10) / (max - 10));
-    const r = 255;
-    const g = Math.round(255 * (1 - ratio));
-    const b = 0;
-    return `rgba(${r}, ${g}, ${b}, 0.7)`;
-  };
-
-  const areasForCurrentFloor = areas.filter((a) => a.floor?.number === currentFloor);
-  const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
 
   const [floorSvgContent, setFloorSvgContent] = useState<string>("");
 
@@ -225,7 +194,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
             </g>
           )}
 
-          {path && showRoutes &&
+          {path &&
             (() => {
               const segments: { x: number; y: number }[][] = [];
               let currentSegment: { x: number; y: number }[] = [];
@@ -291,40 +260,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                 );
               });
             })()}
-
-          {showHeatmap && (
-            <>
-              <defs>
-                {areasForCurrentFloor.map((a) => {
-                  const color = getColor(a.value);
-                  return (
-                    <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor={color} stopOpacity="0.9" />
-                      <stop offset="45%" stopColor={color} stopOpacity="0.5" />
-                      <stop offset="100%" stopColor={color} stopOpacity="0" />
-                    </radialGradient>
-                  );
-                })}
-                {areasForCurrentFloor.map((a) => (
-                  <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
-                    <rect x={a.x} y={a.y} width={a.width} height={a.height} />
-                  </clipPath>
-                ))}
-              </defs>
-
-              {areasForCurrentFloor.map((a) => (
-                <rect
-                  key={a.id}
-                  x={a.x}
-                  y={a.y}
-                  width={a.width}
-                  height={a.height}
-                  fill={`url(#${getGradientId(a.id)})`}
-                  clipPath={`url(#clip-${a.id})`}
-                />
-              ))}
-            </>
-          )}
         </svg>
       </div>
     </div>

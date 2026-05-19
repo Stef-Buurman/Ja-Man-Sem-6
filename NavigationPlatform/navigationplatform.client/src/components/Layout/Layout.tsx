@@ -10,7 +10,8 @@ export const Layout: React.FC<LayoutProps> = ({ isAdmin }) => {
         <div className="header-content">
           <h1 className="logo">Prototype Project</h1>
           <nav className="nav-links">
-            {!isAdmin && <Link to="/">2D Map</Link>}
+            {!isAdmin && <Link to="/">Map</Link>}
+            {!isAdmin && <Link to="/heatmap">Heatmap</Link>}
             {isAdmin && <Link to="/admin/graph-editor">Graph Editor</Link>}
             {isAdmin && <Link to="/admin/heatmap-editor">Heatmap Editor</Link>}
           </nav>
