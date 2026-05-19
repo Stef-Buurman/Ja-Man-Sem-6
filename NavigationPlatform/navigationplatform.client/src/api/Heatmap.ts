@@ -70,6 +70,20 @@ export class Heatmap<SecurityDataType = unknown> extends HttpClient<SecurityData
    * No description
    *
    * @tags Heatmap
+   * @name GetHeatpointAreasJson
+   * @request GET:/api/Heatmap/Json
+   */
+  getHeatpointAreasJson = (params: RequestParams = {}) =>
+    this.request<HeatpointAreaDto[], any>({
+      path: `/api/Heatmap/Json`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Heatmap
    * @name UpdateHeatpointArea
    * @request PUT:/api/Heatmap/{id}
    */

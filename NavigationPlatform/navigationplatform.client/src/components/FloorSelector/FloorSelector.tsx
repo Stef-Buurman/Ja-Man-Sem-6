@@ -4,11 +4,7 @@ interface FloorSelectorProps {
   setFloor: (floor: number) => void;
 }
 
-export const FloorSelector: React.FC<FloorSelectorProps> = ({
-  floors,
-  currentFloor,
-  setFloor,
-}) => {
+export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFloor, setFloor }) => {
   const currentIndex = floors.indexOf(currentFloor);
 
   const goUp = () => {
@@ -27,21 +23,13 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({
     <div className="floor-card">
       <div className="floor-title">Etage</div>
 
-      <button
-        className="floor-button floor-button-up"
-        onClick={goUp}
-        disabled={currentIndex === floors.length - 1}
-      >
+      <button className="floor-button floor-button-up" onClick={goUp} disabled={currentIndex === floors.length - 1}>
         ▲
       </button>
 
       <div className="floor-number">{currentFloor}</div>
 
-      <button
-        className="floor-button floor-button-down"
-        onClick={goDown}
-        disabled={currentIndex === 0}
-      >
+      <button className="floor-button floor-button-down" onClick={goDown} disabled={currentIndex === 0}>
         ▼
       </button>
     </div>

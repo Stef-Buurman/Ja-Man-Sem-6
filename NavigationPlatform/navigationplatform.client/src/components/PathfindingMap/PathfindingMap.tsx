@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => { },
+  handleRoomClick = () => {},
   floors,
   currentPosition,
 }) => {
@@ -201,9 +201,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
               for (const id of path) {
                 const node =
-                  typeof id === "string"
-                    ? nodes.find((n) => n.id === id && n.floor === currentFloor)
-                    : undefined;
+                  typeof id === "string" ? nodes.find((n) => n.id === id && n.floor === currentFloor) : undefined;
 
                 if (!node) {
                   if (currentSegment.length > 0) {
@@ -222,9 +220,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
               return segments.map((points, index) => {
                 const pathPoints =
-                  index === 0 &&
-                    currentPosition &&
-                    currentPosition.floor === currentFloor
+                  index === 0 && currentPosition && currentPosition.floor === currentFloor
                     ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
                     : points;
 

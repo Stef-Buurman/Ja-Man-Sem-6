@@ -105,8 +105,8 @@ export interface GraphNodeDto {
 }
 
 export interface HeatpointArea {
-  /** @format int32 */
-  id: number;
+  /** @format uuid */
+  id: string;
   /** @format double */
   x: number;
   /** @format double */
@@ -126,8 +126,8 @@ export interface HeatpointArea {
 }
 
 export interface HeatpointAreaDto {
-  /** @format int32 */
-  id: number;
+  /** @format uuid */
+  id: string;
   /** @format double */
   x: number;
   /** @format double */
@@ -158,11 +158,11 @@ export interface UpdateGraphParams {
 }
 
 export interface UpdateHeatpointAreaParams {
-  /** @format int32 */
-  id: number;
+  /** @format uuid */
+  id: string;
 }
 
 export interface DeleteHeatpointAreaParams {
-  /** @format int32 */
-  id: number;
+  /** @format uuid */
+  id: string;
 }
