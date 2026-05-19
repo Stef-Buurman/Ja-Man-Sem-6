@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./Pathfinding.css";
 import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
@@ -23,10 +23,12 @@ export const Pathfinding: React.FC = () => {
   const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
-  let { x } = useParams<{ x: string }>();
-  let { y } = useParams<{ y: string }>();
-  let { floor } = useParams<{ floor: string }>();
-  let { destination } = useParams<{ destination: string }>();
+  const { x, y, floor, destination } = useParams<{
+    x: string;
+    y: string;
+    floor: string;
+    destination: string;
+  }>();
   const [showHeatmap, setShowHeatmap] = useState(false);
   const [showRoutes, setShowRoutes] = useState(true);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
@@ -55,7 +57,11 @@ export const Pathfinding: React.FC = () => {
     }
 
     if (destination) {
-      setDestinationNode(destination);
+      if (destination.toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase()) {
+        setDestinationNode(ToiletNodeName);
+      } else if (destination.toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()) {
+        setDestinationNode(EmergencyNodeName);
+      }
     }
   }, [x, y, floor, destination]);
 
@@ -77,15 +83,7 @@ export const Pathfinding: React.FC = () => {
         setGraph(graphData);
         if (userPosition && graphData.nodes != null && graphData.nodes.length > 0) {
           if (!userLocationProvided) return;
-          const closestNode = graphData.nodes
-            .filter((node) => node.x != null && node.y != null && !node.id?.includes("_door"))
-            .reduce((best, node) => {
-              const bestDistance = Math.hypot((best.x ?? 0) - userPosition.x, (best.y ?? 0) - userPosition.y);
-              const currentDistance = Math.hypot((node.x ?? 0) - userPosition.x, (node.y ?? 0) - userPosition.y);
-              const isSameFloor = node.floor === userPosition.floor;
-              if (!isSameFloor) return best;
-              return currentDistance < bestDistance ? node : best;
-            });
+          const closestNode = getClosestNode(graphData.nodes, userPosition);
 
           if (closestNode?.id) {
             setStartNodes([closestNode.id]);
@@ -106,16 +104,43 @@ export const Pathfinding: React.FC = () => {
     fetchGraph();
   }, [currentFloor]);
 
+  const getClosestNode = (nodes: GraphNodeDto[], position: { x: number; y: number; floor: number }) => {
+    return nodes
+      .filter(
+        (node) => node.x != null && node.y != null && node.floor === position.floor && !node.id?.includes("_door"),
+      )
+      .reduce<GraphNodeDto | undefined>((best, node) => {
+        if (!best) return node;
+
+        const bestDistance = Math.hypot((best.x ?? 0) - position.x, (best.y ?? 0) - position.y);
+        const currentDistance = Math.hypot((node.x ?? 0) - position.x, (node.y ?? 0) - position.y);
+
+        return currentDistance < bestDistance ? node : best;
+      }, undefined);
+  };
+
   useEffect(() => {
     if (hasAutoCalculatedPath.current) return;
-    if (!destination) return;
+    if (!destinationNode) return;
     if (!userLocationProvided) return;
     if (!graph.nodes || graph.nodes.length === 0) return;
-    if (startNodes.length === 0) return;
+
+    let newStartNodes = [];
+    if (startNodes.length === 0 && !userPosition) return;
+    else if (startNodes.length === 0 && userPosition) {
+      const closestNode = getClosestNode(graph.nodes, userPosition);
+      if (closestNode?.id) {
+        newStartNodes.push(closestNode.id);
+        setStartNodes(newStartNodes);
+      } else {
+        console.warn("No valid start node found for user position:", userPosition);
+        return;
+      }
+    }
 
     hasAutoCalculatedPath.current = true;
-    calculatePathAndGoToMap(destination);
-  }, [graph, startNodes, destination, userLocationProvided]);
+    calculatePathAndGoToMap(destinationNode, newStartNodes);
+  }, [graph, startNodes, destinationNode, userLocationProvided]);
 
   const handleSettingChange = (settings: PathfindingSettings) => {
     setIsAccessibleRoute(settings.accessibleRoute);
@@ -140,17 +165,22 @@ export const Pathfinding: React.FC = () => {
     setDestinationNode(roomId);
   };
 
-  const roomOptions = graph.nodes
-    ?.filter((node) => node.id?.includes("_door") && !node.id?.toLocaleLowerCase().includes("nooduitgang"))
-    .map((node) => node.roomId)
-    .filter((roomId): roomId is string => roomId !== undefined && roomId !== null)
-    .concat(
-      graph.nodes
-        ?.filter((node) => GetNodeTypeFromInteger(node.type) === "entrance")
+  const roomOptions = useMemo(() => {
+    return [
+      ...(graph.nodes ?? [])
+        .filter((node) => node.id?.includes("_door") && !node.id.toLowerCase().includes("nooduitgang"))
+        .map((node) => node.roomId)
+        .filter((roomId): roomId is string => !!roomId),
+
+      ...(graph.nodes ?? [])
+        .filter((node) => GetNodeTypeFromInteger(node.type) === "entrance")
         .map((node) => node.id)
-        .filter((id): id is string => id !== undefined && id !== null),
-    )
-    .concat([EmergencyNodeName, ToiletNodeName]);
+        .filter((id): id is string => !!id),
+
+      EmergencyNodeName,
+      ToiletNodeName,
+    ];
+  }, [graph.nodes]);
 
   useEffect(() => {
     fetchFloors();
@@ -166,27 +196,29 @@ export const Pathfinding: React.FC = () => {
 
   const calculatePathAndGoToMap = (destinationOverride?: string, startNodesOverride?: string[]) => {
     let destinationToUse = [destinationOverride ?? destinationNode ?? ""];
-    if (!destinationToUse || destinationToUse.length === 0 || (startNodesOverride ?? startNodes).length === 0 || !graph.nodes) return;
+    if (
+      !destinationToUse ||
+      destinationToUse.length === 0 ||
+      (startNodesOverride ?? startNodes).length === 0 ||
+      !graph.nodes
+    )
+      return;
 
-    let startNodesToUse = (startNodesOverride ?? startNodes).concat((startNodesOverride ?? startNodes).map((n) => n + "_door"));
+    let startNodesToUse = (startNodesOverride ?? startNodes).concat(
+      (startNodesOverride ?? startNodes).map((n) => n + "_door"),
+    );
     let result: string[] = [];
 
     if (startNodesToUse[0] === UserLocationName && userPosition) {
-      const closestNode = graph.nodes
-        .filter((node) => node.x != null && node.y != null && !node.id?.includes("_door"))
-        .reduce((best, node) => {
-          const bestDistance = Math.hypot((best.x ?? 0) - userPosition.x, (best.y ?? 0) - userPosition.y);
-          const currentDistance = Math.hypot((node.x ?? 0) - userPosition.x, (node.y ?? 0) - userPosition.y);
-          const isSameFloor = node.floor === userPosition.floor;
-
-          if (!isSameFloor) return best;
-          return currentDistance < bestDistance ? node : best;
-        });
+      const closestNode = getClosestNode(graph.nodes, userPosition);
       if (closestNode?.id) {
         startNodesToUse = [closestNode.id];
       }
     }
-    if (destinationToUse[0].toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase() || destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()) {
+    if (
+      destinationToUse[0].toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase() ||
+      destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()
+    ) {
       let nodeName = destinationToUse[0];
       if (destinationToUse[0] === ToiletNodeName) {
         console.log("Finding toilet nodes...");
@@ -392,10 +424,10 @@ export const Pathfinding: React.FC = () => {
                 currentPosition={
                   userPosition
                     ? {
-                      x: userPosition.x,
-                      y: userPosition.y,
-                      floor: userPosition.floor,
-                    }
+                        x: userPosition.x,
+                        y: userPosition.y,
+                        floor: userPosition.floor,
+                      }
                     : undefined
                 }
                 areas={areas}

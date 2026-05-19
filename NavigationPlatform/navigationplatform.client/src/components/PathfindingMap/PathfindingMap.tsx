@@ -183,9 +183,9 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   return (
     <div className="map-view-v4">
-      <button className="map-view-v4__copy-button" onClick={copyDoors}>
+      {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
-      </button>
+      </button> */}
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
