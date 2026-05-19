@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NavigationPlatform.Server.Migrations
 {
     [DbContext(typeof(NavigationPlatformContext))]
-    [Migration("20260513120534_RemovedLevelFromHeatpointArea")]
-    partial class RemovedLevelFromHeatpointArea
+    [Migration("20260519111731_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.7")
+                .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -114,11 +114,9 @@ namespace NavigationPlatform.Server.Migrations
 
             modelBuilder.Entity("NavigationPlatform.Server.Models.HeatpointArea", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("FloorId")
                         .HasColumnType("uuid");
