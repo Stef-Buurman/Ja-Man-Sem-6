@@ -28,7 +28,9 @@ namespace NavigationPlatform.Server.Services
 
                 await context.Database.MigrateAsync(cancellationToken);
                 var graphImportService = scope.ServiceProvider.GetRequiredService<GraphImportService>();
+                var heatpointAreaService = scope.ServiceProvider.GetRequiredService<HeatpointAreaService>();
                 await graphImportService.ImportFloorsFromFileAsync();
+                await heatpointAreaService.ImportHeatpointAreas();
             }
             catch (Exception ex)
             {

@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NavigationPlatform.Server.DB;
@@ -20,6 +22,52 @@ namespace NavigationPlatform.Server.Services
         public List<HeatpointArea> GetHeatpointAreas()
         {
             return _context.HeatpointAreas.AsNoTracking().Include(a => a.Floor).ToList();
+        }
+
+        public List<HeatpointAreaDto> GetHeatpointAreasJson()
+        {
+            return _context.HeatpointAreas.AsNoTracking().Include(a => a.Floor).ToList().Select(a => new HeatpointAreaDto
+            {
+                Id = a.Id,
+                X = a.X,
+                Y = a.Y,
+                Value = a.Value,
+                SoundLevel = a.SoundLevel,
+                Floor = a.Floor?.Number ?? 0,
+                Width = a.Width,
+                Height = a.Height
+            }).ToList();
+        }
+
+        public async Task ImportHeatpointAreas()
+        {
+            var json = await File.ReadAllTextAsync("Data/HeatpointAreas.json");
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            options.Converters.Add(new JsonStringEnumConverter());
+
+            var heatpointAreas = JsonSerializer.Deserialize<List<HeatpointAreaDto>>(json, options);
+            if (heatpointAreas != null)
+            {
+                foreach (var area in heatpointAreas)
+                {
+                    var heatpointArea = new HeatpointArea
+                    {
+                        Id = area.Id,
+                        X = area.X,
+                        Y = area.Y,
+                        Value = area.Value,
+                        SoundLevel = area.SoundLevel,
+                        FloorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id,
+                        Width = area.Width,
+                        Height = area.Height
+                    };
+                    _context.HeatpointAreas.Add(heatpointArea);
+                }
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task AddHeatpointArea(HeatpointAreaDto area)
@@ -89,5 +137,6 @@ namespace NavigationPlatform.Server.Services
             _context.HeatpointAreas.Remove(area);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync(hubMethodName, "Heatpoint area deleted");
-    }}
+        }
+    }
 }

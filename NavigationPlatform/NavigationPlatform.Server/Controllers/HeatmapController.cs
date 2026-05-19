@@ -18,6 +18,9 @@ namespace HeatmapAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<HeatpointArea>> GetHeatpointAreas() => Ok(_heatpointAreaService.GetHeatpointAreas());
 
+        [HttpGet("Json")]
+        public ActionResult<IEnumerable<HeatpointAreaDto>> GetHeatpointAreasJson() => Ok(_heatpointAreaService.GetHeatpointAreasJson());
+
         [HttpPost]
         public async Task<ActionResult<HeatpointArea>> AddHeatpointArea([FromBody] HeatpointAreaDto area)
         {
