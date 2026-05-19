@@ -12,6 +12,17 @@ namespace NavigationPlatform.Server.Services
         private readonly NavigationPlatformContext _context;
         private readonly IHubContext<HeatmapHub> _hubContext;
         private string hubMethodName = "ReceiveAreaUpdate";
+        private static readonly JsonSerializerOptions _jsonSerializerOptions = CreateJsonSerializerOptions();
+
+        private static JsonSerializerOptions CreateJsonSerializerOptions()
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            options.Converters.Add(new JsonStringEnumConverter());
+            return options;
+        }
 
         public HeatpointAreaService(NavigationPlatformContext context, IHubContext<HeatmapHub> hubContext)
         {
@@ -42,24 +53,33 @@ namespace NavigationPlatform.Server.Services
         public async Task ImportHeatpointAreas()
         {
             var json = await File.ReadAllTextAsync("Data/HeatpointAreas.json");
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            options.Converters.Add(new JsonStringEnumConverter());
-
-            var heatpointAreas = JsonSerializer.Deserialize<List<HeatpointAreaDto>>(json, options);
+            var heatpointAreas = JsonSerializer.Deserialize<List<HeatpointAreaDto>>(json, _jsonSerializerOptions);
             if (heatpointAreas != null)
             {
                 foreach (var area in heatpointAreas)
                 {
+                    var floorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id;
+                    var exists = (area.Id != Guid.Empty && _context.HeatpointAreas.Any(h => h.Id == area.Id))
+                                 || _context.HeatpointAreas.Any(h =>
+                                     h.X == area.X &&
+                                     h.Y == area.Y &&
+                                     h.FloorId == floorId &&
+                                     h.Width == area.Width &&
+                                     h.Height == area.Height);
+
+                    if (exists)
+                    {
+                        continue;
+                    }
+
                     var heatpointArea = new HeatpointArea
                     {
+                        Id = area.Id,
                         X = area.X,
                         Y = area.Y,
                         Value = area.Value,
                         SoundLevel = area.SoundLevel,
-                        FloorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id,
+                        FloorId = floorId,
                         Width = area.Width,
                         Height = area.Height
                     };
