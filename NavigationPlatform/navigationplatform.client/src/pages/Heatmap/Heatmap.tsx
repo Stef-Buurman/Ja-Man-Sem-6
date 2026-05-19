@@ -8,9 +8,7 @@ import { FloorCache } from "../../utils/CachedMethods";
 import { HeatmapMap } from "../../components/HeatmapMap/HeatmapMap";
 
 export const Heatmap: React.FC = () => {
-  const [path, setPath] = useState<string[]>([]);
   const [currentFloor, setCurrentFloor] = useState<number>(0);
-  const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
 
   const fetchFloors = async () => {
