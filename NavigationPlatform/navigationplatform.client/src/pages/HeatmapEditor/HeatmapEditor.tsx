@@ -44,7 +44,7 @@ const HeatmapEditor: React.FC = () => {
 
   const handleAddArea = async () => {
     const newArea: HeatpointAreaDto = {
-      id: areas.length > 0 ? Math.max(...areas.map((a) => a.id)) + 1 : 1,
+      id: crypto.randomUUID(),
       x: 0,
       y: 0,
       value: 0,
@@ -63,7 +63,7 @@ const HeatmapEditor: React.FC = () => {
     if (res.ok) setAreas([...areas, res.response]);
   };
 
-  const handleDeleteArea = async (id: number) => {
+  const handleDeleteArea = async (id: string) => {
     await deleteHeatpointArea(
       {
         id,
@@ -78,7 +78,7 @@ const HeatmapEditor: React.FC = () => {
     setAreas(areas.filter((a) => a.id !== id));
   };
 
-  const areYouSurePopup = (id: number) => {
+  const areYouSurePopup = (id: string) => {
     if (window.confirm("Are you sure you want to delete this area?")) {
       handleDeleteArea(id);
     }
