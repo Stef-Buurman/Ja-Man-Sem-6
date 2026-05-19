@@ -51,3 +51,7 @@
   height: 100%;
   display: block;
 }
+
+#Second_Draft {
+  pointer-events: bounding-box;
+}

@@ -117,12 +117,22 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
     const target = e.target as Element;
 
-    const roomGroup = target.closest("g[id^='H.'], g[id^='WN.'], g[id^='WD.']");
+    const roomGroup = target.closest(
+      "g[id^='H.'], g[id^='WN.'], g[id^='WD.']"
+    );
+
     console.log("Clicked room group:", roomGroup?.id);
 
     if (roomGroup?.id) {
-      const cleanId = roomGroup.id.replace(/-\\d+$/, "");
+      const cleanId = roomGroup.id.replace(/-\d+$/, "");
       handleRoomClick(cleanId);
+      return;
+    }
+
+    const stadslabGroup = target.closest("g[id='Second_Draft']")
+
+    if (stadslabGroup) {
+      handleRoomClick("WN.00.019 Stadslab")
     }
   };
 
