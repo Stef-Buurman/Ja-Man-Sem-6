@@ -6,7 +6,7 @@ namespace NavigationPlatform.Server.Models
     [EntityTypeConfiguration(typeof(HeatpointAreaConfig))]
     public class HeatpointArea
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
         public int Value { get; set; }

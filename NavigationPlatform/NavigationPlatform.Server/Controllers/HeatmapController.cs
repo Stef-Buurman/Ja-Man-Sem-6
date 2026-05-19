@@ -36,7 +36,7 @@ namespace HeatmapAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<HeatpointArea>> UpdateHeatpointArea(int id, [FromBody] HeatpointAreaDto area)
+        public async Task<ActionResult<HeatpointArea>> UpdateHeatpointArea(Guid id, [FromBody] HeatpointAreaDto area)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace HeatmapAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHeatpointArea(int id)
+        public async Task<IActionResult> DeleteHeatpointArea(Guid id)
         {
             try
             {

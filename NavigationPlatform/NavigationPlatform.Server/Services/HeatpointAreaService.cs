@@ -55,7 +55,6 @@ namespace NavigationPlatform.Server.Services
                 {
                     var heatpointArea = new HeatpointArea
                     {
-                        Id = area.Id,
                         X = area.X,
                         Y = area.Y,
                         Value = area.Value,
@@ -89,7 +88,7 @@ namespace NavigationPlatform.Server.Services
             await _hubContext.Clients.All.SendAsync(hubMethodName, "Heatpoint area added");
         }
 
-        public async Task UpdateHeatpointArea(int id, HeatpointAreaDto area)
+        public async Task UpdateHeatpointArea(Guid id, HeatpointAreaDto area)
         {
             var existingArea = _context.HeatpointAreas.FirstOrDefault(a => a.Id == id);
             if (existingArea == null)
@@ -126,7 +125,7 @@ namespace NavigationPlatform.Server.Services
             await _hubContext.Clients.All.SendAsync(hubMethodName, "Heatpoint areas updated");
         }
 
-        public async Task DeleteHeatpointArea(int id)
+        public async Task DeleteHeatpointArea(Guid id)
         {
             var area = await _context.HeatpointAreas.FindAsync(id);
             if (area == null)
