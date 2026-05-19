@@ -34,7 +34,7 @@
         fill: #000e4b;
       }
 
-      .cls-10 {
+      .cls-18 {
         fill: lime;
       }
     </style>
@@ -326,43 +326,43 @@
     </g>
   </g>
   <g id="DataPoints">
-    <circle id="WN.01.029-2" data-name="WN.01.029" class="cls-10" cx="1431.67" cy="764" r="10.98"/>
-    <circle id="WN.01.028-2" data-name="WN.01.028" class="cls-10" cx="1489.04" cy="757.69" r="10.98"/>
-    <circle id="WN.01.022-2" data-name="WN.01.022" class="cls-10" cx="1779.59" cy="789.48" r="10.98"/>
-    <circle id="WN.01.023-2" data-name="WN.01.023" class="cls-10" cx="1566.08" cy="823.33" r="10.98"/>
-    <circle id="WN.01.017-2" data-name="WN.01.017" class="cls-10" cx="2004.45" cy="758.16" r="10.98"/>
-    <circle id="WN.01.014-2" data-name="WN.01.014" class="cls-10" cx="2167.37" cy="736.19" r="10.98"/>
-    <circle id="WN.01.007-2" data-name="WN.01.007" class="cls-10" cx="2189.34" cy="702.58" r="10.98"/>
-    <circle id="WN.01.Trap1" class="cls-10" cx="2161.51" cy="666.71" r="10.98"/>
-    <circle id="WN.01.Lift" class="cls-10" cx="2113.85" cy="627.88" r="10.98"/>
-    <circle id="WN.01.Trap2" class="cls-10" cx="1429.55" cy="726.78" r="10.98"/>
-    <circle id="WD.1.019" class="cls-10" cx="965.85" cy="976.98" r="10.98"/>
-    <circle id="WD.1.016" class="cls-10" cx="1148.84" cy="934.03" r="10.98"/>
-    <circle id="WD.01.Trap1" class="cls-10" cx="990.7" cy="908.86" r="10.98"/>
-    <circle id="WD.01.Lift" class="cls-10" cx="922.38" cy="911.67" r="10.98"/>
-    <circle id="WD.01.Trap2" class="cls-10" cx="812.84" cy="702.79" r="10.98"/>
-    <circle id="WD.1.029-2" data-name="WD.1.029" class="cls-10" cx="798.89" cy="776.42" r="10.98"/>
-    <circle id="WD.01.031-2" data-name="WD.01.031" class="cls-10" cx="778.31" cy="719.26" r="10.98"/>
-    <circle id="WD.1.003" class="cls-10" cx="863.71" cy="832.66" r="10.98"/>
-    <circle id="H.1.403-2" data-name="H.1.403" class="cls-10" cx="240.41" cy="322.85" r="10.98"/>
-    <circle id="H.1.318-2" data-name="H.1.318" class="cls-10" cx="229.42" cy="386.41" r="10.98"/>
-    <circle id="H.1.312-2" data-name="H.1.312" class="cls-10" cx="295.14" cy="675.73" r="10.98"/>
-    <circle id="H.1.315-2" data-name="H.1.315" class="cls-10" cx="268.22" cy="559.68" r="10.98"/>
-    <circle id="H.1.308-2" data-name="H.1.308" class="cls-10" cx="324.53" cy="815.71" r="10.98"/>
-    <circle id="H.1.306-2" data-name="H.1.306" class="cls-10" cx="360.94" cy="977.41" r="10.98"/>
-    <circle id="H.1.206-2" data-name="H.1.206" class="cls-10" cx="391.01" cy="1008.09" r="10.98"/>
-    <circle id="H.1.204-2" data-name="H.1.204" class="cls-10" cx="503.49" cy="993.56" r="10.98"/>
-    <circle id="H.1.Trap1" class="cls-10" cx="692.05" cy="1072.76" r="10.98"/>
-    <circle id="H.1.Lift1" class="cls-10" cx="686.32" cy="1040.67" r="10.98"/>
-    <circle id="H.1.Lift2" class="cls-10" cx="615.97" cy="974.97" r="10.98"/>
-    <circle id="H.1.Lift3" class="cls-10" cx="609.23" cy="943.31" r="10.98"/>
-    <circle id="H.1.Trap2" class="cls-10" cx="462.3" cy="245" r="10.98"/>
-    <circle id="H.1.117-2" data-name="H.1.117" class="cls-10" cx="590.33" cy="822.28" r="10.98"/>
-    <circle id="H.1.116-2" data-name="H.1.116" class="cls-10" cx="580.6" cy="778.44" r="10.98"/>
-    <circle id="H.1.114-2" data-name="H.1.114" class="cls-10" cx="563.08" cy="698.33" r="10.98"/>
-    <circle id="H.1.112-2" data-name="H.1.112" class="cls-10" cx="544.88" cy="614.21" r="10.98"/>
-    <circle id="H.1.110-2" data-name="H.1.110" class="cls-10" cx="526.35" cy="533.31" r="10.98"/>
-    <circle id="H.1.107-2" data-name="H.1.107" class="cls-10" cx="503.73" cy="399.3" r="10.98"/>
-    <circle id="H.1.104-2" data-name="H.1.104" class="cls-10" cx="478.27" cy="278.55" r="10.98"/>
+    <circle id="WN.01.029-2" data-name="WN.01.029" class="cls-18" cx="1431.67" cy="764" r="10.98"/>
+    <circle id="WN.01.028-2" data-name="WN.01.028" class="cls-18" cx="1489.04" cy="757.69" r="10.98"/>
+    <circle id="WN.01.022-2" data-name="WN.01.022" class="cls-18" cx="1779.59" cy="789.48" r="10.98"/>
+    <circle id="WN.01.023-2" data-name="WN.01.023" class="cls-18" cx="1566.08" cy="823.33" r="10.98"/>
+    <circle id="WN.01.017-2" data-name="WN.01.017" class="cls-18" cx="2004.45" cy="758.16" r="10.98"/>
+    <circle id="WN.01.014-2" data-name="WN.01.014" class="cls-18" cx="2167.37" cy="736.19" r="10.98"/>
+    <circle id="WN.01.007-2" data-name="WN.01.007" class="cls-18" cx="2189.34" cy="702.58" r="10.98"/>
+    <circle id="WN.01.Trap1" class="cls-18" cx="2161.51" cy="666.71" r="10.98"/>
+    <circle id="WN.01.Lift" class="cls-18" cx="2113.85" cy="627.88" r="10.98"/>
+    <circle id="WN.01.Trap2" class="cls-18" cx="1429.55" cy="726.78" r="10.98"/>
+    <circle id="WD.1.019" class="cls-18" cx="965.85" cy="976.98" r="10.98"/>
+    <circle id="WD.1.016" class="cls-18" cx="1148.84" cy="934.03" r="10.98"/>
+    <circle id="WD.01.Trap1" class="cls-18" cx="990.7" cy="908.86" r="10.98"/>
+    <circle id="WD.01.Lift" class="cls-18" cx="922.38" cy="911.67" r="10.98"/>
+    <circle id="WD.01.Trap2" class="cls-18" cx="812.84" cy="702.79" r="10.98"/>
+    <circle id="WD.1.029-2" data-name="WD.1.029" class="cls-18" cx="798.89" cy="776.42" r="10.98"/>
+    <circle id="WD.01.031-2" data-name="WD.01.031" class="cls-18" cx="778.31" cy="719.26" r="10.98"/>
+    <circle id="WD.1.003" class="cls-18" cx="863.71" cy="832.66" r="10.98"/>
+    <circle id="H.1.403-2" data-name="H.1.403" class="cls-18" cx="240.41" cy="322.85" r="10.98"/>
+    <circle id="H.1.318-2" data-name="H.1.318" class="cls-18" cx="229.42" cy="386.41" r="10.98"/>
+    <circle id="H.1.312-2" data-name="H.1.312" class="cls-18" cx="295.14" cy="675.73" r="10.98"/>
+    <circle id="H.1.315-2" data-name="H.1.315" class="cls-18" cx="268.22" cy="559.68" r="10.98"/>
+    <circle id="H.1.308-2" data-name="H.1.308" class="cls-18" cx="324.53" cy="815.71" r="10.98"/>
+    <circle id="H.1.306-2" data-name="H.1.306" class="cls-18" cx="360.94" cy="977.41" r="10.98"/>
+    <circle id="H.1.206-2" data-name="H.1.206" class="cls-18" cx="391.01" cy="1008.09" r="10.98"/>
+    <circle id="H.1.204-2" data-name="H.1.204" class="cls-18" cx="503.49" cy="993.56" r="10.98"/>
+    <circle id="H.1.Trap1" class="cls-18" cx="692.05" cy="1072.76" r="10.98"/>
+    <circle id="H.1.Lift1" class="cls-18" cx="686.32" cy="1040.67" r="10.98"/>
+    <circle id="H.1.Lift2" class="cls-18" cx="615.97" cy="974.97" r="10.98"/>
+    <circle id="H.1.Lift3" class="cls-18" cx="609.23" cy="943.31" r="10.98"/>
+    <circle id="H.1.Trap2" class="cls-18" cx="462.3" cy="245" r="10.98"/>
+    <circle id="H.1.117-2" data-name="H.1.117" class="cls-18" cx="590.33" cy="822.28" r="10.98"/>
+    <circle id="H.1.116-2" data-name="H.1.116" class="cls-18" cx="580.6" cy="778.44" r="10.98"/>
+    <circle id="H.1.114-2" data-name="H.1.114" class="cls-18" cx="563.08" cy="698.33" r="10.98"/>
+    <circle id="H.1.112-2" data-name="H.1.112" class="cls-18" cx="544.88" cy="614.21" r="10.98"/>
+    <circle id="H.1.110-2" data-name="H.1.110" class="cls-18" cx="526.35" cy="533.31" r="10.98"/>
+    <circle id="H.1.107-2" data-name="H.1.107" class="cls-18" cx="503.73" cy="399.3" r="10.98"/>
+    <circle id="H.1.104-2" data-name="H.1.104" class="cls-18" cx="478.27" cy="278.55" r="10.98"/>
   </g>
 </svg>
