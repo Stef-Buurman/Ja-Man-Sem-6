@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./HeatmapMap.css";
 import type { HeatmapMapProps } from "./HeatmapMap.props";
+import { useNavigate } from "react-router";
+import type { HeatpointArea } from "../../api/data-contracts";
 
 export const HeatmapMap: React.FC<HeatmapMapProps> = ({
   currentFloor,
@@ -12,6 +14,7 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -73,7 +76,7 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
   };
 
   const areasForCurrentFloor = areas.filter((a) => a.floor?.number === currentFloor);
-  const getGradientId = (areaId: number) => `heat-grad-${areaId}`;
+  const getGradientId = (areaId: string) => `heat-grad-${areaId}`;
 
   const [floorSvgContent, setFloorSvgContent] = useState<string>("");
 
@@ -99,12 +102,15 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
     loadSvg();
   }, [selectedFloor?.fileName]);
 
+  const navigateToRoom = (heatPointArea: HeatpointArea) => {
+    const x = heatPointArea.x + heatPointArea.width / 2;
+    const y = heatPointArea.y + heatPointArea.height / 2;
+
+    navigate(`/to/${heatPointArea.floor?.number}/${x}/${y}`);
+  };
+
   return (
     <div className="map-view-v4">
-      {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
-        📋 Copy doors
-      </button> */}
-
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
           {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
@@ -134,7 +140,8 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
 
           {areasForCurrentFloor.map((a) => (
             <rect
-            transform="translate(-100 40) rotate(-8.4)"
+              onClick={() => navigateToRoom(a)}
+              transform="translate(-100 40) rotate(-8.4)"
               key={a.id}
               x={a.x}
               y={a.y}

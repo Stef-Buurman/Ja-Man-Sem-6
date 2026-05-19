@@ -423,7 +423,7 @@ export const Pathfinding: React.FC = () => {
 
               <button
                 className="pathfinding-button"
-                disabled={!destinationNode || startNodes.length === 0}
+                disabled={(!destinationNode && destinationPoint === null) || startNodes.length === 0}
                 onClick={() => calculatePathAndGoToMap()}
               >
                 Naar de kaart

@@ -53,6 +53,17 @@ export async function updateRangeHeatpointArea(
   return handleApiResponse(() => heatmapApi.updateRangeHeatpointArea(...args, params), toastOptions);
 }
 
+export async function getHeatpointAreasJson(
+  ...argsWithToast: [
+    ...WithoutRequestParams<Parameters<Heatmap["getHeatpointAreasJson"]>>,
+    ToastOptions?,
+    RequestParams?,
+  ]
+): Promise<ApiResult<ExtractResponse<ReturnType<Heatmap["getHeatpointAreasJson"]>>>> {
+  const { args, toastOptions, params } = extractArgsToastsAndParams(argsWithToast);
+  return handleApiResponse(() => heatmapApi.getHeatpointAreasJson(...args, params), toastOptions);
+}
+
 export async function updateHeatpointArea(
   ...argsWithToast: [...WithoutRequestParams<Parameters<Heatmap["updateHeatpointArea"]>>, ToastOptions?, RequestParams?]
 ): Promise<ApiResult<ExtractResponse<ReturnType<Heatmap["updateHeatpointArea"]>>>> {

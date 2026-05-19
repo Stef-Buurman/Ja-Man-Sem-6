@@ -25,18 +25,17 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
     }
   }, [value]);
 
-  const normalizeRoom = (value: string) =>
-    value.toLowerCase().replace(/\./g, "")
+  const normalizeRoom = (value: string) => value.toLowerCase().replace(/\./g, "");
 
   const suggestions = useMemo(() => {
-    const trimmed = normalizeRoom(query)
+    const trimmed = normalizeRoom(query);
     if (!trimmed) return [];
 
     const counts = new Map<string, number>();
 
     for (const item of data) {
-      const normalizedItemRaw = item.trim()
-      const normalizedItem = normalizeRoom(normalizedItemRaw)
+      const normalizedItemRaw = item.trim();
+      const normalizedItem = normalizeRoom(normalizedItemRaw);
 
       if ((normalizedItem.includes(trimmed) && normalizedItem !== trimmed) || normalizedItem === trimmed) {
         counts.set(normalizedItemRaw, (counts.get(normalizedItemRaw) || 0) + 1);
