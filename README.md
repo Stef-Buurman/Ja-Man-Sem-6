@@ -31,8 +31,6 @@ Het project is klaar wanneer aan de volgende punten is voldaan:
 - Gevoelige gegevens worden veilig opgeslagen.
 - Basisbeveiliging tegen veelvoorkomende kwetsbaarheden is toegepast, zoals:
   - SQL Injection
-  - XSS
-  - CSRF
 
 ## Oplevering & Documentatie
 - De productieversie draait zonder console errors.
