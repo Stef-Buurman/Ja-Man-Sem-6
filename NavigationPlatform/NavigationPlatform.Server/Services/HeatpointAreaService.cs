@@ -52,43 +52,93 @@ namespace NavigationPlatform.Server.Services
 
         public async Task ImportHeatpointAreas()
         {
-            var json = await File.ReadAllTextAsync("Data/HeatpointAreas.json");
-            var heatpointAreas = JsonSerializer.Deserialize<List<HeatpointAreaDto>>(json, _jsonSerializerOptions);
-            if (heatpointAreas != null)
+            const string filePath = "Data/HeatpointAreas.json";
+
+            if (!File.Exists(filePath))
+                return;
+
+            var json = await File.ReadAllTextAsync(filePath);
+
+            var heatpointAreas = JsonSerializer.Deserialize<List<HeatpointAreaDto>>(
+                json,
+                _jsonSerializerOptions
+            );
+
+            if (heatpointAreas is null || heatpointAreas.Count == 0)
+                return;
+
+            var floors = await _context.Floors
+                .ToDictionaryAsync(f => f.Number, f => f.Id);
+
+            var existingAreas = await _context.HeatpointAreas.ToListAsync();
+
+            foreach (var area in heatpointAreas)
             {
-                foreach (var area in heatpointAreas)
+                floors.TryGetValue(area.Floor, out var floorId);
+
+                var existingHeatpoint = FindExistingHeatpointArea(
+                    existingAreas,
+                    area,
+                    floorId
+                );
+
+                if (existingHeatpoint is not null)
                 {
-                    var floorId = _context.Floors.FirstOrDefault(f => f.Number == area.Floor)?.Id;
-                    var exists = (area.Id != Guid.Empty && _context.HeatpointAreas.Any(h => h.Id == area.Id))
-                                 || _context.HeatpointAreas.Any(h =>
-                                     h.X == area.X &&
-                                     h.Y == area.Y &&
-                                     h.FloorId == floorId &&
-                                     h.Width == area.Width &&
-                                     h.Height == area.Height);
-
-                    if (exists)
-                    {
-                        continue;
-                    }
-
-                    var heatpointArea = new HeatpointArea
-                    {
-                        Id = area.Id,
-                        X = area.X,
-                        Y = area.Y,
-                        Value = area.Value,
-                        SoundLevel = area.SoundLevel,
-                        FloorId = floorId,
-                        Width = area.Width,
-                        Height = area.Height
-                    };
-                    _context.HeatpointAreas.Add(heatpointArea);
+                    UpdateHeatpointArea(existingHeatpoint, area, floorId);
+                    continue;
                 }
-                await _context.SaveChangesAsync();
+
+                _context.HeatpointAreas.Add(new HeatpointArea
+                {
+                    Id = area.Id == Guid.Empty ? Guid.NewGuid() : area.Id,
+                    X = area.X,
+                    Y = area.Y,
+                    Value = area.Value,
+                    SoundLevel = area.SoundLevel,
+                    FloorId = floorId,
+                    Width = area.Width,
+                    Height = area.Height
+                });
             }
+
+            await _context.SaveChangesAsync();
         }
 
+        private static HeatpointArea? FindExistingHeatpointArea(
+            List<HeatpointArea> existingAreas,
+            HeatpointAreaDto area,
+            Guid? floorId)
+        {
+            if (area.Id != Guid.Empty)
+            {
+                var byId = existingAreas.FirstOrDefault(h => h.Id == area.Id);
+
+                if (byId is not null)
+                    return byId;
+            }
+
+            return existingAreas.FirstOrDefault(h =>
+                h.X == area.X &&
+                h.Y == area.Y &&
+                h.FloorId == floorId &&
+                h.Width == area.Width &&
+                h.Height == area.Height
+            );
+        }
+
+        private static void UpdateHeatpointArea(
+            HeatpointArea existingHeatpoint,
+            HeatpointAreaDto area,
+            Guid? floorId)
+        {
+            existingHeatpoint.X = area.X;
+            existingHeatpoint.Y = area.Y;
+            existingHeatpoint.Value = area.Value;
+            existingHeatpoint.SoundLevel = area.SoundLevel;
+            existingHeatpoint.FloorId = floorId;
+            existingHeatpoint.Width = area.Width;
+            existingHeatpoint.Height = area.Height;
+        }
         public async Task AddHeatpointArea(HeatpointAreaDto area)
         {
             var heatpointArea = new HeatpointArea
