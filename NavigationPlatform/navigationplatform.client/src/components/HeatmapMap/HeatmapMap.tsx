@@ -6,7 +6,7 @@ import type { HeatpointArea } from "../../api/data-contracts";
 
 export const HeatmapMap: React.FC<HeatmapMapProps> = ({
   currentFloor,
-  handleRoomClick = () => { },
+  handleRoomClick = () => {},
   floors,
   currentPosition,
   areas = [],
@@ -109,27 +109,29 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
     navigate(`/to/${heatPointArea.floor?.number}/${x}/${y}`);
   };
 
-  const HEATMAP_ROTATION = -10.7;
-  const LINE_ROTATION = 45 + HEATMAP_ROTATION;
+  const BUILDING_SLOPE = 0.065;
+
+  const getSlopedPoints = (width: number, height: number) => {
+    const drop = width * BUILDING_SLOPE;
+
+    return `
+    0,0
+    ${width},${drop}
+    ${width},${height + drop}
+    0,${height}
+  `;
+  };
+
+  const HEATMAP_ROTATION = -12.1;
 
   return (
     <div className="map-view-v4">
       <div className="map-view-v4__svg-wrapper">
-        <svg
-          ref={svgElement}
-          viewBox={viewBox || "0 0 1000 1000"}
-          className="MapView3d4"
-          onClick={onSvgClick}
-        >
-          {floorSvgContent && (
-            <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />
-          )}
+        <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
+          {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
 
           {currentPosition && currentPosition.floor === currentFloor && (
-            <g
-              transform={`translate(${currentPosition.x}, ${currentPosition.y})`}
-              style={{ pointerEvents: "none" }}
-            >
+            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
               <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
             </g>
           )}
@@ -145,17 +147,9 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
                   patternUnits="userSpaceOnUse"
                   width="32"
                   height="32"
-                  patternTransform={`rotate(${LINE_ROTATION})`}
+                  patternTransform="rotate(45)"
                 >
-                  <line
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="32"
-                    stroke={color}
-                    strokeWidth="25"
-                    opacity="0.35"
-                  />
+                  <line x1="0" y1="0" x2="0" y2="32" stroke={color} strokeWidth="25" opacity="0.35" />
                 </pattern>
               );
             })}
@@ -163,31 +157,18 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
 
           {areasForCurrentFloor.map((a) => {
             const color = getColor(a.value);
+            const points = getSlopedPoints(a.width, a.height);
 
             return (
               <g
                 key={a.id}
                 onClick={() => navigateToRoom(a)}
-                transform={`rotate(${HEATMAP_ROTATION} ${a.x} ${a.y})`}
+                transform={`translate(${a.x}, ${a.y}) rotate(${HEATMAP_ROTATION})`}
                 style={{ cursor: "pointer" }}
               >
-                <rect
-                  x={a.x}
-                  y={a.y}
-                  width={a.width}
-                  height={a.height}
-                  fill={`url(#pattern-${a.id})`}
-                />
+                <polygon points={points} fill={`url(#pattern-${a.id})`} />
 
-                <rect
-                  x={a.x}
-                  y={a.y}
-                  width={a.width}
-                  height={a.height}
-                  fill="none"
-                  stroke={color}
-                  strokeWidth={4}
-                />
+                <polygon points={points} fill="none" stroke={color} strokeWidth={4} />
               </g>
             );
           })}
