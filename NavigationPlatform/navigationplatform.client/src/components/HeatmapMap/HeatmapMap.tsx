@@ -6,7 +6,7 @@ import type { HeatpointArea } from "../../api/data-contracts";
 
 export const HeatmapMap: React.FC<HeatmapMapProps> = ({
   currentFloor,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
   currentPosition,
   areas = [],
@@ -109,13 +109,27 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
     navigate(`/to/${heatPointArea.floor?.number}/${x}/${y}`);
   };
 
+  const HEATMAP_ROTATION = -10.7;
+  const LINE_ROTATION = 45 + HEATMAP_ROTATION;
+
   return (
     <div className="map-view-v4">
       <div className="map-view-v4__svg-wrapper">
-        <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
-          {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
+        <svg
+          ref={svgElement}
+          viewBox={viewBox || "0 0 1000 1000"}
+          className="MapView3d4"
+          onClick={onSvgClick}
+        >
+          {floorSvgContent && (
+            <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />
+          )}
+
           {currentPosition && currentPosition.floor === currentFloor && (
-            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
+            <g
+              transform={`translate(${currentPosition.x}, ${currentPosition.y})`}
+              style={{ pointerEvents: "none" }}
+            >
               <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
             </g>
           )}
@@ -123,34 +137,60 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
           <defs>
             {areasForCurrentFloor.map((a) => {
               const color = getColor(a.value);
+
               return (
-                <radialGradient key={a.id} id={getGradientId(a.id)} cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor={color} stopOpacity="0.9" />
-                  <stop offset="45%" stopColor={color} stopOpacity="0.5" />
-                  <stop offset="100%" stopColor={color} stopOpacity="0" />
-                </radialGradient>
+                <pattern
+                  key={`pattern-${a.id}`}
+                  id={`pattern-${a.id}`}
+                  patternUnits="userSpaceOnUse"
+                  width="32"
+                  height="32"
+                  patternTransform={`rotate(${LINE_ROTATION})`}
+                >
+                  <line
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="32"
+                    stroke={color}
+                    strokeWidth="25"
+                    opacity="0.35"
+                  />
+                </pattern>
               );
             })}
-            {areasForCurrentFloor.map((a) => (
-              <clipPath key={`clip-${a.id}`} id={`clip-${a.id}`}>
-                <rect x={a.x} y={a.y} width={a.width} height={a.height} />
-              </clipPath>
-            ))}
           </defs>
 
-          {areasForCurrentFloor.map((a) => (
-            <rect
-              onClick={() => navigateToRoom(a)}
-              transform="translate(-100 40) rotate(-8.4)"
-              key={a.id}
-              x={a.x}
-              y={a.y}
-              width={a.width}
-              height={a.height}
-              fill={`url(#${getGradientId(a.id)})`}
-              clipPath={`url(#clip-${a.id})`}
-            />
-          ))}
+          {areasForCurrentFloor.map((a) => {
+            const color = getColor(a.value);
+
+            return (
+              <g
+                key={a.id}
+                onClick={() => navigateToRoom(a)}
+                transform={`rotate(${HEATMAP_ROTATION} ${a.x} ${a.y})`}
+                style={{ cursor: "pointer" }}
+              >
+                <rect
+                  x={a.x}
+                  y={a.y}
+                  width={a.width}
+                  height={a.height}
+                  fill={`url(#pattern-${a.id})`}
+                />
+
+                <rect
+                  x={a.x}
+                  y={a.y}
+                  width={a.width}
+                  height={a.height}
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={4}
+                />
+              </g>
+            );
+          })}
         </svg>
       </div>
     </div>
