@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./PathfindingMap.css";
 import type { PathfindingMapProps } from "./PathfindingMap.props";
 import type { GraphNodeDto } from "../../api/data-contracts";
@@ -16,6 +16,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
+  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -134,8 +135,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     }
   };
 
-  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
-
   useEffect(() => {
     if (!selectedFloor?.fileName) return;
 
@@ -158,6 +157,41 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     loadSvg();
   }, [selectedFloor?.fileName]);
 
+  const escapeCssAttribute = (value: string) => value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
+
+  const pathNodeIconCss = useMemo(() => {
+    if (!path?.length) return "";
+
+    const idsForCurrentFloor = path
+      .map((nodeId) => nodes.find((n) => n.id === nodeId && n.floor === currentFloor))
+      .filter((node): node is GraphNodeDto => Boolean(node))
+      .flatMap((node) => {
+        const ids = [node.id];
+
+        if (node.roomId) ids.push(node.roomId);
+
+        ids.push(`.${node.id}`);
+        if (node.roomId) ids.push(`.${node.roomId}`);
+
+        return ids;
+      });
+
+    const uniqueIds = [...new Set(idsForCurrentFloor)].filter((id) => id != null);
+
+    if (uniqueIds.length === 0) return "";
+    return uniqueIds
+      .map((id) => {
+        const safeId = escapeCssAttribute(id);
+        return `
+        [id="${safeId}"] .icon-background,
+        [class~="${safeId}"] .icon-background {
+          fill: blue !important;
+        }
+      `;
+      })
+      .join("\n");
+  }, [path, nodes, currentFloor]);
+
   return (
     <div className="map-view-v4">
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
@@ -167,6 +201,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
           {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
+          <style>{pathNodeIconCss}</style>
           {/* {nodes
             .filter((n) => n.floor === currentFloor)
             .map((n) => (
