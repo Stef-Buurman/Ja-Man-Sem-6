@@ -158,7 +158,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     loadSvg();
   }, [selectedFloor?.fileName]);
 
-  const escapeCssAttribute = (value: string) => value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
+  const escapeCssAttribute = (value: string) =>
+    value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
 
   const pathNodeIconCss = useMemo(() => {
     if (!path?.length) return "";

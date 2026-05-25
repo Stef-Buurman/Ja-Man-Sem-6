@@ -281,7 +281,10 @@ export const Pathfinding: React.FC = () => {
             )
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
-      } else if (destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase() && destinationPoint?.type === "coordinates") {
+      } else if (
+        destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase() &&
+        destinationPoint?.type === "coordinates"
+      ) {
         const closestNode = getClosestNode(graph.nodes, {
           floor: Number(destinationPoint.floor),
           x: Number(destinationPoint.x),
