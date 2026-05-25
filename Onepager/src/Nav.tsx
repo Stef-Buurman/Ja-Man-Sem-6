@@ -56,6 +56,10 @@ function Nav() {
           <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint3")}>
             Sprint 3
           </button>
+
+          <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => scrollToSection("sprint4")}>
+            Sprint 4
+          </button>
         </div>
 
         {/* Mobile menu */}
@@ -72,6 +76,9 @@ function Nav() {
             </button>
             <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint3"); setMenuOpen(false); }}>
               Sprint 3
+            </button>
+            <button className="hover:text-[#e8492b] transition cursor-pointer" onClick={() => { scrollToSection("sprint4"); setMenuOpen(false); }}>
+              Sprint 4
             </button>
           </div>
         )}
