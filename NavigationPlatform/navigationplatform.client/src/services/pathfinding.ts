@@ -124,69 +124,6 @@ export function reconstructPath(cameFrom: Map<string, string>, current: string):
   return path;
 }
 
-export function findPathAStar(
-  startId: string,
-  endId: string,
-  graph: GraphDto,
-  settings: PathfindingSettings,
-): string[] {
-  const adjacency = buildAdjacencyMap(graph, settings);
-
-  const openSet = new Set<string>([startId]);
-  const cameFrom = new Map<string, string>();
-
-  const gScore = new Map<string, number>();
-  const fScore = new Map<string, number>();
-
-  graph.nodes?.forEach((n) => {
-    if (n.id) {
-      gScore.set(n.id, Infinity);
-      fScore.set(n.id, Infinity);
-    }
-  });
-
-  gScore.set(startId, 0);
-
-  const startNode = getNode(graph, startId);
-  const endNode = getNode(graph, endId);
-  if (!startNode || !endNode) {
-    return [];
-  }
-
-  fScore.set(startId, heuristic(startNode, endNode));
-
-  while (openSet.size > 0) {
-    let current = [...openSet].reduce((a, b) => (fScore.get(a)! < fScore.get(b)! ? a : b));
-
-    if (current === endId) {
-      return reconstructPath(cameFrom, current);
-    }
-
-    openSet.delete(current);
-
-    const currentNode = getNode(graph, current);
-    if (!currentNode) continue;
-
-    for (const neighborId of getNeighbors(current, adjacency, settings, graph)) {
-      const neighborNode = getNode(graph, neighborId);
-      if (!neighborNode) continue;
-
-      const tentativeG = gScore.get(current)! + getEdgeCost(currentNode, neighborNode);
-
-      if (tentativeG < gScore.get(neighborId)!) {
-        cameFrom.set(neighborId, current);
-
-        gScore.set(neighborId, tentativeG);
-        fScore.set(neighborId, tentativeG + heuristic(neighborNode, endNode));
-
-        openSet.add(neighborId);
-      }
-    }
-  }
-
-  return [];
-}
-
 export function findPathAStarMultiStart(
   startIds: string[],
   endIds: string[],
