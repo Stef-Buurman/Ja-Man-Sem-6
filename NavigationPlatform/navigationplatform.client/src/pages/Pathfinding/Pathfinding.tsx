@@ -267,15 +267,13 @@ export const Pathfinding: React.FC = () => {
       destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase()
     ) {
       let nodeName = destinationToUse[0];
-      if (destinationToUse[0] === ToiletNodeName) {
-        console.log("Finding toilet nodes...");
+      if (destinationToUse[0].toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase()) {
         destinationToUse =
           graph.nodes
             ?.filter((n) => n.label === "Toilet")
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
-      } else if (destinationToUse[0] === EmergencyNodeName) {
-        console.log("Finding emergency nodes...");
+      } else if (destinationToUse[0].toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()) {
         destinationToUse =
           graph.nodes
             ?.filter(
@@ -283,8 +281,7 @@ export const Pathfinding: React.FC = () => {
             )
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
-      } else if (destinationToUse[0] === CustomDestinationName && destinationPoint?.type === "coordinates") {
-        console.log("Finding closest node to custom destination...");
+      } else if (destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase() && destinationPoint?.type === "coordinates") {
         const closestNode = getClosestNode(graph.nodes, {
           floor: Number(destinationPoint.floor),
           x: Number(destinationPoint.x),

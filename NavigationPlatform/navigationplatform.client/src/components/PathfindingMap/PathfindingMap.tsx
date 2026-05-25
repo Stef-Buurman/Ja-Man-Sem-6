@@ -17,6 +17,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
   const [floorSvgContent, setFloorSvgContent] = useState<string>("");
+  const pathColor = "blue";
 
   useEffect(() => {
     if (!gottenSVGElement.current) return;
@@ -185,7 +186,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         return `
         [id="${safeId}"] .icon-background,
         [class~="${safeId}"] .icon-background {
-          fill: blue !important;
+          fill: ${pathColor} !important;
         }
       `;
       })
@@ -202,37 +203,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
           {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
           <style>{pathNodeIconCss}</style>
-          {/* {nodes
-            .filter((n) => n.floor === currentFloor)
-            .map((n) => (
-              <rect
-                key={n.id}
-                x={n.x - (n.width ?? 20) / 2}
-                y={n.y - (n.height ?? 20) / 2}
-                width={n.width ?? 20}
-                height={n.height ?? 20}
-                fill={n.type === "door" ? "#ff0000" : "#ffd27f"}
-                stroke="#333"
-                strokeWidth={2}
-                rx={3}
-                onClick={() => handleRoomClick(n.id)}
-                style={{ cursor: "pointer", opacity: 0.8 }}
-              />
-            ))}
-
-          {edges.map((e) => {
-            const from = nodes.find((n) => n.id === e.from && n.floor === currentFloor);
-            const to = nodes.find((n) => n.id === e.to && n.floor === currentFloor);
-            if (!from || !to) return null;
-
-            return <line key={`${e.from}-${e.to}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="#aaa" strokeWidth={8} strokeLinecap="round" />;
-          })} */}
           {currentPosition && currentPosition.floor === currentFloor && (
             <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
-              {/* <g transform={`rotate(${(heading ?? 0) + MAP_NORTH_OFFSET})`}>
-                <polygon points="0,-35 14,10 0,3 -14,10" fill="#2563eb" stroke="white" strokeWidth={3} />
-              </g> */}
-
               <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
             </g>
           )}
@@ -291,7 +263,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                     key={index}
                     d={d}
                     fill="none"
-                    stroke="blue"
+                    stroke={pathColor}
                     strokeWidth={6}
                     strokeLinecap="round"
                     strokeLinejoin="round"
