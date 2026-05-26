@@ -72,7 +72,7 @@ function Sprint4() {
                 Op basis van de gebruikerstesten eerder deze sprint hebben wij ons prototype verder
                 verbeterd en uitgebreid. De kaart die eerst alleen bruikbaar was voor de derde verdieping,
                 is nu bijna klaar voor het hele gebouw. We hebben verdiepingen 0 tot en met 2 toegevoegd
-                en missen nu alleen nog maar de verdiepingen 5 en 6.
+                en missen nu alleen nog maar de verdiepingen 4 tot en met 6.
               </p>
               <p>
                 Daarnaast hebben wij nooduitgangen toegevoegd aan de applicatie. Nu kan de applicatie
