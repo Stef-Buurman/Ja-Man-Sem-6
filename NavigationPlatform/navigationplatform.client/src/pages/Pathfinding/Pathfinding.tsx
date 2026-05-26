@@ -35,10 +35,10 @@ export const Pathfinding: React.FC = () => {
   const startPoint =
     floor && x && y
       ? {
-        floor,
-        x: Number(x),
-        y: Number(y),
-      }
+          floor,
+          x: Number(x),
+          y: Number(y),
+        }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -46,11 +46,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-        type: "coordinates",
-        floor: destFloor,
-        x: Number(destX),
-        y: Number(destY),
-      }
+          type: "coordinates",
+          floor: destFloor,
+          x: Number(destX),
+          y: Number(destY),
+        }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -141,7 +141,7 @@ export const Pathfinding: React.FC = () => {
     if (!graph.nodes) return [];
 
     if (override) {
-      return [override, override + "_door"];
+      return [override, override + "_door", override + "A", override + "B"];
     }
 
     if (destinationPoint?.type === "coordinates") {
@@ -170,7 +170,6 @@ export const Pathfinding: React.FC = () => {
       return undefined;
     }
 
-    // Best option: use the last node of the calculated path
     const lastPathNodeId = path.at(-1);
 
     if (lastPathNodeId) {
@@ -491,19 +490,19 @@ export const Pathfinding: React.FC = () => {
                 currentPosition={
                   userPosition
                     ? {
-                      x: userPosition.x,
-                      y: userPosition.y,
-                      floor: userPosition.floor,
-                    }
+                        x: userPosition.x,
+                        y: userPosition.y,
+                        floor: userPosition.floor,
+                      }
                     : undefined
                 }
                 destination={
                   destinationNode
                     ? {
-                      x: destinationNode.x,
-                      y: destinationNode.y,
-                      floor: destinationNode.floor,
-                    }
+                        x: destinationNode.x,
+                        y: destinationNode.y,
+                        floor: destinationNode.floor,
+                      }
                     : undefined
                 }
               />
@@ -528,7 +527,9 @@ export const Pathfinding: React.FC = () => {
                         className="pathfinding-route-step-button"
                         onClick={() => setCurrentFloor(step.floor)}
                       >
-                        <strong>Stap {index + 1}: {step.title}</strong>
+                        <strong>
+                          Stap {index + 1}: {step.title}
+                        </strong>
                         <span>{step.instruction}</span>
                       </button>
                     </li>
@@ -536,9 +537,7 @@ export const Pathfinding: React.FC = () => {
                 </ol>
 
                 {activeStep && (
-                  <p className="pathfinding-current-instruction">
-                    Huidige instructie: {activeStep.instruction}
-                  </p>
+                  <p className="pathfinding-current-instruction">Huidige instructie: {activeStep.instruction}</p>
                 )}
               </section>
             )}
