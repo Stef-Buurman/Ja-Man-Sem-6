@@ -232,3 +232,76 @@
     padding: 8px;
   }
 }
+
+.pathfinding-route-steps {
+  padding: 14px 16px;
+  background-color: rgba(248, 239, 227, 0.92);
+  border: 1px solid #342626;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(52, 38, 38, 0.1);
+}
+
+.pathfinding-route-steps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.pathfinding-route-steps-label {
+  font-weight: 800;
+  color: #342626;
+}
+
+.pathfinding-route-steps-count {
+  font-size: 0.9rem;
+  color: #5d5d5d;
+}
+
+.pathfinding-route-steps-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.pathfinding-route-step-button {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px;
+  border: 1px solid rgba(52, 38, 38, 0.22);
+  border-radius: 12px;
+  background: white;
+  color: #342626;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pathfinding-route-step-button:hover {
+  border-color: #d3114c;
+}
+
+.pathfinding-route-step-active .pathfinding-route-step-button {
+  border-color: #d3114c;
+  box-shadow: 0 0 0 2px rgba(211, 17, 76, 0.15);
+}
+
+.pathfinding-route-step-button span {
+  line-height: 1.35;
+}
+
+.pathfinding-current-instruction {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-left: 4px solid #d3114c;
+  background: white;
+  border-radius: 10px;
+  color: #342626;
+}
+

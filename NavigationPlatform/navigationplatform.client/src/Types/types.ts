@@ -6,3 +6,10 @@ export type Floor = {
 export type PathfindingSettings = {
   accessibleRoute: boolean;
 };
+
+export type PathStep = {
+  floor: number;
+  title: string;
+  instruction: string;
+  nodeIds: string[];
+};

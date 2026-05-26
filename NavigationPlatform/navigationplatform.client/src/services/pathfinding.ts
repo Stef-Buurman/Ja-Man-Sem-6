@@ -229,3 +229,185 @@ export function calculateWalkingDistance(path: string[], graph: GraphDto): numbe
 
   return totalDistance;
 }
+
+export type PathStep = {
+  floor: number;
+  title: string;
+  instruction: string;
+  nodeIds: string[];
+};
+
+const buildingColors: Record<string, string> = {
+  WD: "donkerblauwe",
+  WN: "gele",
+  H: "roze",
+};
+
+function getNodeDisplayName(node?: GraphNodeDto): string {
+  if (!node) return "";
+
+  const type = GetNodeTypeFromInteger(node.type);
+  const rawName = node.label || node.roomId || "";
+
+  if (rawName.toLowerCase().startsWith("node_")) return "";
+
+  if (type === "entrance") return "de ingang";
+  if (type === "elevator") return "de lift";
+  if (type === "stairs") return "de trap";
+  if (type === "door") return rawName ? `de deur bij ${rawName}` : "de deur";
+
+  return rawName;
+}
+
+function getBuildingCode(node?: GraphNodeDto): string | undefined {
+  const value = node?.roomId || node?.label || node?.id || "";
+  const match = value.match(/^(WD|WN|H)(?=[._-]|\d|$)/i);
+
+  return match ? match[1].toUpperCase() : undefined;
+}
+
+function getBuildingText(node?: GraphNodeDto): string {
+  const buildingCode = getBuildingCode(node);
+
+  if (!buildingCode) return "het gebouw";
+
+  const color = buildingColors[buildingCode];
+
+  return color ? `het ${color} ${buildingCode}-gebouw` : `het ${buildingCode}-gebouw`;
+}
+
+function getConnectorName(fromNode: GraphNodeDto, toNode: GraphNodeDto): string {
+  const fromType = GetNodeTypeFromInteger(fromNode.type);
+  const toType = GetNodeTypeFromInteger(toNode.type);
+
+  return fromType === "elevator" || toType === "elevator" ? "lift" : "trap";
+}
+
+function isConnectorNode(node: GraphNodeDto): boolean {
+  const type = GetNodeTypeFromInteger(node.type);
+  return type === "stairs" || type === "elevator";
+}
+
+function getSimpleDirectionInstruction(fromNode: GraphNodeDto, toNode: GraphNodeDto): string {
+  const dx = (toNode.x ?? 0) - (fromNode.x ?? 0);
+
+  if (dx > 80) return "naar links";
+  if (dx < -80) return "naar rechts";
+
+  return "rechtdoor";
+}
+
+function getExitDirectionInstruction(connectorNode: GraphNodeDto, nextNode: GraphNodeDto): string {
+  const dx = (nextNode.x ?? 0) - (connectorNode.x ?? 0);
+
+  if (dx > 20) return "naar links";
+  if (dx < -20) return "naar rechts";
+
+  return "rechtdoor";
+}
+
+function getTargetText(targetNode: GraphNodeDto): string {
+  const nodeName = getNodeDisplayName(targetNode);
+
+  if (nodeName) {
+    return `richting ${nodeName}`;
+  }
+
+  return `door ${getBuildingText(targetNode)}`;
+}
+
+function getWalkingInstruction(fromNode: GraphNodeDto, targetNode: GraphNodeDto): string {
+  return `Loop ${getSimpleDirectionInstruction(fromNode, targetNode)} ${getTargetText(targetNode)}.`;
+}
+
+function getTransitionInstruction(fromNode: GraphNodeDto, toNode: GraphNodeDto): string {
+  return `Neem de ${getConnectorName(fromNode, toNode)} naar verdieping ${toNode.floor}.`;
+}
+
+type FloorSegment = {
+  floor: number;
+  nodes: GraphNodeDto[];
+};
+
+function splitPathIntoFloorSegments(nodes: GraphNodeDto[]): FloorSegment[] {
+  const segments: FloorSegment[] = [];
+
+  for (const node of nodes) {
+    const lastSegment = segments[segments.length - 1];
+
+    if (!lastSegment || lastSegment.floor !== node.floor) {
+      segments.push({
+        floor: node.floor,
+        nodes: [node],
+      });
+    } else {
+      lastSegment.nodes.push(node);
+    }
+  }
+
+  return segments;
+}
+
+function isMeaningfulSegment(segment: FloorSegment, index: number, segments: FloorSegment[]): boolean {
+  if (index === 0 || index === segments.length - 1) return true;
+
+  return segment.nodes.some((node) => !isConnectorNode(node));
+}
+
+export function buildPathSteps(path: string[], graph: GraphDto): PathStep[] {
+  if (!path.length || !graph.nodes?.length) return [];
+
+  const nodesInPath = path
+    .map((id) => getNode(graph, id))
+    .filter((node): node is GraphNodeDto => Boolean(node));
+
+  if (nodesInPath.length === 0) return [];
+
+  const allSegments = splitPathIntoFloorSegments(nodesInPath);
+  const segments = allSegments.filter(isMeaningfulSegment);
+
+  return segments.map((segment, index): PathStep => {
+    const firstNode = segment.nodes[0];
+    const lastNode = segment.nodes[segment.nodes.length - 1];
+
+    const previousSegment = segments[index - 1];
+    const nextSegment = segments[index + 1];
+
+    const nodeIds = segment.nodes
+      .map((node) => node.id)
+      .filter((id): id is string => Boolean(id));
+
+    let instruction = "";
+
+    if (index === 0) {
+      instruction = getWalkingInstruction(firstNode, lastNode);
+
+      if (nextSegment) {
+        instruction += ` ${getTransitionInstruction(lastNode, nextSegment.nodes[0])}`;
+      }
+    } else {
+      const previousLastNode = previousSegment.nodes[previousSegment.nodes.length - 1];
+      const connector = getConnectorName(previousLastNode, firstNode);
+      const exitDirection = getExitDirectionInstruction(firstNode, lastNode);
+
+      instruction = `Verlaat de ${connector} en ga ${exitDirection}.`;
+
+      if (firstNode.id !== lastNode.id) {
+        instruction += ` ${getWalkingInstruction(firstNode, lastNode)}`;
+      }
+
+      if (nextSegment) {
+        instruction += ` ${getTransitionInstruction(lastNode, nextSegment.nodes[0])}`;
+      } else {
+        instruction += " Bestemming bereikt.";
+      }
+    }
+
+    return {
+      floor: segment.floor,
+      title: `Verdieping ${segment.floor}`,
+      instruction,
+      nodeIds,
+    };
+  });
+}
