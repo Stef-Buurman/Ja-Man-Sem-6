@@ -9,9 +9,10 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
   currentPosition,
+  destination,
 }) => {
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
@@ -158,7 +159,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     loadSvg();
   }, [selectedFloor?.fileName]);
 
-  const escapeCssAttribute = (value: string) => value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
+  const escapeCssAttribute = (value: string) =>
+    value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
 
   const pathNodeIconCss = useMemo(() => {
     if (!path?.length) return "";
@@ -271,6 +273,20 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                 );
               });
             })()}
+
+          {destination && destination.floor === currentFloor && (
+            <g
+              id="SVGRepo_iconCarrier"
+              transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}
+            >
+              <path
+                className="destination-fill"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3.37892 10.2236L8 16L12.6211 10.2236C13.5137 9.10788 14 7.72154 14 6.29266V6C14 2.68629 11.3137 0 8 0C4.68629 0 2 2.68629 2 6V6.29266C2 7.72154 2.4863 9.10788 3.37892 10.2236ZM8 8C9.10457 8 10 7.10457 10 6C10 4.89543 9.10457 4 8 4C6.89543 4 6 4.89543 6 6C6 7.10457 6.89543 8 8 8Z"
+              />
+            </g>
+          )}
         </svg>
       </div>
     </div>

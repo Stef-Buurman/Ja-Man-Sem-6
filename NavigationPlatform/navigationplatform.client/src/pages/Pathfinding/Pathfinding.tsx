@@ -4,7 +4,7 @@ import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
 import SearchSelect from "../../components/SearchSelect/SearchSelect";
 import type { PathfindingSettings } from "../../Types/types";
-import { findPathAStarMultiStart } from "../../services/pathfinding";
+import { buildPathSteps, findPathAStarMultiStart } from "../../services/pathfinding";
 import { type FloorDto, type GraphDto, type GraphNodeDto, type HeatpointArea } from "../../api/data-contracts";
 import { getWholeGraph } from "../../api/methods/Graph.api";
 import { useParams } from "react-router-dom";
@@ -20,37 +20,37 @@ export const Pathfinding: React.FC = () => {
   const [currentFloor, setCurrentFloor] = useState<number>(0);
   const [selectedRoom, setSelectedRoom] = useState<string | undefined>(undefined);
   const [startNodes, setStartNodes] = useState<string[]>([]);
-  const [destinationNode, setDestinationNode] = useState<string | undefined>(undefined);
+  const [destinationNodeId, setDestinationNodeId] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
   const { floor, x, y, destination, destFloor, destX, destY } = useParams();
 
-  const [showHeatmap, setShowHeatmap] = useState(false);
-  const [showRoutes, setShowRoutes] = useState(true);
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
   const [screen, setScreen] = useState<"settings" | "map">("settings");
-  const userLocationProvided = x !== undefined && y !== undefined && floor !== undefined;
-
   const hasAutoCalculatedPath = useRef(false);
+
+  const pathSteps = useMemo(() => buildPathSteps(path, graph), [path, graph]);
+  const activeStep = pathSteps.find((step) => step.floor === currentFloor) ?? pathSteps[0];
 
   const startPoint =
     floor && x && y
       ? {
-          floor,
-          x: Number(x),
-          y: Number(y),
-        }
+        floor,
+        x: Number(x),
+        y: Number(y),
+      }
       : null;
+  const userLocationProvided = startPoint !== null;
 
   const destinationPoint = destination
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-          type: "coordinates",
-          floor: destFloor,
-          x: Number(destX),
-          y: Number(destY),
-        }
+        type: "coordinates",
+        floor: destFloor,
+        x: Number(destX),
+        y: Number(destY),
+      }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -68,17 +68,17 @@ export const Pathfinding: React.FC = () => {
 
     if (userLocationProvided) {
       setUserPosition({
-        x: parseInt(x),
-        y: parseInt(y),
+        x: startPoint.x,
+        y: startPoint.y,
         floor: floorNumber,
       });
     }
 
     if (destination) {
       if (destination.toLocaleLowerCase() === ToiletNodeName.toLocaleLowerCase()) {
-        setDestinationNode(ToiletNodeName);
+        setDestinationNodeId(ToiletNodeName);
       } else if (destination.toLocaleLowerCase() === EmergencyNodeName.toLocaleLowerCase()) {
-        setDestinationNode(EmergencyNodeName);
+        setDestinationNodeId(EmergencyNodeName);
       }
     }
   }, [x, y, floor, destination]);
@@ -158,16 +158,38 @@ export const Pathfinding: React.FC = () => {
       return [destinationPoint.value, destinationPoint.value + "_door"];
     }
 
-    if (destinationNode) {
-      return [destinationNode, destinationNode + "_door"];
+    if (destinationNodeId) {
+      return [destinationNodeId, destinationNodeId + "_door"];
     }
 
     return [];
   };
 
+  const destinationNode = useMemo<GraphNodeDto | undefined>(() => {
+    if (!graph.nodes || graph.nodes.length === 0) {
+      return undefined;
+    }
+
+    // Best option: use the last node of the calculated path
+    const lastPathNodeId = path.at(-1);
+
+    if (lastPathNodeId) {
+      const pathDestinationNode = graph.nodes.find((node) => node.id === lastPathNodeId);
+
+      if (pathDestinationNode) {
+        return pathDestinationNode;
+      }
+    }
+
+    // Fallback: use selected destination
+    const destinationNodes = resolveDestinationNodes();
+
+    return graph.nodes.find((node) => destinationNodes.includes(node.id ?? ""));
+  }, [graph.nodes, path, destinationNodeId, destinationPoint]);
+
   useEffect(() => {
     if (hasAutoCalculatedPath.current) return;
-    if (!destinationNode && !destinationPoint) return;
+    if (!destinationNodeId && !destinationPoint) return;
     if (!userLocationProvided) return;
     if (!graph.nodes || graph.nodes.length === 0) return;
 
@@ -185,8 +207,8 @@ export const Pathfinding: React.FC = () => {
     }
 
     hasAutoCalculatedPath.current = true;
-    calculatePathAndGoToMap(destinationNode, newStartNodes);
-  }, [graph, startNodes, destinationNode, userLocationProvided]);
+    calculatePathAndGoToMap(destinationNodeId, newStartNodes);
+  }, [graph, startNodes, destinationNodeId, userLocationProvided]);
 
   const handleSettingChange = (settings: PathfindingSettings) => {
     setIsAccessibleRoute(settings.accessibleRoute);
@@ -208,7 +230,7 @@ export const Pathfinding: React.FC = () => {
   };
 
   const handleDestinationClick = (roomId: string) => {
-    setDestinationNode(roomId);
+    setDestinationNodeId(roomId);
   };
 
   const roomOptions = useMemo(() => {
@@ -281,7 +303,10 @@ export const Pathfinding: React.FC = () => {
             )
             .map((n) => n.id)
             .filter((v): v is string => !!v) ?? destinationToUse;
-      } else if (destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase() && destinationPoint?.type === "coordinates") {
+      } else if (
+        destinationToUse[0].toLocaleLowerCase() === CustomDestinationName.toLocaleLowerCase() &&
+        destinationPoint?.type === "coordinates"
+      ) {
         const closestNode = getClosestNode(graph.nodes, {
           floor: Number(destinationPoint.floor),
           x: Number(destinationPoint.x),
@@ -299,7 +324,7 @@ export const Pathfinding: React.FC = () => {
       const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0]?.number ?? 0;
 
       setCurrentFloor(floor);
-      setDestinationNode(nodeName);
+      setDestinationNodeId(nodeName);
       setSelectedRoom(nodeName);
       setScreen("map");
       return;
@@ -312,7 +337,7 @@ export const Pathfinding: React.FC = () => {
     const floor = (graph.nodes?.find((n) => n.id === result[0]) as GraphNodeDto)?.floor ?? floorsList[0]?.number ?? 0;
 
     setCurrentFloor(floor);
-    setDestinationNode(destinationToUse[0]);
+    setDestinationNodeId(destinationToUse[0]);
     setSelectedRoom(destinationToUse[0]);
     setScreen("map");
   };
@@ -407,8 +432,8 @@ export const Pathfinding: React.FC = () => {
                       data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
                       onSelect={handleDestinationClick}
                       value={
-                        destinationNode && nodeAvailable(destinationNode)
-                          ? destinationNode.replace("_door", "")
+                        destinationNodeId && nodeAvailable(destinationNodeId)
+                          ? destinationNodeId.replace("_door", "")
                           : destinationPoint != null && destinationPoint.type !== "name"
                             ? CustomDestinationName
                             : undefined
@@ -420,7 +445,7 @@ export const Pathfinding: React.FC = () => {
 
               <button
                 className="pathfinding-button"
-                disabled={(!destinationNode && destinationPoint === null) || startNodes.length === 0}
+                disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
                 onClick={() => calculatePathAndGoToMap()}
               >
                 Naar de kaart
@@ -466,14 +491,57 @@ export const Pathfinding: React.FC = () => {
                 currentPosition={
                   userPosition
                     ? {
-                        x: userPosition.x,
-                        y: userPosition.y,
-                        floor: userPosition.floor,
-                      }
+                      x: userPosition.x,
+                      y: userPosition.y,
+                      floor: userPosition.floor,
+                    }
+                    : undefined
+                }
+                destination={
+                  destinationNode
+                    ? {
+                      x: destinationNode.x,
+                      y: destinationNode.y,
+                      floor: destinationNode.floor,
+                    }
                     : undefined
                 }
               />
             </section>
+            {pathSteps.length > 0 && (
+              <section className="pathfinding-route-steps">
+                <div className="pathfinding-route-steps-header">
+                  <span className="pathfinding-route-steps-label">Routebeschrijving</span>
+                  <span className="pathfinding-route-steps-count">
+                    {pathSteps.length} verdiepingstap{pathSteps.length === 1 ? "" : "pen"}
+                  </span>
+                </div>
+
+                <ol className="pathfinding-route-steps-list">
+                  {pathSteps.map((step, index) => (
+                    <li
+                      key={`${step.floor}-${index}`}
+                      className={`pathfinding-route-step ${step.floor === currentFloor ? "pathfinding-route-step-active" : ""}`}
+                    >
+                      <button
+                        type="button"
+                        className="pathfinding-route-step-button"
+                        onClick={() => setCurrentFloor(step.floor)}
+                      >
+                        <strong>Stap {index + 1}: {step.title}</strong>
+                        <span>{step.instruction}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+
+                {activeStep && (
+                  <p className="pathfinding-current-instruction">
+                    Huidige instructie: {activeStep.instruction}
+                  </p>
+                )}
+              </section>
+            )}
           </>
         )}
       </div>
