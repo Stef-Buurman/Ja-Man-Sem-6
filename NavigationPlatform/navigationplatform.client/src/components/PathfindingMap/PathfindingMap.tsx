@@ -197,11 +197,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   return (
     <div className="map-view-v4">
-      {destination && (
-        <div className="destination-indicator">
-          Destination: {`(${destination.x.toFixed(0)}, ${destination.y.toFixed(0)}, Floor ${destination.floor})`}
-        </div>
-      )}
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
         📋 Copy doors
       </button> */}
