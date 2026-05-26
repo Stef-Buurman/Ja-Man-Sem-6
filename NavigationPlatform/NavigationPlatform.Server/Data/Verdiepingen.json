@@ -18,5 +18,10 @@
     "number": 1,
     "fileName": "floor1.svg",
     "dataFileName": "Verdieping1.json"
+  },
+    {
+    "number": 5,
+    "fileName": "floor5.svg",
+    "dataFileName": "Verdieping5.json"
   }
 ]

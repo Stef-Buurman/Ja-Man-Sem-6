@@ -218,5 +218,49 @@
     "width": 250,
     "height": 130,
     "color": "red"
+  },
+  {
+    "id": "d84c8f60-9d0e-4ada-8803-d327d063d707",
+    "x": 412,
+    "y": 542,
+    "value": 0,
+    "soundLevel": 0,
+    "floor": 5,
+    "width": 50,
+    "height": 274,
+    "color": "green"
+  },
+  {
+    "id": "7806236d-550b-485a-a23c-bcf8d10f472d",
+    "x": 1542,
+    "y": 764,
+    "value": 4,
+    "soundLevel": 0,
+    "floor": 5,
+    "width": 460,
+    "height": 70,
+    "color": "yellow"
+  },
+  {
+    "id": "695014b5-d3f3-4e31-b34a-39f00dd7c69c",
+    "x": 2040,
+    "y": 790,
+    "value": 10,
+    "soundLevel": 0,
+    "floor": 5,
+    "width": 128,
+    "height": 220,
+    "color": "yellow"
+  },
+  {
+    "id": "72fc7acd-3d18-4ffb-b74d-1b5134f5908b",
+    "x": 2149,
+    "y": 616,
+    "value": 20,
+    "soundLevel": 0,
+    "floor": 5,
+    "width": 143,
+    "height": 365,
+    "color": "red"
   }
 ]
