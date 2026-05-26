@@ -165,6 +165,12 @@ export const Pathfinding: React.FC = () => {
     return [];
   };
 
+  const getDestinationNode = (): GraphNodeDto | undefined => {
+    const destinationNodes = resolveDestinationNodes();
+    if (destinationNodes.length === 0 || !graph.nodes) return undefined;
+    return graph.nodes.find((n) => destinationNodes.includes(n.id ?? ""));
+  };
+
   useEffect(() => {
     if (hasAutoCalculatedPath.current) return;
     if (!destinationNode && !destinationPoint) return;
@@ -475,6 +481,11 @@ export const Pathfinding: React.FC = () => {
                       }
                     : undefined
                 }
+                destination={getDestinationNode() ? {
+                  x: getDestinationNode()!.x,
+                  y: getDestinationNode()!.y,
+                  floor: getDestinationNode()!.floor
+                } : undefined}
               />
             </section>
           </>

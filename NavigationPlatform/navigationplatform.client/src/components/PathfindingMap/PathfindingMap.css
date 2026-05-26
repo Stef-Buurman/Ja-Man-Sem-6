@@ -55,3 +55,7 @@
 #Second_Draft {
   pointer-events: bounding-box;
 }
+
+.destination-fill{
+  fill: blue;
+}

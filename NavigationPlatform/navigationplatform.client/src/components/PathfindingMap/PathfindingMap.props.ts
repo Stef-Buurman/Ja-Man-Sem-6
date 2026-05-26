@@ -12,4 +12,9 @@ export interface PathfindingMapProps {
     y: number;
     floor: number;
   };
+  destination?: {
+    x: number;
+    y: number;
+    floor: number;
+  };
 }
