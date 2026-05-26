@@ -237,6 +237,35 @@ export type PathStep = {
   nodeIds: string[];
 };
 
+const buildingInfo: Record<string, { color: string; name: string }> = {
+  WD: {
+    color: "donkerblauwe",
+    name: "WD-gebouw",
+  },
+  WN: {
+    color: "gele",
+    name: "WN-gebouw",
+  },
+  H: {
+    color: "roze",
+    name: "H-gebouw",
+  },
+};
+
+function getBuildingInstruction(node?: GraphNodeDto): string {
+  const buildingCode = getBuildingCode(node);
+
+  if (!buildingCode) return "";
+
+  const info = buildingInfo[buildingCode];
+
+  if (!info) {
+    return `Ga richting het ${buildingCode}-gebouw.`;
+  }
+
+  return `Ga richting het ${info.color} ${info.name}.`;
+}
+
 const buildingColors: Record<string, string> = {
   WD: "donkerblauwe",
   WN: "gele",
@@ -317,7 +346,13 @@ function getTargetText(targetNode: GraphNodeDto): string {
 }
 
 function getWalkingInstruction(fromNode: GraphNodeDto, targetNode: GraphNodeDto): string {
-  return `Loop ${getSimpleDirectionInstruction(fromNode, targetNode)} ${getTargetText(targetNode)}.`;
+  const direction = getSimpleDirectionInstruction(fromNode, targetNode);
+
+  const targetText = getTargetText(targetNode);
+
+  const buildingInstruction = getBuildingInstruction(targetNode);
+
+  return `Loop ${direction} ${targetText}. ${buildingInstruction}`.trim();
 }
 
 function getTransitionInstruction(fromNode: GraphNodeDto, toNode: GraphNodeDto): string {
