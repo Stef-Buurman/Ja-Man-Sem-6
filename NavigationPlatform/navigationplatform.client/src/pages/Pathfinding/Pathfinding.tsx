@@ -249,6 +249,28 @@ export const Pathfinding: React.FC = () => {
     ];
   }, [graph.nodes]);
 
+  const currentUserPosition = useMemo(() => {
+    return userPosition
+      ? {
+          x: Math.round(userPosition.x),
+          y: Math.round(userPosition.y),
+          floor: userPosition.floor,
+        }
+      : startNodes.length > 0
+        ? (() => {
+            const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+            if (node) {
+              return {
+                x: Math.round(node.x ?? 0),
+                y: Math.round(node.y ?? 0),
+                floor: node.floor ?? 0,
+              };
+            }
+            return undefined;
+          })()
+        : undefined;
+  }, [userPosition, startNodes, graph.nodes]);
+
   useEffect(() => {
     fetchFloors();
     fetchHeatmapAreas();
@@ -487,15 +509,7 @@ export const Pathfinding: React.FC = () => {
                   calculatePathAndGoToMap(roomId);
                 }}
                 floors={floorsList}
-                currentPosition={
-                  userPosition
-                    ? {
-                        x: userPosition.x,
-                        y: userPosition.y,
-                        floor: userPosition.floor,
-                      }
-                    : undefined
-                }
+                currentPosition={currentUserPosition}
                 destination={
                   destinationNode
                     ? {

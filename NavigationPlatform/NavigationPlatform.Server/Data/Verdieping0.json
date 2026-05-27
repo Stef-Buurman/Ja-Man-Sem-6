@@ -940,6 +940,17 @@
       "label": null
     },
     {
+      "id": "Ingang_107",
+      "x": 525,
+      "y": 1177.5,
+      "floor": 0,
+      "type": 6,
+      "width": 30,
+      "height": 30,
+      "roomId": null,
+      "label": null
+    },
+    {
       "id": "WD.00.018_door",
       "x": 1033,
       "y": 978,
@@ -1497,6 +1508,17 @@
       "label": null
     },
     {
+      "id": "Ingang_99",
+      "x": 2115,
+      "y": 952.5,
+      "floor": 0,
+      "type": 6,
+      "width": 30,
+      "height": 30,
+      "roomId": null,
+      "label": null
+    },
+    {
       "id": "node_1779698158827",
       "x": 550,
       "y": 1030,
@@ -1639,6 +1661,17 @@
     },
     {
       "id": "Ingang_WD",
+      "x": 975,
+      "y": 1110,
+      "floor": 0,
+      "type": 6,
+      "width": 30,
+      "height": 30,
+      "roomId": null,
+      "label": null
+    },
+    {
+      "id": "Ingang_103",
       "x": 975,
       "y": 1110,
       "floor": 0,
@@ -2523,6 +2556,11 @@
       "weight": null
     },
     {
+      "from": "Ingang_99",
+      "to": "node_1778664042735",
+      "weight": null
+    },
+    {
       "from": "node_1778683270886",
       "to": "node_1778663996941",
       "weight": null
@@ -2788,6 +2826,11 @@
       "weight": null
     },
     {
+      "from": "Ingang_103",
+      "to": "node_1778664149583",
+      "weight": null
+    },
+    {
       "from": "node_1778664136571",
       "to": "WD.00.000 Trap1",
       "weight": null
@@ -2837,6 +2880,11 @@
       "weight": null
     },
     {
+      "from": "Ingang_107",
+      "to": "node_1778664230672",
+      "weight": null
+    },
+    {
       "from": "node_1778664277676",
       "to": "node_1778664259128",
       "weight": null
@@ -2864,6 +2912,11 @@
     {
       "from": "node_1778664204098",
       "to": "Ingang_H",
+      "weight": null
+    },
+    {
+      "from": "node_1778664204098",
+      "to": "Ingang_107",
       "weight": null
     },
     {
@@ -3018,6 +3071,11 @@
     {
       "from": "node_1779698160915",
       "to": "Ingang_H",
+      "weight": null
+    },
+    {
+      "from": "node_1779698160915",
+      "to": "Ingang_107",
       "weight": null
     },
     {
