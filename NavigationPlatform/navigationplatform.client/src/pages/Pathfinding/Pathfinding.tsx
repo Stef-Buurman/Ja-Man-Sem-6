@@ -35,10 +35,10 @@ export const Pathfinding: React.FC = () => {
   const startPoint =
     floor && x && y
       ? {
-          floor,
-          x: Number(x),
-          y: Number(y),
-        }
+        floor,
+        x: Number(x),
+        y: Number(y),
+      }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -46,11 +46,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-          type: "coordinates",
-          floor: destFloor,
-          x: Number(destX),
-          y: Number(destY),
-        }
+        type: "coordinates",
+        floor: destFloor,
+        x: Number(destX),
+        y: Number(destY),
+      }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -252,22 +252,22 @@ export const Pathfinding: React.FC = () => {
   const currentUserPosition = useMemo(() => {
     return userPosition
       ? {
-          x: Math.round(userPosition.x),
-          y: Math.round(userPosition.y),
-          floor: userPosition.floor,
-        }
+        x: Math.round(userPosition.x),
+        y: Math.round(userPosition.y),
+        floor: userPosition.floor,
+      }
       : startNodes.length > 0
         ? (() => {
-            const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
-            if (node) {
-              return {
-                x: Math.round(node.x ?? 0),
-                y: Math.round(node.y ?? 0),
-                floor: node.floor ?? 0,
-              };
-            }
-            return undefined;
-          })()
+          const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+          if (node) {
+            return {
+              x: Math.round(node.x ?? 0),
+              y: Math.round(node.y ?? 0),
+              floor: node.floor ?? 0,
+            };
+          }
+          return undefined;
+        })()
         : undefined;
   }, [userPosition, startNodes, graph.nodes]);
 
@@ -490,15 +490,17 @@ export const Pathfinding: React.FC = () => {
               </div>
 
               <div className="pathfinding-map-toolbar-right">
+              </div>
+            </section>
+
+            <section className="pathfinding-map-card">
+              <div className="map-overlay-top-right">
                 <FloorSelector
                   floors={floorsList.map((f) => f.number)}
                   currentFloor={currentFloor}
                   setFloor={setCurrentFloor}
                 />
               </div>
-            </section>
-
-            <section className="pathfinding-map-card">
               <PathfindingMap
                 nodes={graph.nodes ?? []}
                 edges={graph.edges ?? []}
@@ -513,10 +515,10 @@ export const Pathfinding: React.FC = () => {
                 destination={
                   destinationNode
                     ? {
-                        x: destinationNode.x,
-                        y: destinationNode.y,
-                        floor: destinationNode.floor,
-                      }
+                      x: destinationNode.x,
+                      y: destinationNode.y,
+                      floor: destinationNode.floor,
+                    }
                     : undefined
                 }
               />

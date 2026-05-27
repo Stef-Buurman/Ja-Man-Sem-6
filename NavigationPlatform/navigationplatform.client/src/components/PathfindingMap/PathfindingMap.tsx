@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./PathfindingMap.css";
 import type { PathfindingMapProps } from "./PathfindingMap.props";
-import type { GraphNodeDto } from "../../api/data-contracts";
+import type { FloorDto, GraphNodeDto } from "../../api/data-contracts";
 import type { NodeType } from "../../Types/nodeType";
 import { GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 
@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => {},
+  handleRoomClick = () => { },
   floors,
   currentPosition,
   destination,
@@ -17,7 +17,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
-  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
+  const [floorSvgContent, setFloorSvgContent] = useState<{ floor: number; svg: string }[]>([]);
   const pathColor = "blue";
 
   useEffect(() => {
@@ -137,11 +137,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (!selectedFloor?.fileName) return;
 
-    const loadSvg = async () => {
-      const response = await fetch(`/floors/${selectedFloor.fileName}`);
+    const loadSvg = async (floor: FloorDto) => {
+      const response = await fetch(`/floors/${floor.fileName}`);
       const svgText = await response.text();
 
       const parser = new DOMParser();
@@ -153,11 +153,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       const vb = svg.getAttribute("viewBox");
       if (vb) setViewBox(vb);
 
-      setFloorSvgContent(svg.innerHTML);
+      setFloorSvgContent((prev) => [...prev, { floor: floor.number, svg: svg.innerHTML }]);
     };
 
-    loadSvg();
-  }, [selectedFloor?.fileName]);
+    for (const floor of floors || []) loadSvg(floor);
+  }, [selectedFloor, floors]);
 
   const escapeCssAttribute = (value: string) =>
     value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
@@ -197,6 +197,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   const radius = 25;
 
+  const currentFloorSvgContent = useMemo(() => {
+    const floorContent = floorSvgContent.find(f => f.floor === currentFloor);
+    return floorContent ? floorContent.svg : "";
+  }, [floorSvgContent, currentFloor]);
+
   return (
     <div className="map-view-v4">
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
@@ -205,7 +210,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
-          {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
+          {currentFloorSvgContent && <g dangerouslySetInnerHTML={{ __html: currentFloorSvgContent }} />}
           <style>{pathNodeIconCss}</style>
 
           {path &&
