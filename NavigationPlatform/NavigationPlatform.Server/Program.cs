@@ -45,7 +45,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactCors", policy =>
         policy.WithOrigins(
-                "https://localhost:59957",
+                "https://localhost:5173",
                 "https://navplatform.buurmans.info")
               .AllowAnyHeader()
               .AllowAnyMethod()
