@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => { },
+  handleRoomClick = () => {},
   floors,
   currentPosition,
   destination,
@@ -195,6 +195,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       .join("\n");
   }, [path, nodes, currentFloor]);
 
+  const radius = 25;
+
   return (
     <div className="map-view-v4">
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
@@ -205,11 +207,6 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
           {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
           <style>{pathNodeIconCss}</style>
-          {currentPosition && currentPosition.floor === currentFloor && (
-            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
-              <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
-            </g>
-          )}
 
           {path &&
             (() => {
@@ -274,11 +271,28 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
               });
             })()}
 
+          {currentPosition && currentPosition.floor === currentFloor && (
+            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
+              <defs>
+                <filter id="drop-shadow-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                  <feOffset dx="2" dy="2" />
+                  <feGaussianBlur result="blur" stdDeviation="5" />
+                  <feFlood floodColor="#000" floodOpacity=".2" />
+                  <feComposite in2="blur" operator="in" />
+                  <feComposite in="SourceGraphic" />
+                </filter>
+              </defs>
+
+              <circle cx="0" cy="0" r={radius * 2.2} fill="#4285f2" opacity=".2" />
+
+              <g filter="url(#drop-shadow-1)">
+                <circle cx="0" cy="0" r={radius} fill="#4285f2" stroke="#fff" strokeMiterlimit="10" strokeWidth="3" />
+              </g>
+            </g>
+          )}
+
           {destination && destination.floor === currentFloor && (
-            <g
-              id="SVGRepo_iconCarrier"
-              transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}
-            >
+            <g id="SVGRepo_iconCarrier" transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}>
               <path
                 className="destination-fill"
                 fillRule="evenodd"
