@@ -23,6 +23,7 @@ export const Pathfinding: React.FC = () => {
   const [destinationNodeId, setDestinationNodeId] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
+  const hrLocaties: string[] = ["CMI"];
   const { floor, x, y, destination, destFloor, destX, destY } = useParams();
 
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
@@ -35,10 +36,10 @@ export const Pathfinding: React.FC = () => {
   const startPoint =
     floor && x && y
       ? {
-          floor,
-          x: Number(x),
-          y: Number(y),
-        }
+        floor,
+        x: Number(x),
+        y: Number(y),
+      }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -46,11 +47,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-          type: "coordinates",
-          floor: destFloor,
-          x: Number(destX),
-          y: Number(destY),
-        }
+        type: "coordinates",
+        floor: destFloor,
+        x: Number(destX),
+        y: Number(destY),
+      }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -249,6 +250,28 @@ export const Pathfinding: React.FC = () => {
     ];
   }, [graph.nodes]);
 
+  const currentUserPosition = useMemo(() => {
+    return userPosition
+      ? {
+        x: Math.round(userPosition.x),
+        y: Math.round(userPosition.y),
+        floor: userPosition.floor,
+      }
+      : startNodes.length > 0
+        ? (() => {
+          const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+          if (node) {
+            return {
+              x: Math.round(node.x ?? 0),
+              y: Math.round(node.y ?? 0),
+              floor: node.floor ?? 0,
+            };
+          }
+          return undefined;
+        })()
+        : undefined;
+  }, [userPosition, startNodes, graph.nodes]);
+
   useEffect(() => {
     fetchFloors();
     fetchHeatmapAreas();
@@ -408,6 +431,15 @@ export const Pathfinding: React.FC = () => {
             </div>
 
             <div className="pathfinding-search-wrapper">
+              {false && (
+                <div className="pathfinding-search">
+                  <SearchSelect
+                    title="Vul je startlocatie in"
+                    data={hrLocaties}
+                    value={hrLocaties[0]}
+                    disabled
+                  />
+                </div>)}
               {roomOptions && (
                 <>
                   <div className="pathfinding-search">
@@ -468,15 +500,17 @@ export const Pathfinding: React.FC = () => {
               </div>
 
               <div className="pathfinding-map-toolbar-right">
+              </div>
+            </section>
+
+            <section className="pathfinding-map-card">
+              <div className="map-overlay-top-right">
                 <FloorSelector
                   floors={floorsList.map((f) => f.number)}
                   currentFloor={currentFloor}
                   setFloor={setCurrentFloor}
                 />
               </div>
-            </section>
-
-            <section className="pathfinding-map-card">
               <PathfindingMap
                 nodes={graph.nodes ?? []}
                 edges={graph.edges ?? []}
@@ -487,22 +521,14 @@ export const Pathfinding: React.FC = () => {
                   calculatePathAndGoToMap(roomId);
                 }}
                 floors={floorsList}
-                currentPosition={
-                  userPosition
-                    ? {
-                        x: userPosition.x,
-                        y: userPosition.y,
-                        floor: userPosition.floor,
-                      }
-                    : undefined
-                }
+                currentPosition={currentUserPosition}
                 destination={
                   destinationNode
                     ? {
-                        x: destinationNode.x,
-                        y: destinationNode.y,
-                        floor: destinationNode.floor,
-                      }
+                      x: destinationNode.x,
+                      y: destinationNode.y,
+                      floor: destinationNode.floor,
+                    }
                     : undefined
                 }
               />
