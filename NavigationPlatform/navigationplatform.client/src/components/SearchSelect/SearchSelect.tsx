@@ -2,7 +2,7 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import "./SearchSelect.css";
 import type { SearchSelectProps } from "./SearchSelect.props";
 
-export default function SearchSelect({ title, data, onSelect, value }: SearchSelectProps) {
+export default function SearchSelect({ title, data, onSelect, value, disabled }: SearchSelectProps) {
   const [query, setQuery] = useState(value || "");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,6 +71,7 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
         }}
         onFocus={() => setIsOpen(true)}
         placeholder="Type something..."
+        disabled={disabled}
       />
 
       {isOpen && query.trim() !== "" && (

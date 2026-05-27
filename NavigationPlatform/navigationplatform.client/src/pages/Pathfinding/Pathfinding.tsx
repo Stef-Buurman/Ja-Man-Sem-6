@@ -23,6 +23,7 @@ export const Pathfinding: React.FC = () => {
   const [destinationNodeId, setDestinationNodeId] = useState<string | undefined>(undefined);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
   const [graph, setGraph] = useState<GraphDto>({ nodes: [], edges: [] });
+  const hrLocaties: string[] = ["CMI"];
   const { floor, x, y, destination, destFloor, destX, destY } = useParams();
 
   const [floorsList, setFloorsList] = useState<FloorDto[]>([]);
@@ -430,6 +431,15 @@ export const Pathfinding: React.FC = () => {
             </div>
 
             <div className="pathfinding-search-wrapper">
+              {false && (
+                <div className="pathfinding-search">
+                  <SearchSelect
+                    title="Vul je startlocatie in"
+                    data={hrLocaties}
+                    value={hrLocaties[0]}
+                    disabled
+                  />
+                </div>)}
               {roomOptions && (
                 <>
                   <div className="pathfinding-search">
