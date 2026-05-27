@@ -1,4 +1,6 @@
 import downArrow from "../../assets/icons/DownArrow.svg";
+import "./FloorSelector.css";
+
 interface FloorSelectorProps {
   floors: number[];
   currentFloor: number;

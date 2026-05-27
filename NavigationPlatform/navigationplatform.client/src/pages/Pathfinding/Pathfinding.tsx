@@ -468,15 +468,17 @@ export const Pathfinding: React.FC = () => {
               </div>
 
               <div className="pathfinding-map-toolbar-right">
+              </div>
+            </section>
+
+            <section className="pathfinding-map-card">
+              <div className="map-overlay-top-right">
                 <FloorSelector
                   floors={floorsList.map((f) => f.number)}
                   currentFloor={currentFloor}
                   setFloor={setCurrentFloor}
                 />
               </div>
-            </section>
-
-            <section className="pathfinding-map-card">
               <PathfindingMap
                 nodes={graph.nodes ?? []}
                 edges={graph.edges ?? []}
