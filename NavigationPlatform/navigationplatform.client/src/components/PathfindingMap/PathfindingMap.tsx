@@ -17,6 +17,10 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
 
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const isDragging = useRef(false);
+  const lastPoint = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
     if (!gottenSVGElement.current) return;
     const vb = gottenSVGElement.current.getAttribute("viewBox");
@@ -100,6 +104,45 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
   const selectedFloor = floors?.find((f) => f.number === currentFloor);
 
+  const getPoint = (e: any) => {
+    if (e.touches?.length) {
+      return {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+    }
+
+    return {
+      x: e.clientX,
+      y: e.clientY,
+    };
+  };
+
+  const onPointerDown = (e: any) => {
+    isDragging.current = true;
+    lastPoint.current = getPoint(e);
+  };
+
+  const onPointerMove = (e: any) => {
+    if (!isDragging.current) return;
+
+    const p = getPoint(e);
+
+    const dx = p.x - lastPoint.current.x;
+    const dy = p.y - lastPoint.current.y;
+
+    lastPoint.current = p;
+
+    setPan((prev) => ({
+      x: prev.x + dx,
+      y: prev.y + dy,
+    }));
+  };
+
+  const onPointerUp = () => {
+    isDragging.current = false;
+  };
+
   const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
     if (!svgElement.current) return;
 
@@ -168,6 +211,20 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
+          <g
+            transform={`translate(${pan.x}, ${pan.y})`}
+            onMouseDown={onPointerDown}
+            onMouseMove={onPointerMove}
+            onMouseUp={onPointerUp}
+            onMouseLeave={onPointerUp}
+            onTouchStart={onPointerDown}
+            onTouchMove={onPointerMove}
+            onTouchEnd={onPointerUp}
+            style={{
+              cursor: "grab",
+              touchAction: "none",
+            }}
+          >
           {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
           {/* {nodes
             .filter((n) => n.floor === currentFloor)
@@ -266,6 +323,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
                 );
               });
             })()}
+            </g>
         </svg>
       </div>
     </div>
