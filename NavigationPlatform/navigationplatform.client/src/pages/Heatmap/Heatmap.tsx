@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Heatmap.css";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
 import { type FloorDto, type HeatpointArea } from "../../api/data-contracts";
@@ -6,6 +6,7 @@ import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
 import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
 import { HeatmapMap } from "../../components/HeatmapMap/HeatmapMap";
+import { Link } from "react-router-dom";
 
 export const Heatmap: React.FC = () => {
   const [currentFloor, setCurrentFloor] = useState<number>(0);
@@ -72,23 +73,60 @@ export const Heatmap: React.FC = () => {
     };
   }, []);
 
-  return (
-    <div className="pathfinding-page">
-      <div className="pathfinding-shell">
-        <header className="pathfinding-header">
-          <h1>Heatmap</h1>
-        </header>
-        <section className="pathfinding-map-toolbar">
-          <div className="pathfinding-map-toolbar-right">
-            <FloorSelector
-              floors={floorsList.map((f) => f.number)}
-              currentFloor={currentFloor}
-              setFloor={setCurrentFloor}
-            />
-          </div>
-        </section>
+  const [activeTab, setActiveTab] = useState<"route" | "werkplek">("route");
 
-        <section className="pathfinding-map-card">
+  return (
+    <div className="flex flex-col">
+
+      <div className="w-full flex justify-start px-4 relative z-50">
+        <Link
+          to="/"
+          className="text-xs text-black font-semibold inline-block"
+        >
+          {"< Vorige"}
+        </Link>
+      </div>
+
+      <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
+        <button
+          onClick={() => setActiveTab("route")}
+          className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
+            activeTab === "route" ? "bg-[#00495F] text-white" : "text-[#00495F]"
+          }`}
+        >
+          Route
+        </button>
+
+        <button
+          onClick={() => setActiveTab("werkplek")}
+          className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
+            activeTab === "werkplek" ? "bg-[#00495F] text-white" : "text-[#00495F]"
+          }`}
+        >
+          Werkplek
+        </button>
+      </div>
+
+
+      <div className="px-8 py-2 text-left">
+        <h1 className="text-2xl font-bold text-black">Vind jouw werkplek!</h1>
+
+        <p className="text-sm text-black">
+      Klik op een gebied om de <span className="font-bold">route</span> hiernaartoe te vinden!
+        </p>
+      </div>
+
+      <div className="pathfinding-shell">
+
+        <div className="absolute top-70 right-10">
+          <FloorSelector
+            floors={floorsList.map((f) => f.number)}
+            currentFloor={currentFloor}
+            setFloor={setCurrentFloor}
+          />
+        </div>
+
+        <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
           <HeatmapMap currentFloor={currentFloor} floors={floorsList} areas={areas} />
         </section>
       </div>

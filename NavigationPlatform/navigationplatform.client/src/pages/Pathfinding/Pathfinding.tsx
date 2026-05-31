@@ -423,6 +423,9 @@ export const Pathfinding: React.FC = () => {
 
   return (
     <>
+
+      /*  <Link to="/heatmap">Heatmap</Link>*/
+
       {screen === "settings" && (
         <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
           <button
