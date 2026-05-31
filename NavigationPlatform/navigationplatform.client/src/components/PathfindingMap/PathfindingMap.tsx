@@ -208,8 +208,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         📋 Copy doors
       </button> */}
 
-      <div className="flex-1 min-h-0 w-full rounded-lg overflow-x-auto overflow-y-hidden">
-        <div className="w-[200%] h-full">
+      <div className="flex-1 min-h-[300px] max-h-[65vh] w-full rounded-lg overflow-x-auto overflow-y-hidden">
+        <div className="w-[200%] md:w-[125%] lg:w-[120%] xl:w-[65%] h-full">
           <svg
             ref={svgElement}
             viewBox={viewBox || "0 0 1000 1000"}
