@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./PathfindingMap.css";
 import type { PathfindingMapProps } from "./PathfindingMap.props";
-import type { GraphNodeDto } from "../../api/data-contracts";
+import type { FloorDto, GraphNodeDto } from "../../api/data-contracts";
 import type { NodeType } from "../../Types/nodeType";
 import { GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 
@@ -17,7 +17,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const svgElement = useRef<SVGSVGElement>(null);
   const gottenSVGElement = useRef<SVGSVGElement>(null);
   const [viewBox, setViewBox] = useState<string | null>(null);
-  const [floorSvgContent, setFloorSvgContent] = useState<string>("");
+  const [floorSvgContent, setFloorSvgContent] = useState<{ floor: number; svg: string }[]>([]);
   const pathColor = "blue";
 
   useEffect(() => {
@@ -137,11 +137,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (!selectedFloor?.fileName) return;
 
-    const loadSvg = async () => {
-      const response = await fetch(`/floors/${selectedFloor.fileName}`);
+    const loadSvg = async (floor: FloorDto) => {
+      const response = await fetch(`/floors/${floor.fileName}`);
       const svgText = await response.text();
 
       const parser = new DOMParser();
@@ -153,11 +153,11 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       const vb = svg.getAttribute("viewBox");
       if (vb) setViewBox(vb);
 
-      setFloorSvgContent(svg.innerHTML);
+      setFloorSvgContent((prev) => [...prev, { floor: floor.number, svg: svg.innerHTML }]);
     };
 
-    loadSvg();
-  }, [selectedFloor?.fileName]);
+    for (const floor of floors || []) loadSvg(floor);
+  }, [selectedFloor, floors]);
 
   const escapeCssAttribute = (value: string) =>
     value.replaceAll(/\\/g, "\\\\").replaceAll(/"/g, '\\"').replaceAll(" ", "_");
@@ -195,6 +195,13 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
       .join("\n");
   }, [path, nodes, currentFloor]);
 
+  const radius = 25;
+
+  const currentFloorSvgContent = useMemo(() => {
+    const floorContent = floorSvgContent.find(f => f.floor === currentFloor);
+    return floorContent ? floorContent.svg : "";
+  }, [floorSvgContent, currentFloor]);
+
   return (
     <div className="map-view-v4">
       {/* <button className="map-view-v4__copy-button" onClick={copyDoors}>
@@ -203,13 +210,8 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
 
       <div className="map-view-v4__svg-wrapper">
         <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
-          {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
+          {currentFloorSvgContent && <g dangerouslySetInnerHTML={{ __html: currentFloorSvgContent }} />}
           <style>{pathNodeIconCss}</style>
-          {currentPosition && currentPosition.floor === currentFloor && (
-            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
-              <circle cx={0} cy={0} r={14} fill="#2563eb" stroke="white" strokeWidth={5} />
-            </g>
-          )}
 
           {path &&
             (() => {
@@ -274,11 +276,28 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
               });
             })()}
 
+          {currentPosition && currentPosition.floor === currentFloor && (
+            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
+              <defs>
+                <filter id="drop-shadow-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
+                  <feOffset dx="2" dy="2" />
+                  <feGaussianBlur result="blur" stdDeviation="5" />
+                  <feFlood floodColor="#000" floodOpacity=".2" />
+                  <feComposite in2="blur" operator="in" />
+                  <feComposite in="SourceGraphic" />
+                </filter>
+              </defs>
+
+              <circle cx="0" cy="0" r={radius * 2.2} fill="#4285f2" opacity=".2" />
+
+              <g filter="url(#drop-shadow-1)">
+                <circle cx="0" cy="0" r={radius} fill="#4285f2" stroke="#fff" strokeMiterlimit="10" strokeWidth="3" />
+              </g>
+            </g>
+          )}
+
           {destination && destination.floor === currentFloor && (
-            <g
-              id="SVGRepo_iconCarrier"
-              transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}
-            >
+            <g id="SVGRepo_iconCarrier" transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}>
               <path
                 className="destination-fill"
                 fillRule="evenodd"

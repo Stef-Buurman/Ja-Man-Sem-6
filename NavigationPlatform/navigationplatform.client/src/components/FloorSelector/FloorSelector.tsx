@@ -1,3 +1,6 @@
+import downArrow from "../../assets/icons/DownArrow.svg";
+import "./FloorSelector.css";
+
 interface FloorSelectorProps {
   floors: number[];
   currentFloor: number;
@@ -20,18 +23,29 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
   };
 
   return (
-    <div className="floor-card">
+    <div className="full-floor-card">
       <div className="floor-title">Etage</div>
+      <div className="floor-card">
 
-      <button className="floor-button floor-button-up" onClick={goUp} disabled={currentIndex === floors.length - 1}>
-        ▲
-      </button>
+        <button className="floor-button floor-button-up" onClick={goUp} disabled={currentIndex === floors.length - 1}>
+          <img
+            className="floor-arrow"
+            src={downArrow}
+            alt="Up"
+            style={{ transform: "rotate(180deg)" }}
+          />
+        </button>
 
-      <div className="floor-number">{currentFloor}</div>
+        <span className="floor-number">{currentFloor}</span>
 
-      <button className="floor-button floor-button-down" onClick={goDown} disabled={currentIndex === 0}>
-        ▼
-      </button>
+        <button className="floor-button floor-button-down" onClick={goDown} disabled={currentIndex === 0}>
+          <img
+            className="floor-arrow"
+            src={downArrow}
+            alt="Down"
+          />
+        </button>
+      </div>
     </div>
   );
 };
