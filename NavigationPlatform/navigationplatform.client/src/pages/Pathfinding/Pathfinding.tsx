@@ -547,7 +547,7 @@ export const Pathfinding: React.FC = () => {
             </h2>
           </div>
 
-          <section className="flex-1 min-h-0 w-full p-[10px] rounded-2xl overflow-hidden flex items-center justify-center">
+          <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
             <div className="absolute top-30 right-10">
               <FloorSelector
                 floors={floorsList.map((f) => f.number)}
