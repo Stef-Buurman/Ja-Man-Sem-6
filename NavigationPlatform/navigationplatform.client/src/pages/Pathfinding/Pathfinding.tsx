@@ -446,7 +446,7 @@ export const Pathfinding: React.FC = () => {
       )}
 
       {screen === "settings" && (
-        <section className="max-w-md w-full px-8 py-4 flex flex-col gap-6 items-start text-left">
+        <section className="max-w-md w-full mx-auto px-8 py-4 flex flex-col gap-6 items-start text-left">
           <h1 className="text-2xl font-bold text-black">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
 
           <div className="flex flex-1 flex-col gap-6">
@@ -496,7 +496,7 @@ export const Pathfinding: React.FC = () => {
               </section>
             )}
 
-            <div className="flex w-full items-center justify-between pb-[14px] pr-0 md:w-auto md:min-w-[260px] md:border-b-0 md:border-r md:pr-[18px]">
+            <div className="flex w-full items-center justify-between pb-[14px] pr-0 md:w-auto md:min-w-[260px] md:pr-[18px]">
               <Toggle
                 title="Rolstoeltoegankelijke route"
                 handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
