@@ -147,19 +147,18 @@
 /* MAP */
 
 .pathfinding-map-card {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #f8efe3;
-  border: 2px solid #d3114c;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(52, 38, 38, 0.12);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pathfinding-map-card svg {
@@ -169,11 +168,6 @@
   display: block;
 }
 
-.pathfinding-map-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 
 .map-overlay-top-right {
   position: absolute;

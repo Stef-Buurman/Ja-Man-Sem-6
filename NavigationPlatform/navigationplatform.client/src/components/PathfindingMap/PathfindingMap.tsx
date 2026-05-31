@@ -9,7 +9,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   nodes,
   currentFloor,
   path,
-  handleRoomClick = () => { },
+  handleRoomClick = () => {},
   floors,
   currentPosition,
   destination,
@@ -198,7 +198,7 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
   const radius = 25;
 
   const currentFloorSvgContent = useMemo(() => {
-    const floorContent = floorSvgContent.find(f => f.floor === currentFloor);
+    const floorContent = floorSvgContent.find((f) => f.floor === currentFloor);
     return floorContent ? floorContent.svg : "";
   }, [floorSvgContent, currentFloor]);
 
@@ -208,105 +208,122 @@ export const PathfindingMap: React.FC<PathfindingMapProps> = ({
         📋 Copy doors
       </button> */}
 
-      <div className="map-view-v4__svg-wrapper">
-        <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="MapView3d4" onClick={onSvgClick}>
-          {currentFloorSvgContent && <g dangerouslySetInnerHTML={{ __html: currentFloorSvgContent }} />}
-          <style>{pathNodeIconCss}</style>
+      <div className="flex-1 min-h-0 w-full rounded-lg overflow-x-auto overflow-y-hidden">
+        <div className="w-[250%] h-full">
+          <svg
+            ref={svgElement}
+            viewBox={viewBox || "0 0 1000 1000"}
+            className="w-full h-full block"
+            onClick={onSvgClick}
+          >
+            {currentFloorSvgContent && <g dangerouslySetInnerHTML={{ __html: currentFloorSvgContent }} />}
+            <style>{pathNodeIconCss}</style>
 
-          {path &&
-            (() => {
-              const segments: { x: number; y: number }[][] = [];
-              let currentSegment: { x: number; y: number }[] = [];
+            {path &&
+              (() => {
+                const segments: { x: number; y: number }[][] = [];
+                let currentSegment: { x: number; y: number }[] = [];
 
-              for (const id of path) {
-                const node =
-                  typeof id === "string" ? nodes.find((n) => n.id === id && n.floor === currentFloor) : undefined;
+                for (const id of path) {
+                  const node =
+                    typeof id === "string" ? nodes.find((n) => n.id === id && n.floor === currentFloor) : undefined;
 
-                if (!node) {
-                  if (currentSegment.length > 0) {
-                    segments.push(currentSegment);
-                    currentSegment = [];
+                  if (!node) {
+                    if (currentSegment.length > 0) {
+                      segments.push(currentSegment);
+                      currentSegment = [];
+                    }
+                    continue;
                   }
-                  continue;
+
+                  currentSegment.push({ x: node.x, y: node.y });
                 }
 
-                currentSegment.push({ x: node.x, y: node.y });
-              }
-
-              if (currentSegment.length > 0) {
-                segments.push(currentSegment);
-              }
-
-              return segments.map((points, index) => {
-                const pathPoints =
-                  index === 0 && currentPosition && currentPosition.floor === currentFloor
-                    ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
-                    : points;
-
-                if (pathPoints.length === 0) return null;
-
-                let d = `M ${pathPoints[0].x},${pathPoints[0].y}`;
-
-                for (let i = 0; i < pathPoints.length - 1; i++) {
-                  const p0 = pathPoints[i - 1] || pathPoints[i];
-                  const p1 = pathPoints[i];
-                  const p2 = pathPoints[i + 1];
-                  const p3 = pathPoints[i + 2] || p2;
-
-                  const cp1x = p1.x + (p2.x - p0.x) / 6;
-                  const cp1y = p1.y + (p2.y - p0.y) / 6;
-
-                  const cp2x = p2.x - (p3.x - p1.x) / 6;
-                  const cp2y = p2.y - (p3.y - p1.y) / 6;
-
-                  d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
+                if (currentSegment.length > 0) {
+                  segments.push(currentSegment);
                 }
 
-                return (
-                  <path
-                    key={index}
-                    d={d}
-                    fill="none"
-                    stroke={pathColor}
-                    strokeWidth={6}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                );
-              });
-            })()}
+                return segments.map((points, index) => {
+                  const pathPoints =
+                    index === 0 && currentPosition && currentPosition.floor === currentFloor
+                      ? [{ x: currentPosition.x, y: currentPosition.y }, ...points]
+                      : points;
 
-          {currentPosition && currentPosition.floor === currentFloor && (
-            <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
-              <defs>
-                <filter id="drop-shadow-1" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-                  <feOffset dx="2" dy="2" />
-                  <feGaussianBlur result="blur" stdDeviation="5" />
-                  <feFlood floodColor="#000" floodOpacity=".2" />
-                  <feComposite in2="blur" operator="in" />
-                  <feComposite in="SourceGraphic" />
-                </filter>
-              </defs>
+                  if (pathPoints.length === 0) return null;
 
-              <circle cx="0" cy="0" r={radius * 2.2} fill="#4285f2" opacity=".2" />
+                  let d = `M ${pathPoints[0].x},${pathPoints[0].y}`;
 
-              <g filter="url(#drop-shadow-1)">
-                <circle cx="0" cy="0" r={radius} fill="#4285f2" stroke="#fff" strokeMiterlimit="10" strokeWidth="3" />
+                  for (let i = 0; i < pathPoints.length - 1; i++) {
+                    const p0 = pathPoints[i - 1] || pathPoints[i];
+                    const p1 = pathPoints[i];
+                    const p2 = pathPoints[i + 1];
+                    const p3 = pathPoints[i + 2] || p2;
+
+                    const cp1x = p1.x + (p2.x - p0.x) / 6;
+                    const cp1y = p1.y + (p2.y - p0.y) / 6;
+
+                    const cp2x = p2.x - (p3.x - p1.x) / 6;
+                    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+                    d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
+                  }
+
+                  return (
+                    <path
+                      key={index}
+                      d={d}
+                      fill="none"
+                      stroke={pathColor}
+                      strokeWidth={6}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  );
+                });
+              })()}
+
+            {currentPosition && currentPosition.floor === currentFloor && (
+              <g transform={`translate(${currentPosition.x}, ${currentPosition.y})`} style={{ pointerEvents: "none" }}>
+                <defs>
+                  <filter
+                    id="drop-shadow-1"
+                    x="-50%"
+                    y="-50%"
+                    width="200%"
+                    height="200%"
+                    filterUnits="objectBoundingBox"
+                  >
+                    <feOffset dx="2" dy="2" />
+                    <feGaussianBlur result="blur" stdDeviation="5" />
+                    <feFlood floodColor="#000" floodOpacity=".2" />
+                    <feComposite in2="blur" operator="in" />
+                    <feComposite in="SourceGraphic" />
+                  </filter>
+                </defs>
+
+                <circle cx="0" cy="0" r={radius * 2.2} fill="#4285f2" opacity=".2" />
+
+                <g filter="url(#drop-shadow-1)">
+                  <circle cx="0" cy="0" r={radius} fill="#4285f2" stroke="#fff" strokeMiterlimit="10" strokeWidth="3" />
+                </g>
               </g>
-            </g>
-          )}
+            )}
 
-          {destination && destination.floor === currentFloor && (
-            <g id="SVGRepo_iconCarrier" transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}>
-              <path
-                className="destination-fill"
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3.37892 10.2236L8 16L12.6211 10.2236C13.5137 9.10788 14 7.72154 14 6.29266V6C14 2.68629 11.3137 0 8 0C4.68629 0 2 2.68629 2 6V6.29266C2 7.72154 2.4863 9.10788 3.37892 10.2236ZM8 8C9.10457 8 10 7.10457 10 6C10 4.89543 9.10457 4 8 4C6.89543 4 6 4.89543 6 6C6 7.10457 6.89543 8 8 8Z"
-              />
-            </g>
-          )}
-        </svg>
+            {destination && destination.floor === currentFloor && (
+              <g
+                id="SVGRepo_iconCarrier"
+                transform={`translate(${destination.x - 33}, ${destination.y - 66}) scale(4)`}
+              >
+                <path
+                  className="destination-fill"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M3.37892 10.2236L8 16L12.6211 10.2236C13.5137 9.10788 14 7.72154 14 6.29266V6C14 2.68629 11.3137 0 8 0C4.68629 0 2 2.68629 2 6V6.29266C2 7.72154 2.4863 9.10788 3.37892 10.2236ZM8 8C9.10457 8 10 7.10457 10 6C10 4.89543 9.10457 4 8 4C6.89543 4 6 4.89543 6 6C6 7.10457 6.89543 8 8 8Z"
+                />
+              </g>
+            )}
+          </svg>
+        </div>
       </div>
     </div>
   );
