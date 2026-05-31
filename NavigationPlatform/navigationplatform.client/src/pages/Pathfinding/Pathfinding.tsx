@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Pathfinding.css";
 import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
@@ -7,7 +7,7 @@ import type { PathfindingSettings } from "../../Types/types";
 import { buildPathSteps, findPathAStarMultiStart } from "../../services/pathfinding";
 import { type FloorDto, type GraphDto, type GraphNodeDto, type HeatpointArea } from "../../api/data-contracts";
 import { getWholeGraph } from "../../api/methods/Graph.api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
 import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
@@ -383,11 +383,18 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
+  {/*<div>*/}
+  {/* <Link to="/">Map</Link>*/}
+  {/*  <Link to="/heatmap">Heatmap</Link>*/}
+  {/*</div>*/}
+
+
   return (
-    <div className="pathfinding-page">
-      <div className="pathfinding-shell">
+    <>
+
+      <div className="max-w-md mx-auto px-4 py-4 flex flex-col gap-6 bg-[#FFF0EA]">
         <header className="pathfinding-header">
-          <h1 className="pathfinding-title">{screen === "settings" ? "Waar wil je heen?" : "Map"}</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
 
           {screen === "map" && (
             <h2 className="pathfinding-subtitle">
@@ -398,21 +405,13 @@ export const Pathfinding: React.FC = () => {
         </header>
 
         {screen === "settings" && (
-          <section className="pathfinding-controls">
-            <div className="pathfinding-control-group">
-              <Toggle
-                title="Route toegankelijk voor rolstoelgebruikers"
-                handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
-                currentValue={isAccessibleRoute}
-              />
-            </div>
-
+          <section className="">
             <div className="pathfinding-search-wrapper">
               {roomOptions && (
                 <>
                   <div className="pathfinding-search">
                     <SearchSelect
-                      title="Vul je startlocatie in"
+                      title="Waar ben je nu?"
                       data={roomOptions.concat(userLocationProvided ? [UserLocationName] : [])}
                       onSelect={handleStartClick}
                       value={
@@ -427,7 +426,7 @@ export const Pathfinding: React.FC = () => {
 
                   <div className="pathfinding-search">
                     <SearchSelect
-                      title="Vul je bestemming in"
+                      title="Waar wil je heen?"
                       data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
                       onSelect={handleDestinationClick}
                       value={
@@ -441,6 +440,14 @@ export const Pathfinding: React.FC = () => {
                   </div>
                 </>
               )}
+
+              <div className="pathfinding-control-group">
+                <Toggle
+                  title="Route toegankelijk voor rolstoelgebruikers"
+                  handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
+                  currentValue={isAccessibleRoute}
+                />
+              </div>
 
               <button
                 className="pathfinding-button"
@@ -544,6 +551,6 @@ export const Pathfinding: React.FC = () => {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };

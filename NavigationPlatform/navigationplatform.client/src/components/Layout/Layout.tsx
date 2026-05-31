@@ -1,25 +1,17 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import "./Layout.css";
-import type { LayoutProps } from "./Layout.props";
 
-export const Layout: React.FC<LayoutProps> = ({ isAdmin }) => {
+
+export const Layout = () => {
   return (
-    <div className="layout-container">
-      <header className="layout-header">
-        <div className="header-content">
-          <h1 className="logo">Prototype Project</h1>
-          <nav className="nav-links">
-            {!isAdmin && <Link to="/">Map</Link>}
-            {!isAdmin && <Link to="/heatmap">Heatmap</Link>}
-            {isAdmin && <Link to="/admin/graph-editor">Graph Editor</Link>}
-            {isAdmin && <Link to="/admin/heatmap-editor">Heatmap Editor</Link>}
-          </nav>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-neutral-50">
+      <nav className="bg-[#00495F] text-left px-4 py-3">
+          <h1 className="font-medium text-[#FFF0EA]">Gebouw</h1>
+      </nav>
 
-      <main className="layout-main">
-        <div className="content-wrapper">
+      <main className="flex-1 flex justify-center p-6 bg-[#FFF0EA]">
+        <div className="bg-[#FFF0EA]">
           <Outlet />
         </div>
       </main>
