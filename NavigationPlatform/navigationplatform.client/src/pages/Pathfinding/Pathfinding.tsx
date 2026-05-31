@@ -423,30 +423,27 @@ export const Pathfinding: React.FC = () => {
 
   return (
     <>
+      {screen === "settings" && (
+        <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
+          <button
+            onClick={() => setActiveTab("route")}
+            className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
+              activeTab === "route" ? "bg-[#00495F] text-white" : "text-[#00495F]"
+            }`}
+          >
+            Route
+          </button>
 
-      <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
-        <button
-          onClick={() => setActiveTab("route")}
-          className={`flex-1 py-2 text-sm font-semibold transition rounded-full ${
-            activeTab === "route"
-              ? "bg-[#00495F] text-white"
-              : "text-[#00495F]"
-          }`}
-        >
-          Route
-        </button>
-
-        <button
-          onClick={() => setActiveTab("werkplek")}
-          className={`flex-1 py-2 text-sm font-semibold transition rounded-full ${
-            activeTab === "werkplek"
-              ? "bg-[#00495F] text-white"
-              : "text-[#00495F]"
-          }`}
-        >
-          Werkplek
-        </button>
-      </div>
+          <button
+            onClick={() => setActiveTab("werkplek")}
+            className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
+              activeTab === "werkplek" ? "bg-[#00495F] text-white" : "text-[#00495F]"
+            }`}
+          >
+            Werkplek
+          </button>
+        </div>
+      )}
 
       {screen === "settings" && (
         <section className="max-w-md w-full px-8 py-4 flex flex-col gap-6 items-start text-left">
@@ -460,13 +457,10 @@ export const Pathfinding: React.FC = () => {
             )}
             {roomOptions && (
               <section className="flex flex-col gap-6">
-
                 <div className="flex flex-1 min-w-0 w-full">
                   <div className="w-full">
                     <p className="text-[16px] font-semibold text-black pb-2">Op welke HR locatie ben je?</p>
-                    <div className="px-3 py-2 rounded-full bg-white text-black font-medium">
-                      Wijnhaven (CMI)
-                    </div>
+                    <div className="px-3 py-2 rounded-full bg-white text-black font-medium">Wijnhaven (CMI)</div>
                   </div>
                 </div>
 
@@ -534,21 +528,19 @@ export const Pathfinding: React.FC = () => {
 
       {screen === "map" && (
         <>
-            <div className="w-full flex justify-start px-4">
-              <button
-                className="text-xs text-black font-semibold"
-                onClick={() => {
-                  setScreen("settings");
-                }}
-              >
-                {"< Vorige"}
-              </button>
-            </div>
+          <div className="w-full flex justify-start px-4">
+            <button
+              className="text-xs text-black font-semibold"
+              onClick={() => {
+                setScreen("settings");
+              }}
+            >
+              {"< Vorige"}
+            </button>
+          </div>
 
           <div className="px-8 py-2 text-left">
-            <h1 className="text-2xl font-bold text-black">
-              Jouw route:
-            </h1>
+            <h1 className="text-2xl font-bold text-black">Jouw route:</h1>
 
             <h2 className="text-sm text-black font-normal">
               Naar <span className="font-bold text-xs text-black">{selectedRoom}</span>
