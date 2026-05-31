@@ -48,7 +48,7 @@
 }
 
 .toggle-input:checked + .toggle-track {
-  background-color: var(--quaternary-JaMan-color);
+  background-color: #D30F4C;
 }
 
 .toggle-input:checked + .toggle-track + .toggle-dot {

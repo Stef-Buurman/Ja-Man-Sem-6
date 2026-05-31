@@ -10,13 +10,13 @@ export const Layout = () => {
           <h1 className="font-medium text-[#FFF0EA]">Gebouw</h1>
       </nav>
 
-      <main className="flex-1 flex justify-center p-6 bg-[#FFF0EA]">
-        <div className="bg-[#FFF0EA]">
+      <main className="flex-1 bg-[#FFF0EA] py-6">
+        <div className="w-full">
           <Outlet />
         </div>
       </main>
 
-      <footer className="layout-footer">© {new Date().getFullYear()} Prototype Project. All rights reserved.</footer>
+      <footer className="text-center p-3 bg-white text-black text-sm">© {new Date().getFullYear()} Prototype Project. All rights reserved.</footer>
     </div>
   );
 };

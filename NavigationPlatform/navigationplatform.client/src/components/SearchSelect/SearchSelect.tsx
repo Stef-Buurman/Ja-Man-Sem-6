@@ -55,39 +55,42 @@ export default function SearchSelect({ title, data, onSelect, value }: SearchSel
   };
 
   return (
-    <div className="search-box-container" ref={containerRef}>
-      <label htmlFor="string-search" className="search-box-label">
+    <div
+      className="relative w-full max-w-[420px] overflow-visible"
+      ref={containerRef}
+    >
+      <label htmlFor="string-search" className="block mb-[6px] text-[15px] font-semibold text-[#000000] text-left">
         {title}
       </label>
 
       <input
         id="string-search"
         type="text"
-        className="search-box-input"
+        className="w-full rounded-full bg-white px-3 font-semibold text-sm py-2 text-base text-[#000000] transition-all duration-200 focus:border-[#d3114c] focus:outline-none focus:ring-2 focus:ring-[#d3114c]/15"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
           setIsOpen(true);
         }}
         onFocus={() => setIsOpen(true)}
-        placeholder="Type something..."
+        placeholder="WN.02.007"
       />
 
       {isOpen && query.trim() !== "" && (
-        <div className="search-results-wrapper">
+        <div className="absolute top-[calc(100%-2px)] left-3 right-3 mt-[6px] z-[9999]">
           {suggestions.length > 0 ? (
-            <ul className="search-results-list">
+            <ul className="list-none m-0 p-0 border border-[#342626] rounded-lg overflow-hidden bg-white shadow-lg max-h-[220px] overflow-y-auto">
               {suggestions.map((suggestion, index) => (
                 <li key={`${suggestion.value}-${index}`}>
-                  <button type="button" className="search-result-button" onClick={() => handleSelect(suggestion.value)}>
-                    <span className="search-result-text">{suggestion.value}</span>
-                    <span className="search-result-count">{suggestion.count}</span>
+                  <button type="button" className="w-full flex items-center justify-between px-3 py-[9px] text-left bg-transparent border-0 border-b border-[#34262626] cursor-pointer transition-all duration-200 hover:bg-[#d3114c]/10 active:scale-[0.995]" onClick={() => handleSelect(suggestion.value)}>
+                    <span className="text-sm font-medium text-[#342626]">{suggestion.value}</span>
+                    <span className="min-w-6 px-[7px] py-[3px] rounded-full bg-[#d3114c] text-[#fdf1e3] text-xs font-bold text-center">{suggestion.count}</span>
                   </button>
                 </li>
               ))}
             </ul>
           ) : (
-            <div className="search-no-results">Geen locaties met deze naam gevonden.</div>
+            <div className="px-3 py-[10px] border border-[#d3114c] rounded-lg bg-white text-[#342626] text-sm text-center ">Geen locaties met deze naam gevonden.</div>
           )}
         </div>
       )}

@@ -383,33 +383,41 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
-  {/*<div>*/}
-  {/* <Link to="/">Map</Link>*/}
-  {/*  <Link to="/heatmap">Heatmap</Link>*/}
-  {/*</div>*/}
-
+  {
+    /*<div>*/
+  }
+  {
+    /* <Link to="/">Map</Link>*/
+  }
+  {
+    /*  <Link to="/heatmap">Heatmap</Link>*/
+  }
+  {
+    /*</div>*/
+  }
 
   return (
     <>
+      <header className="pathfinding-header">
+        {/*<h1 className="text-2xl font-bold tracking-tight text-neutral-900">{screen === "settings" ? "Plan je route!" : "Map"}</h1>*/}
 
-      <div className="max-w-md mx-auto px-4 py-4 flex flex-col gap-6 bg-[#FFF0EA]">
-        <header className="pathfinding-header">
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
+        {screen === "map" && (
+          <h2 className="pathfinding-subtitle">
+            Huidige verdieping: {currentFloor}
+            {selectedRoom && ` (Route sent to: ${selectedRoom})`}
+          </h2>
+        )}
+      </header>
 
-          {screen === "map" && (
-            <h2 className="pathfinding-subtitle">
-              Huidige verdieping: {currentFloor}
-              {selectedRoom && ` (Route sent to: ${selectedRoom})`}
-            </h2>
-          )}
-        </header>
-
+      <div className="">
         {screen === "settings" && (
-          <section className="">
-            <div className="pathfinding-search-wrapper">
+          <section className="max-w-md w-full px-8 py-4 flex flex-col gap-6 items-start text-left">
+            <h1 className="text-2xl font-bold text-neutral-900">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
+
+            <div className="flex flex-1 flex-col gap-6">
               {roomOptions && (
-                <>
-                  <div className="pathfinding-search">
+                <section className="flex flex-col gap-6">
+                  <div className="flex flex-1 min-w-0 w-full">
                     <SearchSelect
                       title="Waar ben je nu?"
                       data={roomOptions.concat(userLocationProvided ? [UserLocationName] : [])}
@@ -424,7 +432,7 @@ export const Pathfinding: React.FC = () => {
                     />
                   </div>
 
-                  <div className="pathfinding-search">
+                  <div className="flex flex-1 min-w-0 w-full">
                     <SearchSelect
                       title="Waar wil je heen?"
                       data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
@@ -438,26 +446,30 @@ export const Pathfinding: React.FC = () => {
                       }
                     />
                   </div>
-                </>
+                </section>
               )}
 
-              <div className="pathfinding-control-group">
+              <div className="flex w-full items-center justify-between pb-[14px] pr-0 md:w-auto md:min-w-[260px] md:border-b-0 md:border-r md:pr-[18px]">
                 <Toggle
-                  title="Route toegankelijk voor rolstoelgebruikers"
+                  title="Rolstoeltoegankelijke route"
                   handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
                   currentValue={isAccessibleRoute}
                 />
               </div>
-
-              <button
-                className="pathfinding-button"
-                disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
-                onClick={() => calculatePathAndGoToMap()}
-              >
-                Naar de kaart
-              </button>
             </div>
           </section>
+        )}
+
+        {screen === "settings" && (
+          <div className="w-full flex justify-center pb-6">
+            <button
+              className="min-w-[150px] px-2 py-3 rounded-full font-bold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+              disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
+              onClick={() => calculatePathAndGoToMap()}
+            >
+              Plan route
+            </button>
+          </div>
         )}
 
         {screen === "map" && (
