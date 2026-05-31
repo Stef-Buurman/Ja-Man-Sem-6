@@ -406,6 +406,8 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
+  const [activeTab, setActiveTab] = useState<"route" | "werkplek">("route");
+
   {
     /*<div>*/
   }
@@ -421,6 +423,31 @@ export const Pathfinding: React.FC = () => {
 
   return (
     <>
+
+      <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
+        <button
+          onClick={() => setActiveTab("route")}
+          className={`flex-1 py-2 text-sm font-semibold transition rounded-full ${
+            activeTab === "route"
+              ? "bg-[#00495F] text-white"
+              : "text-[#00495F]"
+          }`}
+        >
+          Route
+        </button>
+
+        <button
+          onClick={() => setActiveTab("werkplek")}
+          className={`flex-1 py-2 text-sm font-semibold transition rounded-full ${
+            activeTab === "werkplek"
+              ? "bg-[#00495F] text-white"
+              : "text-[#00495F]"
+          }`}
+        >
+          Werkplek
+        </button>
+      </div>
+
       {screen === "settings" && (
         <section className="max-w-md w-full px-8 py-4 flex flex-col gap-6 items-start text-left">
           <h1 className="text-2xl font-bold text-black">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
@@ -433,6 +460,16 @@ export const Pathfinding: React.FC = () => {
             )}
             {roomOptions && (
               <section className="flex flex-col gap-6">
+
+                <div className="flex flex-1 min-w-0 w-full">
+                  <div className="w-full">
+                    <p className="text-[16px] font-semibold text-black pb-2">Op welke HR locatie ben je?</p>
+                    <div className="px-3 py-2 rounded-full bg-white text-black font-medium">
+                      Wijnhaven (CMI)
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex flex-1 min-w-0 w-full">
                   <SearchSelect
                     title="Waar ben je nu?"
@@ -477,9 +514,9 @@ export const Pathfinding: React.FC = () => {
       )}
 
       {screen === "settings" && (
-        <div className="w-full flex justify-center pb-6">
+        <div className="flex justify-center pb-6">
           <button
-            className="min-w-[150px] px-2 py-3 rounded-full font-bold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+            className="w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
             disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
             onClick={() => calculatePathAndGoToMap()}
           >

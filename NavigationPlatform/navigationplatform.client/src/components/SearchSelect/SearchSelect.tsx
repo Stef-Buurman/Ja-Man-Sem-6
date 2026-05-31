@@ -59,7 +59,7 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
       className="relative w-full max-w-[420px] overflow-visible"
       ref={containerRef}
     >
-      <label htmlFor="string-search" className="block mb-[6px] text-[15px] font-semibold text-[#000000] text-left">
+      <label htmlFor="string-search" className="block mb-[6px] text-[16px] font-semibold text-[#000000] text-left">
         {title}
       </label>
 
