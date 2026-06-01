@@ -106,6 +106,22 @@ export const Heatmap: React.FC = () => {
         <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
           <HeatmapMap currentFloor={currentFloor} floors={floorsList} areas={areas} />
         </section>
+        <div className="flex items-center gap-4 px-4 py-2 text-xs font-medium">
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-green-500" />
+            <span>Rustig</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-orange-400" />
+            <span>Gemiddeld</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-red-500" />
+            <span>Druk</span>
+          </div>
+        </div>
       </div>
     </div>
   );
