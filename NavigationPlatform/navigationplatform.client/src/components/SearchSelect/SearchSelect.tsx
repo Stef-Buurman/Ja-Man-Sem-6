@@ -44,7 +44,6 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
 
     return [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
       .map(([value, count]) => ({ value, count }));
   }, [query, data]);
 

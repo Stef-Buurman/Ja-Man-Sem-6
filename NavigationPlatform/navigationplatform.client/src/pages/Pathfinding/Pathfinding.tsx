@@ -7,13 +7,14 @@ import type { PathfindingSettings } from "../../Types/types";
 import { buildPathSteps, findPathAStarMultiStart } from "../../services/pathfinding";
 import { type FloorDto, type GraphDto, type GraphNodeDto, type HeatpointArea } from "../../api/data-contracts";
 import { getWholeGraph } from "../../api/methods/Graph.api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getHeatpointAreas } from "../../api/methods/Heatmap.api";
 import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
 import Toggle from "../../components/toggle/toggle";
 import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 import { CustomDestinationName, EmergencyNodeName, ToiletNodeName, UserLocationName } from "../../utils/Globals";
+import { NavigationComponent } from "../../components/NavigationComponent/NavigationComponent";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -36,10 +37,10 @@ export const Pathfinding: React.FC = () => {
   const startPoint =
     floor && x && y
       ? {
-          floor,
-          x: Number(x),
-          y: Number(y),
-        }
+        floor,
+        x: Number(x),
+        y: Number(y),
+      }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -47,11 +48,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-          type: "coordinates",
-          floor: destFloor,
-          x: Number(destX),
-          y: Number(destY),
-        }
+        type: "coordinates",
+        floor: destFloor,
+        x: Number(destX),
+        y: Number(destY),
+      }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -253,22 +254,22 @@ export const Pathfinding: React.FC = () => {
   const currentUserPosition = useMemo(() => {
     return userPosition
       ? {
-          x: Math.round(userPosition.x),
-          y: Math.round(userPosition.y),
-          floor: userPosition.floor,
-        }
+        x: Math.round(userPosition.x),
+        y: Math.round(userPosition.y),
+        floor: userPosition.floor,
+      }
       : startNodes.length > 0
         ? (() => {
-            const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
-            if (node) {
-              return {
-                x: Math.round(node.x ?? 0),
-                y: Math.round(node.y ?? 0),
-                floor: node.floor ?? 0,
-              };
-            }
-            return undefined;
-          })()
+          const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+          if (node) {
+            return {
+              x: Math.round(node.x ?? 0),
+              y: Math.round(node.y ?? 0),
+              floor: node.floor ?? 0,
+            };
+          }
+          return undefined;
+        })()
         : undefined;
   }, [userPosition, startNodes, graph.nodes]);
 
@@ -406,46 +407,10 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
-  const [activeTab, setActiveTab] = useState<"route" | "werkplek">("route");
-
-  {
-    /*<div>*/
-  }
-  {
-    /* <Link to="/">Map</Link>*/
-  }
-  {
-    /*  <Link to="/heatmap">Heatmap</Link>*/
-  }
-  {
-    /*</div>*/
-  }
-
   return (
     <>
-
-      /*  <Link to="/heatmap">Heatmap</Link>*/
-
       {screen === "settings" && (
-        <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
-          <button
-            onClick={() => setActiveTab("route")}
-            className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
-              activeTab === "route" ? "bg-[#00495F] text-white" : "text-[#00495F]"
-            }`}
-          >
-            Route
-          </button>
-
-          <button
-            onClick={() => setActiveTab("werkplek")}
-            className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
-              activeTab === "werkplek" ? "bg-[#00495F] text-white" : "text-[#00495F]"
-            }`}
-          >
-            Werkplek
-          </button>
-        </div>
+        <NavigationComponent activeTab="route" />
       )}
 
       {screen === "settings" && (
@@ -572,10 +537,10 @@ export const Pathfinding: React.FC = () => {
               destination={
                 destinationNode
                   ? {
-                      x: destinationNode.x,
-                      y: destinationNode.y,
-                      floor: destinationNode.floor,
-                    }
+                    x: destinationNode.x,
+                    y: destinationNode.y,
+                    floor: destinationNode.floor,
+                  }
                   : undefined
               }
             />
