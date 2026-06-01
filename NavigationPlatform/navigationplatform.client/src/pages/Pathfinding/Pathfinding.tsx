@@ -406,10 +406,11 @@ export const Pathfinding: React.FC = () => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
 
   useEffect(() => {
-    if (pathSteps.length > 0) {
-      setActiveStepIndex(0);
+    const step = pathSteps[activeStepIndex];
+    if (step?.floor !== undefined) {
+      setCurrentFloor(step.floor);
     }
-  }, [pathSteps]);
+  }, [activeStepIndex, pathSteps]);
 
 
   const nextStep = () => {
