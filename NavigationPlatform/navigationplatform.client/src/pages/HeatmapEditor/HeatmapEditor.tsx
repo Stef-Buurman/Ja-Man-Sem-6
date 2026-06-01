@@ -86,8 +86,8 @@ const HeatmapEditor: React.FC = () => {
 
   return (
     <div className="heatmap-editor">
-      <button className="heatmap-button save-button" onClick={handleAddArea}>
-        Add Area
+      <button className="heatmap-button save-button heatmap-button delete w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed" onClick={handleAddArea}>
+        Gebied toevoegen
       </button>
 
       {areas.map((a) => (
@@ -95,6 +95,7 @@ const HeatmapEditor: React.FC = () => {
           <label>
             X:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.x}
@@ -111,6 +112,7 @@ const HeatmapEditor: React.FC = () => {
           <label>
             Y:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.y}
@@ -125,8 +127,9 @@ const HeatmapEditor: React.FC = () => {
           </label>
 
           <label>
-            Width:
+            Breedte:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.width}
@@ -141,8 +144,9 @@ const HeatmapEditor: React.FC = () => {
           </label>
 
           <label>
-            Height:
+            Hoogte:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.height}
@@ -157,8 +161,9 @@ const HeatmapEditor: React.FC = () => {
           </label>
 
           <label>
-            Floor:
+            Verdieping:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.floor?.number || 0}
@@ -183,8 +188,9 @@ const HeatmapEditor: React.FC = () => {
           </label>
 
           <label>
-            Value:
+            Waarde:
             <input
+              className="px-3 py-2 rounded-full bg-white text-black font-medium"
               min={0}
               type="number"
               value={a.value}
@@ -198,10 +204,10 @@ const HeatmapEditor: React.FC = () => {
             />
           </label>
 
-          <div className="heatmap-actions">
+          <div className="heatmap-actions flex gap-2">
             <button
               disabled={a.value >= 30}
-              className="heatmap-button"
+              className="heatmap-button w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
               onClick={() => {
                 const updated = areas.map((area) => (area.id === a.id ? { ...area, value: area.value + 1 } : area));
                 setAreas(updated);
@@ -213,7 +219,7 @@ const HeatmapEditor: React.FC = () => {
 
             <button
               disabled={a.value <= 0}
-              className="heatmap-button"
+              className="heatmap-button w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
               onClick={() => {
                 const updated = areas.map((area) => (area.id === a.id ? { ...area, value: area.value - 1 } : area));
                 setAreas(updated);
@@ -223,20 +229,20 @@ const HeatmapEditor: React.FC = () => {
               -
             </button>
 
-            <button className="heatmap-button delete" onClick={() => areYouSurePopup(a.id)}>
-              Delete
+            <button className="heatmap-button delete flex-1 px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed" onClick={() => areYouSurePopup(a.id)}>
+              Verwijderen
             </button>
           </div>
         </div>
       ))}
 
       <button
-        className="heatmap-button save-button"
+        className="heatmap-button save-button heatmap-button delete w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
         onClick={() => {
           handleAreaUpdate();
         }}
       >
-        Save Areas
+        Gebieden bewaren
       </button>
     </div>
   );

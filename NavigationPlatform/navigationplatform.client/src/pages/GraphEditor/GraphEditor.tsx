@@ -1,6 +1,6 @@
 import "./GraphEditor.css";
 import { GraphEditor } from "../../components/GraphEditor/GraphEditor";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
 import type { FloorDto, GraphDto } from "../../api/data-contracts";
 import { getGraph } from "../../api/methods/Graph.api";
@@ -47,7 +47,9 @@ export const GraphEditorPage: React.FC = () => {
   }, []);
   return (
     <>
-      <FloorSelector floors={floors.map((f) => f.number)} currentFloor={currentFloor} setFloor={floorChangeHandler} />
+      <div className="absolute top-30 right-10">
+        <FloorSelector floors={floors.map((f) => f.number)} currentFloor={currentFloor} setFloor={floorChangeHandler} />
+      </div>
       <GraphEditor curFloor={currentFloor} initialGraph={currentGraph} floors={floors} />
     </>
   );

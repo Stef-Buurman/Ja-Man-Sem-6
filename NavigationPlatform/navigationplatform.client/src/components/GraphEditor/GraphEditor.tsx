@@ -300,96 +300,121 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
 
   return (
     <div>
-      <select value={newNodeType} onChange={(e) => setNewNodeType(Number(e.target.value) as NodeType)}>
-        <option value={GetTypeFromNodeType("hallway")}>Hallway</option>
-        <option value={GetTypeFromNodeType("entrance")}>Entrance</option>
-      </select>
-      <button onClick={exportGraph}>Copy Graph</button>
-      <button onClick={exportGraphJson}>Copy Graph JSON</button>
-      <button
-        onClick={() => {
-          setNodes([]);
-          setEdges([]);
-        }}
+      <div
+        className="w-full overflow-x-auto overflow-y-hidden"
+        style={{ marginTop: 10 }}
       >
-        Clear Graph
-      </button>
-      <button onClick={save}>Save Graph</button>
+        <div className="w-[200%] md:w-[125%] lg:w-[120%] xl:w-[65%]">
+          <svg
+            viewBox={viewBox || "0 0 2412.61 1344.75"}
+            className="w-full h-auto"
+            onClick={handleMapClick}
+          >
+            {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
 
-      <svg
-        viewBox={viewBox || "0 0 2412.61 1344.75"}
-        style={{ border: "1px solid #ccc", marginTop: 10 }}
-        onClick={handleMapClick}
-      >
-        {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
+            {/* edges */}
+            {edges.map((e, i) => {
+              const from = allVisibleNodes.find((n) => n.id === e.from);
+              const to = allVisibleNodes.find((n) => n.id === e.to);
 
-        {edges.map((e, i) => {
-          const from = allVisibleNodes.find((n) => n.id === e.from);
-          const to = allVisibleNodes.find((n) => n.id === e.to);
+              if (!from || !to) return null;
 
-          if (!from || !to) return null;
+              return (
+                <line
+                  key={i}
+                  x1={from.x}
+                  y1={from.y}
+                  x2={to.x}
+                  y2={to.y}
+                  stroke="black"
+                  strokeWidth={2}
+                />
+              );
+            })}
 
-          return <line key={i} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="black" strokeWidth={2} />;
-        })}
+            {/* doors */}
+            {visibleDoors.map((d) => (
+              <circle
+                key={d.id}
+                cx={d.x}
+                cy={d.y}
+                r={10}
+                fill={selectedNode === d.id ? "red" : "yellow"}
+                stroke="purple"
+                strokeWidth={2}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNodeClick(d.id ?? "");
+                }}
+              />
+            ))}
 
-        {visibleDoors.map((d) => (
-          <circle
-            key={d.id}
-            cx={d.x}
-            cy={d.y}
-            r={10}
-            fill={selectedNode === d.id ? "red" : "yellow"}
-            stroke="purple"
-            strokeWidth={2}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNodeClick(d.id ?? "");
+            {/* hallway nodes */}
+            {visibleNodes
+              .filter((n) => n.type === GetTypeFromNodeType("hallway"))
+              .map((n) => (
+                <circle
+                  name={n.id ?? ""}
+                  key={n.id}
+                  cx={n.x}
+                  cy={n.y}
+                  r={6}
+                  fill={selectedNode === n.id ? "red" : "blue"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNodeClick(n.id ?? "");
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    handleDeleteNode(n.id ?? "");
+                  }}
+                />
+              ))}
+
+            {/* entrance nodes */}
+            {visibleNodes
+              .filter((n) => n.type === GetTypeFromNodeType("entrance"))
+              .map((n) => (
+                <rect
+                  key={n.id}
+                  x={n.x - (n.width || 50) / 2}
+                  y={n.y - (n.height || 50) / 2}
+                  width={n.width || 50}
+                  height={n.height || 50}
+                  fill={selectedNode === n.id ? "red" : "green"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNodeClick(n.id ?? "");
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    handleDeleteNode(n.id ?? "");
+                  }}
+                />
+              ))}
+          </svg>
+        </div>
+      </div>
+      <div className="flex flex-row items-start text-sm text-black text-[16px]">
+        <select className="flex-1" value={newNodeType} onChange={(e) => setNewNodeType(Number(e.target.value) as NodeType)}>
+          <option value={GetTypeFromNodeType("hallway")}>Gangpad</option>
+          <option value={GetTypeFromNodeType("entrance")}>Ingang</option>
+        </select>
+        <div className="flex flex-col flex-1">
+          <button onClick={exportGraph}>Kopieer grafiek</button>
+          <button onClick={exportGraphJson}>Kopieer grafiek JSON</button>
+          <button
+            onClick={() => {
+              setNodes([]);
+              setEdges([]);
             }}
-          />
-        ))}
-
-        {visibleNodes
-          .filter((n) => n.type === GetTypeFromNodeType("hallway"))
-          .map((n) => (
-            <circle
-              name={n.id ?? ""}
-              key={n.id}
-              cx={n.x}
-              cy={n.y}
-              r={6}
-              fill={selectedNode === n.id ? "red" : "blue"}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNodeClick(n.id ?? "");
-              }}
-              onContextMenu={(e) => {
-                e.preventDefault();
-                handleDeleteNode(n.id ?? "");
-              }}
-            />
-          ))}
-
-        {visibleNodes
-          .filter((n) => n.type === GetTypeFromNodeType("entrance"))
-          .map((n) => (
-            <rect
-              key={n.id}
-              x={n.x - (n.width || 50) / 2}
-              y={n.y - (n.height || 50) / 2}
-              width={n.width || 50}
-              height={n.height || 50}
-              fill={selectedNode === n.id ? "red" : "green"}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNodeClick(n.id ?? "");
-              }}
-              onContextMenu={(e) => {
-                e.preventDefault();
-                handleDeleteNode(n.id ?? "");
-              }}
-            />
-          ))}
-      </svg>
+          >
+            Leeg grafiek
+          </button>
+          <button onClick={save}>Bewaar grafiek</button>
+        </div>
+      </div>
     </div>
+
   );
 };
