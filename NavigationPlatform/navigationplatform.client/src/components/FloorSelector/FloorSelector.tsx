@@ -28,7 +28,7 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
       <div className="floor-title">Etage</div>
       <div className="floor-card">
         <button
-          className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-up disabled:opacity-0 disabled:cursor-not-allowed"
+          className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-up disabled:opacity-0 cursor-default"
           onClick={goUp}
           disabled={currentIndex === floors.length - 1 || disabled}
         >
@@ -38,7 +38,7 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
         <span className="text-[60px] leading-none font-bold text-white">{currentFloor}</span>
 
         <button
-          className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-down disabled:opacity-0 disabled:cursor-not-allowed"
+          className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-down disabled:opacity-0 cursor-default"
           onClick={goDown}
           disabled={currentIndex === 0 || disabled}
         >
