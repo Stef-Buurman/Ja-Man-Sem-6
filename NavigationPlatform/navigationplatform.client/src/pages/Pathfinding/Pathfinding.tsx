@@ -32,15 +32,15 @@ export const Pathfinding: React.FC = () => {
   const hasAutoCalculatedPath = useRef(false);
 
   const pathSteps = useMemo(() => buildPathSteps(path, graph), [path, graph]);
-  const activeStep = pathSteps.find((step) => step.floor === currentFloor) ?? pathSteps[0];
+  // const activeStep = pathSteps.find((step) => step.floor === currentFloor) ?? pathSteps[0];
 
   const startPoint =
     floor && x && y
       ? {
-        floor,
-        x: Number(x),
-        y: Number(y),
-      }
+          floor,
+          x: Number(x),
+          y: Number(y),
+        }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -48,11 +48,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-        type: "coordinates",
-        floor: destFloor,
-        x: Number(destX),
-        y: Number(destY),
-      }
+          type: "coordinates",
+          floor: destFloor,
+          x: Number(destX),
+          y: Number(destY),
+        }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -250,22 +250,22 @@ export const Pathfinding: React.FC = () => {
   const currentUserPosition = useMemo(() => {
     return userPosition
       ? {
-        x: Math.round(userPosition.x),
-        y: Math.round(userPosition.y),
-        floor: userPosition.floor,
-      }
+          x: Math.round(userPosition.x),
+          y: Math.round(userPosition.y),
+          floor: userPosition.floor,
+        }
       : startNodes.length > 0
         ? (() => {
-          const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
-          if (node) {
-            return {
-              x: Math.round(node.x ?? 0),
-              y: Math.round(node.y ?? 0),
-              floor: node.floor ?? 0,
-            };
-          }
-          return undefined;
-        })()
+            const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+            if (node) {
+              return {
+                x: Math.round(node.x ?? 0),
+                y: Math.round(node.y ?? 0),
+                floor: node.floor ?? 0,
+              };
+            }
+            return undefined;
+          })()
         : undefined;
   }, [userPosition, startNodes, graph.nodes]);
 
@@ -403,11 +403,28 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+
+  useEffect(() => {
+    if (pathSteps.length > 0) {
+      setActiveStepIndex(0);
+    }
+  }, [pathSteps]);
+
+
+  const nextStep = () => {
+    setActiveStepIndex((prev) => Math.min(prev + 1, pathSteps.length - 1));
+  };
+
+  const prevStep = () => {
+    setActiveStepIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const activeStep = pathSteps[activeStepIndex];
+
   return (
     <>
-      {screen === "settings" && (
-        <NavigationComponent activeTab="route" />
-      )}
+      {screen === "settings" && <NavigationComponent activeTab="route" />}
 
       {screen === "settings" && (
         <section className="max-w-md w-full mx-auto px-8 py-4 flex flex-col gap-6 items-start text-left">
@@ -533,46 +550,49 @@ export const Pathfinding: React.FC = () => {
               destination={
                 destinationNode
                   ? {
-                    x: destinationNode.x,
-                    y: destinationNode.y,
-                    floor: destinationNode.floor,
-                  }
+                      x: destinationNode.x,
+                      y: destinationNode.y,
+                      floor: destinationNode.floor,
+                    }
                   : undefined
               }
             />
           </section>
+
           {pathSteps.length > 0 && (
-            <section className="p-[14px_16px]">
-              <div className="pathfinding-route-steps-header">
-                <span className="pathfinding-route-steps-label">Routebeschrijving</span>
-                <span className="pathfinding-route-steps-count">
-                  {pathSteps.length} verdiepingstap{pathSteps.length === 1 ? "" : "pen"}
+            <section className="p-[14px_16px] flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-black">Routebeschrijving</span>
+                <span className="text-sm text-black/70">
+                  Stap {activeStepIndex + 1} van {pathSteps.length}
                 </span>
               </div>
 
-              <ol className="pathfinding-route-steps-list">
-                {pathSteps.map((step, index) => (
-                  <li
-                    key={`${step.floor}-${index}`}
-                    className={`pathfinding-route-step ${step.floor === currentFloor ? "pathfinding-route-step-active" : ""}`}
-                  >
-                    <button
-                      type="button"
-                      className="pathfinding-route-step-button"
-                      onClick={() => setCurrentFloor(step.floor)}
-                    >
-                      <strong>
-                        Stap {index + 1}: {step.title}
-                      </strong>
-                      <span>{step.instruction}</span>
-                    </button>
-                  </li>
-                ))}
-              </ol>
+              <div className="flex items-center justify-center gap-6">
+                <button
+                  onClick={prevStep}
+                  disabled={activeStepIndex === 0}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                >
+                  ‹
+                </button>
 
-              {activeStep && (
-                <p className="pathfinding-current-instruction">Huidige instructie: {activeStep.instruction}</p>
-              )}
+                <div className="min-w-[120px] text-center py-2 bg-[#D30F4C] rounded-full text-sm font-semibold text-white">
+                  Stap {activeStepIndex + 1}
+                </div>
+
+                <button
+                  onClick={nextStep}
+                  disabled={activeStepIndex === pathSteps.length - 1}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white shadow">
+                <p className="text-sm text-black/70">{activeStep?.instruction}</p>
+              </div>
             </section>
           )}
         </>
