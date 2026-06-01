@@ -27,23 +27,23 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
     <div className="full-floor-card">
       <div className="floor-title">Etage</div>
       <div className="floor-card">
-        <button
+        {!disabled && (<button
           className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-up"
           onClick={goUp}
-          disabled={currentIndex === floors.length - 1 || disabled}
+          disabled={currentIndex === floors.length - 1}
         >
           <img className="floor-arrow" src={downArrow} alt="Up" style={{ transform: "rotate(180deg)" }} />
-        </button>
+        </button>)}
 
         <span className="text-[60px] leading-none font-bold text-white">{currentFloor}</span>
 
-        <button
+        {!disabled && (<button
           className="bg-black border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-out floor-button-down"
           onClick={goDown}
-          disabled={currentIndex === 0 || disabled}
+          disabled={currentIndex === 0}
         >
           <img className="floor-arrow" src={downArrow} alt="Down" />
-        </button>
+        </button>)}
       </div>
     </div>
   );
