@@ -147,18 +147,18 @@
 /* MAP */
 
 .pathfinding-map-card {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pathfinding-map-card svg {
@@ -168,14 +168,11 @@
   display: block;
 }
 
-
 .map-overlay-top-right {
   position: absolute;
   top: 5%;
   right: 7%;
 }
-
-
 
 /* MOBILE */
 

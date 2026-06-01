@@ -4,4 +4,5 @@ export type SearchSelectProps = {
   onSelect?: (value: string) => void;
   value?: string;
   disabled?: boolean;
+  startValue?: string;
 };

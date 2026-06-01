@@ -128,7 +128,12 @@ export const HeatmapMap: React.FC<HeatmapMapProps> = ({
     <div className="map-view-v4">
       <div className="flex-1 min-h-[300px] max-h-[65vh] w-full rounded-lg overflow-x-auto overflow-y-hidden">
         <div className="w-[180%] md:w-[125%] lg:w-[120%] xl:w-[65%] h-full">
-          <svg ref={svgElement} viewBox={viewBox || "0 0 1000 1000"} className="w-full h-full block" onClick={onSvgClick}>
+          <svg
+            ref={svgElement}
+            viewBox={viewBox || "0 0 1000 1000"}
+            className="w-full h-full block"
+            onClick={onSvgClick}
+          >
             {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}
 
             {currentPosition && currentPosition.floor === currentFloor && (

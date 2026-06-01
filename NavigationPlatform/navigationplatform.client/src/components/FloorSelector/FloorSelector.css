@@ -6,17 +6,17 @@
 }
 
 .floor-card {
-    color: black;
-    width: 72px;
-    height: 110px;
-    background: #000;
-    border-radius: 5px;
+  color: black;
+  width: 72px;
+  height: 110px;
+  background: #000;
+  border-radius: 5px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2px
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
 }
 
 .floor-arrow {
@@ -35,7 +35,5 @@
 
 .floor-title {
   color: black;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
-
-

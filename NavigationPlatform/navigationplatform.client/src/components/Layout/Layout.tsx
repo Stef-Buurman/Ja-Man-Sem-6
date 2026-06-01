@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import "./Layout.css";
 import footer from "/src/svgs/footer.svg";
-import settings from "/src/svgs/settings.svg"
+import settings from "/src/svgs/settings.svg";
 
 export const Layout = ({ isAdmin }: { isAdmin: boolean }) => {
   return (

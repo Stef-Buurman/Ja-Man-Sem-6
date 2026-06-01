@@ -2,8 +2,8 @@ import { useMemo, useState, useRef, useEffect } from "react";
 import "./SearchSelect.css";
 import type { SearchSelectProps } from "./SearchSelect.props";
 
-export default function SearchSelect({ title, data, onSelect, value, disabled }: SearchSelectProps) {
-  const [query, setQuery] = useState(value || "");
+export default function SearchSelect({ title, data, onSelect, value, disabled, startValue }: SearchSelectProps) {
+  const [query, setQuery] = useState(value || startValue || "");
   const [isOpen, setIsOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,8 +22,10 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
   useEffect(() => {
     if (value !== undefined) {
       setQuery(value);
+    } else if (startValue !== undefined) {
+      setQuery(startValue);
     }
-  }, [value]);
+  }, [value, startValue]);
 
   const normalizeRoom = (value: string) => value.toLowerCase().replace(/\./g, "");
 
@@ -42,10 +44,25 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
       }
     }
 
-    return [...counts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .map(([value, count]) => ({ value, count }));
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([value, count]) => ({ value, count }));
   }, [query, data]);
+
+  const clearStartValue = () => {
+    if (startValue && query === startValue) {
+      setQuery("");
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let newValue = event.target.value;
+
+    if (startValue && query === startValue) {
+      newValue = newValue.replace(startValue, "");
+    }
+
+    setQuery(newValue);
+    setIsOpen(true);
+  };
 
   const handleSelect = (value: string) => {
     setQuery(value);
@@ -54,10 +71,7 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
   };
 
   return (
-    <div
-      className="relative w-full max-w-[420px] overflow-visible"
-      ref={containerRef}
-    >
+    <div className="relative w-full max-w-[420px] overflow-visible" ref={containerRef}>
       <label htmlFor="string-search" className="block mb-[6px] text-[16px] font-semibold text-[#000000] text-left">
         {title}
       </label>
@@ -67,11 +81,15 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
         type="text"
         className="w-full rounded-full bg-white px-3 font-semibold text-sm py-2 text-base text-[#000000] transition-all duration-200 focus:border-[#d3114c] focus:outline-none focus:ring-2 focus:ring-[#d3114c]/15"
         value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
+        onChange={handleInputChange}
+        onFocus={() => {
+          clearStartValue();
           setIsOpen(true);
         }}
-        onFocus={() => setIsOpen(true)}
+        onClick={() => {
+          clearStartValue();
+          setIsOpen(true);
+        }}
         placeholder="WN.02.007"
         disabled={disabled}
       />
@@ -82,15 +100,23 @@ export default function SearchSelect({ title, data, onSelect, value, disabled }:
             <ul className="list-none m-0 p-0 border border-[#342626] rounded-lg overflow-hidden bg-white shadow-lg max-h-[220px] overflow-y-auto">
               {suggestions.map((suggestion, index) => (
                 <li key={`${suggestion.value}-${index}`}>
-                  <button type="button" className="w-full flex items-center justify-between px-3 py-[9px] text-left bg-transparent border-0 border-b border-[#34262626] cursor-pointer transition-all duration-200 hover:bg-[#d3114c]/10 active:scale-[0.995]" onClick={() => handleSelect(suggestion.value)}>
+                  <button
+                    type="button"
+                    className="w-full flex items-center justify-between px-3 py-[9px] text-left bg-transparent border-0 border-b border-[#34262626] cursor-pointer transition-all duration-200 hover:bg-[#d3114c]/10 active:scale-[0.995]"
+                    onClick={() => handleSelect(suggestion.value)}
+                  >
                     <span className="text-sm font-medium text-[#342626]">{suggestion.value}</span>
-                    <span className="min-w-6 px-[7px] py-[3px] rounded-full bg-[#d3114c] text-[#fdf1e3] text-xs font-bold text-center">{suggestion.count}</span>
+                    <span className="min-w-6 px-[7px] py-[3px] rounded-full bg-[#d3114c] text-[#fdf1e3] text-xs font-bold text-center">
+                      {suggestion.count}
+                    </span>
                   </button>
                 </li>
               ))}
             </ul>
           ) : (
-            <div className="px-3 py-[10px] border border-[#d3114c] rounded-lg bg-white text-[#342626] text-sm text-center ">Geen locaties met deze naam gevonden.</div>
+            <div className="px-3 py-[10px] border border-[#d3114c] rounded-lg bg-white text-[#342626] text-sm text-center">
+              Geen locaties met deze naam gevonden.
+            </div>
           )}
         </div>
       )}
