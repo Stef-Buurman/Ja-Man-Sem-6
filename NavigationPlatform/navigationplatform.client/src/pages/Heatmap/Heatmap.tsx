@@ -7,6 +7,7 @@ import * as signalR from "@microsoft/signalr";
 import { FloorCache } from "../../utils/CachedMethods";
 import { HeatmapMap } from "../../components/HeatmapMap/HeatmapMap";
 import { Link } from "react-router-dom";
+import { NavigationComponent } from "../../components/NavigationComponent/NavigationComponent";
 
 export const Heatmap: React.FC = () => {
   const [currentFloor, setCurrentFloor] = useState<number>(0);
@@ -87,32 +88,13 @@ export const Heatmap: React.FC = () => {
         </Link>
       </div>
 
-      <div className="w-[300px] mx-auto flex rounded-full bg-[#00495F]/15 my-6">
-        <button
-          onClick={() => setActiveTab("route")}
-          className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
-            activeTab === "route" ? "bg-[#00495F] text-white" : "text-[#00495F]"
-          }`}
-        >
-          Route
-        </button>
-
-        <button
-          onClick={() => setActiveTab("werkplek")}
-          className={`flex-1 py-2 text-[13px] font-semibold transition rounded-full ${
-            activeTab === "werkplek" ? "bg-[#00495F] text-white" : "text-[#00495F]"
-          }`}
-        >
-          Werkplek
-        </button>
-      </div>
-
+      <NavigationComponent activeTab="werkplek" />
 
       <div className="px-8 py-2 text-left">
         <h1 className="text-2xl font-bold text-black">Vind jouw werkplek!</h1>
 
         <p className="text-sm text-black">
-      Klik op een gebied om de <span className="font-bold">route</span> hiernaartoe te vinden!
+          Klik op een gebied om de <span className="font-bold">route</span> hiernaartoe te vinden!
         </p>
       </div>
 
