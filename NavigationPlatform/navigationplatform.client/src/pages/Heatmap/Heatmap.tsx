@@ -77,7 +77,7 @@ export const Heatmap: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"route" | "werkplek">("route");
 
   return (
-    <div className="flex flex-col">
+    <div className="w-full max-w-[800px] mx-auto flex flex-col">
       <div className="w-full flex justify-start px-4 relative z-50">
         <Link to="/" className="text-xs text-black font-semibold inline-block">
           {"< Vorige"}
@@ -95,7 +95,7 @@ export const Heatmap: React.FC = () => {
       </div>
 
       <div className="pathfinding-shell">
-        <div className="absolute top-70 right-10">
+        <div className="absolute top-70 right-10 xl:top-70 xl:right-100">
           <FloorSelector
             floors={floorsList.map((f) => f.number)}
             currentFloor={currentFloor}

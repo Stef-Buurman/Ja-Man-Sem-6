@@ -516,92 +516,95 @@ export const Pathfinding: React.FC = () => {
 
       {screen === "map" && (
         <>
-          <div className="w-full flex justify-start px-4">
-            <button
-              className="text-xs text-black font-semibold"
-              onClick={() => {
-                setScreen("settings");
-              }}
-            >
-              {"< Vorige"}
-            </button>
-          </div>
-
-          <div className="px-8 py-2 text-left">
-            <h1 className="text-2xl font-bold text-black">Jouw route:</h1>
-
-            <h2 className="text-sm text-black font-normal">
-              Naar <span className="font-bold text-xs text-black">{selectedRoom}</span>
-            </h2>
-          </div>
-
-          <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
-            <div className="absolute top-30 right-10">
-              <FloorSelector
-                floors={floorsList.map((f) => f.number)}
-                currentFloor={currentFloor}
-                setFloor={setCurrentFloor}
-              />
+          <div className="w-full max-w-[800px] mx-auto flex flex-col">
+            <div className="w-full flex justify-start px-4">
+              <button
+                className="text-xs text-black font-semibold"
+                onClick={() => {
+                  setScreen("settings");
+                }}
+              >
+                {"< Vorige"}
+              </button>
             </div>
-            <PathfindingMap
-              nodes={graph.nodes ?? []}
-              edges={graph.edges ?? []}
-              currentFloor={currentFloor}
-              path={path}
-              handleRoomClick={(roomId) => {
-                handleDestinationClick(roomId);
-                calculatePathAndGoToMap(roomId);
-              }}
-              floors={floorsList}
-              currentPosition={currentUserPosition}
-              destination={
-                destinationNode
-                  ? {
-                      x: destinationNode.x,
-                      y: destinationNode.y,
-                      floor: destinationNode.floor,
-                    }
-                  : undefined
-              }
-            />
-          </section>
 
-          {pathSteps.length > 0 && (
-            <section className="p-[14px_16px] flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-black">Routebeschrijving</span>
-                <span className="text-sm text-black/70">
-                  Stap {activeStepIndex + 1} van {pathSteps.length}
-                </span>
+            <div className="px-8 py-2 text-left">
+              <h1 className="text-2xl font-bold text-black">Jouw route:</h1>
+
+              <h2 className="text-sm text-black font-normal">
+                Naar <span className="font-bold text-xs text-black">{selectedRoom}</span>
+              </h2>
+            </div>
+
+            <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
+              <div className="absolute top-30 right-10 xl:top-30 xl:right-100">
+                <FloorSelector
+                  floors={floorsList.map((f) => f.number)}
+                  currentFloor={currentFloor}
+                  setFloor={setCurrentFloor}
+                  disabled
+                />
               </div>
+              <PathfindingMap
+                nodes={graph.nodes ?? []}
+                edges={graph.edges ?? []}
+                currentFloor={currentFloor}
+                path={path}
+                handleRoomClick={(roomId) => {
+                  handleDestinationClick(roomId);
+                  calculatePathAndGoToMap(roomId);
+                }}
+                floors={floorsList}
+                currentPosition={currentUserPosition}
+                destination={
+                  destinationNode
+                    ? {
+                        x: destinationNode.x,
+                        y: destinationNode.y,
+                        floor: destinationNode.floor,
+                      }
+                    : undefined
+                }
+              />
+            </section>
 
-              <div className="flex items-center justify-center gap-6">
-                <button
-                  onClick={prevStep}
-                  disabled={activeStepIndex === 0}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
-                >
-                  ‹
-                </button>
-
-                <div className="min-w-[120px] text-center py-2 bg-[#D30F4C] rounded-full text-sm font-semibold text-white">
-                  Stap {activeStepIndex + 1}
+            {pathSteps.length > 0 && (
+              <section className="p-[14px_16px] flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-black">Routebeschrijving</span>
+                  <span className="text-sm text-black/70">
+                    Stap {activeStepIndex + 1} van {pathSteps.length}
+                  </span>
                 </div>
 
-                <button
-                  onClick={nextStep}
-                  disabled={activeStepIndex === pathSteps.length - 1}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
-                >
-                  ›
-                </button>
-              </div>
+                <div className="flex items-center justify-center gap-6">
+                  <button
+                    onClick={prevStep}
+                    disabled={activeStepIndex === 0}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                  >
+                    ‹
+                  </button>
 
-              <div className="p-4 rounded-lg bg-white shadow">
-                <p className="text-sm text-black/70">{activeStep?.instruction}</p>
-              </div>
-            </section>
-          )}
+                  <div className="min-w-[120px] text-center py-2 bg-[#D30F4C] rounded-full text-sm font-semibold text-white">
+                    Stap {activeStepIndex + 1}
+                  </div>
+
+                  <button
+                    onClick={nextStep}
+                    disabled={activeStepIndex === pathSteps.length - 1}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                  >
+                    ›
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-lg bg-white shadow">
+                  <p className="text-sm text-black/70">{activeStep?.instruction}</p>
+                </div>
+              </section>
+            )}
+          </div>
         </>
       )}
     </>
