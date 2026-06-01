@@ -510,6 +510,7 @@ export const Pathfinding: React.FC = () => {
 
       {screen === "map" && (
         <>
+        <div className="w-full max-w-[800px] mx-auto flex flex-col">
           <div className="w-full flex justify-start px-4">
             <button
               className="text-xs text-black font-semibold"
@@ -596,6 +597,7 @@ export const Pathfinding: React.FC = () => {
               </div>
             </section>
           )}
+          </div>
         </>
       )}
     </>
