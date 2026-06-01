@@ -36,7 +36,7 @@ export const FloorSelector: React.FC<FloorSelectorProps> = ({ floors, currentFlo
           />
         </button>
 
-        <span className="text-[60px] font-bold text-white mb-[10px]">{currentFloor}</span>
+        <span className="text-[60px] font-bold text-white my-[5px]">{currentFloor}</span>
 
         <button className="bg-black mt-2 border-0 p-0 m-0 cursor-pointer transition-all duration-150 ease-in-outfloor-button-down" onClick={goDown} disabled={currentIndex === 0}>
           <img
