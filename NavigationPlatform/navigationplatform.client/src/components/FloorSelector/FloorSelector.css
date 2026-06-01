@@ -6,20 +6,17 @@
 }
 
 .floor-card {
-  color: black;
-  width: 72px;
-  height: 110px;
-  background: #000;
-  border-radius: 5px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+    width: 72px;
+    height: 110px;
+    background: #000;
+    border-radius: 5px;
 
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px
 }
 
 .floor-arrow {
