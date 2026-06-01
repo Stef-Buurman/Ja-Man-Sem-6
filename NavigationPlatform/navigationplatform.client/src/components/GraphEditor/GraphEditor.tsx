@@ -395,24 +395,23 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
           </svg>
         </div>
       </div>
-      <div className="flex flex-row items-start text-sm text-black text-[16px]">
-        <select className="flex-1" value={newNodeType} onChange={(e) => setNewNodeType(Number(e.target.value) as NodeType)}>
+      <div className="flex flex-col text-sm text-black text-[16px] gap-2 items-center mt-3">
+        <select className="w-[80%] px-3 py-2 rounded-full bg-white text-black font-medium" value={newNodeType} onChange={(e) => setNewNodeType(Number(e.target.value) as NodeType)}>
           <option value={GetTypeFromNodeType("hallway")}>Gangpad</option>
           <option value={GetTypeFromNodeType("entrance")}>Ingang</option>
         </select>
-        <div className="flex flex-col flex-1">
-          <button onClick={exportGraph}>Kopieer grafiek</button>
-          <button onClick={exportGraphJson}>Kopieer grafiek JSON</button>
-          <button
-            onClick={() => {
-              setNodes([]);
-              setEdges([]);
-            }}
-          >
-            Leeg grafiek
-          </button>
-          <button onClick={save}>Bewaar grafiek</button>
-        </div>
+        <button className="w-[80%] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed" onClick={exportGraph}>Kopieer grafiek</button>
+        <button className="w-[80%] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"  onClick={exportGraphJson}>Kopieer grafiek JSON</button>
+        <button
+          className="w-[80%] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+          onClick={() => {
+            setNodes([]);
+            setEdges([]);
+          }}
+        >
+          Leeg grafiek
+        </button>
+        <button className="w-[80%] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"  onClick={save}>Bewaar grafiek</button>
       </div>
     </div>
 
