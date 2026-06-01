@@ -93,11 +93,7 @@ export const Pathfinding: React.FC = () => {
 
   useEffect(() => {
     const fetchGraph = async () => {
-      const res = await getWholeGraph({
-        toastSuccess: {
-          message: `Graph for floor ${currentFloor} loaded successfully!`,
-        },
-      });
+      const res = await getWholeGraph();
       if (res.ok) {
         let graphData = res.response;
         setGraph(graphData);
