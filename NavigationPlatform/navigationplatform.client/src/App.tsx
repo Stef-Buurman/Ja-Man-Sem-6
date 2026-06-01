@@ -9,7 +9,7 @@ import { Heatmap } from "./pages/Heatmap/Heatmap";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout isAdmin={false} />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Pathfinding />} />
         <Route path="/from/:floor/:x/:y" element={<Pathfinding />} />
         <Route path="/to/:destination" element={<Pathfinding />} />
@@ -20,7 +20,7 @@ function App() {
         <Route path="/to/:destFloor/:destX/:destY/from/:floor/:x/:y" element={<Pathfinding />} />
         <Route path="/heatmap" element={<Heatmap />} />
       </Route>
-      <Route path="/admin" element={<Layout isAdmin={true} />}>
+      <Route path="/admin" element={<Layout />}>
         <Route path="/admin/graph-editor" element={<GraphEditorPage />} />
         <Route path="/admin/heatmap-editor" element={<HeatmapEditor />} />
       </Route>
