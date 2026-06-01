@@ -412,7 +412,6 @@ export const Pathfinding: React.FC = () => {
     }
   }, [activeStepIndex, pathSteps]);
 
-
   const nextStep = () => {
     setActiveStepIndex((prev) => Math.min(prev + 1, pathSteps.length - 1));
   };
@@ -452,6 +451,13 @@ export const Pathfinding: React.FC = () => {
                     data={roomOptions.concat(userLocationProvided ? [UserLocationName] : [])}
                     onSelect={handleStartClick}
                     value={
+                      nodeAvailable(startNodes[0])
+                        ? startNodes[0].replace("_door", "")
+                        : userLocationProvided
+                          ? UserLocationName
+                          : undefined
+                    }
+                    startValue={
                       nodeAvailable(startNodes[0])
                         ? startNodes[0].replace("_door", "")
                         : userLocationProvided

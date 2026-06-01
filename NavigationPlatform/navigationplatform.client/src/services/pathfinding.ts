@@ -167,9 +167,7 @@ export function findPathAStarMultiStart(
     const endNode = getNode(graph, targetId);
     if (!endNode) return [];
 
-    const firstStartNode = startIds
-      .map((id) => getNode(graph, id))
-      .find((node): node is GraphNodeDto => Boolean(node));
+    const firstStartNode = startIds.map((id) => getNode(graph, id)).find((node): node is GraphNodeDto => Boolean(node));
 
     if (!firstStartNode) return [];
 
@@ -212,7 +210,8 @@ export function findPathAStarMultiStart(
         const neighborNode = getNode(graph, neighborId);
         if (!neighborNode) continue;
 
-        const tentativeG = (gScore.get(current) ?? Infinity) + getEdgeCost(currentNode, neighborNode, settings, endNode, firstStartNode);
+        const tentativeG =
+          (gScore.get(current) ?? Infinity) + getEdgeCost(currentNode, neighborNode, settings, endNode, firstStartNode);
 
         if (tentativeG < (gScore.get(neighborId) ?? Infinity)) {
           cameFrom.set(neighborId, current);

@@ -78,12 +78,8 @@ export const Heatmap: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-
       <div className="w-full flex justify-start px-4 relative z-50">
-        <Link
-          to="/"
-          className="text-xs text-black font-semibold inline-block"
-        >
+        <Link to="/" className="text-xs text-black font-semibold inline-block">
           {"< Vorige"}
         </Link>
       </div>
@@ -99,7 +95,6 @@ export const Heatmap: React.FC = () => {
       </div>
 
       <div className="pathfinding-shell">
-
         <div className="absolute top-70 right-10">
           <FloorSelector
             floors={floorsList.map((f) => f.number)}
