@@ -10,6 +10,7 @@ import kioskstartscherm from "./assets/images/Kiosk startscherm.png"
 import HeatmapsImg from "./assets/images/heatmaps.png";
 import mapv1 from "./assets/images/3dv1.png";
 import mapv2 from "./assets/images/3dv2.png";
+import NonhumanPersona from "./assets/images/Nonhuman-persona.png";
 
 function Sprint3() {
   return (
@@ -159,12 +160,36 @@ function Sprint3() {
               </div>
           </section>
 
+          {/* Nonuman Persona */}
+          <section className="py-24 bg-[#e8492b] text-[#fdf1e3] space-y-6 sm:space-y-10">
+              <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
+
+                  <div className="flex-2">
+                      <img
+                          src={NonhumanPersona}
+                          alt="Non human persona"
+                          className="rounded-2xl w-full object-cover"/>
+                  </div>
+
+                  <div className="space-y-6 flex-1">
+                      <h2 className="text-3xl  sm:text-4xl font-bold">Nonhuman persona</h2>
+                      <p>
+                          Om een correct beeld te krijgen over het gebouw waar wij onze aandacht aan besteden
+                          tijdens het maken van onze applicatie hebben wij een Nonhuman persona aangemaakt.
+                          Zo hopen wij tijdens het proces een duidelijk punt te maken van de frustraties die
+                          door het gebouw voorkomen, wie het gebouw binnenkomt en wat de oorzaak is van de
+                          problemen die wij op proberen te lossen.
+                      </p>
+                  </div>
+              </div>
+          </section>
+
         {/* Logo */}
-        <section className="pb-40 pt-24 z-10 bg-[#e8492b] text-[#fdf1e3]">
+        <section className="pb-40 pt-24 z-10 bg-[#fdf1e3] text-[#342626]">
             <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
                 <div className="flex flex-col justify-center items-center text-center">
                     <img
-                        src={logo_white}
+                        src={logo_brown}
                         alt="JaMan logo"
                         className="w-40 sm:w-56 md:w-64 mb-6"
                     />

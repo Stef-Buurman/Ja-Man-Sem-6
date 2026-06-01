@@ -80,19 +80,36 @@ function Sprint1() {
                                 </h2>
 
                                 <div className="space-y-4 leading-relaxed">
+                                    {/*<p>*/}
+                                    {/*    Wij hebben besloten om onze focus te verleggen naar studenten en bezoekers van*/}
+                                    {/*    het CMI-gebouw. Uit de verzamelde data kwam duidelijk naar voren dat het*/}
+                                    {/*    grootste pijnpunt het vinden van lokalen is. Op basis hiervan hebben wij ervoor*/}
+                                    {/*    gekozen om ons te richten op wayfinding binnen het gebouw.*/}
+                                    {/*</p>*/}
+
+                                    {/*<p>*/}
+                                    {/*    Onze oorspronkelijke ontwerpvraag, die voornamelijk gericht was op bezorgrobots,*/}
+                                    {/*    sluit daardoor niet langer goed aan bij de behoeften van onze doelgroep. Door*/}
+                                    {/*    deze nieuwe focus kunnen wij in een sociale omgeving een oplossing ontwikkelen*/}
+                                    {/*    die niet alleen functioneel is, maar ook beter aansluit bij onze kernwaarden en*/}
+                                    {/*    de daadwerkelijke behoeften van de gebruikers.*/}
+                                    {/*</p>*/}
                                     <p>
                                         Wij hebben besloten om onze focus te verleggen naar studenten en bezoekers van
-                                        het CMI-gebouw. Uit de verzamelde data kwam duidelijk naar voren dat het
-                                        grootste pijnpunt het vinden van lokalen is. Op basis hiervan hebben wij ervoor
-                                        gekozen om ons te richten op wayfinding binnen het gebouw.
+                                        het CMI-gebouw. Uit de verzamelde data kwam duidelijk naar voren dat onze oude
+                                        ontwerpvraag, die voornamelijk gericht was op bezorgrobots
+                                        niet alleen weinig aansluit bij onze kernwaarden, maar ook bij de
+                                        daadwerkelijke behoeften van de gebruikers. Wij willen samen met het maken van
+                                        een functioneel product dat deze niet alleen functioneel is, maar ook een
+                                        echt probleem oplost in een sociale omgeving.
                                     </p>
-
                                     <p>
-                                        Onze oorspronkelijke ontwerpvraag, die voornamelijk gericht was op bezorgrobots,
-                                        sluit daardoor niet langer goed aan bij de behoeften van onze doelgroep. Door
-                                        deze nieuwe focus kunnen wij in een sociale omgeving een oplossing ontwikkelen
-                                        die niet alleen functioneel is, maar ook beter aansluit bij onze kernwaarden en
-                                        de daadwerkelijke behoeften van de gebruikers.
+                                        Aan de hand van de data uit de eerder uitgevoerde fieldresearch kwam naar voren
+                                        dat de grootste pijnpunt van studenten het vinden van lokalen is. Samen met het
+                                        feit dat dit een echt probleem is met vraag naar een oplossing, vinden wij dat dit
+                                        veel beter past bij onze kernwaarden. Op basis hiervan hebben wij besloten om
+                                        onze ontwerpvraag te veranderen.
+
                                     </p>
                                 </div>
                             </div>

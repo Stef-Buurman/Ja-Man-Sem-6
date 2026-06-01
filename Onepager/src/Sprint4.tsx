@@ -6,13 +6,14 @@ import WireframesHeatmap from "./assets/images/WireframesHeatmapFloor3.png";
 import WireframesStart from "./assets/images/WireframesStart.png";
 import WireframesStartHeatmap from "./assets/images/WireframesStartHeatmap.png";
 import WireframesStep1 from "./assets/images/WireframesStep1.png";
+import Scamper from "./assets/images/SCAMPER.png";
 
 function Sprint4() {
   return (
       <section id="sprint4" className="overflow-visible relative">
 
         {/* Usertests */}
-        <section className="py-24 bg-[#fdf1e3] text-[#342626]">
+        <section className="py-24 bg-[#342626] text-[#fdf1e3]">
           <h1 className="text-2xl sm:text-4xl font-bold text-center mb-12">
             SPRINT 4
           </h1>
@@ -56,7 +57,7 @@ function Sprint4() {
         </section>
 
         {/* Prototype updates */}
-        <section className="py-24 bg-[#342626] text-[#fdf1e3] space-y-6 sm:space-y-10">
+        <section className="py-24 bg-[#beddfc] text-[#342626] space-y-6 sm:space-y-10">
           <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
             {/* Afbeelding links */}
             <div className="flex-2">
@@ -116,7 +117,7 @@ function Sprint4() {
         </section>
 
         {/* Wireframes */}
-        <section className="pb-40 pt-24 z-10 bg-[#beddfc] text-[#342626]">
+        <section className="pb-40 pt-24 z-10 bg-[#e8492b] text-[#fdf1e3]">
 
           {/* TEXT */}
           <div className="max-w-3xl mx-auto px-6 text-center space-y-6 sm:space-y-8">
@@ -178,8 +179,60 @@ function Sprint4() {
           </div>
         </section>
 
+        {/* Ontwerprichtlijnen */}
+        <section className="py-24 bg-[#fdf1e3] text-[#342626]">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-start gap-10 md:gap-20">
+            <div className="w-full md:w-3/5 text-left space-y-6 sm:space-y-10">
+              <h2 className="text-3xl sm:text-4xl font-bold">
+                Onze ontwerprichtlijnen
+              </h2>
+              <div className="space-y-6">
+                <p>
+
+                  Om een oplossing te ontwerpen die écht aansluit bij de praktijk, hebben we zeven
+                  richtlijnen opgesteld. Deze zijn direct voortgekomen uit onze verschillende onderzoeken
+                  en methodes:
+                </p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>Een helder begin en eindpunt: Gebruikers moeten bij het navigeren precies weten waar hun route start en stopt. (Uit: Crazy 8's en Smart en Social Fest)</li>
+                  <li>Bruikbaar voor iedereen: De tool moet werken voor álle studenten, ongeacht hun opleiding of de HR-locatie waar ze zich bevinden. (Uit: Benchmarking interviews)</li>
+                  <li>Eenvoudig te onderhouden: Het systeem moet up-to-date blijven en makkelijk beheerd kunnen worden door een vaste 'wayfinding keeper'. (Uit: Interview met Mijksenaar)</li>
+                  <li>Digitaal en analoog versterken elkaar: De applicatie werkt pas echt goed als deze nauw samenwerkt met de fysieke borden in het gebouw. (Uit: Interview met Mijksenaar en benchmarking)</li>
+                  <li>Snel je lokaal vinden: Studenten moeten zonder gezoek en binnen no-time bij het juiste lokaal kunnen komen. (Uit: Interviews met studenten)</li>
+                  <li>Snel een studieplek spotten: De digitale interface moet direct inzichtelijk maken waar er op dat moment nog een rustige werkplek vrij is. (Uit: Interviews met studenten)</li>
+                  <li>Consistent en betrouwbaar: Het systeem moet elke dag exact hetzelfde werken, zodat gebruikers er blind op kunnen vertrouwen. (Uit: Values in Design I)</li>
+                </ul>
+              </div>
+            </div>
+            <div className="w-full md:w-3/5 text-left space-y-6 sm:space-y-10">
+              <h2 className="text-3xl sm:text-4xl font-bold">
+                Toegepaste methodes
+              </h2>
+              <div className="space-y-6">
+                <p>
+                  Om van al onze losse data en ingevingen tot een concreet concept te komen,
+                  hebben we drie verschillende methodes ingezet:
+                </p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>SCAMPER (Ideegeneratie): Met deze brainstormtechniek hebben we out-of-the-box nagedacht over ons product. Door bestaande ideeën aan te passen of te combineren, kwamen we bijvoorbeeld op functies zoals AR-navigatie en checkpoints met QR-codes.</li>
+                  <li>Concept Mapping (Concepting): Hiermee hebben we de relaties tussen onze doelgroep, de knelpunten en onze oplossingen visueel gestructureerd. Het hielp ons inzien dat digitale hulpmiddelen (zoals de app en kiosk) en analoge borden complementair zijn en elkaar moeten aanvullen.</li>
+                  <li>COCD Box (Convergeren): Na het brainstormen moesten we keuzes maken. Met deze methode hebben we alle ideeën gecategoriseerd op basis van haalbaarheid en originaliteit (Now, Wow, How). Zo filterden we de meest realistische en vernieuwende functies voor ons uiteindelijke prototype.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="w-full flex justify-center overflow-visible">
+            <img
+                src={Scamper}
+                alt="Usertests plan"
+                className="mx-auto rounded-2xl shadow-xl w-full md:w-3/5 object-cover my-16
+    transform transition-transform duration-300 hover:scale-110"
+            />
+          </div>
+        </section>
+
         {/* Logo */}
-        <section className="pb-40 pt-24 z-10 bg-[#e8492b] text-[#fdf1e3]">
+        <section className="pb-40 pt-24 z-10 bg-[#342626] text-[#fdf1e3]">
           <div className="max-w-5xl mx-auto px-6 text-center space-y-6 sm:space-y-10">
             <div className="flex flex-col justify-center items-center text-center">
               <img
