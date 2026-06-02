@@ -431,3 +431,6 @@ dist/
 *.db
 launch.json
 *.lscache
+.idea/*
+/PathfindingPrototype/pathfindingprototype/.vite/deps/package.json
+/PathfindingPrototype/pathfindingprototype/.vite/deps/_metadata.json
