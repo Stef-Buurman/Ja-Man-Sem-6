@@ -66,9 +66,10 @@ function Sprint5() {
 
             <div className="space-y-6 text-base sm:text-lg leading-relaxed">
               <p>
-                Door deze verbeteringen sluit het prototype beter aan op de
-                behoeften van gebruikers. De route is beter te volgen, de kaart
-                geeft meer houvast en de heatmap is begrijpelijker geworden.
+                Deze verbeteringen hebben ervoor gezorgd dat ons prototype
+                duidelijker en gebruiksvriendelijker is. Gebruikers kunnen de
+                route beter volgen, begrijpen waar ze zich bevinden en welke
+                gebieden druk zijn.
               </p>
             </div>
           </div>
