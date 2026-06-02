@@ -10,8 +10,7 @@ export type ToggleProps = {
 const Toggle: React.FC<ToggleProps> = ({ title, handleCheckboxChange: handleToggleChange, currentValue = false }) => {
   return (
     <label>
-      <span>{title || "Edit:"}</span>
-      <div className="toggle-container">
+      <div className="flex items-center gap-3 relative cursor-pointer">
         <input
           type="checkbox"
           checked={currentValue}
@@ -20,6 +19,7 @@ const Toggle: React.FC<ToggleProps> = ({ title, handleCheckboxChange: handleTogg
         />
         <div className="toggle-track"></div>
         <div className="toggle-dot"></div>
+        <span className="text-xs">{title || "Edit:"}</span>
       </div>
     </label>
   );

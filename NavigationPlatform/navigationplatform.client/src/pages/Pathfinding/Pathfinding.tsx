@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./Pathfinding.css";
 import { PathfindingMap } from "../../components/PathfindingMap/PathfindingMap";
 import { FloorSelector } from "../../components/FloorSelector/FloorSelector";
@@ -14,6 +14,7 @@ import { FloorCache } from "../../utils/CachedMethods";
 import Toggle from "../../components/toggle/toggle";
 import { GetNodeTypeFromInteger, GetTypeFromNodeType } from "../../utils/NodeTypeFromType";
 import { CustomDestinationName, EmergencyNodeName, ToiletNodeName, UserLocationName } from "../../utils/Globals";
+import { NavigationComponent } from "../../components/NavigationComponent/NavigationComponent";
 
 export const Pathfinding: React.FC = () => {
   const [path, setPath] = useState<string[]>([]);
@@ -31,15 +32,15 @@ export const Pathfinding: React.FC = () => {
   const hasAutoCalculatedPath = useRef(false);
 
   const pathSteps = useMemo(() => buildPathSteps(path, graph), [path, graph]);
-  const activeStep = pathSteps.find((step) => step.floor === currentFloor) ?? pathSteps[0];
+  // const activeStep = pathSteps.find((step) => step.floor === currentFloor) ?? pathSteps[0];
 
   const startPoint =
     floor && x && y
       ? {
-        floor,
-        x: Number(x),
-        y: Number(y),
-      }
+          floor,
+          x: Number(x),
+          y: Number(y),
+        }
       : null;
   const userLocationProvided = startPoint !== null;
 
@@ -47,11 +48,11 @@ export const Pathfinding: React.FC = () => {
     ? { type: "name", value: destination }
     : destFloor && destX && destY
       ? {
-        type: "coordinates",
-        floor: destFloor,
-        x: Number(destX),
-        y: Number(destY),
-      }
+          type: "coordinates",
+          floor: destFloor,
+          x: Number(destX),
+          y: Number(destY),
+        }
       : null;
   const destinationProvided = destinationPoint !== null;
 
@@ -92,11 +93,7 @@ export const Pathfinding: React.FC = () => {
 
   useEffect(() => {
     const fetchGraph = async () => {
-      const res = await getWholeGraph({
-        toastSuccess: {
-          message: `Graph for floor ${currentFloor} loaded successfully!`,
-        },
-      });
+      const res = await getWholeGraph();
       if (res.ok) {
         let graphData = res.response;
         setGraph(graphData);
@@ -253,22 +250,22 @@ export const Pathfinding: React.FC = () => {
   const currentUserPosition = useMemo(() => {
     return userPosition
       ? {
-        x: Math.round(userPosition.x),
-        y: Math.round(userPosition.y),
-        floor: userPosition.floor,
-      }
+          x: Math.round(userPosition.x),
+          y: Math.round(userPosition.y),
+          floor: userPosition.floor,
+        }
       : startNodes.length > 0
         ? (() => {
-          const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
-          if (node) {
-            return {
-              x: Math.round(node.x ?? 0),
-              y: Math.round(node.y ?? 0),
-              floor: node.floor ?? 0,
-            };
-          }
-          return undefined;
-        })()
+            const node = graph.nodes?.find((n) => n.id === startNodes[0]) as GraphNodeDto;
+            if (node) {
+              return {
+                x: Math.round(node.x ?? 0),
+                y: Math.round(node.y ?? 0),
+                floor: node.floor ?? 0,
+              };
+            }
+            return undefined;
+          })()
         : undefined;
   }, [userPosition, startNodes, graph.nodes]);
 
@@ -406,109 +403,146 @@ export const Pathfinding: React.FC = () => {
     };
   }, []);
 
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+
+  useEffect(() => {
+    const step = pathSteps[activeStepIndex];
+    if (step?.floor !== undefined) {
+      setCurrentFloor(step.floor);
+    }
+  }, [activeStepIndex, pathSteps]);
+
+  const nextStep = () => {
+    setActiveStepIndex((prev) => Math.min(prev + 1, pathSteps.length - 1));
+  };
+
+  const prevStep = () => {
+    setActiveStepIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const activeStep = pathSteps[activeStepIndex];
+
   return (
-    <div className="pathfinding-page">
-      <div className="pathfinding-shell">
-        <header className="pathfinding-header">
-          <h1 className="pathfinding-title">{screen === "settings" ? "Waar wil je heen?" : "Map"}</h1>
+    <>
+      {screen === "settings" && <NavigationComponent activeTab="route" />}
 
-          {screen === "map" && (
-            <h2 className="pathfinding-subtitle">
-              Huidige verdieping: {currentFloor}
-              {selectedRoom && ` (Route sent to: ${selectedRoom})`}
-            </h2>
-          )}
-        </header>
+      {screen === "settings" && (
+        <section className="max-w-md w-full mx-auto px-8 py-4 flex flex-col gap-6 items-start text-left">
+          <h1 className="text-2xl font-bold text-black">{screen === "settings" ? "Plan je route!" : "Map"}</h1>
 
-        {screen === "settings" && (
-          <section className="pathfinding-controls">
-            <div className="pathfinding-control-group">
+          <div className="flex flex-1 flex-col gap-6">
+            {false && (
+              <div className="pathfinding-search">
+                <SearchSelect title="Vul je startlocatie in" data={hrLocaties} value={hrLocaties[0]} disabled />
+              </div>
+            )}
+            {roomOptions && (
+              <section className="flex flex-col gap-6">
+                <div className="flex flex-1 min-w-0 w-full">
+                  <div className="w-full">
+                    <p className="text-[16px] font-semibold text-black pb-2">Op welke HR locatie ben je?</p>
+                    <div className="px-3 py-2 rounded-full bg-white text-black font-medium">Wijnhaven (CMI)</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-1 min-w-0 w-full">
+                  <SearchSelect
+                    title="Waar ben je nu?"
+                    data={roomOptions.concat(userLocationProvided ? [UserLocationName] : [])}
+                    onSelect={handleStartClick}
+                    value={
+                      nodeAvailable(startNodes[0])
+                        ? startNodes[0].replace("_door", "")
+                        : userLocationProvided
+                          ? UserLocationName
+                          : undefined
+                    }
+                    startValue={
+                      nodeAvailable(startNodes[0])
+                        ? startNodes[0].replace("_door", "")
+                        : userLocationProvided
+                          ? UserLocationName
+                          : undefined
+                    }
+                  />
+                </div>
+
+                <div className="flex flex-1 min-w-0 w-full">
+                  <SearchSelect
+                    title="Waar wil je heen?"
+                    data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
+                    onSelect={handleDestinationClick}
+                    value={
+                      destinationNodeId && nodeAvailable(destinationNodeId)
+                        ? destinationNodeId.replace("_door", "")
+                        : destinationPoint != null && destinationPoint.type !== "name"
+                          ? CustomDestinationName
+                          : undefined
+                    }
+                  />
+                </div>
+              </section>
+            )}
+
+            <div className="flex w-full items-center justify-between pb-[14px] pr-0 md:w-auto md:min-w-[260px] md:pr-[18px]">
               <Toggle
-                title="Route toegankelijk voor rolstoelgebruikers"
+                title="Rolstoeltoegankelijke route"
                 handleCheckboxChange={(checked) => handleSettingChange({ accessibleRoute: checked })}
                 currentValue={isAccessibleRoute}
               />
             </div>
+          </div>
+        </section>
+      )}
 
-            <div className="pathfinding-search-wrapper">
-              {false && (
-                <div className="pathfinding-search">
-                  <SearchSelect
-                    title="Vul je startlocatie in"
-                    data={hrLocaties}
-                    value={hrLocaties[0]}
-                    disabled
-                  />
-                </div>)}
-              {roomOptions && (
-                <>
-                  <div className="pathfinding-search">
-                    <SearchSelect
-                      title="Vul je startlocatie in"
-                      data={roomOptions.concat(userLocationProvided ? [UserLocationName] : [])}
-                      onSelect={handleStartClick}
-                      value={
-                        nodeAvailable(startNodes[0])
-                          ? startNodes[0].replace("_door", "")
-                          : userLocationProvided
-                            ? UserLocationName
-                            : undefined
-                      }
-                    />
-                  </div>
+      {screen === "settings" && (
+        <div className="flex justify-center pb-6">
+          <button
+            className="w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+            disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
+            onClick={() => calculatePathAndGoToMap()}
+          >
+            Plan route
+          </button>
+        </div>
+      )}
 
-                  <div className="pathfinding-search">
-                    <SearchSelect
-                      title="Vul je bestemming in"
-                      data={roomOptions.concat(destinationProvided ? [CustomDestinationName] : [])}
-                      onSelect={handleDestinationClick}
-                      value={
-                        destinationNodeId && nodeAvailable(destinationNodeId)
-                          ? destinationNodeId.replace("_door", "")
-                          : destinationPoint != null && destinationPoint.type !== "name"
-                            ? CustomDestinationName
-                            : undefined
-                      }
-                    />
-                  </div>
-                </>
-              )}
+      {/*{screen === "map" && (*/}
+      {/*  <h2 className="pathfinding-subtitle">*/}
+      {/*    Huidige verdieping: {currentFloor}*/}
+      {/*     && ` (Route sent to: ${selectedRoom})`}*/}
+      {/*  </h2>*/}
+      {/*)}*/}
 
+      {screen === "map" && (
+        <>
+          <div className="w-full max-w-[800px] mx-auto flex flex-col">
+            <div className="w-full flex justify-start px-4">
               <button
-                className="pathfinding-button"
-                disabled={(!destinationNodeId && destinationPoint === null) || startNodes.length === 0}
-                onClick={() => calculatePathAndGoToMap()}
+                className="text-xs text-black font-semibold"
+                onClick={() => {
+                  setScreen("settings");
+                }}
               >
-                Naar de kaart
+                {"< Vorige"}
               </button>
             </div>
-          </section>
-        )}
 
-        {screen === "map" && (
-          <>
-            <section className="pathfinding-map-toolbar">
-              <div className="pathfinding-map-toolbar-left">
-                <button
-                  className="pathfinding-button"
-                  onClick={() => {
-                    setScreen("settings");
-                  }}
-                >
-                  Terug naar instellingen
-                </button>
-              </div>
+            <div className="px-8 py-2 text-left">
+              <h1 className="text-2xl font-bold text-black">Jouw route:</h1>
 
-              <div className="pathfinding-map-toolbar-right">
-              </div>
-            </section>
+              <h2 className="text-sm text-black font-normal">
+                Naar <span className="font-bold text-xs text-black">{selectedRoom}</span>
+              </h2>
+            </div>
 
-            <section className="pathfinding-map-card">
-              <div className="map-overlay-top-right">
+            <section className="flex-1 min-h-0 w-full rounded-2xl overflow-hidden flex items-center justify-center">
+              <div className="absolute top-30 right-10 xl:top-30 xl:right-100">
                 <FloorSelector
                   floors={floorsList.map((f) => f.number)}
                   currentFloor={currentFloor}
                   setFloor={setCurrentFloor}
+                  disabled
                 />
               </div>
               <PathfindingMap
@@ -525,51 +559,54 @@ export const Pathfinding: React.FC = () => {
                 destination={
                   destinationNode
                     ? {
-                      x: destinationNode.x,
-                      y: destinationNode.y,
-                      floor: destinationNode.floor,
-                    }
+                        x: destinationNode.x,
+                        y: destinationNode.y,
+                        floor: destinationNode.floor,
+                      }
                     : undefined
                 }
               />
             </section>
+
             {pathSteps.length > 0 && (
-              <section className="pathfinding-route-steps">
-                <div className="pathfinding-route-steps-header">
-                  <span className="pathfinding-route-steps-label">Routebeschrijving</span>
-                  <span className="pathfinding-route-steps-count">
-                    {pathSteps.length} verdiepingstap{pathSteps.length === 1 ? "" : "pen"}
+              <section className="p-[14px_16px] flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-black">Routebeschrijving</span>
+                  <span className="text-sm text-black/70">
+                    Stap {activeStepIndex + 1} van {pathSteps.length}
                   </span>
                 </div>
 
-                <ol className="pathfinding-route-steps-list">
-                  {pathSteps.map((step, index) => (
-                    <li
-                      key={`${step.floor}-${index}`}
-                      className={`pathfinding-route-step ${step.floor === currentFloor ? "pathfinding-route-step-active" : ""}`}
-                    >
-                      <button
-                        type="button"
-                        className="pathfinding-route-step-button"
-                        onClick={() => setCurrentFloor(step.floor)}
-                      >
-                        <strong>
-                          Stap {index + 1}: {step.title}
-                        </strong>
-                        <span>{step.instruction}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ol>
+                <div className="flex items-center justify-center gap-6">
+                  <button
+                    onClick={prevStep}
+                    disabled={activeStepIndex === 0}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                  >
+                    ‹
+                  </button>
 
-                {activeStep && (
-                  <p className="pathfinding-current-instruction">Huidige instructie: {activeStep.instruction}</p>
-                )}
+                  <div className="min-w-[120px] text-center py-2 bg-[#D30F4C] rounded-full text-sm font-semibold text-white">
+                    Stap {activeStepIndex + 1}
+                  </div>
+
+                  <button
+                    onClick={nextStep}
+                    disabled={activeStepIndex === pathSteps.length - 1}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-[#D30F4C] text-white disabled:opacity-0"
+                  >
+                    ›
+                  </button>
+                </div>
+
+                <div className="p-4 rounded-lg bg-white shadow">
+                  <p className="text-sm text-black/70">{activeStep?.instruction}</p>
+                </div>
               </section>
             )}
-          </>
-        )}
-      </div>
-    </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };

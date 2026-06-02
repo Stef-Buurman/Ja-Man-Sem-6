@@ -11,7 +11,7 @@ runCommandAsync("npm run dev", clientFolderName);
 
 if (shouldOpenBrowser) {
   setTimeout(() => {
-    open("https://localhost:59957");
+    open("https://localhost:5173");
     open("http://localhost:5294/swagger");
   }, 5000);
 }

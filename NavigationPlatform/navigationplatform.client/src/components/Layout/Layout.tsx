@@ -1,30 +1,37 @@
-import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./Layout.css";
-import type { LayoutProps } from "./Layout.props";
+import footer from "/src/svgs/footer.svg";
+import settings from "/src/svgs/settings.svg";
 
-export const Layout: React.FC<LayoutProps> = ({ isAdmin }) => {
+export const Layout = ({ isAdmin }: { isAdmin: boolean }) => {
   return (
-    <div className="layout-container">
-      <header className="layout-header">
-        <div className="header-content">
-          <h1 className="logo">Prototype Project</h1>
-          <nav className="nav-links">
-            {!isAdmin && <Link to="/">Map</Link>}
-            {!isAdmin && <Link to="/heatmap">Heatmap</Link>}
-            {isAdmin && <Link to="/admin/graph-editor">Graph Editor</Link>}
-            {isAdmin && <Link to="/admin/heatmap-editor">Heatmap Editor</Link>}
-          </nav>
+    <div className="min-h-screen flex flex-col bg-neutral-50">
+      <nav className="bg-[#00495F] text-left px-4 py-6">
+        <div className="max-w-[600px] mx-auto flex gap-2">
+          <img src={settings} alt="Settings" className="max-h-6" />
+          <h1 className="font-medium text-[#FFF0EA]">Gebouw</h1>
+          {isAdmin && (
+            <div className="">
+              <Link to="/admin/graph-editor" className="text-sm text-[#FFF0EA] hover:underline mr-4">
+                Graph Editor
+              </Link>
+              <Link to="/admin/heatmap-editor" className="text-sm text-[#FFF0EA] hover:underline">
+                Heatmap Editor
+              </Link>
+            </div>
+          )}
         </div>
-      </header>
+      </nav>
 
-      <main className="layout-main">
-        <div className="content-wrapper">
+      <main className="flex-1 bg-[#FFF0EA] py-6">
+        <div className="w-full">
           <Outlet />
         </div>
       </main>
 
-      <footer className="layout-footer">© {new Date().getFullYear()} Prototype Project. All rights reserved.</footer>
+      <footer className="flex justify-center">
+        <img src={footer} alt="Footer" className="w-[100vw] max-w-[600px] min-w-[220px] h-auto px-6" />
+      </footer>
     </div>
   );
 };
