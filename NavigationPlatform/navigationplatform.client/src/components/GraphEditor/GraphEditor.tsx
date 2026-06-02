@@ -300,14 +300,10 @@ ${distinctBy(edges.concat(y), (e) => [e.from, e.to].sort().join("-"))
 
   return (
     <div>
-      <div
-        className="w-full overflow-x-auto overflow-y-hidden"
-        style={{ marginTop: 10 }}
-      >
-        <div className="w-[200%] md:w-[125%] lg:w-[120%] xl:w-[65%]">
+      <div className="flex-1 min-h-[300px] max-h-[65vh] w-full rounded-lg overflow-x-auto overflow-y-hidden">
+        <div className="w-[200%] md:w-[125%] lg:w-[120%] xl:w-[120%] h-full">
           <svg
             viewBox={viewBox || "0 0 2412.61 1344.75"}
-            className="w-full h-auto"
             onClick={handleMapClick}
           >
             {floorSvgContent && <g dangerouslySetInnerHTML={{ __html: floorSvgContent }} />}

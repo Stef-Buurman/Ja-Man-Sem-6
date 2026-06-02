@@ -85,8 +85,11 @@ const HeatmapEditor: React.FC = () => {
   };
 
   return (
-    <div className="heatmap-editor">
-      <button className="heatmap-button save-button heatmap-button delete w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed" onClick={handleAddArea}>
+    <div className="w-full max-w-[1000px] mx-auto heatmap-editor">
+      <button
+        className="heatmap-button save-button heatmap-button delete w-[180px] px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+        onClick={handleAddArea}
+      >
         Gebied toevoegen
       </button>
 
@@ -229,7 +232,10 @@ const HeatmapEditor: React.FC = () => {
               -
             </button>
 
-            <button className="heatmap-button delete flex-1 px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed" onClick={() => areYouSurePopup(a.id)}>
+            <button
+              className="heatmap-button delete flex-1 px-2 py-2 rounded-full font-semibold text-base text-white bg-[#D30F4C] transition duration-200 ease-out hover:bg-gray-700 hover:-translate-y-[1px] disabled:cursor-not-allowed"
+              onClick={() => areYouSurePopup(a.id)}
+            >
               Verwijderen
             </button>
           </div>

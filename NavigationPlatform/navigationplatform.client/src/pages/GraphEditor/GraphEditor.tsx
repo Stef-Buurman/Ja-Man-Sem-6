@@ -46,11 +46,11 @@ export const GraphEditorPage: React.FC = () => {
     fetchFloors();
   }, []);
   return (
-    <>
+    <div className="w-full max-w-[1000px] mx-auto">
       <div className="absolute top-30 right-10">
         <FloorSelector floors={floors.map((f) => f.number)} currentFloor={currentFloor} setFloor={floorChangeHandler} />
       </div>
       <GraphEditor curFloor={currentFloor} initialGraph={currentGraph} floors={floors} />
-    </>
+    </div>
   );
 };
