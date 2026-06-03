@@ -5,6 +5,7 @@ import stef from "./assets/team/Stef.png";
 import stefan from "./assets/team/Stefan.png";
 import wout from "./assets/team/Wout.png";
 import milan from "./assets/team/Milan.png";
+import villagerSound from "./assets/sounds/villager-sound.mp3";
 
 function Team1() {
   const needed = [3, 5, 4, 1, 2];
@@ -25,6 +26,16 @@ function Team1() {
   const arraysEqual = (a: number[], b: number[]) => a.length === b.length && a.every((value, index) => value === b[index]);
 
   const handleClick = (id: number) => {
+    if (id === 4) {
+      const audio = new Audio(villagerSound);
+
+      audio.volume = 1.0;
+
+      audio.play().catch((error) => {
+        console.error("Could not play sound:", error);
+      });
+    }
+
     setCurrent((prev) => {
       let next: number[];
 
