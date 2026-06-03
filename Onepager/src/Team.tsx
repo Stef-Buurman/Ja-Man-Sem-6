@@ -5,11 +5,45 @@ import stef from "./assets/team/Stef.png";
 import stefan from "./assets/team/Stefan.png";
 import wout from "./assets/team/Wout.png";
 import milan from "./assets/team/Milan.png";
-import villagerSound from "./assets/sounds/villager-sound.mp3";
+import villagerAccept1 from "./assets/sounds/Villager_accept1.ogg";
+import villagerAccept2 from "./assets/sounds/Villager_accept2.ogg";
+import villagerAccept3 from "./assets/sounds/Villager_accept3.ogg";
+import villagerDeath from "./assets/sounds/Villager_death.ogg";
+import villagerDeny1 from "./assets/sounds/Villager_deny1.ogg";
+import villagerDeny2 from "./assets/sounds/Villager_deny2.ogg";
+import villagerDeny3 from "./assets/sounds/Villager_deny3.ogg";
+import villagerHurt1 from "./assets/sounds/Villager_hurt1.ogg.mp3";
+import villagerHurt2 from "./assets/sounds/Villager_hurt2.ogg.mp3";
+import villagerHurt3 from "./assets/sounds/Villager_hurt3.ogg.mp3";
+import villagerHurt4 from "./assets/sounds/Villager_hurt4.ogg.mp3";
+import villagerIdle1 from "./assets/sounds/Villager_idle1.ogg";
+import villagerIdle2 from "./assets/sounds/Villager_idle2.ogg";
+import villagerIdle3 from "./assets/sounds/Villager_idle3.ogg";
+import villagerTrade1 from "./assets/sounds/Villager_trade1.ogg";
+import villagerTrade2 from "./assets/sounds/Villager_trade2.ogg";
+import villagerTrade3 from "./assets/sounds/Villager_trade3.ogg";
 
 function Team1() {
   const needed = [3, 5, 4, 1, 2];
-
+  const villagerSounds = [
+    villagerAccept1,
+    villagerAccept2,
+    villagerAccept3,
+    villagerDeath,
+    villagerDeny1,
+    villagerDeny2,
+    villagerDeny3,
+    villagerHurt1,
+    villagerHurt2,
+    villagerHurt3,
+    villagerHurt4,
+    villagerIdle1,
+    villagerIdle2,
+    villagerIdle3,
+    villagerTrade1,
+    villagerTrade2,
+    villagerTrade3,
+  ];
   const baseTeam = [
     { id: 1, name: "Stefan", role: "CMGT", img: stefan },
     { id: 2, name: "Rick", role: "CMGT", img: rick },
@@ -17,6 +51,18 @@ function Team1() {
     { id: 4, name: "Paola", role: "CMD", img: paola },
     { id: 5, name: "Stef", role: "INF", img: stef },
   ];
+
+  const playRandomVillagerSound = () => {
+    const randomIndex = Math.floor(Math.random() * villagerSounds.length);
+    const randomSound = villagerSounds[randomIndex];
+
+    const audio = new Audio(randomSound);
+    audio.volume = 1.0;
+
+    audio.play().catch((error) => {
+      console.error("Could not play sound:", error);
+    });
+  };
 
   const milanMember = { id: 6, name: "Milan", role: "Chief Vibes Officer", img: milan };
 
@@ -27,13 +73,7 @@ function Team1() {
 
   const handleClick = (id: number) => {
     if (id === 4) {
-      const audio = new Audio(villagerSound);
-
-      audio.volume = 1.0;
-
-      audio.play().catch((error) => {
-        console.error("Could not play sound:", error);
-      });
+      playRandomVillagerSound();
     }
 
     setCurrent((prev) => {
