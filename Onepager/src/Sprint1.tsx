@@ -9,31 +9,45 @@ function Sprint1() {
         <section id="sprint1" className="overflow-visible relative">
             {/* Pact Analyse */}
             <section className="py-24 bg-[#fdf1e3]">
-                <h1 id="sprint1" className="text-2xl mb-10 sm:text-4xl font-bold text-center">
+                <h1 className="text-2xl sm:text-4xl font-bold text-center mb-16">
                     SPRINT 1
                 </h1>
-                <div
-                    className="space-y-6 sm:space-y-8 md:space-y-10 text-[#342626] text-base leading-relaxed max-w-5xl mx-auto">
-                    <h3 className="text-2xl sm:text-3xl font-bold">Pact analyse</h3>
 
-                    <p>
-                        Wij hebben deskresearch gedaan over bezorgrobots en bezorgservices
-                        zodat wij de huidige situatie in kaart kunnen brengen met de
-                        problemen die hierbij komen kijken. Hiervoor hebben wij een
-                        uitgebreide PACT-analyse uitgevoerd waarna we onze bevindingen
-                        overzichtelijk gemaakt hebben door middel van het gebruik van
-                        inzicht-kaarten. Een paar onderwerpen die vaak teruggekomen waren
-                        tijdens onze research zijn:
-                    </p>
-                    <ul className="space-y-2 sm:space-y-3 list-disc pl-6">
+                <div className="max-w-5xl mx-auto px-6 text-[#342626] space-y-10">
+
+                    {/* Title */}
+                    <h3 className="text-2xl sm:text-3xl font-bold">
+                        Pact analyse
+                    </h3>
+
+                    {/* Text */}
+                    <div className="space-y-6 leading-relaxed text-base sm:text-lg">
+                        <p>
+                            Wij hebben deskresearch gedaan over bezorgrobots en bezorgservices
+                            zodat wij de huidige situatie in kaart kunnen brengen met de
+                            problemen die hierbij komen kijken. Hiervoor hebben wij een
+                            uitgebreide PACT-analyse uitgevoerd waarna we onze bevindingen
+                            overzichtelijk gemaakt hebben door middel van het gebruik van
+                            inzicht-kaarten.
+                        </p>
+
+                        <p>
+                            Een paar onderwerpen die vaak teruggekomen zijn tijdens onze research:
+                        </p>
+                    </div>
+
+                    {/* List */}
+                    <ul className="space-y-3 list-disc pl-6 text-base sm:text-lg">
                         <li>Problemen met regelgeving.</li>
                         <li>Veiligheid en privacy.</li>
                         <li>Vertrouwen.</li>
                         <li>Logistieke problemen.</li>
                         <li>Sociale communicatie met robots.</li>
                     </ul>
+
                 </div>
-                <PactAnalyseCardGrid/>
+
+                <PactAnalyseCardGrid />
             </section>
 
             {/* Field-Research */}

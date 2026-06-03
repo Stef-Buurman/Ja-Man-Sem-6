@@ -65,7 +65,7 @@ function Sprint2() {
                             problemen aan binnen de fysieke omgeving.
                         </p>
 
-                        <div className="flex gap-10">
+                        <div className="flex flex-col md:flex-row gap-10">
 
                             <div className="md:w-1/2">
                                 <h3 className="font-bold text-xl mb-2">Diversiteit binnen de groep</h3>

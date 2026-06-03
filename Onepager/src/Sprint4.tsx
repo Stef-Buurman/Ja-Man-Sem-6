@@ -58,50 +58,62 @@ function Sprint4() {
 
         {/* Prototype updates */}
         <section className="py-24 bg-[#beddfc] text-[#342626] space-y-6 sm:space-y-10">
-          <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
-            {/* Afbeelding links */}
-            <div className="flex-2">
-              <img
-                  src={PrototypeUpdate}
-                  alt="Prototype update"
-                  className="rounded-2xl shadow-xl w-full object-cover"/>
-            </div>
-            {/* Tekst rechts */}
-            <div className="space-y-6 flex-1">
-              <h2 className="text-3xl  sm:text-4xl font-bold">Prototype update</h2>
-              <p>
-                Op basis van de gebruikerstesten eerder deze sprint hebben wij ons prototype verder
-                verbeterd en uitgebreid. De kaart die eerst alleen bruikbaar was voor de derde verdieping,
-                is nu bijna klaar voor het hele gebouw. We hebben verdiepingen 0 tot en met 2 toegevoegd
-                en missen nu alleen nog maar de verdiepingen 4 tot en met 6.
-              </p>
-              <p>
-                Daarnaast hebben wij nooduitgangen toegevoegd aan de applicatie. Nu kan de applicatie
-                niet alleen gebruikt worden voor standaard navigeren, maar ook voor het vinden
-                van nooduitgangen tijdens potentieel gevaarlijke situaties.
-              </p>
-            </div>
-          </div>
-          <div className="max-w-5xl mx-auto px-6 flex gap-10 items-center">
+            <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 mb-16 items-center">
 
-            {/* Tekst rechts */}
-            <div className="space-y-6  flex-1">
-              <h2 className="text-3xl sm:text-4xl font-bold">Rolstoeltoegankelijkheid</h2>
-              <p>
-                Ook hebben wij aandacht besteed aan toegankelijkheid voor gebruikers. Ze kunnen nu kiezen
-                voor een roelstoelvriendelijke optie tijdens het invullen van de roete. Deze roete zal
-                dan in plaats van naar de trappen, automatisch langs liften gaan.
-              </p>
+                {/* Afbeelding */}
+                <div className="w-full md:flex-[2]">
+                    <img
+                        src={PrototypeUpdate}
+                        alt="Prototype update"
+                        className="rounded-2xl shadow-xl w-full h-auto object-contain"
+                    />
+                </div>
+
+                {/* Tekst */}
+                <div className="w-full md:flex-1 space-y-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold">
+                        Prototype update
+                    </h2>
+
+                    <p>
+                        Op basis van de gebruikerstesten eerder deze sprint hebben wij ons prototype verder
+                        verbeterd en uitgebreid. De kaart die eerst alleen bruikbaar was voor de derde verdieping,
+                        is nu bijna klaar voor het hele gebouw. We hebben verdiepingen 0 tot en met 2 toegevoegd
+                        en missen nu alleen nog maar de verdiepingen 4 tot en met 6.
+                    </p>
+
+                    <p>
+                        Daarnaast hebben wij nooduitgangen toegevoegd aan de applicatie. Nu kan de applicatie
+                        niet alleen gebruikt worden voor standaard navigeren, maar ook voor het vinden
+                        van nooduitgangen tijdens potentieel gevaarlijke situaties.
+                    </p>
+                </div>
+
             </div>
 
-            {/* Afbeelding links */}
-            <div className="space-y-6 flex-2">
-              <img
-                  src={PrototypeUpdateSearchbar}
-                  alt="Extra aandacht rolstoeltoegankelijkheid"
-                  className="rounded-2xl shadow-xl w-full object-cover"/>
+            <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 items-center mb-16">
+                {/* Tekst */}
+                <div className="w-full md:flex-1 space-y-6 min-w-0">
+                    <h2 className="text-3xl sm:text-4xl font-bold break-words">
+                        Rolstoeltoegankelijkheid
+                    </h2>
+
+                    <p>
+                        Ook hebben wij aandacht besteed aan toegankelijkheid voor gebruikers. Ze kunnen nu kiezen
+                        voor een rolstoelvriendelijke optie tijdens het invullen van de route. Deze route zal
+                        dan in plaats van naar de trappen, automatisch langs liften gaan.
+                    </p>
+                </div>
+
+                {/* Afbeelding */}
+                <div className="w-full md:flex-[2]">
+                    <img
+                        src={PrototypeUpdateSearchbar}
+                        alt="Extra aandacht rolstoeltoegankelijkheid"
+                        className="rounded-2xl shadow-xl w-full h-auto object-contain"
+                    />
+                </div>
             </div>
-          </div>
 
           <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
             <div className="space-y-6 flex-1">
@@ -221,14 +233,14 @@ function Sprint4() {
               </div>
             </div>
           </div>
-          <div className="w-full flex justify-center overflow-visible">
-            <img
-                src={Scamper}
-                alt="Usertests plan"
-                className="mx-auto rounded-2xl shadow-xl w-full md:w-3/5 object-cover my-16
-    transform transition-transform duration-300 hover:scale-110"
-            />
-          </div>
+            <div className="w-full flex justify-center overflow-visible px-6">
+                <img
+                    src={Scamper}
+                    alt="Usertests plan"
+                    className="rounded-2xl shadow-xl w-full md:w-3/5 object-cover my-16
+        transform transition-transform duration-300 hover:scale-110"
+                />
+            </div>
         </section>
 
         {/* Logo */}

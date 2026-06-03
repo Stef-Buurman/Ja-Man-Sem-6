@@ -54,19 +54,23 @@ function Sprint3() {
 
         {/* Prototypes */}
         <section className="py-24 bg-[#342626] text-[#fdf1e3] space-y-6 sm:space-y-10">
-            <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
+            <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 mb-16 items-center">
 
-                {/* Afbeelding links */}
-                <div className="flex-2">
+                {/* Afbeelding */}
+                <div className="w-full md:flex-[2]">
                     <img
                         src={prototype}
                         alt="Uitkomsten wayfinding"
-                        className="rounded-2xl shadow-xl w-full object-cover"/>
+                        className="rounded-2xl shadow-xl w-full h-auto object-contain"
+                    />
                 </div>
 
-                {/* Tekst rechts */}
-                <div className="space-y-6 flex-1">
-                    <h2 className="text-3xl  sm:text-4xl font-bold">Wayfinding prototype V4</h2>
+                {/* Tekst */}
+                <div className="w-full md:flex-1 space-y-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold">
+                        Wayfinding prototype V4
+                    </h2>
+
                     <p>
                         In de vorige sprint hebben wij een eerste kleine versie van het 3D
                         wayfinding prototype ontwikkeld. Deze sprint hebben wij hierop
@@ -76,12 +80,16 @@ function Sprint3() {
                         iconen en optimalisaties is de navigatie intuïtiever en praktischer voor gebruik.
                     </p>
                 </div>
-            </div>
-            <div className="max-w-5xl mx-auto px-6 flex gap-10 items-center">
 
-                {/* Tekst rechts */}
-                <div className="space-y-6  flex-1">
-                    <h2 className="text-3xl sm:text-4xl font-bold">Heatmap prototype</h2>
+            </div>
+            <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 items-center mb-16">
+
+                {/* Tekst */}
+                <div className="w-full md:flex-1 space-y-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold">
+                        Heatmap prototype
+                    </h2>
+
                     <p>
                         Voor het heatmap idee uit de vorige sprint hebben wij al bestaande
                         versies van onze wayfinding prototypes gebruikt om het concept verder uit te
@@ -92,13 +100,15 @@ function Sprint3() {
                     </p>
                 </div>
 
-                {/* Afbeelding links */}
-                <div className="space-y-6 flex-2">
+                {/* Afbeelding */}
+                <div className="w-full md:flex-[2]">
                     <img
                         src={heatmapPrototype}
                         alt="Uitkomsten wayfinding"
-                        className="rounded-2xl shadow-xl w-full object-cover"/>
+                        className="rounded-2xl shadow-xl w-full h-auto object-contain"
+                    />
                 </div>
+
             </div>
         </section>
 
@@ -162,17 +172,23 @@ function Sprint3() {
 
           {/* Nonuman Persona */}
           <section className="py-24 bg-[#e8492b] text-[#fdf1e3] space-y-6 sm:space-y-10">
-              <div className="max-w-5xl mx-auto px-6 flex gap-10 mb-16 items-center">
+              <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-10 items-center mb-16">
 
-                  <div className="flex-2">
+                  {/* Afbeelding */}
+                  <div className="w-full md:flex-1">
                       <img
                           src={NonhumanPersona}
                           alt="Non human persona"
-                          className="rounded-2xl w-full object-cover"/>
+                          className="rounded-2xl w-full h-auto object-cover"
+                      />
                   </div>
 
-                  <div className="space-y-6 flex-1">
-                      <h2 className="text-3xl  sm:text-4xl font-bold">Nonhuman persona</h2>
+                  {/* Tekst */}
+                  <div className="w-full md:flex-1 space-y-6">
+                      <h2 className="text-3xl sm:text-4xl font-bold">
+                          Nonhuman persona
+                      </h2>
+
                       <p>
                           Om een correct beeld te krijgen over het gebouw waar wij onze aandacht aan besteden
                           tijdens het maken van onze applicatie hebben wij een Nonhuman persona aangemaakt.
@@ -181,6 +197,7 @@ function Sprint3() {
                           problemen die wij op proberen te lossen.
                       </p>
                   </div>
+
               </div>
           </section>
 
