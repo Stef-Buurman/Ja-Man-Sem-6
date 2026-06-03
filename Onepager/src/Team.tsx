@@ -22,6 +22,7 @@ import villagerIdle3 from "./assets/sounds/Villager_idle3.ogg";
 import villagerTrade1 from "./assets/sounds/Villager_trade1.ogg";
 import villagerTrade2 from "./assets/sounds/Villager_trade2.ogg";
 import villagerTrade3 from "./assets/sounds/Villager_trade3.ogg";
+import newKids from "./assets/sounds/NewKids.mp3";
 
 function Team1() {
   const needed = [3, 5, 4, 1, 2];
@@ -74,6 +75,13 @@ function Team1() {
   const handleClick = (id: number) => {
     if (id === 4) {
       playRandomVillagerSound();
+    } else if (id === 1) {
+      const audio = new Audio(newKids);
+      audio.volume = 1.0;
+
+      audio.play().catch((error) => {
+        console.error("Could not play sound:", error);
+      });
     }
 
     setCurrent((prev) => {
