@@ -22,63 +22,86 @@ De applicatie is ontwikkeld als prototype binnen CMGT met als doel het verbetere
 
 - Frontend: React
 - Backend: Node.js / API service
-- Kaartfunctionaliteit: interactieve map library (bijv. Leaflet / Mapbox)
-- Communicatie: REST API tussen frontend en backend
-- Containerisatie: Docker (optioneel / afhankelijk van omgeving)
+- Kaartfunctionaliteit: Leaflet / Mapbox (afhankelijk van implementatie)
+- Communicatie: REST API
+- Containerisatie: Docker
 
 ---
 
 ## Projectstructuur
 
-- /frontend → React applicatie (UI, pagina’s, components)
-- /backend → API logica (routes, locaties, data verwerking)
+- /frontend → React applicatie (UI, components)
+- /backend → API (routes, data, logic)
 - /assets → afbeeldingen en iconen
-- /services → API calls vanuit de frontend
+- /services → API calls
 
 ---
 
-## Installatie
+## Installatie zonder Docker
 
-### Repository clonen
+### 1. Repository clonen
 git clone https://github.com/Stef-Buurman/Ja-Man-Sem-6.git
+cd Ja-Man-Sem-6
 
-### Dependencies installeren
+### 2. Frontend starten
+cd frontend
 npm install
-
-Let op: dit moet mogelijk zowel in frontend als backend map uitgevoerd worden.
-
-### Applicatie starten
-Ga eerst naar de goede map cd .\NavigationPlatform\
-
-Run dan:
 npm run dev
+
+### 3. Backend starten (nieuwe terminal)
+cd backend
+npm install
+npm run dev
+
+⚠️ Let op:
+- Beide servers moeten tegelijk draaien
+- Backend moet gestart zijn voordat alle functies werken
+
+---
+
+## Installatie met Docker (aanbevolen)
+
+### Vereisten
+- Installeer Docker Desktop: https://www.docker.com/products/docker-desktop/
+- Controleer installatie:
+  docker -v
+
+---
+
+### Start project met Docker
+
+Ga naar de root van het project en voer uit:
+
+docker compose up --build
+
+Dit doet automatisch:
+- Frontend builden en starten
+- Backend builden en starten
+- Communicatie tussen frontend en backend instellen
+
+---
+
+### Stoppen van Docker
+docker compose down
 
 ---
 
 ## Belangrijk
 
-- Frontend is afhankelijk van backend voor routes en locaties
-- Zonder backend werken kernfuncties niet volledig
+- Frontend is afhankelijk van backend
 - API URL moet correct ingesteld zijn
 - GPS en oriëntatie kunnen per device verschillen
-
----
-
-## Docker
-
-Zorg dat docker is gedownload dan dat hij runt
+- Docker maakt installatie eenvoudiger maar vereist correcte setup
 
 ---
 
 ## Toekomstige verbeteringen
 
-- Betere scheiding frontend/backend
-- Verbeteren GPS en oriëntatie
-- Betere autocomplete zoekfunctie
-- Error handling verbeteren
-- Docker setup volledig documenteren
+- Frontend en backend scheiden in aparte repositories
+- Docker verder documenteren en optimaliseren
+- Eén startcommando zonder handmatige stappen
+- Betere foutafhandeling en logging
 
----
 
 # Ja-Man-Sem-6 – Definition of Done
 
